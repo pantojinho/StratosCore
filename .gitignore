@@ -1,0 +1,26 @@
+# Local tools and credentials
+.codex/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Firmware build products
+build/
+.pio/
+
+# KiCad local state and recovery files
+*.kicad_prl
+*.lck
+~*.lck
+*-backups/
+*.bak
+*.tmp
+
+# Local analysis scratch; intentional release outputs are tracked separately
+tmp/

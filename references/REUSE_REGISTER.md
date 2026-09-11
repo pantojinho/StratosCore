@@ -1,0 +1,15 @@
+# Reference and reuse register
+
+Reviewed 2026-09-11 UTC. **No external implementation code, circuit, footprint or artwork is incorporated.** These entries record research; links and original analysis are the only reference-derived additions. Official license texts are intentionally included under their publication terms.
+
+| Source / exact revision | License evidence | Is reuse permitted? | Use here / modifications |
+| --- | --- | --- | --- |
+| HAT, ede42aea0a62b0821dacf69886a06be7529f59e8 | Root/tree/API license unestablished; [notes](LEGACY_PROJECTS.md) | Not established for copying; obtain permission | Architecture/pin comparison only; none |
+| StratosBrain, 943de16ff35f0b5c77d04f515245bce8342be79b | [MIT](https://github.com/pantojinho/StratosBrain_S3/blob/943de16ff35f0b5c77d04f515245bce8342be79b/LICENSE), copyright CIANDRINI 2026 | MIT-covered code with notices; dependencies/assets separately | Lessons and comparison only; none |
+| avBadge, d03f2a3bee7544e03df314edd8eafa24e040701b | Hardware scope unestablished; mixed software subtrees | No copying approved; file-level audit needed | [Architecture study](AVBADGE_NOTES.md); none |
+| ADSBee, 2942116b726f3b014605fc78af5373c6452c721d | [GPL v3](https://github.com/PantsForBirds/adsbee/blob/2942116b726f3b014605fc78af5373c6452c721d/LICENSE) and project declaration | Conditional on GPL compliance; not MIT relicensing | [Architecture/PIO study](ADSBEE_NOTES.md); none |
+| MeshCore, 0679dbeffc504d562d2f09eb072fdc223f8ffc2a | [Root MIT license](https://github.com/meshcore-dev/MeshCore/blob/0679dbeffc504d562d2f09eb072fdc223f8ffc2a/LICENSE) | Root-covered work with notices; transitive libraries separately | Compatibility objective only; no port/import |
+| Manufacturer documentation linked in [source index](../hardware/datasheets/README.md) | Individual vendor copyright/terms | Electrical use and redistribution terms vary; check exact asset | Links and independently written analysis; no document redistribution |
+| CERN-OHL-P-2.0 / MIT official text | [Provenance and scope](../LICENSES/README.md) | Official published license text used as supplied | License text only; MIT holder/year substituted |
+
+Before importing any asset add: exact URL and commit/revision; file/circuit and destination; copyright holder; SPDX identifier or exact terms; permission evidence; obligations and compatibility decision; modifications; reviewer and date. Include modifications even if the answer is "none." Do not interpret a public repository, a vendor CAD download, or a GPL component running on another MCU as blanket permission.
