@@ -46,6 +46,7 @@ Display connector/drawing, GNSS antenna, microphone MPN, USB-C input controller,
 | P10 | JLCPCB 1.6 mm four-layer JLC2313 stack as field-solver candidate | Current manufacturer order confirmation and impedance geometries before layout |
 | P11 | BLB01/TA2003A/ADL5513/MCP6566 ADS-B frontend | S-parameter simulation, supply quote, conducted sensitivity/blocker/pulse tests and RF review |
 | P12 | Shared SPI plus dedicated high-speed flow-controlled RP2040 UART; GPIO map in `INTERFACE_GPIO_MAP.md` | Boot-state electrical review and full concurrency logic-analyzer test |
+| P13 | Implement ICM-42688-P, MMC5983MA, BMP581 and SHT40-AD1B-R2 on the 3.3 V I2C bus; direct interrupt only for the IMU | Exact-symbol/land-pattern review, bus capacitance, sensor identity tests, magnetic/thermal/pressure-port validation and ICM supply recheck |
 
 ## Conflicts requiring explicit resolution
 

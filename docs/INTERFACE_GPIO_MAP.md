@@ -1,6 +1,6 @@
 # Rev A interface and GPIO allocation candidate
 
-Status: reviewed allocation for schematic entry; assignments remain change-controlled until exact display/power/GNSS choices are accepted. ESP32-S3-WROOM-1-N16R8 octal PSRAM reserves GPIO35/36/37.
+Status: reviewed allocation entered in KiCad sheet `01_compute`; assignments remain change-controlled until exact display/power/GNSS choices are accepted. ESP32-S3-WROOM-1-N16R8 octal PSRAM reserves GPIO35/36/37.
 
 ## ESP32-S3 allocation
 
@@ -54,3 +54,7 @@ LCD, microSD and SX1262 share one hardware SPI host with separate chip selects. 
 RP2040 uses a dedicated 921600-baud UART with RTS/CTS. At 8N1 it provides about 92.16 kB/s payload before framing, above the 40 kB/s stress scenario in the ADS-B architecture. Sequence numbers, receiver-overflow counters and protocol CRC make loss visible. The external expansion UART remains independent.
 
 The map closes the logical resource budget, including native USB and recovery paths. Exact electrical pullups, boot-state levels and expander output defaults must be reviewed in each schematic sheet.
+
+## KiCad entry status
+
+`hardware/kicad/01_compute.kicad_sch` implements U1, the EN 10 kΩ pull-up/1 µF reset capacitor, 10 µF plus 100 nF local 3V3 decoupling and every used GPIO net above. GPIO3, GPIO35, GPIO36, GPIO37, GPIO45 and GPIO46 carry explicit no-connect markers. The footprint is KiCad's standard ESP32-S3-WROOM-1 module footprint and must still be checked against Espressif's current land pattern and antenna keepout before PCB placement.
