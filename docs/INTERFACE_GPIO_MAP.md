@@ -57,4 +57,4 @@ The map closes the logical resource budget, including native USB and recovery pa
 
 ## KiCad entry status
 
-`hardware/kicad/01_compute.kicad_sch` implements U1, the EN 10 kΩ pull-up/1 µF reset capacitor, 10 µF plus 100 nF local 3V3 decoupling and every used GPIO net above. GPIO3, GPIO35, GPIO36, GPIO37, GPIO45 and GPIO46 carry explicit no-connect markers. The footprint is KiCad's standard ESP32-S3-WROOM-1 module footprint and must still be checked against Espressif's current land pattern and antenna keepout before PCB placement.
+`hardware/kicad/01_compute.kicad_sch` implements U1, the EN 10 kΩ pull-up/1 µF reset capacitor, 10 µF plus 100 nF local 3V3 decoupling and every used GPIO net above. Its +3V3 and GND connections are global hierarchy nets so child-sheet loads share the intended rails. GPIO3, GPIO35, GPIO36, GPIO37, GPIO45 and GPIO46 carry explicit no-connect markers. The footprint is KiCad's standard ESP32-S3-WROOM-1 module footprint and must still be checked against Espressif's current land pattern and antenna keepout before PCB placement.

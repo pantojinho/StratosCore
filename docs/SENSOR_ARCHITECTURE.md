@@ -4,12 +4,14 @@ Locked set: **ICM-42688-P**, **MMC5983MA**, **BMP581**, **SHT40**. BME688 gas/VO
 
 | Sensor | Function | Interface plan | Primary source |
 | --- | --- | --- | --- |
-| ICM-42688-P | Accelerometer + gyro | I2C candidate; SPI if bandwidth demands; IRQ/FIFO budget required | [TDK DS-000347 v1.6](https://product.tdk.com/system/files/dam/doc/product/sensor/mortion-inertial/imu/data_sheet/ds-000347-icm-42688-p-v1.6.pdf) |
-| MMC5983MA | Three-axis magnetic field and calibrated heading input | I2C candidate; SET/RESET and DRDY behavior to implement | [MEMSIC datasheet Rev A](https://www.memsic.com/Public/Uploads/uploadfile/files/20220119/MMC5983MADatasheetRevA.pdf) |
-| BMP581 | Pressure, barometric altitude and variometer input | I2C candidate; filter/ODR/interrupt selection pending | [Bosch BST-BMP581-DS004](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp581-ds004.pdf) |
-| SHT40 | Ambient temperature/humidity | I2C; heater normally disabled during ambient measurements | [Sensirion SHT40 and linked SHT4x datasheet](https://sensirion.com/products/catalog/SHT40) |
+| ICM-42688-P | Accelerometer + gyro | I2C at 0x68 plus INT1 planned; CAD entry held pending current-document review | [TDK current product page, DS-000347 v1.9](https://www.invensense.tdk.com/en-us/products/6-axis/icm-42688-p) |
+| MMC5983MA | Three-axis magnetic field and calibrated heading input | I2C at 0x30; polled in Rev A; logical pin carrier entered, no footprint | [MEMSIC datasheet Rev A](https://www.memsic.com/Public/Uploads/uploadfile/files/20220119/MMC5983MADatasheetRevA.pdf) |
+| BMP581 | Pressure, barometric altitude and variometer input | I2C at 0x46; polled in Rev A; logical pin carrier entered, no footprint | [Bosch BST-BMP581-DS004](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp581-ds004.pdf) |
+| SHT40-AD1B-R2 | Ambient temperature/humidity | I2C at 0x44; exact symbol/footprint entered; heater normally disabled during ambient measurements | [Sensirion SHT4x datasheet v7.3](https://sensirion.com/media/documents/33FD6951/6A7C10A0/HT_DS_Datasheet_SHT4x_V7.3.pdf) |
 
 Do not assign final I2C addresses until strap states and exact ordering codes are verified; touch, PMIC, fuel gauge and expansion devices must be included in the address/capacitance audit. Choose bus speed for the slowest participating device and actual loading. Add timeout/recovery for a peripheral holding the bus low. Review IRQ/wake requirements before exhausting GPIOs.
+
+The reviewed schematic subset implements MMC5983MA with its 10 µF CAP capacitor and 1 µF VDD decoupling, BMP581 with 100 nF on each rail, and SHT40-AD1B-R2 with 100 nF decoupling. BMP581 VDD is 1.71–3.6 V and VDDIO is 1.08–3.6 V. Bosch DS004-13 Figure 28 requires 10 Ω in VDD and 100 Ω in VDDIO if either rail rises in less than 10 µs; the schematic keeps selectable positions until the rail ramps are measured. Shared I2C pull-ups remain assigned to the interfaces sheet.
 
 ## Mechanical and thermal integration
 
