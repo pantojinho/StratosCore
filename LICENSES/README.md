@@ -9,7 +9,7 @@ Copyright (c) 2026 StratosCore contributors, for their original contributions. E
 | Original repository guidance and research notes (`README.md`, `AGENTS.md`, `references/`, configuration files) | MIT, except quoted/external material under its own terms |
 | External datasheets, code, CAD, artwork or reused circuits | Their own documented licenses; never overridden by this table |
 
-Hardware source location: [StratosCore repository](https://github.com/pantojinho/StratosCore). No hardware design files or firmware implementation are included yet. Future source files should carry the relevant SPDX identifier and applicable contributor/third-party notices.
+Hardware source location: [StratosCore repository](https://github.com/pantojinho/StratosCore). The current KiCad files contain architecture partitions only, and the current Python code is a host-side ADS-B timing fixture rather than target firmware. New source files should carry the relevant SPDX identifier and applicable contributor/third-party notices.
 
 ## Official text retrieval
 

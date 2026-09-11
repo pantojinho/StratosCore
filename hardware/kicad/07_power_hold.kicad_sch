@@ -1,0 +1,12 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "fdbf5f3c-bcff-40a2-a0d1-0e092fd48b9d")
+	(paper "A4")
+	(title_block (title "07 Power - HOLD") (rev "architecture-gate"))
+	(lib_symbols)
+	(text "HOLD: independent protected 1S bays and ideal-diode OR need owner acceptance and qualified battery review." (exclude_from_sim no) (at 25.4 30.48 0) (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom)) (uuid "0fe146b3-bf5a-4e20-ab72-2239e6092702"))
+	(sheet_instances (path "/" (page "1")))
+	(embedded_fonts no)
+)

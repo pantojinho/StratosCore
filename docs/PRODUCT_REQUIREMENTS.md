@@ -8,7 +8,7 @@ StratosCore Rev A is a compact experimental field computer. This document expres
 | PR02 | 2.8-inch IPS, 320 x 240, capacitive touch, both orientations | Vendor drawing, sample test, rotation/touch corner tests |
 | PR03 | Two accessible physical buttons | Debounce, boot behavior, enclosure access in both orientations |
 | PR04 | Integrated SX1262 SPI, 915 MHz hardware, U.FL | Semtech reference review, conducted RF and regional configuration tests |
-| PR05 | ATGM332D-5NR32 UART navigation | Manufacturer confirmation and cold/warm-start, NMEA and constellation tests |
+| PR05 | UART multi-GNSS navigation suitable for the accepted mission altitude | Owner decision on ATGM332D 18 km limit versus MAX-M10S proposal; then cold/warm-start, NMEA/UBX and constellation tests |
 | PR06 | ICM-42688-P + MMC5983MA + BMP581 + SHT40 | Device identity, axes, calibration, pressure and thermal tests |
 | PR07 | Core 1090 MHz ADS-B with RP2040 and dedicated frontend | Known frames, invalid-frame rejection, RF replay and coexistence tests |
 | PR08 | Traffic model with ICAO, callsign, lat/lon, altitude, velocity, track/heading when available | Field validity, per-field age, CPR and ownship-relative display tests |
@@ -39,6 +39,6 @@ Logs must be able to represent UTC/time validity, monotonic timestamp, GNSS fix/
 
 Microphone logging is optional and experimental; it is not a certified cockpit voice recorder. ADS-B is receive-only, incomplete traffic information; no certified navigation or collision-avoidance claim. MeshCore companion, messaging, tracker and repeater are firmware objectives subject to porting and licensing, not working features.
 
-## Foundation acceptance
+## Current architecture acceptance
 
-All requested paths exist, all locked parts appear in the preliminary BOM, unknown supplier IDs are TBD, diagrams are conceptual, references have license assessments, official license texts are present, handoff lists ordered work, and the foundation is committed. No PCB routing or speculative schematic is included.
+All requested paths exist, locked parts and proposals are explicit in the preliminary BOM, unknown supplier IDs remain TBD, diagrams are conceptual, references have license assessments, official license texts are present, and the handoff lists ordered work. A valid gated KiCad hierarchy and host ADS-B timing fixture exist. No completed circuit, PCB routing or manufacturing release is included.

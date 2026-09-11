@@ -1,6 +1,6 @@
 # System architecture
 
-Status: conceptual Rev A allocation. No final pin map or complete schematic. Read [decisions](DECISIONS.md), [diagram](BLOCK_DIAGRAM.md) and [RF architecture](RF_ARCHITECTURE.md) together.
+Status: Rev A allocation with a reviewed candidate [GPIO map](INTERFACE_GPIO_MAP.md) and schematic hierarchy. No complete circuit or PCB. Read [decisions](DECISIONS.md), [diagram](BLOCK_DIAGRAM.md) and [RF architecture](RF_ARCHITECTURE.md) together.
 
 ## Responsibilities
 

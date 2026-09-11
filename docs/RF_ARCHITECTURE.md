@@ -5,7 +5,7 @@ Status: mandatory pre-layout concept; no antenna placement or matching network i
 | System | RF path | Constraints |
 | --- | --- | --- |
 | Wi-Fi / BLE | ESP32-S3-WROOM-1 module PCB antenna, 2.4 GHz | Preserve exact module antenna keepout in all relevant layers and enclosure materials; no external-antenna module substitution |
-| GNSS | Antenna TBD to ATGM332D-5NR32 | Separate clean receive path; antenna bias and passband follow confirmed constellation support |
+| GNSS | Antenna TBD to owner-selected ATGM332D/MAX-M10S path | Separate clean receive path; antenna bias, passband and footprint follow the accepted P07 decision |
 | LoRa | SX1262, reference matching/filter/switch network, U.FL, 915 MHz class antenna | Direct IC integration; oscillator/TCXO and RF switch policy chosen with Semtech reference; region-specific transmission |
 | ADS-B | Separate 1090 MHz antenna, preselection, LNA/filtering, detector/comparator, RP2040 | Receiver blocker tolerance and analog bandwidth must be demonstrated; never shared with SX1262 |
 
@@ -15,7 +15,7 @@ For the ESP antenna, use [Espressif hardware layout guidance](https://documentat
 
 ## Placement and stackup study
 
-First place volume/keepout envelopes for module antenna, display FPC, cell holder, connectors and all RF zones. Keep high-current loops and fast display/SD clocks away from receive inputs and their matching networks. Use short controlled-impedance RF paths over continuous return planes, stitching as determined by RF frequency and geometry, and local decoupling/rail filtering. Shield cans and partitions are options; leave area until coexistence is measured.
+First place volume/keepout envelopes for module antenna, display FPC, cell holder, connectors and all RF zones. Keep high-current loops and fast display/SD clocks away from receive inputs and their matching networks. Use short controlled-impedance RF paths over continuous return planes, stitching as determined by RF frequency and geometry, and local decoupling/rail filtering. Shield cans and partitions are options; leave area until coexistence is measured. The current spatial proposal and section view are in [the mechanical/RF floorplan](MECHANICAL_RF_FLOORPLAN.md).
 
 L2 is proposed solid ground. L1 RF referenced to L2 is a starting point. L3 power/signal allocation must also provide coherent return paths for L4 signals; the conceptual stack is not automatically suitable for high-speed routing on every layer. Ask the manufacturer for dielectric thickness, copper, soldermask and impedance capability; calculate 50-ohm geometries from that stack. No trace width is specified before then. See [manufacturing](MANUFACTURING_STRATEGY.md).
 

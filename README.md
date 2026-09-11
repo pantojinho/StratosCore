@@ -2,7 +2,7 @@
 
 Compact open-source field, aviation, meteorological, navigation, and radio computer based on **ESP32-S3-WROOM-1-N16R8**.
 
-**Status: Rev A engineering foundation only.** No schematic, PCB layout, runnable firmware, or manufacturing package exists yet. This is an experimental platform, **not a certified aviation instrument**, collision-avoidance system, or cockpit voice recorder.
+**Status: Rev A architecture and validation phase.** A reviewed schematic hierarchy and host-side ADS-B timing fixture exist, but no completed circuit, PCB layout, hardware prototype, or manufacturing package exists yet. This is an experimental platform, **not a certified aviation instrument**, collision-avoidance system, or cockpit voice recorder.
 
 ## Rev A baseline
 
@@ -11,7 +11,7 @@ Compact open-source field, aviation, meteorological, navigation, and radio compu
 | Compute | ESP32-S3-WROOM-1-N16R8; 16 MB Flash, 8 MB PSRAM; Wi-Fi/BLE and module PCB antenna |
 | User interface | 2.8-inch IPS, 320 x 240, capacitive touch; portrait/landscape; two physical buttons |
 | LoRa | Directly integrated SX1262, 915 MHz class hardware, SPI, PCB U.FL; optional SMA pigtail |
-| GNSS | ATGM332D-5NR32 via UART; antenna and exact capabilities require verification |
+| GNSS | ATGM332D-5NR32 remains locked, but its verified 18 km ceiling triggers a MAX-M10S replacement proposal |
 | Motion/environment | ICM-42688-P, MMC5983MA, BMP581, SHT40; no baseline BME688 |
 | ADS-B | Dedicated 1090 MHz RF frontend and RP2040 timing processor, feeding ESP32-S3 |
 | Logging | Mandatory microSD and digital MEMS microphone provision for optional synchronized audio |
@@ -29,7 +29,7 @@ Potential uses include flight/vario instrumentation, traffic visualization, ball
 4. [Open questions](docs/OPEN_QUESTIONS.md), [preliminary BOM](bom/preliminary_bom.csv), and [reference/reuse register](references/REUSE_REGISTER.md).
 5. [Engineering handoff and next five tasks](docs/ASTRA_HANDOFF.md); contributors must read [AGENTS.md](AGENTS.md).
 
-The 12-hour runtime is a target, not a demonstrated result. The display's exact part, connector, antenna positions, ADS-B analog parts, and battery topology are deliberately unselected. The GNSS manufacturer's current listing does not establish Galileo support; see [GNSS architecture](docs/GNSS_ARCHITECTURE.md).
+The 12-hour runtime is a target, not a demonstrated result. The Orient C1 display is selected for sample validation, but its exact drawing/connector remains on hold. The locked GNSS was documented more fully and has an 18 km altitude ceiling, so a MAX-M10S replacement proposal awaits owner acceptance. Battery and ADS-B circuits remain prototype candidates pending the reviews described in [component evidence](docs/COMPONENT_EVIDENCE.md), [power review](docs/POWER_ARCHITECTURE_REVIEW.md) and [ADS-B validation](docs/ADSB_VALIDATION.md).
 
 ## Repository layout
 
@@ -49,4 +49,4 @@ StratosCore/
 
 ## Licensing
 
-Original hardware, mechanical designs and hardware engineering documentation: **CERN-OHL-P-2.0**. Original firmware and its software documentation: **MIT**. See [license scope and provenance](LICENSES/README.md). Third-party work retains its own terms; no reference circuit or implementation code has been imported in this foundation.
+Original hardware, mechanical designs and hardware engineering documentation: **CERN-OHL-P-2.0**. Original firmware and its software documentation: **MIT**. See [license scope and provenance](LICENSES/README.md). Third-party work retains its own terms; no reference circuit or implementation code has been imported.

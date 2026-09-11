@@ -1,0 +1,12 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "46e520f0-3f91-4723-9af8-a307da062f24")
+	(paper "A4")
+	(title_block (title "06 ADS-B") (rev "architecture-gate"))
+	(lib_symbols)
+	(text "Candidate chain: BLB01 / TA2003A stages / ADL5513 / MCP6566 / RP2040. Bench validation required." (exclude_from_sim no) (at 25.4 30.48 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "d8eeb5c1-78d5-4472-a85c-c58ee8933395"))
+	(sheet_instances (path "/" (page "1")))
+	(embedded_fonts no)
+)

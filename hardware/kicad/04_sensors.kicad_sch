@@ -1,0 +1,12 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "1cd063f0-f4b7-40c1-bb5f-0d5e73e839bc")
+	(paper "A4")
+	(title_block (title "04 Sensors") (rev "architecture-gate"))
+	(lib_symbols)
+	(text "ICM-42688-P, MMC5983MA, BMP581 and SHT40 domain." (exclude_from_sim no) (at 25.4 30.48 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "e53dcda9-2f12-4ef5-ab9a-c515e02e50cf"))
+	(sheet_instances (path "/" (page "1")))
+	(embedded_fonts no)
+)

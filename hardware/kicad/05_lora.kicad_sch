@@ -1,0 +1,12 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "9c93cf97-95a1-4f1b-a41c-6c33c22e9d0e")
+	(paper "A4")
+	(title_block (title "05 LoRa") (rev "architecture-gate"))
+	(lib_symbols)
+	(text "SX1262 915-class SPI radio with U.FL output; RF network requires manufacturer reference design." (exclude_from_sim no) (at 25.4 30.48 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "10df5b83-920c-48bd-979f-a867f13beb19"))
+	(sheet_instances (path "/" (page "1")))
+	(embedded_fonts no)
+)

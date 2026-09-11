@@ -4,8 +4,8 @@ Boxes are functions, not selected footprints, final rails or a wiring diagram. D
 
 ```mermaid
 flowchart LR
-  USB[USB-C] --> PWR[Input protection and charger / power path TBD]
-  CELLS[Removable 21700 bays] --> SAFE[Independent protection / topology TBD]
+  USB[USB-C] --> PWR[Input protection + two BQ25185 candidates]
+  CELLS[Removable 21700 bays] --> SAFE[Independent fuse / reverse protection / NTC]
   SAFE <--> PWR
   PWR --> RAILS[Regulation and switched domains TBD]
   USB -. native USB data .-> ESP[ESP32-S3-WROOM-1-N16R8]
@@ -13,20 +13,20 @@ flowchart LR
   ESP <--> WIFI[Module PCB antenna: Wi-Fi / BLE]
   ESP -. display bus .-> LCD[2.8-inch IPS 320 x 240]
   TOUCH[Capacitive touch + two buttons] --> ESP
-  GNSSA[GNSS antenna TBD] --> GNSS[ATGM332D-5NR32]
+  GNSSA[GNSS antenna TBD] --> GNSS[GNSS HOLD: ATGM332D or proposed MAX-M10S]
   GNSS <-->|UART| ESP
   SENS[ICM-42688-P / MMC5983MA / BMP581 / SHT40] <-->|I2C or SPI allocation TBD| ESP
   ESP <-->|SPI| LORA[SX1262 + Semtech RF matching]
   LORA <--> UFL[U.FL: 915 MHz antenna]
-  ADSA[Separate 1090 MHz antenna] --> FILTER[RF preselection / SAW]
-  FILTER --> LNA[LNA and further filtering TBD]
-  LNA --> DET[Detector / comparator TBD]
+  ADSA[Separate 1090 MHz antenna] --> LNA1[BLB01 candidate]
+  LNA1 --> FILTER[TA2003A / BLB01 / TA2003A candidate]
+  FILTER --> DET[ADL5513 / MCP6566 candidate]
   DET --> RP[RP2040: timing and Mode-S decoding]
-  RP -. UART or SPI .-> ESP
+  RP -. UART 921600 + RTS/CTS .-> ESP
   ESP <-->|Storage bus TBD| SD[microSD]
   MIC[Digital MEMS microphone] -. I2S / PDM .-> ESP
   ESP <--> EXP[3V3 / GND / I2C / SPI / UART / GPIO expansion]
-  GAUGE[Fuel gauge TBD] -. I2C .-> ESP
+  GAUGE[Two MAX17048 candidates via TCA9543A] -. I2C .-> ESP
   RAILS --> RFPOWER[GNSS / ADS-B / LoRa / sensors / display / SD domains]
 ```
 

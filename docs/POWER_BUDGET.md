@@ -5,16 +5,16 @@
 | Block | BALLOON W | FLIGHT W | DESKTOP W | Basis to replace with measurement |
 | --- | ---: | ---: | ---: | --- |
 | ESP32 + Flash/PSRAM + wireless | 0.12 | 0.40 | 0.65 | CPU duty, Wi-Fi/BLE state and clock not fixed |
-| LCD + backlight + touch | 0.01 | 0.60 | 0.70 | Placeholder; exact panel unknown, largest brightness dependency |
+| LCD + backlight + touch | 0.01 | 0.625 | 0.625 | Orient candidate related drawing; exact C1 sample and brightness profile still unmeasured |
 | GNSS | 0.09 | 0.09 | 0.09 | Planning allowance near vendor listing; acquisition/antenna bias still unresolved |
 | Four sensors | 0.02 | 0.03 | 0.03 | Sample rate/filter/heater policy not fixed |
-| ADS-B complete subsystem | 0.00 | 0.55 | 0.55 | Off in this BALLOON scenario; frontend and clocks not selected |
+| ADS-B complete subsystem | 0.00 | 0.60 | 0.60 | Two 3 V BLB01 stages, ADL5513, comparator, RP2040/support allowance; unmeasured |
 | SX1262 and RF support | 0.02 | 0.03 | 0.03 | Duty-cycle allowance only; no universal TX settings |
 | microSD | 0.03 | 0.10 | 0.10 | Card and batching-dependent; write peaks much larger |
 | Microphone/audio increment | 0.00 | 0.03 | 0.03 | Audio enabled for conservative FLIGHT/DESKTOP example |
 | Gauge, control and other loads | 0.02 | 0.03 | 0.04 | PMIC idle, enables and miscellaneous allowances |
-| **Load total** | **0.31** | **1.86** | **2.22** | Sum of above |
-| **With 25% design margin** | **0.3875** | **2.3250** | **2.7750** | Used in runtime examples |
+| **Load total** | **0.31** | **1.935** | **2.195** | Sum of above |
+| **With 25% design margin** | **0.3875** | **2.41875** | **2.74375** | Used in runtime examples |
 
 ## Energy and runtime arithmetic
 
@@ -25,12 +25,12 @@ Example only: one 5.0 Ah cell at 3.6 V nominal gives 18 Wh nameplate energy. Cel
 | Scenario | One example cell | Two example cells | 12 h implication |
 | --- | ---: | ---: | --- |
 | BALLOON | 33.45 h | 66.89 h | Arithmetic suggests margin; actual duty and cold operation remain untested |
-| FLIGHT | 5.57 h | 11.15 h | Neither example reaches 12 h with chosen allowances |
-| DESKTOP, battery equivalent | 4.67 h | 9.34 h | Intended use is USB powered; charging power is additional |
+| FLIGHT | 5.36 h | 10.72 h | Neither example reaches 12 h with chosen allowances |
+| DESKTOP, battery equivalent | 4.72 h | 9.45 h | Intended use is USB powered; charging power is additional |
 
 Two-cell energy summation assumes a future safe architecture can use both cells' energy; it does not specify parallel wiring or guarantee lossless switchover. It also assumes both cells meet the example capacity, not an arbitrary mixed pair.
 
-For 12 h, maximum margin-adjusted delivered load is **1.08 W** with one example cell, or **2.16 W** with two. Under the separate 25% load margin, raw design budgets become **0.864 W** and **1.728 W** respectively. FLIGHT's 1.86 W allowance exceeds the two-cell raw budget by **0.132 W**. Required nameplate energy at the margin-adjusted FLIGHT load is 2.325 x 12 / (0.80 x 0.90) = **38.75 Wh**, versus 36 Wh for two example cells.
+For 12 h, maximum margin-adjusted delivered load is **1.08 W** with one example cell, or **2.16 W** with two. Under the separate 25% load margin, raw design budgets become **0.864 W** and **1.728 W** respectively. FLIGHT's 1.935 W allowance exceeds the two-cell raw budget by **0.207 W**. Required nameplate energy at the margin-adjusted FLIGHT load is 2.41875 x 12 / (0.80 x 0.90) = **40.31 Wh**, versus 36 Wh for two example cells.
 
 This is a sensitivity analysis, not evidence that a larger cell alone solves runtime. Measure display brightness, ADS-B power, actual conversion efficiency and cold-cell capacity first. Every additional continuous 0.1 W costs 1.2 Wh over 12 h at the loads.
 

@@ -2,26 +2,27 @@
 
 ## Current state
 
-Rev A foundation only. Requirements, architecture, power options/budget, preliminary BOM, references and official licenses are present. No KiCad schematic/board, firmware build, electrical prototype or manufacturing outputs exist. No legacy repository was modified. Owner authorized direct publication to `main`, without PR, for this foundation.
+Rev A has moved from foundation into architecture validation. Component evidence, an independent dual-bay power proposal, runtime update, mechanical/RF floorplan, JLC stack candidate, ADS-B frontend candidate, clean-room timing tests and a complete ESP32 GPIO allocation are present. The KiCad 10 architecture hierarchy exists and its structural ERC has zero findings; no circuit sheet or PCB is manufacturing-ready.
 
-Read [DECISIONS.md](DECISIONS.md), [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md) and [AGENTS.md](../AGENTS.md) first. Locked hardware must remain unchanged without an accepted proposal. Never assign a display footprint from an assumed panel or directly parallel removable cells.
+Read [DECISIONS.md](DECISIONS.md), [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md), [component evidence](COMPONENT_EVIDENCE.md), [power review](POWER_ARCHITECTURE_REVIEW.md) and [AGENTS.md](../AGENTS.md) first. Never assign the display footprint from the related C drawing or directly connect removable cells in parallel.
 
 ## Critical findings
 
-- Exact GNSS manufacturer listing does not confirm Galileo or a configurable higher output rate; keep ATGM332D-5NR32 pending evidence.
-- ADSBee GPL-3.0 and avBadge's unestablished hardware license prohibit treating published work as freely relicensable. No code/circuit was copied.
-- Legacy pin maps and AMOLED/sensor/UART-LoRa drivers conflict with this baseline. avBadge uses SoC TV input/DSP, not RP2040.
-- Two illustrative 5 Ah cells yield 11.15 h FLIGHT under conservative allowances; 12 h is unproven.
-- GPIO/serial-resource budget and 21700/display/antenna mechanical fit remain unresolved.
+- Orient `AFY240320A1-2.8INTH-C1` is selected for samples and has authorized-distributor stock, but its exact C1 drawing is still missing. Its schematic connector remains on hold.
+- The ATGM332D-5NR32 manual confirms Galileo and 10 Hz maximum but imposes an 18 km altitude ceiling. `MAX-M10S-00B` is the documented 80 km replacement proposal and needs owner acceptance because D07 is locked.
+- The recommended battery architecture uses two independent BQ25185 channels and an LTC4415 reverse-blocked OR. It needs owner and qualified electrical/battery review before schematic freeze or energizing.
+- The 84 x 60 mm PCB/31 mm one-cell envelope is plausible. The two-cell enclosure needs about 37 mm; the original 32 mm maximum is not realistic with the reviewed display/cell stack.
+- Revised two-cell FLIGHT runtime is 10.72 h under conservative allowances. At least 0.207 W raw average must be removed to reach 12 h with the example cells.
+- The independent ADS-B candidate is BLB01/TA2003A/ADL5513/MCP6566. Host timing/CRC tests pass; analog sensitivity and RP2040 PIO/DMA remain unproven.
 
-## Next five engineering tasks, in order
+## Next engineering work
 
-1. **Close component evidence and sourcing gaps.** Obtain exact LCD/touch sample/drawings and GNSS variant/commands; verify locked-part datasheets/orderable suffixes; gather dated quotes and audit firmware/reuse licenses. Record proposals for unmet requirements without changing baseline.
-2. **Review power architecture and runtime feasibility.** Compare one/two-bay circuits and cell/holder candidates, choose charger/gauge candidates, refine rail/peak/thermal budget, and complete explicit battery safety review before topology freeze.
-3. **Complete mechanical/RF floorplan and manufacturer stackup study.** Fit both enclosure variants, establish antenna and environmental-sensor zones, connector access and impedance constraints. No routing yet.
-4. **Prove ADS-B frontend and timing independently.** Evaluate manufacturer-backed RF chain with RP2040 capture, known frames and coexistence; specify ESP32 link, timestamping, validation and overflow behavior. Resolve reuse licensing before importing code.
-5. **Freeze reviewed interfaces and begin schematic/bring-up planning.** Complete GPIO/bus/address/rail map, then create verified KiCad symbols and schematic blocks with ERC and a testable BOM. Placement/routing requires the preceding reviews; manufacturing later requires DRC and release review.
+1. Obtain two labeled C1 display samples and its exact controlled drawing; identify the mating connectors and measure backlight/readability.
+2. Record the owner's decision on the MAX-M10S GNSS proposal and the independent dual-bay power concept. Then perform a second-person battery schematic review.
+3. Finish the non-RF schematic sheets with verified manufacturer symbols; keep display, GNSS and power fault details explicitly gated. Run KiCad ERC and review every exception.
+4. Build RF evaluation coupons for BLB01/TA2003A/ADL5513/MCP6566 on the confirmed stack and implement RP2040 PIO/DMA plus the flow-controlled transport.
+5. Print the 84 x 60 mm fit dummy and both rear covers; test antenna/pigtail, vent, button, SD, USB and battery service clearances.
 
 ## Validation boundary
 
-Foundation checks cover file/link/BOM/license/decision integrity and power arithmetic only. ERC/DRC and firmware tests are not applicable yet. Stop after this phase; do not interpret placeholders as authorization to continue to PCB routing.
+Current tests prove documentation consistency and the host ADS-B timing fixture only. They do not prove battery safety, RF sensitivity, 12-hour autonomy, display pinout, antenna performance, enclosure fit or flight suitability. PCB placement/routing and manufacturing outputs remain prohibited until their gates close.

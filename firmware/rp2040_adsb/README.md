@@ -1,5 +1,12 @@
 # RP2040 ADS-B firmware plan
 
-Dedicated capture, preamble/frame extraction, timestamping, format-aware parity validation and transport/health reporting. PIO plus DMA is the candidate mechanism; no copied PIO, hardcoded pin assignment or build exists.
+The first clean-room validation artifact is a host-only pulse-position capture model. It generates and decodes a known 112-bit DF17 fixture at 8 samples/us and validates the Mode S CRC polynomial without importing ADSBee GPL source.
 
-Specify clock limits, PIO/DMA resources, boot flash, watchdog, recovery, packet protocol and queue-overflow behavior after frontend characterization. Test decoder logic with independent known fixtures, then conducted waveform replay. See [ADS-B architecture](../../docs/ADSB_ARCHITECTURE.md) and [reuse register](../../references/REUSE_REGISTER.md); GPL code is not implicitly part of this MIT firmware.
+Run from the repository root:
+
+```powershell
+python -m unittest discover firmware/rp2040_adsb/tests -v
+python firmware/rp2040_adsb/tools/validate_capture.py
+```
+
+This proves only the digital timing/test contract. RP2040 PIO/DMA, comparator behavior, RF sensitivity and the ESP32 transport still require implementation and bench measurements described in [the validation plan](../../docs/ADSB_VALIDATION.md).

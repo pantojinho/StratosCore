@@ -1,0 +1,12 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "4884ca17-5d59-46f5-8746-3d51c8a09215")
+	(paper "A4")
+	(title_block (title "02 Interfaces") (rev "architecture-gate"))
+	(lib_symbols)
+	(text "Shared SPI, I2C, UART and control allocation follows docs/INTERFACE_GPIO_MAP.md." (exclude_from_sim no) (at 25.4 30.48 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "65d87443-c68b-409a-a635-f2eaa77a0eca"))
+	(sheet_instances (path "/" (page "1")))
+	(embedded_fonts no)
+)

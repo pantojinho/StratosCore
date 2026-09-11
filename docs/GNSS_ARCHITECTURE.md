@@ -1,12 +1,12 @@
 # GNSS architecture
 
-Baseline remains **ATGM332D-5NR32 via UART**. Exact pinout, ordering variant documentation, command manual and antenna implementation must be verified before schematic entry.
+Baseline remains **ATGM332D-5NR32 via UART** until the owner accepts the documented replacement proposal. Its full manual is now available, but its 18 km altitude ceiling prevents schematic commitment for balloon use.
 
-## Capability discrepancy
+## Verified capability and mission conflict
 
-The [manufacturer's exact product page](https://www.icofchina.com/daohang/danpin/2441.html), checked 2026-09-11 UTC, lists GPS/QZSS and BeiDou by default, GLONASS as optional/configuration-dependent, 1 Hz output, NMEA0183, default 9600 baud, and a ROM variant without saved commands. It does **not list Galileo**. Its table gives 2.7-3.6 V supply and a 16.0 x 12.2 x 2.4 mm module envelope.
+The [full ATGM332D-5NR32 manual](https://datasheet.lcsc.com/lcsc/2206231830_ZHONGKEWEI-ATGM332D-5NR32_C3037611.pdf), checked 2026-09-11 UTC, lists BDS/GPS/GLONASS/Galileo/QZSS/SBAS, 1 Hz default with 10 Hz maximum, NMEA0183, 2.7-3.6 V supply, less than 26 mA at 3.3 V and a 15.9 x 12.1 x 2.4 mm module. It also specifies a maximum altitude of 18,000 m.
 
-The prior conversation's broader constellation/update-rate claims are therefore not accepted as verified specifications. GPS/Galileo/BeiDou and GLONASS where supported remain desired capabilities, but Galileo and configurable higher update rates are unresolved for this exact part. Keep the chosen MPN; request a manufacturer command manual and ordering-code confirmation, then test a sample. If a requirement cannot be met, create a replacement proposal with all comparisons required by [AGENTS.md](../AGENTS.md).
+Galileo and the higher update rate are now documented. High-altitude balloon compatibility is not. [Component evidence](COMPONENT_EVIDENCE.md) proposes u-blox `MAX-M10S-00B`, whose manufacturer documents airborne modes to 80,000 m, explicit multi-GNSS support and configurable higher rates. That change is not accepted yet, so no GNSS symbol/footprint is placed in the schematic.
 
 ## Antenna options (separate decision)
 

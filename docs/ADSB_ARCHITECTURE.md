@@ -4,7 +4,7 @@
 
 ## Proposed signal chain
 
-Separate antenna -> RF preselection/SAW -> LNA and further filtering as needed -> fast envelope/log detector -> threshold/comparator -> RP2040 PIO/DMA/frame processing -> framed UART or SPI -> ESP32-S3 contact store, relative traffic UI and microSD logger.
+Separate antenna -> BLB01 LNA -> TA2003A SAW -> BLB01 LNA -> TA2003A SAW -> ADL5513 fast log detector -> MCP6566 threshold/comparator -> RP2040 PIO/DMA/frame processing -> 921600-baud UART with RTS/CTS -> ESP32-S3 contact store, relative traffic UI and microSD logger. This is an independently selected prototype candidate, not a copied ADSBee circuit; see [validation](ADSB_VALIDATION.md).
 
 Pre-LNA filtering reduces blockers but adds noise loss; assess both against the required sensitivity and nearby LoRa emissions. Select LNA gain/noise/linearity, filter insertion loss and rejection, detector pulse response, comparator delay/jitter/hysteresis and logic swing together. A detector specified for 1090 MHz carrier frequency can still be too slow to preserve ADS-B pulses. Threshold adaptation must not hide or distort valid pulse trains.
 
@@ -32,4 +32,4 @@ ADSBee's GPL-3.0 terms cover its published designs/code; copying requires a lice
 
 ## Required proof before integration
 
-Use legally obtained test frames and controlled conducted RF; test valid/invalid parity, burst overlaps, near/far signals, saturation recovery, comparator threshold sweeps, clock tolerances, FIFO stress, UART resynchronization, CPR edge cases and stale fields. Compare decoded records with independently validated fixtures. Measure sensitivity, false positives and drop rate under LCD/SD/Wi-Fi/LoRa/charging stress. Range targets are TBD; antenna sightings alone are not a receiver qualification.
+The repository now contains an independently authored host fixture for a known valid DF17 frame, CRC failure and preamble jitter. Continue with controlled conducted RF; test burst overlaps, near/far signals, saturation recovery, comparator threshold sweeps, clock tolerances, FIFO stress, UART resynchronization, CPR edge cases and stale fields. Measure sensitivity, false positives and drop rate under LCD/SD/Wi-Fi/LoRa/charging stress. Range targets are TBD; antenna sightings alone are not a receiver qualification.

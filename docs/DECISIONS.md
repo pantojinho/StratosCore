@@ -12,7 +12,7 @@ Baseline established from the owner's foundation brief; research reviewed 2026-0
 | D04 | Portrait and landscape support; two physical buttons | Mechanical access and coordinate transforms required |
 | D05 | SX1262 directly on PCB, SPI, 915 MHz class hardware | No E220/E32, UART radio module, or plug-in radio board; regional TX settings configurable |
 | D06 | LoRa PCB U.FL | Optional enclosure SMA via pigtail; exact connector ordering code open |
-| D07 | ATGM332D-5NR32 GNSS, UART | Capabilities must be reconciled with vendor evidence; antenna open |
+| D07 | ATGM332D-5NR32 GNSS, UART | Galileo/10 Hz verified; 18 km limit conflicts with balloon use; P07 replacement decision pending; antenna open |
 | D08 | ICM-42688-P, MMC5983MA, BMP581, SHT40 | No BME688 baseline; isolate environmental sensors from heat |
 | D09 | Integrated 1090 MHz ADS-B in Rev A | Independent RF chain; RP2040 baseline for timing-critical decoding |
 | D10 | Mandatory microSD | Timestamped telemetry, contacts, events and system state |
@@ -28,7 +28,7 @@ Baseline established from the owner's foundation brief; research reviewed 2026-0
 
 ## Open selections
 
-Exact LCD manufacturer/MPN, touch controller, display connector, GNSS antenna, ADS-B RF frontend, microphone MPN, USB-C charger/PMIC, fuel gauge, one/two-cell topology, exact PCB dimensions, enclosure thickness, RF connector MPNs and GNSS/ADS-B connector styles, and PCB stackup remain OPEN. The LoRa connector *family* remains U.FL despite the general connector-selection TODO.
+Display connector/drawing, GNSS antenna, microphone MPN, USB-C input controller, regulators, reverse-cell protection, exact PCB dimensions, enclosure thickness, RF connector MPNs and GNSS/ADS-B connector styles remain OPEN. The display, ADS-B frontend, charger/ORing/gauge, mechanical envelope and stackup are proposals or sample candidates with explicit gates below. The LoRa connector *family* remains U.FL despite the general connector-selection TODO.
 
 ## Proposals, not freezes
 
@@ -39,10 +39,17 @@ Exact LCD manufacturer/MPN, touch controller, display connector, GNSS antenna, A
 | P03 | Evaluate one protected 1S bay first; independently managed dual bays for larger version | [Power options](POWER_ARCHITECTURE_OPTIONS.md) fault review and measured runtime; topology remains open |
 | P04 | L1 components/signals, L2 solid ground, L3 power/signals, L4 signals/components | Manufacturer stackup, return-current review, controlled impedance |
 | P05 | ESP-IDF/FreeRTOS with separate board support and services | Toolchain/license audit and MeshCore port feasibility; no firmware build selected |
+| P06 | Orient `AFY240320A1-2.8INTH-C1` as display sample candidate using SPI | Exact C1 drawing, labeled samples, connector, backlight and readability/power tests; footprint remains prohibited |
+| P07 | Replace locked GNSS with u-blox `MAX-M10S-00B` | Owner acceptance required; complete comparison in `COMPONENT_EVIDENCE.md`; then verify exact symbol/footprint and antenna |
+| P08 | Two BQ25185 independent 1S bays feeding LTC4415, with per-bay fuse/reverse protection/NTC/gauge | Owner plus qualified electrical/battery reviewer acceptance and complete fault bench matrix before freeze |
+| P09 | Common 84 x 60 mm PCB; approximately 31 mm one-cell and 37 mm two-cell enclosures | Printed dummy and final component/connector tolerance stack |
+| P10 | JLCPCB 1.6 mm four-layer JLC2313 stack as field-solver candidate | Current manufacturer order confirmation and impedance geometries before layout |
+| P11 | BLB01/TA2003A/ADL5513/MCP6566 ADS-B frontend | S-parameter simulation, supply quote, conducted sensitivity/blocker/pulse tests and RF review |
+| P12 | Shared SPI plus dedicated high-speed flow-controlled RP2040 UART; GPIO map in `INTERFACE_GPIO_MAP.md` | Boot-state electrical review and full concurrency logic-analyzer test |
 
 ## Conflicts requiring explicit resolution
 
-See [legacy comparison](../references/LEGACY_PROJECTS.md). Legacy AMOLED, QMI8658, BME688, BMM350, AT6558R and UART LoRa assumptions do not apply. Galileo and configurable update rate are desired but not established for the exact GNSS. ADSBee GPL reuse and MeshCore dependency licensing require review against the MIT objective. No architecture change was accepted to resolve these issues automatically.
+See [legacy comparison](../references/LEGACY_PROJECTS.md). Legacy AMOLED, QMI8658, BME688, BMM350, AT6558R and UART LoRa assumptions do not apply. The exact GNSS now has constellation/rate evidence but fails the balloon altitude envelope; P07 requires the owner's decision. ADSBee GPL reuse and MeshCore dependency licensing require review against the MIT objective. No architecture change was accepted automatically.
 
 ## Change record template
 

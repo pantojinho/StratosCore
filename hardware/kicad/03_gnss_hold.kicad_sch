@@ -1,0 +1,12 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "201f0ee9-5d9e-4450-b375-6eb268e01248")
+	(paper "A4")
+	(title_block (title "03 GNSS - HOLD") (rev "architecture-gate"))
+	(lib_symbols)
+	(text "HOLD: ATGM332D is limited to 18 km. Owner decision P07 is required before schematic entry." (exclude_from_sim no) (at 25.4 30.48 0) (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom)) (uuid "3ed47de1-b7e7-483e-91ac-c9bf5b3c00db"))
+	(sheet_instances (path "/" (page "1")))
+	(embedded_fonts no)
+)

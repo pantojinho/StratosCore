@@ -1,13 +1,13 @@
 # Power architecture options
 
-**Status: OPEN. No battery topology, charger, protection circuit or fuel gauge is selected.** These are engineering candidates for review, not wiring instructions. Target: one removable 21700 in a compact enclosure or two in a larger enclosure, USB-C charging and operation while charging.
+**Status: option B selected as the engineering recommendation, pending explicit owner and qualified battery/electrical review.** No battery topology is frozen and these are not wiring instructions. See the concrete [power architecture review](POWER_ARCHITECTURE_REVIEW.md).
 
 ## Candidate architectures
 
 | Option | Energy/charge paths | Advantages | Issues and disposition |
 | --- | --- | --- | --- |
 | A: one managed 1S bay | Cell protection and reverse-insertion stage; 1S charger with separate system power path; regulated system supply | Lowest part count and easiest fault characterization; fits one-cell concept | Runtime may miss 12 h in FLIGHT; second loose spare gives no continuous dual-cell operation. Evaluation reference only, not frozen |
-| B: two independently managed 1S bays | Each bay has protection, temperature monitoring, controlled charger and protected discharge path; reverse-blocked outputs feed a power mux/OR stage | Either bay can operate alone; mismatched state of charge need not equalize between cells | Highest duplicated circuitry; current/thermal limits must coordinate both chargers; dual gauge addressing; validate every backfeed path. Preferred dual-bay study candidate |
+| B: two independently managed 1S bays | Each bay has protection, temperature monitoring, BQ25185 charger and protected discharge path; reverse-blocked outputs feed an LTC4415 OR stage | Either bay can operate alone; mismatched state of charge need not equalize between cells | Recommended; duplicated circuitry, USB current coordination, reverse insertion and thermal behavior still require fault tests |
 | C: two bays with mutually exclusive selection | Hardware interlocked break-before-make battery selection; charger connects only to selected bay; system hold-up or USB covers transition | Potentially one charger; avoids simultaneous direct cell connection | Charge sequencing and removal can reset system; charger/sense/NTC switching complicates fault safety. Reject any firmware-only interlock |
 | D: managed 2S removable pack | Series cells with per-cell monitoring, balancing, 2S charger and buck regulation | Lower system current for equal power | Missing cell breaks pack; mismatched loose cells problematic; one-cell mode needs separate engineered path. Not a drop-in answer to 1-or-2 loose cells |
 | E: fixed matched 1S2P pack | Factory-assembled matched pack, protection and pack connector | Simpler charging than independent bays | Changes the independently removable-cell concept; only a future replacement proposal, not baseline |
@@ -16,18 +16,17 @@
 
 An ideal-diode OR generally lets the higher-voltage source carry the load; it does not guarantee equal sharing. A power mux chooses a source rather than combining capacity into a physically parallel pack. Runtime and SOC calculations must reflect the chosen policy.
 
-## Manufacturer-backed candidates (not BOM selections)
+## Manufacturer-backed candidates
 
 | Function | Candidate / source | Relevance and limitation |
 | --- | --- | --- |
-| Simple 1S linear charging | [TI BQ24074](https://www.ti.com/product/BQ24074), BQ2407x datasheet and evaluation circuit | Separate system power path; simpler switching-noise environment; enclosure dissipation may limit charge current |
+| Per-bay 1S linear charging | [TI BQ25185](https://www.ti.com/product/BQ25185), data sheet and evaluation circuit | Recommended candidate; SYS power path, NTC input and fault protection; duplicated linear heat limits charge rate |
 | 1S switching charging | [TI BQ25895](https://www.ti.com/product/BQ25895), datasheet | Power-path charger candidate; switching layout/EMI and configuration burden; neither dual-cell balancing nor USB-C PD controller |
 | Cell fault protection | [TI BQ2970 family](https://www.ti.com/product/BQ2970), datasheet | Per-cell over/undervoltage and current fault detection with external FETs; exact thresholds and reverse insertion path still require selection |
-| Source selection | [TI TPS2121](https://www.ti.com/product/TPS2121), datasheet | Power mux candidate; assess input range, voltage drop, quiescent current and switching behavior; does not replace charger or cell protection |
-| Low-loss source OR | [ADI LTC4412 datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4412.pdf) | External FET ideal diode; battery reversal rating and external-device limits must be checked for the exact arrangement |
+| Low-loss source OR | [ADI LTC4415](https://www.analog.com/en/products/ltc4415.html) | Recommended candidate; two integrated ideal-diode paths, reverse blocking and per-path current limits |
 | 1S state of charge | [ADI MAX17048](https://www.analog.com/en/products/max17048.html), datasheet | Voltage-model gauge candidate; needs cell/profile characterization and insertion handling; per-bay measurement for independent cells |
 
-The [BQ25895 datasheet](https://www.ti.com/lit/ds/symlink/bq25895.pdf) and [TPS2121 datasheet](https://www.ti.com/lit/ds/symlink/tps2121.pdf) are starting electrical references. No exact current limits, MOSFETs, resistors or charger termination settings are assigned here. Costs, assembled area and supplier availability are TBD; these options cannot yet support a purchasing decision.
+No exact reverse-polarity MOSFETs, fuses or charger resistor values are assigned here. Those values require the accepted cell and fault-test limits.
 
 ## USB-C and operation while charging
 

@@ -1,0 +1,65 @@
+<!-- SPDX-License-Identifier: CERN-OHL-P-2.0 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">StratosCore Rev A dimensional planning view</title>
+  <desc id="desc">An 84 by 60 millimetre planning board with display, RF, compute and power zones, plus one-cell and two-cell thickness sections.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#475569"/>
+    </marker>
+    <style>
+      text{font-family:Arial,sans-serif;fill:#172033}.title{font-size:30px;font-weight:700}.h{font-size:21px;font-weight:700}.label{font-size:16px}.small{font-size:14px}.dim{stroke:#475569;stroke-width:2;marker-start:url(#arrow);marker-end:url(#arrow)}.ext{stroke:#94a3b8;stroke-width:1}.board{fill:#dff4e5;stroke:#16794a;stroke-width:3}.display{fill:#dcecff;stroke:#2563a6;stroke-width:2}.rf{fill:#fee8c8;stroke:#c66a12;stroke-width:2}.core{fill:#ece4ff;stroke:#7047a8;stroke-width:2}.power{fill:#ffe1e8;stroke:#b63255;stroke-width:2}.cell{fill:#d9e1e8;stroke:#475569;stroke-width:2}.case{fill:none;stroke:#172033;stroke-width:3}.note{fill:#fff8d8;stroke:#ad7d00;stroke-width:2}
+    </style>
+  </defs>
+  <rect width="1200" height="760" fill="#f8fafc"/>
+  <text x="55" y="55" class="title">StratosCore Rev A — estudo dimensional</text>
+  <text x="55" y="90" class="label">Dimensões de planejamento; confirmar com amostras e dummy impresso antes do placement.</text>
+
+  <text x="55" y="140" class="h">Vista frontal da PCB — 84 × 60 mm</text>
+  <rect x="100" y="180" width="504" height="360" rx="12" class="board"/>
+  <rect x="137" y="200" width="303" height="300" rx="8" class="display"/>
+  <text x="165" y="240" class="h">Display C1</text>
+  <text x="165" y="266" class="label">50,45 × 69,90 × 4,21</text>
+  <text x="165" y="292" class="small">FPC e conector em HOLD</text>
+  <rect x="458" y="200" width="126" height="82" rx="8" class="rf"/>
+  <text x="475" y="232" class="label">GNSS / ADS-B</text>
+  <text x="475" y="256" class="small">pigtails + shield</text>
+  <rect x="458" y="300" width="126" height="92" rx="8" class="core"/>
+  <text x="475" y="333" class="label">ESP32 / RP2040</text>
+  <text x="475" y="358" class="small">buses + debug</text>
+  <rect x="458" y="410" width="126" height="110" rx="8" class="power"/>
+  <text x="475" y="445" class="label">USB / power</text>
+  <text x="475" y="470" class="small">SD + chargers</text>
+  <text x="475" y="493" class="small">LoRa oposto</text>
+  <line x1="100" y1="565" x2="604" y2="565" class="dim"/>
+  <line x1="100" y1="545" x2="100" y2="582" class="ext"/>
+  <line x1="604" y1="545" x2="604" y2="582" class="ext"/>
+  <text x="325" y="595" class="label">84 mm</text>
+  <line x1="70" y1="180" x2="70" y2="540" class="dim"/>
+  <line x1="82" y1="180" x2="55" y2="180" class="ext"/>
+  <line x1="82" y1="540" x2="55" y2="540" class="ext"/>
+  <text x="40" y="380" class="label" transform="rotate(-90 40 380)">60 mm</text>
+
+  <text x="690" y="140" class="h">Seções de espessura</text>
+  <text x="690" y="178" class="label">Uma célula — alvo aproximado 31 mm</text>
+  <rect x="700" y="205" width="420" height="112" rx="15" class="case"/>
+  <rect x="720" y="220" width="260" height="17" class="display"/>
+  <rect x="720" y="246" width="260" height="7" class="board"/>
+  <circle cx="1025" cy="274" r="43" class="cell"/>
+  <text x="742" y="292" class="small">Componentes na área livre</text>
+  <line x1="1150" y1="205" x2="1150" y2="317" class="dim"/>
+  <text x="1172" y="274" class="label" transform="rotate(-90 1172 274)">≈31 mm</text>
+
+  <text x="690" y="370" class="label">Duas células — alvo aproximado 37 mm</text>
+  <rect x="700" y="397" width="420" height="148" rx="15" class="case"/>
+  <rect x="720" y="413" width="380" height="17" class="display"/>
+  <rect x="720" y="440" width="380" height="7" class="board"/>
+  <circle cx="860" cy="492" r="43" class="cell"/>
+  <circle cx="960" cy="492" r="43" class="cell"/>
+  <line x1="1150" y1="397" x2="1150" y2="545" class="dim"/>
+  <text x="1172" y="500" class="label" transform="rotate(-90 1172 500)">≈37 mm</text>
+
+  <rect x="690" y="590" width="430" height="112" rx="10" class="note"/>
+  <text x="710" y="623" class="h">Gates antes do CAD final</text>
+  <text x="710" y="653" class="label">• desenho exato e duas amostras do display C1</text>
+  <text x="710" y="679" class="label">• holder, pigtails, portas, ventilação e tolerâncias impressas</text>
+</svg>
