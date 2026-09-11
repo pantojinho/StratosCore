@@ -22,6 +22,6 @@ Unresolved issues do not authorize changing locked components. All are currently
 | O16 | Mission temperature/pressure/dynamics and weather resistance? | Product/test | Intended operating envelope, sensor/cell ratings, pressure and thermal limits |
 | O17 | Acquisition rates, SD capacity, audio format and allowed data loss? | Product/firmware | User workflow and throughput/power-loss tests; schema and rotation policy |
 | O18 | ADS-B sensitivity, range, contact limits and stale time? | Product/RF/firmware | RF performance target and repeatable test plan, not anecdotal reception |
-| O19 | PARTIAL: can ICM-42688-P be sourced and entered in CAD from the current controlled document? | Procurement/hardware | Recheck authorized stock/lead time; obtain and review TDK DS-000347 v1.9 delta, current land pattern and assembly guidance before symbol/footprint entry |
+| O19 | PARTIAL: can ICM-42688-P be sourced and assigned a production CAD footprint? | Procurement/hardware | DS-000347 v1.9 and AN-000393 v2.4 release the pin/application entry; create and independently review the custom land/mask/stencil geometry, then recheck authorized stock/lead time |
 
 Owner decisions are pending for P07 (high-altitude GNSS replacement) and P08 (independent dual-bay power concept). P08 still requires a separate qualified electrical/battery reviewer before topology freeze or prototype energizing.
