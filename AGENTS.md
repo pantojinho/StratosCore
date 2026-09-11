@@ -19,7 +19,7 @@ Read `docs/DECISIONS.md` before modifying hardware and `docs/ASTRA_HANDOFF.md` b
 13. ADS-B is a core Rev A hardware feature with its own 1090 MHz RF path and RP2040 baseline. SX1262 is for LoRa, never the ADS-B receiver. Runtime profiles may power ADS-B down.
 14. Keep region/channel/power/duty-cycle settings configurable. No universal 915 MHz transmit configuration; require an appropriate regional configuration before enabling TX.
 15. Keep hardware under CERN-OHL-P-2.0 and original firmware under MIT as described in `LICENSES/README.md`. Do not copy GPL code into MIT firmware or assume a processor boundary resolves licensing.
-16. Avoid unrelated changes, credentials, personal logs, generated caches, and local `.codex/` settings in commits. For this initial task, the owner authorized direct publication to `main` without a PR; that is not a standing authorization for future releases.
+16. Avoid unrelated changes, credentials, personal logs, generated caches, and local `.codex/` settings in commits. The owner has granted standing authorization to work and publish directly to `main` without pull requests for this project. Continue to honor all engineering review and safety gates above.
 
 ## Verification for the current phase
 
