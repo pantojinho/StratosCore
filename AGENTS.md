@@ -20,6 +20,7 @@ Read `docs/DECISIONS.md` before modifying hardware and `docs/ASTRA_HANDOFF.md` b
 14. Keep region/channel/power/duty-cycle settings configurable. No universal 915 MHz transmit configuration; require an appropriate regional configuration before enabling TX.
 15. Keep hardware under CERN-OHL-P-2.0 and original firmware under MIT as described in `LICENSES/README.md`. Do not copy GPL code into MIT firmware or assume a processor boundary resolves licensing.
 16. Avoid unrelated changes, credentials, personal logs, generated caches, and local `.codex/` settings in commits. The owner has granted standing authorization to work and publish directly to `main` without pull requests for this project. Continue to honor all engineering review and safety gates above.
+17. The current priority is hardware and PCBA readiness. Use Sol-class work to close exact parts, evidence, interfaces, application circuits, footprints, review gates and the Astra handoff. Reserve Astra for efficient KiCad schematic/PCB execution after decisions are prepared. Limit firmware work to evidence or interface fixtures required to validate the hardware until the hardware baseline is ready.
 
 ## Verification for the current phase
 

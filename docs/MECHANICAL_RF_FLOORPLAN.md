@@ -4,7 +4,7 @@ Status: dimensional feasibility study, not production CAD. Review date: 2026-09-
 
 ## Envelope result
 
-The exact 80 x 60 x 32 mm target is not feasible for a two-cell unit with the reviewed off-the-shelf holder and all electronics.
+The exact 80 x 60 x 32 mm target is not feasible for the accepted two-cell unit with the reviewed dimensional-reference holder and all electronics.
 
 | Item | Verified/planning envelope | Consequence |
 | --- | --- | --- |
@@ -13,11 +13,11 @@ The exact 80 x 60 x 32 mm target is not feasible for a two-cell unit with the re
 | Keystone 1123 holder | approximately 82.2 x 45.1 mm; 17.27 mm holder height above PCB listed by distributor | Requires at least about 84 mm board/enclosure length |
 | PCB | 1.6 mm candidate | Four-layer stackup; final tolerance open |
 
-With the display and cells on opposite sides of one PCB, the nominal section already approaches 4.21 + 1.6 + 21.7 = 27.51 mm before adhesive, component height, air gaps and two enclosure walls. A realistic two-cell section is 36-38 mm. The one-cell rear cover can target 30-32 mm because components can occupy the unused second-bay area.
+With the display and cells on opposite sides of one PCB, the nominal section already approaches 4.21 + 1.6 + 21.7 = 27.51 mm before adhesive, component height, air gaps and two enclosure walls. A realistic two-cell section is 36-38 mm. Rev A no longer includes the earlier one-cell enclosure variant.
 
-**Proposed CAD starting envelopes:** common PCB 84 x 60 mm; one-cell enclosure about 88 x 64 x 31 mm; two-cell enclosure about 88 x 64 x 37 mm. These are not frozen dimensions.
+**Proposed CAD starting envelope:** PCB 84 x 60 mm; two-cell enclosure about 88 x 64 x 37 mm. These are not frozen dimensions.
 
-See the [dimensioned planning view](../mechanical/pcb_dummy/fit-check.svg) for the board zones and one/two-cell section comparison. It is an editable study drawing, not manufacturing CAD.
+See the [dimensioned planning view](../mechanical/pcb_dummy/fit-check.svg) for the board zones and earlier one/two-cell section comparison. Rev A now uses the two-cell case only. The drawing is an editable study, not manufacturing CAD.
 
 ## Placement zones
 
@@ -26,7 +26,7 @@ flowchart TB
   TOP[Top edge: GNSS and ADS-B pigtail exits; pressure/static and humidity vents]
   RF[Upper third: shielded ADS-B chain and quiet GNSS supply]
   CORE[Middle: ESP32/RP2040, memory, buses and display connectors]
-  PWR[Lower third: USB-C, chargers, ORing, regulators and SD]
+  PWR[Lower third: USB-C, 2S charger/protection, buck regulators and SD]
   EDGE[Board edge beyond metalwork: ESP32 PCB antenna keepout]
   LORA[Opposite lower corner: SX1262 matching and locked LoRa U.FL]
   TOP --> RF --> CORE --> PWR
@@ -44,6 +44,6 @@ flowchart TB
 
 ## Mechanical gates
 
-Create printed dummies before PCB placement: display/FPC, ESP antenna keepout, two cells and holder, pigtail bend radii, connectors, button actuators and vent membranes. Test insertion/removal without scraping cell wrappers, one-handed battery-door retention, 1 m drop orientations, pigtail strain and access to ESP recovery plus RP2040 SWD.
+Create a printed dummy before PCB placement: display/FPC, ESP antenna keepout, two cells and exact holder, pigtail bend radii, connectors, button actuators and vent membranes. Test insertion/removal without scraping cell wrappers, one-handed battery-door retention, polarity visibility, 1 m drop orientations, pigtail strain and access to ESP recovery plus RP2040 SWD.
 
 The RF floorplan is acceptable for schematic partitioning. It is not sufficient for antenna approval or PCB routing; those require the final enclosure, stackup and conducted/radiated coexistence measurements.

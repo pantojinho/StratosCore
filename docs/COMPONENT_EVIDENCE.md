@@ -25,7 +25,7 @@ The locked `ATGM332D-5NR32` is orderable as LCSC `C3037611`. LCSC listed 1,454 u
 
 The full 18-page manufacturer manual resolves the earlier constellation discrepancy: its technical table lists BDS, GPS, GLONASS, Galileo, QZSS and SBAS, 1 Hz default with 10 Hz maximum, NMEA0183, 2.7-3.6 V supply, less than 26 mA at 3.3 V, 15.9 x 12.1 x 2.4 mm and a maximum altitude of **18,000 m**. That altitude ceiling is below ordinary high-altitude balloon missions and conflicts with StratosCore's balloon use case. The exact part can remain suitable for ground, handheld and normal flight profiles, but cannot be the only Rev A navigation source if operation above 18 km is required.
 
-### Proposed replacement: u-blox `MAX-M10S-00B`
+### Accepted replacement: u-blox `MAX-M10S-00B`
 
 | Required comparison | ATGM332D-5NR32 | MAX-M10S-00B | Impact |
 | --- | --- | --- | --- |
@@ -39,7 +39,7 @@ The full 18-page manufacturer manual resolves the earlier constellation discrepa
 
 Primary sources: [ATGM332D-5NR32 manual](https://datasheet.lcsc.com/lcsc/2206231830_ZHONGKEWEI-ATGM332D-5NR32_C3037611.pdf), [u-blox MAX-M10S data sheet](https://beta-content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf), and [u-blox integration manual](https://content.u-blox.com/sites/default/files/MAX-M10S_IntegrationManual_UBX-20053088.pdf). Supply sources: [LCSC C3037611](https://www.lcsc.com/product-detail/Satellite-Positioning-Modules_ZHONGKEWEI-ATGM332D-5NR32_C3037611.html) and [DigiKey MAX-M10S-00B](https://www.digikey.com/en/products/detail/u-blox/MAX-M10S-00B/15712906).
 
-This is a complete replacement proposal, not an accepted baseline change. Until the owner accepts it, schematic sheet `03_gnss` remains on hold and D07 remains locked to ATGM332D-5NR32.
+The project owner accepted this replacement on 2026-09-13. D07 is now locked to MAX-M10S-00B. Schematic sheet `03_gnss` remains gated only until the exact ordering code, manufacturer pad drawing, supply/backup application and antenna implementation are reviewed.
 
 ## Locked sensor audit
 

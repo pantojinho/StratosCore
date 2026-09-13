@@ -5,7 +5,7 @@ Status: mandatory pre-layout concept; no antenna placement or matching network i
 | System | RF path | Constraints |
 | --- | --- | --- |
 | Wi-Fi / BLE | ESP32-S3-WROOM-1 module PCB antenna, 2.4 GHz | Preserve exact module antenna keepout in all relevant layers and enclosure materials; no external-antenna module substitution |
-| GNSS | Antenna TBD to owner-selected ATGM332D/MAX-M10S path | Separate clean receive path; antenna bias, passband and footprint follow the accepted P07 decision |
+| GNSS | Antenna TBD for accepted MAX-M10S-00B | Separate clean receive path; antenna bias, passband and footprint follow the exact u-blox integration evidence |
 | LoRa | SX1262, reference matching/filter/switch network, U.FL, 915 MHz class antenna | Direct IC integration; oscillator/TCXO and RF switch policy chosen with Semtech reference; region-specific transmission |
 | ADS-B | Separate 1090 MHz antenna, preselection, LNA/filtering, detector/comparator, RP2040 | Receiver blocker tolerance and analog bandwidth must be demonstrated; never shared with SX1262 |
 

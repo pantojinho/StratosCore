@@ -5,8 +5,8 @@
 Current holds:
 
 - display connector/footprint: exact Orient C1 drawing and sample;
-- GNSS: owner decision on ATGM332D versus MAX-M10S;
-- power: owner and qualified battery/electrical acceptance plus reverse-polarity details;
+- GNSS: MAX-M10S-00B accepted; exact CAD, supply/backup application and antenna circuit review remain;
+- power: owner accepted two removable 21700 cells in 2S with one balanced charger; qualified battery/electrical review, exact holder, common protection, power path and regulators remain;
 - ICM-42688-P physical CAD: create/review the project footprint and stencil geometry from DS-000347 v1.9 and AN-000393 v2.4;
 - ADS-B: S-parameter simulation and conducted prototype measurements.
 
@@ -16,4 +16,4 @@ Use KiCad 10 for new edits. Run ERC from the repository root after every schemat
 & 'C:\Program Files\KiCad\10.0\bin\kicad-cli.exe' sch erc --exit-code-violations --output hardware\kicad\reports\erc-architecture.rpt hardware\kicad\StratosCore.kicad_sch
 ```
 
-KiCad 10.0.6 reported zero errors and zero warnings on 2026-09-11 for the hierarchy, compute sheet and reviewed sensor subset. The two project-stage changes from the standard ERC profile are `isolated_pin_label` and `single_global_label`: both remain temporarily ignored because several architecture nets still have one endpoint. Restore both diagnostics to `warning` as peer sheets gain their matching endpoints; the standard KiCad ignores remain listed in the report. The result proves connectivity consistency within the present scope; it does not qualify the circuits that remain gated. Retain reviewed reports under `hardware/kicad/reports/`. No PCB exists yet.
+KiCad 10.0.6 reported zero errors and zero warnings on 2026-09-11 for the hierarchy, compute sheet and reviewed sensor subset. The two project-stage changes from the standard ERC profile are `isolated_pin_label` and `single_global_label`: both remain temporarily ignored because several architecture nets still have one endpoint. Restore both diagnostics to `warning` as peer sheets gain their matching endpoints; the standard KiCad ignores remain listed in the report. The result proves connectivity consistency within the present scope; it does not qualify the circuits that remain gated. Retain reviewed reports under `hardware/kicad/reports/`. No PCB exists yet. Current preparation should leave Astra an evidence-complete execution list so its work is concentrated on KiCad entry, placement/routing and ERC/DRC rather than component research.

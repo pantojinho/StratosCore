@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block (title "07 Power - HOLD") (rev "architecture-gate"))
 	(lib_symbols)
-	(text "HOLD: independent protected 1S bays and ideal-diode OR need owner acceptance and qualified battery review." (exclude_from_sim no) (at 25.4 30.48 0) (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom)) (uuid "0fe146b3-bf5a-4e20-ab72-2239e6092702"))
+	(text "HOLD: owner accepted removable 2S cells and one balanced charger; exact circuit needs qualified battery review." (exclude_from_sim no) (at 25.4 30.48 0) (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom)) (uuid "0fe146b3-bf5a-4e20-ab72-2239e6092702"))
 	(sheet_instances (path "/" (page "1")))
 	(embedded_fonts no)
 )

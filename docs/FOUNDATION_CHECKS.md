@@ -1,16 +1,16 @@
 # Architecture validation record
 
-Phase: Rev A architecture validation, reviewed 2026-09-11 UTC. These are documentation, file-format and host-model checks, not hardware qualification results.
+Phase: Rev A architecture validation, last reviewed 2026-09-13. These are documentation, file-format and host-model checks, not hardware qualification results.
 
 | Check | Result |
 | --- | --- |
 | Required engineering and reference documents | Present; new evidence, power, mechanical/RF, stackup, ADS-B and GPIO records linked |
-| Preliminary BOM | Exact 13-column schema, unique logical references and no empty fields |
+| Preliminary BOM | Exact 13-column schema and 38 functional rows; accepted MAX-M10S and 2S direction synchronized |
 | Locked part coverage | All eight selected MPNs present; no BME688 component row |
 | Supplier identifiers | Verified C3037611 recorded; other unknown supplier IDs remain TBD |
 | Relative Markdown links and code fences | Resolved/balanced in repository files |
 | License provenance | Included SHA-256 values match retrieved official texts; MIT substitutions limited to holder/year |
-| Power calculation | Revised totals, margin, cell-energy assumptions and runtime examples independently recomputed |
+| Power calculation | 2S energy, totals, margin and runtime independently recomputed; FLIGHT example remains 10.72 h |
 | ADS-B host fixture | Known DF17 decode/CRC, corruption rejection and sample-jitter tests pass |
 | KiCad structure | KiCad 10.0.6 parsed the root/eight children, populated ESP32 compute entry and reviewed MMC5983MA/BMP581/SHT40 sensor subset; ERC: 0 errors, 0 warnings |
 | Whitespace / patch integrity | `git diff --check` clean at review |

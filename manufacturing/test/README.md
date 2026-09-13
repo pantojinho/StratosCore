@@ -4,7 +4,7 @@ No electrical tests have been executed. Define test points, fixture, current lim
 
 | Area | Planned evidence |
 | --- | --- |
-| Power and battery | Short/leakage, rails under transient load, USB/charge limits, reverse insertion, independent-bay mismatch/removal and thermal protection |
+| Power and battery | Short/leakage, rails under transient load, USB/charge limits, either cell reversed/missing/removed, 2S mismatch/balance and thermal protection |
 | Compute | Boot/recovery, exact Flash/PSRAM capacity, RP2040 programming/watchdog |
 | Sensors/GNSS | IDs, axes, calibration sanity, pressure/temperature response, GNSS fix/UTC and antenna behavior |
 | UI | Pixel/touch tests, orientation mapping, two buttons, dim/sleep/wake |

@@ -8,18 +8,18 @@ StratosCore Rev A is a compact experimental field computer. This document expres
 | PR02 | 2.8-inch IPS, 320 x 240, capacitive touch, both orientations | Vendor drawing, sample test, rotation/touch corner tests |
 | PR03 | Two accessible physical buttons | Debounce, boot behavior, enclosure access in both orientations |
 | PR04 | Integrated SX1262 SPI, 915 MHz hardware, U.FL | Semtech reference review, conducted RF and regional configuration tests |
-| PR05 | UART multi-GNSS navigation suitable for the accepted mission altitude | Owner decision on ATGM332D 18 km limit versus MAX-M10S proposal; then cold/warm-start, NMEA/UBX and constellation tests |
+| PR05 | MAX-M10S-00B UART multi-GNSS navigation suitable for balloon altitude | Cold/warm-start, airborne-mode, NMEA/UBX, constellation and 80 km boundary review/tests |
 | PR06 | ICM-42688-P + MMC5983MA + BMP581 + SHT40 | Device identity, axes, calibration, pressure and thermal tests |
 | PR07 | Core 1090 MHz ADS-B with RP2040 and dedicated frontend | Known frames, invalid-frame rejection, RF replay and coexistence tests |
 | PR08 | Traffic model with ICAO, callsign, lat/lon, altitude, velocity, track/heading when available | Field validity, per-field age, CPR and ownship-relative display tests |
 | PR09 | Mandatory microSD black-box-style data logging | Long-duration writes, removal/full-card errors, bounded queues, power interruption |
 | PR10 | Digital MEMS microphone provision, optional synchronized logging | Audio timestamp mapping, throughput, clock drift, dropped-block flags |
 | PR11 | USB-C charging, operation while charging, native data target | Source-current limits, role/orientation, brownout, thermal and fault tests |
-| PR12 | Safe removable 21700 one/two-cell concept | Explicit battery architecture review including mismatch and reverse insertion |
+| PR12 | Two removable matched 21700 cells in 2S with one balanced charger and common protection | Qualified battery review including mismatch, missing/reversed cell, removal, short, thermal and charge/discharge faults |
 | PR13 | Approximately 12 h normal portable runtime | Profile, brightness, battery, temperature and radios documented in discharge test |
 | PR14 | 3V3/GND + I2C + SPI/CS + UART + GPIO/IRQ expansion | Pin budget, voltage/current limits, connector and recovery tests |
 | PR15 | Four-layer PCB, approximately 80 x 60 mm target footprint | Manufacturer stackup and mechanical fit review; final dimensions open |
-| PR16 | Printed enclosure, approximately 25-32 mm thickness | Cell/holder/panel/cable tolerances and sample fit; larger battery option allowed |
+| PR16 | Printed enclosure for display and two 21700 cells, approximately 37 mm starting thickness | Exact holder/panel/cable tolerances, printed dummy and sample fit |
 | PR17 | Thermal and RF isolation | Temperature bias tests and receiver degradation during each aggressor state |
 | PR18 | Open-source provenance and manufacturing readiness | License register; BOM/footprint audits; later ERC/DRC and assembly review |
 

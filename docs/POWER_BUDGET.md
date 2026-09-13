@@ -28,7 +28,7 @@ Example only: one 5.0 Ah cell at 3.6 V nominal gives 18 Wh nameplate energy. Cel
 | FLIGHT | 5.36 h | 10.72 h | Neither example reaches 12 h with chosen allowances |
 | DESKTOP, battery equivalent | 4.72 h | 9.45 h | Intended use is USB powered; charging power is additional |
 
-Two-cell energy summation assumes a future safe architecture can use both cells' energy; it does not specify parallel wiring or guarantee lossless switchover. It also assumes both cells meet the example capacity, not an arbitrary mixed pair.
+Two-cell energy uses the accepted 2S direction: 7.2 V nominal at 5 Ah has the same 36 Wh nameplate energy as two 3.6 V, 5 Ah cells counted separately. It assumes a matched, qualified pair and does not include unmeasured 2S charger, protection or buck losses beyond the general efficiency allowance.
 
 For 12 h, maximum margin-adjusted delivered load is **1.08 W** with one example cell, or **2.16 W** with two. Under the separate 25% load margin, raw design budgets become **0.864 W** and **1.728 W** respectively. FLIGHT's 1.935 W allowance exceeds the two-cell raw budget by **0.207 W**. Required nameplate energy at the margin-adjusted FLIGHT load is 2.41875 x 12 / (0.80 x 0.90) = **40.31 Wh**, versus 36 Wh for two example cells.
 
@@ -38,6 +38,6 @@ This is a sensitivity analysis, not evidence that a larger cell alone solves run
 
 Regulators must support concurrent RF bursts, SD writes, backlight startup and CPU transients. Do not size them from averages. Record datasheet maximum/peak envelopes and scope current/voltage at both battery and rails; define permitted rail droop only after all part limits are known. SX1262 antenna power is not the same as battery input power.
 
-For a linear charger, a first dissipation estimate is `(input_V - battery_V) x charge_A`, plus system-path losses. At an illustrative 5 V input, 3.2 V cell and 1 A charge rate this is **1.8 W** before other losses; the charge rate is not a selected setting. A switching charger trades some heat for switching-noise/layout concerns. See [power options](POWER_ARCHITECTURE_OPTIONS.md).
+Charging a 2S pack to 8.4 V from nominal 5 V USB requires a boost charger. Input current, inductor current, switch loss, cell-balancing heat and system load while charging must be calculated from the selected circuit and then measured. The BQ25887 candidate supports up to 2 A charge current, but no charge rate is selected. See [power options](POWER_ARCHITECTURE_OPTIONS.md).
 
-Measure each domain individually, then concurrent FLIGHT load; repeat with USB charging, low battery and expected ambient limits. Run a full 12 h profile with logged brightness/radio settings, capacity, cutoff and resets. Measure converter efficiency over discharge; update this table with measured min/typ/max and uncertainty. Vendor GNSS anchor: [ATGM332D-5NR32 product page](https://www.icofchina.com/daohang/danpin/2441.html), listing 25 mA at 3.3 V (82.5 mW); 90 mW is a planning allowance, not its maximum rating.
+Measure each domain individually, then concurrent FLIGHT load; repeat with USB charging, low battery and expected ambient limits. Run a full 12 h profile with logged brightness/radio settings, capacity, cutoff and resets. Measure converter efficiency over the 2S discharge range; update this table with measured min/typ/max and uncertainty. The 90 mW GNSS row remains a conservative allowance until MAX-M10S-00B plus antenna-bias power is measured.

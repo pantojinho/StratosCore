@@ -1,49 +1,32 @@
 # Power architecture options
 
-**Status: option B selected as the engineering recommendation, pending explicit owner and qualified battery/electrical review.** No battery topology is frozen and these are not wiring instructions. See the concrete [power architecture review](POWER_ARCHITECTURE_REVIEW.md).
+**Status: option D was accepted by the owner on 2026-09-13 as the engineering direction.** The exact circuit is not frozen and may not be energized until a qualified electrical/battery reviewer accepts the schematic, protection thresholds and fault-test limits. See the concrete [power architecture review](POWER_ARCHITECTURE_REVIEW.md).
 
-## Candidate architectures
+## Compared options
 
 | Option | Energy/charge paths | Advantages | Issues and disposition |
 | --- | --- | --- | --- |
-| A: one managed 1S bay | Cell protection and reverse-insertion stage; 1S charger with separate system power path; regulated system supply | Lowest part count and easiest fault characterization; fits one-cell concept | Runtime may miss 12 h in FLIGHT; second loose spare gives no continuous dual-cell operation. Evaluation reference only, not frozen |
-| B: two independently managed 1S bays | Each bay has protection, temperature monitoring, BQ25185 charger and protected discharge path; reverse-blocked outputs feed an LTC4415 OR stage | Either bay can operate alone; mismatched state of charge need not equalize between cells | Recommended; duplicated circuitry, USB current coordination, reverse insertion and thermal behavior still require fault tests |
-| C: two bays with mutually exclusive selection | Hardware interlocked break-before-make battery selection; charger connects only to selected bay; system hold-up or USB covers transition | Potentially one charger; avoids simultaneous direct cell connection | Charge sequencing and removal can reset system; charger/sense/NTC switching complicates fault safety. Reject any firmware-only interlock |
-| D: managed 2S removable pack | Series cells with per-cell monitoring, balancing, 2S charger and buck regulation | Lower system current for equal power | Missing cell breaks pack; mismatched loose cells problematic; one-cell mode needs separate engineered path. Not a drop-in answer to 1-or-2 loose cells |
-| E: fixed matched 1S2P pack | Factory-assembled matched pack, protection and pack connector | Simpler charging than independent bays | Changes the independently removable-cell concept; only a future replacement proposal, not baseline |
+| A: one managed 1S bay | Cell protection and reverse-insertion stage; 1S charger with separate system power path | Lowest part count | Does not meet the owner's two-cell requirement; rejected for Rev A |
+| B: two independently managed 1S bays | Each bay has protection, temperature monitoring and a charger; reverse-blocked outputs feed an OR stage | Either bay can operate alone; prevents cell equalization | Rejected by owner as excessive complexity on 2026-09-13; retained as comparison evidence |
+| C: two bays with mutually exclusive selection | Hardware interlocked battery selection; charger connects only to the selected bay | Potentially one 1S charger | Selection, charging and removal fault behavior remain complicated; rejected for Rev A |
+| **D: managed 2S removable pair** | Two series cells with midpoint sensing, balancing, one 2S charger, common 2S protection and buck regulation | Meets two-cell/removable-holder requirement with one charger; lower system current for equal power | **Owner accepted direction.** Both cells are required; qualified safety review and fault tests remain mandatory |
+| E: fixed matched 1S2P pack | Factory-assembled matched parallel pack, protection and pack connector | Simple 1S charging | Conflicts with the owner's removable-cell holder requirement; rejected for Rev A |
 
-**Excluded: directly paralleling two user-removable cells, even if each is sold as protected.** An ideal diode at the combined output cannot stop cell-to-cell equalization upstream. A discharge OR stage also cannot provide a safe charge path through a reverse-blocked cell output. Option B therefore requires separately managed charging to each cell and a full parasitic/body-diode/backfeed review, including USB present and controller unpowered states.
+## Accepted 2S constraints
 
-An ideal-diode OR generally lets the higher-voltage source carry the load; it does not guarantee equal sharing. A power mux chooses a source rather than combining capacity into a physically parallel pack. Runtime and SOC calculations must reflect the chosen policy.
+- Use two cells of the same approved model, capacity class, age and verified state; service them as a pair.
+- The holder must expose pack negative, series midpoint and pack positive with a documented 2S connection. A marketplace photo or title does not establish its wiring or rating.
+- A single charger must measure both cells and actively balance them. TI `BQ25887` is the first candidate, not a frozen selection.
+- A common 2S discharge-protection path must cover pack overvoltage, per-cell undervoltage, overcurrent/short and temperature. The charger alone is not assumed to provide all discharge protection.
+- Missing-cell, reversed-cell, mixed-state, hot insertion/removal and USB transitions require hardware-safe behavior. Firmware is monitoring and policy, not the only safety layer.
+- The system must regulate from the approximately 6.0-8.4 V 2S pack range. Exact buck rails, charging-while-operating behavior and shutdown thresholds remain open.
 
-## Manufacturer-backed candidates
+## Candidate references
 
 | Function | Candidate / source | Relevance and limitation |
 | --- | --- | --- |
-| Per-bay 1S linear charging | [TI BQ25185](https://www.ti.com/product/BQ25185), data sheet and evaluation circuit | Recommended candidate; SYS power path, NTC input and fault protection; duplicated linear heat limits charge rate |
-| 1S switching charging | [TI BQ25895](https://www.ti.com/product/BQ25895), datasheet | Power-path charger candidate; switching layout/EMI and configuration burden; neither dual-cell balancing nor USB-C PD controller |
-| Cell fault protection | [TI BQ2970 family](https://www.ti.com/product/BQ2970), datasheet | Per-cell over/undervoltage and current fault detection with external FETs; exact thresholds and reverse insertion path still require selection |
-| Low-loss source OR | [ADI LTC4415](https://www.analog.com/en/products/ltc4415.html) | Recommended candidate; two integrated ideal-diode paths, reverse blocking and per-path current limits |
-| 1S state of charge | [ADI MAX17048](https://www.analog.com/en/products/max17048.html), datasheet | Voltage-model gauge candidate; needs cell/profile characterization and insertion handling; per-bay measurement for independent cells |
+| Balanced 2S USB-input charger | [TI BQ25887](https://www.ti.com/product/BQ25887), Rev B data sheet | 2S boost charger, I2C, per-cell ADC and integrated balancing; no claim here that it provides the complete system power path or discharge protection |
+| Previous independent 1S charger | [TI BQ25185](https://www.ti.com/product/BQ25185) | Historical P08 comparison only; no longer the Rev A direction |
+| Previous source OR | [ADI LTC4415](https://www.analog.com/en/products/ltc4415.html) | Historical P08 comparison only; removed by the accepted 2S direction |
 
-No exact reverse-polarity MOSFETs, fuses or charger resistor values are assigned here. Those values require the accepted cell and fault-test limits.
-
-## USB-C and operation while charging
-
-Provide sink-side CC detection/termination appropriate to the chosen Type-C architecture, input ESD/overvoltage/inrush protection, and a current limit that respects the source's advertised/negotiated capability. Do not assume every USB source supplies 3 A, or that a charger IC negotiates PD. Native USB data routing and charging must coexist; PD is optional unless selected power demands require it. See [TI Type-C controller TUSB320](https://www.ti.com/product/TUSB320) as a research reference, not a selected part.
-
-Budget USB input for simultaneous system load and charging. Reduce or suspend charge current when needed; prioritize a stable system rail. Check termination accuracy with system load, absent/deeply discharged battery startup, USB insertion/removal, both connector orientations, suspend/current policy and VBUS backfeed.
-
-## Required review before topology freeze
-
-| Hazard / state | Required evidence |
-| --- | --- |
-| Reverse insertion, damaged wrapper, shorted bay | Mechanical keying/contact insulation, electrically safe polarity handling, independent overcurrent response |
-| Two different SOC/capacity/age cells | No uncontrolled equalization; per-bay isolation; worst-case current at insertion |
-| Empty bay, one/both cells removed under load | Defined shutdown/continued-operation policy; no live accessible contacts or rail collapse outside limits |
-| Charge too cold/hot, ambient solar heating | Cell-specific operating limits; per-cell temperature sense; charge inhibition and thermal measurement |
-| USB present, charger disabled, MCU crashed | Safe default hardware state; leakage/backfeed map; no firmware-only safety dependency |
-| Gauge and bus power interactions | Per-bay SOC/voltage; fixed-address collision solution; no I2C back-powering when bay is off |
-| Cell depletion while writing SD | Low-battery warning and bounded shutdown; quantify hold-up, flush time and possible last-record loss |
-
-Document exact cell model and dimensional limits, fault tree, schematic review, charger/FET thermal calculations, and controlled current-limited bench results. The owner and a qualified battery/electrical reviewer must explicitly accept the topology before design freeze. This review is for the later electrical design, not a blocker to this documentation commit.
+No exact 2S protection IC/FETs, fuse, holder, thermistor, fuel gauge, buck regulator or USB-C input controller is assigned here. Those parts and values require the selected cells, exact holder evidence, power-path choice and accepted fault-test limits.

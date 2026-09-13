@@ -5,11 +5,11 @@ Unresolved issues do not authorize changing locked components. All are currently
 | ID | Decision/question | Owner role | Closure evidence / dependency |
 | --- | --- | --- | --- |
 | O01 | PARTIAL: exact C1 display drawing and connector? | Display/mechanical | Orient C1 selected for samples; obtain exact drawing, two samples, connector and power/readability measurements |
-| O02 | OWNER DECISION: replace ATGM332D-5NR32 for balloon altitude? | GNSS | Manual confirms Galileo/10 Hz but limits altitude to 18 km; MAX-M10S-00B replacement proposal complete |
+| O02 | CLOSED 2026-09-13: replace ATGM332D-5NR32 for balloon altitude | GNSS | Owner accepted MAX-M10S-00B; exact CAD, antenna and configuration move to O03/implementation review |
 | O03 | GNSS antenna type, bias, connector and placement? | RF/mechanical | Link/noise budget, coexistence and both enclosure orientations |
 | O04 | PARTIAL: ADS-B conducted performance? | RF | BLB01/TA2003A/ADL5513/MCP6566 candidate selected; simulate S-parameters and pass conducted pulse/blocker tests |
-| O05 | REVIEW PENDING: accept independent dual 1S bays? | Power + owner/reviewer | BQ25185/LTC4415 architecture and fault matrix documented; exact reverse protection and fault bench tests remain |
-| O06 | PARTIAL: USB-C input, regulators and gauge calibration? | Power | MAX17048/TCA9543A candidates chosen; USB current detection, buck-boost/backlight and thermal settings remain |
+| O05 | OWNER ACCEPTED / REVIEW PENDING: two removable 21700 cells in 2S? | Power + reviewer | P14 accepted 2026-09-13; qualified electrical/battery review, exact 2S protection, holder verification and fault tests remain before freeze |
+| O06 | PARTIAL: USB-C input, 2S charger, regulators and state estimation? | Power | BQ25887 is the first balanced-charger candidate; USB current detection, discharge protection, system power path, buck rails and thermal settings remain |
 | O07 | Microphone MPN, I2S/PDM, port and optional DNP? | Audio/mechanical | Sample rate/clock budget, supply and acoustic tests |
 | O08 | PARTIAL: exact PCB/enclosure dimensions? | Mechanical | 84 x 60 mm PCB, 31/37 mm enclosure candidates; print/fit dummies and tolerances remain |
 | O09 | RF connector MPNs and GNSS/ADS-B connector styles? | RF/mechanical | U.FL retained for LoRa; cable loss, antenna access, mating and assembly drawings |
@@ -24,4 +24,4 @@ Unresolved issues do not authorize changing locked components. All are currently
 | O18 | ADS-B sensitivity, range, contact limits and stale time? | Product/RF/firmware | RF performance target and repeatable test plan, not anecdotal reception |
 | O19 | PARTIAL: can ICM-42688-P be sourced and assigned a production CAD footprint? | Procurement/hardware | DS-000347 v1.9 and AN-000393 v2.4 release the pin/application entry; create and independently review the custom land/mask/stencil geometry, then recheck authorized stock/lead time |
 
-Owner decisions are pending for P07 (high-altitude GNSS replacement) and P08 (independent dual-bay power concept). P08 still requires a separate qualified electrical/battery reviewer before topology freeze or prototype energizing.
+The owner accepted P07 and the P14 2S direction on 2026-09-13, and rejected P08. P14 still requires a separate qualified electrical/battery reviewer before topology freeze, schematic commitment or prototype energizing.

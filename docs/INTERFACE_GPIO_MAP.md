@@ -1,6 +1,6 @@
 # Rev A interface and GPIO allocation candidate
 
-Status: reviewed allocation entered in KiCad sheet `01_compute`; assignments remain change-controlled until exact display/power/GNSS choices are accepted. ESP32-S3-WROOM-1-N16R8 octal PSRAM reserves GPIO35/36/37.
+Status: reviewed allocation entered in KiCad sheet `01_compute`; assignments remain change-controlled until exact display, power and GNSS applications are reviewed. ESP32-S3-WROOM-1-N16R8 octal PSRAM reserves GPIO35/36/37.
 
 ## ESP32-S3 allocation
 
@@ -36,14 +36,13 @@ GPIO3, GPIO45 and GPIO46 remain unused because they are strapping pins; GPIO46 i
 | --- | --- | --- |
 | 0x20 | TCA9535 candidate | Slow resets/enables/status only |
 | 0x30 | MMC5983MA | Locked magnetometer |
-| 0x36 | MAX17048 behind TCA9543A | Same fixed address isolated per bay |
+| 0x6B | BQ25887 2S charger candidate | Seven-bit default address verified in TI SLUSD89B section 8.3.11.5/Table 6; any separate state-of-charge gauge remains open |
 | 0x44 | SHT40 | Locked humidity/temperature sensor |
 | 0x46 | BMP581 | SDO-low candidate; 0x47 remains alternate |
 | 0x55 expected | ST1633i touch | Must be confirmed from exact C1 document/sample |
 | 0x68 | ICM-42688-P | AD0-low candidate; 0x69 remains alternate |
-| 0x70 | TCA9543A candidate | A1/A0 low; per-bay gauge branches |
 
-The bus starts at 400 kHz. Interrupt/polling policy: direct touch and IMU interrupts; poll BMP581/MMC5983MA at scheduled rates; aggregate gauge alerts through TCA9543A. Expansion bus capacitance and stuck-bus recovery require a measured cable limit.
+The bus starts at 400 kHz. Interrupt/polling policy: direct touch and IMU interrupts; poll BMP581/MMC5983MA at scheduled rates. The BQ25887 interrupt and any separate gauge alert allocation remain open until the exact power application is reviewed. Expansion bus capacitance and stuck-bus recovery require a measured cable limit.
 
 ## Shared SPI service contract
 

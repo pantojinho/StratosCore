@@ -1,6 +1,8 @@
 # Manufacturing strategy
 
-Target four-layer PCB and automated assembly at JLCPCB or comparable supplier. The requested stack is conceptual: L1 components/signals, L2 ground, L3 power/signals, L4 signals/components. Manufacturer-approved dielectric/copper stack, board thickness, impedance tolerances and return paths must be established before layout.
+Target four-layer PCB and automated assembly at JLCPCB or a comparable Chinese PCBA supplier, followed by shipment of assembled prototypes. The requested stack is conceptual: L1 components/signals, L2 ground, L3 power/signals, L4 signals/components. Manufacturer-approved dielectric/copper stack, board thickness, impedance tolerances and return paths must be established before layout.
+
+The current priority is hardware readiness. Sol should close exact component evidence, compatibility, voltage/current domains, pin maps, application circuits, footprints, constraints and review gates. Astra should then execute the prepared work in KiCad: complete schematic entry, ERC, placement, routing and DRC. Manufacturing files are generated only after those reviews pass and the owner explicitly accepts the release.
 
 ## Sourcing
 
@@ -16,6 +18,6 @@ Validate PCBA handling of WROOM modules, small MEMS, microphone port, sensor con
 2. Schematic review: pinouts, voltage domains, boot/recovery, no unpowered backfeed, protection and complete BOM.
 3. Placement/route review against approved stackup, RF references, sensor thermal/mechanical rules and enclosure fit.
 4. ERC and DRC with tool version, settings, reports and signed exceptions; independent electrical/RF/power review.
-5. Gerber/drill review, BOM/CPL consistency and rotations, assembly drawings, programming/test procedure, revision/hash and explicit release acceptance.
+5. Gerber/drill review, fabrication drawing, stackup/impedance note, orderable BOM, CPL consistency and rotations, assembly drawings, programming/test procedure, revision/hash and explicit release acceptance.
 
 `manufacturing/gerbers`, `pickplace` and `assembly` are reserved areas, not ready-to-order deliverables. No manufacturing output is generated in this phase. See [test plan](../manufacturing/test/README.md).
