@@ -20,7 +20,7 @@ from framing import (  # noqa: E402
 )
 
 KNOWN_DF17 = bytes.fromhex("8D40621D58C382D690C8AC2863A7")
-KNOWN_DF11 = KNOWN_DF17[:7]
+SHORT_FRAME = bytes.fromhex("5D40621D58C382")
 
 
 def collect(decoder: Decoder, chunks) -> list:
@@ -60,7 +60,7 @@ class ContactFramingTests(unittest.TestCase):
 
     def test_56_and_112_bit_classes(self) -> None:
         decoder = Decoder()
-        stream = [encode_wrap(0, 0, 0), encode_contact(KNOWN_DF11, 10, 1), encode_contact(KNOWN_DF17, 20, 2)]
+        stream = [encode_wrap(0, 0, 0), encode_contact(SHORT_FRAME, 10, 1), encode_contact(KNOWN_DF17, 20, 2)]
         records = collect(decoder, stream)
         contacts = [r for r in records if r.record_type is RecordType.CONTACT]
         self.assertEqual(len(contacts), 2)
@@ -154,6 +154,31 @@ class ResyncTests(unittest.TestCase):
         records.extend(decoder.feed(full[-3:]))
         self.assertEqual(len(records), 2)
 
+    def test_corrupted_length_does_not_swallow_next_record(self) -> None:
+        bad = bytearray(encode_heartbeat(10, 1, 10))
+        bad[9] = 250
+        good = encode_wrap(20, 2, 0)
+        decoder = Decoder()
+        records = collect(decoder, [bytes(bad) + good])
+        self.assertEqual([r.record_type for r in records], [RecordType.WRAP])
+        self.assertGreaterEqual(decoder.stats.format_errors, 1)
+
+    def test_contact_class_must_match_payload_length(self) -> None:
+        malformed = build_record(RecordType.CONTACT, 1, 10, bytes((0x01, 0xFF)) + KNOWN_DF17)
+        good = encode_wrap(20, 2, 0)
+        decoder = Decoder()
+        records = collect(decoder, [malformed + good])
+        self.assertEqual([r.record_type for r in records], [RecordType.WRAP])
+        self.assertEqual(decoder.stats.format_errors, 1)
+
+    def test_fixed_record_type_rejects_wrong_length(self) -> None:
+        malformed = build_record(RecordType.OVERFLOW, 1, 10, b"\x01\x00\x00")
+        good = encode_wrap(20, 2, 0)
+        decoder = Decoder()
+        records = collect(decoder, [malformed + good])
+        self.assertEqual([r.record_type for r in records], [RecordType.WRAP])
+        self.assertGreaterEqual(decoder.stats.format_errors, 1)
+
 
 class ConcurrencyTests(unittest.TestCase):
     """Interleave independent producers the way DMA ring + ISR would."""
@@ -180,7 +205,7 @@ class ConcurrencyTests(unittest.TestCase):
         self.assertTrue(all(f == KNOWN_DF17 for f in frames))
 
     def test_capture_stress_burst_loss_visibility(self) -> None:
-        """A 40 kB/s stress burst: contacts plus declared drops stay consistent."""
+        """A long fragmented stream keeps contacts and declared drops consistent."""
         decoder = Decoder()
         stream = encode_wrap(0, 0, 0)
         seq = 0
@@ -194,7 +219,7 @@ class ConcurrencyTests(unittest.TestCase):
                 ts += 2
             seq = (seq + 1) & 0xFF
             stream += encode_contact(KNOWN_DF17, ts, seq)
-            ts += 160  # ~112 us frame + gap at 8 MHz sample clock
+            ts += 960  # 120 us spacing at the 8 MHz sample clock
         records = collect(decoder, [stream[i * 997 : (i + 1) * 997] for i in range(len(stream) // 997 + 1)])
         contacts = [r for r in records if r.record_type is RecordType.CONTACT]
         self.assertEqual(len(contacts), 200)

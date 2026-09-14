@@ -21,7 +21,8 @@ Wire record layout (little-endian fields, all sizes in bytes):
     10      LEN   PAYLOAD     record specific
     10+LEN  2     CRC16       CCITT-FALSE over VERSION..PAYLOAD inclusive
 
-CONTACT payload: 1 class byte (0x01 = 56-bit DF11, 0x02 = 112-bit DF17),
+CONTACT payload: 1 length-class byte (0x01 = 56-bit SHORT, 0x02 =
+112-bit LONG),
 1 confidence byte, then the 7- or 14-byte Mode S frame.
 OVERFLOW payload: 2-byte count of records/samples dropped since the previous
 OVERFLOW record (or since reset for the first one).
@@ -34,7 +35,8 @@ window; used to detect silent stalls when no contacts arrive.
 Decoder behavior contract:
 - resynchronization: any byte that is not a valid record start is skipped;
   after garbage, decoding resumes at the next SYNC pair.
-- a CRC failure discards the record and counts it, never aborts the stream.
+- an invalid header, payload shape or CRC advances one byte and rescans, so a
+  corrupted LEN cannot consume a valid record that follows it.
 - a SEQ discontinuity flags exactly one overflow event per gap, but the
   OVERFLOW record is the authoritative dropped-sample count.
 - timestamps must be strictly monotonic on the reconstructed 64-bit clock;
@@ -63,8 +65,8 @@ class RecordType(enum.IntEnum):
 
 
 class FrameClass:
-    DF11 = 0x01
-    DF17 = 0x02
+    SHORT_56 = 0x01
+    LONG_112 = 0x02
 
 
 def crc16_ccitt(data: Sequence[int]) -> int:
@@ -92,9 +94,9 @@ def build_record(record_type: RecordType, seq: int, ts: int, payload: bytes = b"
 
 def encode_contact(frame: bytes, ts: int, seq: int, confidence: int = 0xFF) -> bytes:
     if len(frame) == 7:
-        fclass = FrameClass.DF11
+        fclass = FrameClass.SHORT_56
     elif len(frame) == 14:
-        fclass = FrameClass.DF17
+        fclass = FrameClass.LONG_112
     else:
         raise ValueError("contact payload is a 56- or 112-bit Mode S frame")
     return build_record(RecordType.CONTACT, seq, ts, bytes((fclass, confidence)) + frame)
@@ -118,6 +120,7 @@ def encode_heartbeat(ts: int, seq: int, uptime_ticks: int) -> bytes:
 class StreamStats:
     records: int = 0
     crc_errors: int = 0
+    format_errors: int = 0
     seq_gaps: int = 0
     resync_skips: int = 0
     monotonic_violations: int = 0
@@ -172,38 +175,56 @@ class Decoder:
 
             if len(buf) < HEADER_LEN:
                 return None
+            version = buf[2]
+            rtype = buf[3]
             ts = int.from_bytes(buf[5:9], "little")
             length = buf[9]
-            if length == 0 and buf[3] in (RecordType.CONTACT, RecordType.OVERFLOW, RecordType.WRAP):
-                # These record types always carry a payload; a zero LEN here means
-                # the SYNC bytes are inside a payload, not a record start.
+
+            # Reject impossible headers before trusting LEN. This bounds recovery
+            # when a corrupt byte makes an apparent record claim a long payload.
+            valid_lengths = {
+                int(RecordType.CONTACT): (9, 16),
+                int(RecordType.OVERFLOW): (2,),
+                int(RecordType.WRAP): (4,),
+                int(RecordType.HEARTBEAT): (4,),
+            }
+            if version != VERSION or rtype not in valid_lengths or length not in valid_lengths[rtype]:
                 del buf[:1]
                 self.stats.resync_skips += 1
+                self.stats.format_errors += 1
                 continue
             total = HEADER_LEN + length + CRC_LEN
             if len(buf) < total:
                 return None
 
             body = bytes(buf[2 : HEADER_LEN + length])
-            version, rtype, seq = body[0], body[1], body[2]
+            seq = body[2]
             expected = crc16_ccitt(body)
             got = buf[HEADER_LEN + length] | (buf[HEADER_LEN + length + 1] << 8)
-            del buf[:total]
 
-            if version != VERSION or expected != got:
+            if expected != got:
                 self.stats.crc_errors += 1
-                continue  # stream continues after the discarded record
-            try:
-                record_type = RecordType(rtype)
-            except ValueError:
-                self.stats.crc_errors += 1
+                del buf[:1]
                 continue
+
+            payload = bytes(body[8:])
+            if rtype == RecordType.CONTACT:
+                expected_contact_length = {
+                    FrameClass.SHORT_56: 9,
+                    FrameClass.LONG_112: 16,
+                }.get(payload[0])
+                if expected_contact_length != length:
+                    self.stats.format_errors += 1
+                    del buf[:1]
+                    continue
+
+            del buf[:total]
+            record_type = RecordType(rtype)
 
             if self._last_seq is not None and ((seq - self._last_seq) & 0xFF) > 1:
                 self.stats.seq_gaps += 1
             self._last_seq = seq
 
-            payload = bytes(body[8:])
             if record_type is RecordType.WRAP:
                 self._wraps = int.from_bytes(payload[:4], "little")
                 self._saw_wrap_record = True

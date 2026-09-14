@@ -28,10 +28,10 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | Area | Primary documents |
 | --- | --- |
 | Components and sourcing | [Component evidence](COMPONENT_EVIDENCE.md), [datasheet index](../hardware/datasheets/README.md), [preliminary BOM](../bom/preliminary_bom.csv) |
-| Digital support | [RP2040 flash/clock and microSD review](DIGITAL_SUPPORT_REVIEW.md), [buttons and slow-control I/O](CONTROL_IO_REVIEW.md) |
+| Digital support | [RP2040 flash/clock and microSD review](DIGITAL_SUPPORT_REVIEW.md), [digital footprint review](FOOTPRINT_REVIEWS_DIGITAL.md), [buttons and slow-control I/O](CONTROL_IO_REVIEW.md) |
 | Display | [Display requirements](DISPLAY_REQUIREMENTS.md) |
 | GNSS | [GNSS architecture](GNSS_ARCHITECTURE.md) |
-| Sensors | [Sensor architecture](SENSOR_ARCHITECTURE.md) |
+| Sensors and GNSS CAD | [Sensor architecture](SENSOR_ARCHITECTURE.md), [sensor/GNSS/RF footprint review](FOOTPRINT_REVIEWS_SENSORS_GNSS.md) |
 | Audio | [Digital microphone architecture](AUDIO_ARCHITECTURE.md) |
 | Power and wired connectors | [Accepted options](POWER_ARCHITECTURE_OPTIONS.md), [2S review](POWER_ARCHITECTURE_REVIEW.md), [rail plan](POWER_RAIL_PLAN.md), [USB-C/expansion connectors](CONNECTOR_ARCHITECTURE.md), [power budget](POWER_BUDGET.md) |
 | RF | [RF architecture](RF_ARCHITECTURE.md), [RF connector selection](RF_CONNECTOR_SELECTION.md), [ADS-B architecture](ADSB_ARCHITECTURE.md), [ADS-B validation](ADSB_VALIDATION.md) |

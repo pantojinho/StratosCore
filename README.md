@@ -14,7 +14,7 @@ StratosCore is an open-source portable field, aviation, meteorological, navigati
 | ESP32 compute sheet and GPIO allocation | Sensor CAD, LoRa/ADS-B RF, stackup and mechanical dummy | Final factory stack confirmation |
 | Exact candidates for RP2040 support, microSD, audio, USB-C, expansion, buttons, rails and RF interconnects | Independent footprints, mechanical fit, off-state review and application tests | Independent footprint and bring-up review |
 | KiCad hierarchy; latest ERC: zero violations | Orderable BOM and manufacturing inputs | |
-| ADS-B host fixture: four tests passing | | |
+| ADS-B host models: 24 tests passing | UART/PIO/DMA implementation and sustained-link bench proof | |
 
 There is no finished schematic, PCB layout, prototype or manufacturing package yet. Do not order boards from the current repository. See [project status](docs/PROJECT_STATUS.md) for the complete gate list.
 
