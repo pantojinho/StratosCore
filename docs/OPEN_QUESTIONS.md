@@ -9,7 +9,7 @@ This file lists unresolved work only. [Project status](PROJECT_STATUS.md) sets p
 | O04 | PROTOTYPE GATE | ADS-B / RF | Simulate and then measure the BLB01/TA2003A/ADL5513/MCP6566 candidate for sensitivity, blockers, gain, pulse timing and coexistence |
 | O05 | OWNER ACCEPTED; REVIEW BLOCKED | Power / qualified reviewer | Review the complete two-removable-cell 2S charger, common protection, holder and fault limits before schematic commitment or energizing |
 | O06 | IN PROGRESS | Power / Sol | Review Molicel M50A cell candidate; select exact holder and USB-C receptacle/input protection; close the TUSB320LAI and preferred BQ25887 applications, common protection, buck rails, thermistors/fuses/FETs and state estimation; no batteryless operation or USB PD is currently proposed |
-| O07 | OPEN | Audio/mechanical / Sol | Select microphone MPN and I2S/PDM interface; close supply, clock, footprint, acoustic port and optional DNP behavior |
+| O07 | OPEN | Audio/mechanical / Sol | Select an active-production microphone MPN and PDM application; close supply/translation, clock, footprint, acoustic port and optional DNP behavior |
 | O08 | PROTOTYPE GATE | Mechanical | Verify the 84 x 60 mm PCB and approximately 88 x 64 x 37 mm enclosure with exact component drawings and a printed fit dummy |
 | O09 | OPEN | RF/mechanical / Sol | Select exact RF connector MPNs and GNSS/ADS-B styles from cable loss, access, mating-cycle and assembly requirements; LoRa remains U.FL |
 | O10 | BLOCKED EXTERNALLY | PCB/manufacturer | Confirm the current four-layer production stack and field-solved 50-ohm RF/90-ohm USB geometries with the chosen factory |
@@ -22,6 +22,7 @@ This file lists unresolved work only. [Project status](PROJECT_STATUS.md) sets p
 | O17 | DEFERRED | Product/firmware | Set acquisition rates, SD capacity, audio format and allowed data loss after hardware interfaces and power profiles are stable |
 | O18 | OWNER INPUT + RF TEST | ADS-B/product | Define sensitivity, range, contact/stale-time targets and a repeatable conducted/field test plan |
 | O19 | IN PROGRESS | Sensors/procurement | Create and independently review the ICM-42688-P land/mask/stencil footprint; recheck authorized stock and lead time |
+| O20 | IN PROGRESS | Digital CAD/procurement | Independently compare W25Q128JVSIQ, ABM8-272-T3 and DM3AT-SF-PEJM5 footprints with current drawings; validate RP2040 boot/clock and microSD mechanical/power-fail behavior |
 
 ## Recently closed owner decisions
 

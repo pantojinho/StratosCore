@@ -23,7 +23,7 @@ flowchart LR
   FILTER --> DET[ADL5513 / MCP6566 candidate]
   DET --> RP[RP2040: timing and Mode-S decoding]
   RP -. UART 921600 + RTS/CTS .-> ESP
-  ESP <-->|Storage bus TBD| SD[microSD]
+  ESP <-->|Shared SPI + dedicated CS| SD[microSD]
   MIC[Digital MEMS microphone] -. I2S / PDM .-> ESP
   ESP <--> EXP[3V3 / GND / I2C / SPI / UART / GPIO expansion]
   CHGMON[BQ25887 per-cell ADC / 2S state estimation TBD] -. I2C .-> ESP

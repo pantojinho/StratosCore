@@ -52,6 +52,8 @@ Display mating connectors/translation/backlight, GNSS antenna, microphone MPN, U
 | P15 | Molicel `INR-21700-M50A` as the first matched-cell sample candidate | Official sheet matches the 5 Ah runtime basis and exact mechanical envelope; owner/reviewer acceptance, Brazilian sourcing, mission-temperature and holder-fit evidence remain |
 | P16 | Keep `BQ25887RGER` as preferred charger candidate without batteryless operation; compare `BQ25792RQMR` only if an NVDC power path becomes required | BQ25887 integrates 2S balancing but TI confirms no power path; exact protection, current, termination-under-load and USB behavior remain review gates |
 | P17 | Evaluate `TUSB320LAIRWBR` as the fixed-UFP USB-C CC controller; remain at 5 V without USB PD | TI documents default/1.5 A/3 A current detection at address 0x47. Hardware caps BQ25887 input at 500 mA until valid detection; exact connector, back-power, ESD/inrush and factory availability remain open |
+| P18 | Use `W25Q128JVSIQ` and `ABM8-272-T3` as the preferred RP2040 flash/clock candidates | Raspberry Pi's current guide uses W25Q128JVS and explicitly recommends the Abracon crystal/reference values; footprints, source status and corner bring-up remain gates |
+| P19 | Use Hirose `DM3AT-SF-PEJM5` as the preferred microSD socket candidate on shared SPI | Exact May 2026 controlled drawing, card-detect switch and mechanical envelope reviewed; final footprint, enclosure access, ESD/power switching and factory sourcing remain gates |
 
 ## Conflicts requiring explicit resolution
 

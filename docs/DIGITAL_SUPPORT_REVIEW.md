@@ -1,0 +1,37 @@
+# Digital support parts review
+
+Status: exact engineering candidates reviewed 2026-09-14. These selections reduce the pre-KiCad queue but remain subject to independent footprint comparison, factory availability and board-level bring-up.
+
+## RP2040 boot flash
+
+`W25Q128JVSIQ` is the preferred RP2040 boot-flash candidate. Raspberry Pi's current *Hardware design with RP2040* uses the Winbond `W25Q128JVS` family in its minimal design, and RP2040 supports up to 16 MB of external QSPI flash. The exact `W25Q128JVSIQ` provides 128 Mbit/16 MB, 2.7-3.6 V operation, industrial -40 to 85 °C rating and an 8-SOIC package. The larger package is deliberate for Rev A inspectability and rework; a smaller suffix would require a separate footprint and availability review.
+
+Route the six QSPI signals directly between RP2040 and flash, keep them short, follow the Raspberry Pi reference pullup/decoupling arrangement and expose the documented BOOTSEL recovery path. The final schematic review must confirm the exact Winbond status-register defaults, RP2040 boot-ROM compatibility and maximum XIP clock. Bring-up must prove cold boot, repeated reset, full-image programming, checksum and operation across the accepted temperature and voltage range.
+
+## RP2040 reference clock
+
+`ABM8-272-T3` is the preferred 12 MHz crystal. Raspberry Pi explicitly recommends this exact Abracon part at 3.3 V and documents 30 ppm tolerance/stability, 50 ohm maximum ESR and 10 pF load capacitance. Its reference circuit uses two 15 pF load capacitors and a 1 kohm series damping resistor. Preserve that starting circuit and keep XIN/XOUT traces short and symmetric; any part/value or IOVDD change requires oscillator startup and drive-level requalification.
+
+This clock is required for deterministic ADS-B capture timing and reliable USB/debug behavior. Test startup at voltage and temperature corners and compare the RP2040 timebase against GNSS PPS before accepting timing performance.
+
+## microSD socket
+
+`DM3AT-SF-PEJM5` is the preferred socket candidate. Hirose's May 2026 DM3 catalog identifies the exact part as an eight-contact, top-board, right-angle SMT, push-push microSD socket with a card-detection switch. The official product page gives a 13.85 x 15.95 mm body, 1.68 mm height, 0.5 A rating, gold-plated contacts and 10,000 mating cycles; official 2D/3D files are available.
+
+Use the already budgeted shared SPI interface for Rev A. Route card detect to a slow I2C-expander input; no safety function depends on it. Add separately selected ESD protection, required SD pullups and a reviewed load switch if power cycling is retained. The socket must sit at the enclosure edge with the full insertion, locked, over-travel and eject envelopes from the controlled drawing. The exact footprint must be independently transcribed and compared before KiCad release.
+
+## Availability snapshots
+
+Checked 2026-09-14 for prototype planning only:
+
+| Part | Snapshot | Consequence |
+| --- | --- | --- |
+| `W25Q128JVSIQ` | DigiKey displayed 57,555 in stock at USD 4.21 quantity one | Strong prototype availability; recheck reel/PCBA sourcing |
+| `ABM8-272-T3` | DigiKey displayed 29,393 in stock at USD 0.71 quantity one | Exact Raspberry Pi recommendation remains practical |
+| `DM3AT-SF-PEJM5` | DigiKey regional pages displayed about 29,700 in stock and about USD 5.20 quantity one | Mechanically robust but relatively expensive; do not substitute without controlled-drawing review |
+
+Primary evidence: [Raspberry Pi hardware design guide](https://datasheets.raspberrypi.com/rp2040/hardware-design-with-rp2040.pdf), [Winbond W25Q128JV product search](https://www.winbond.com/hq/search/?__locale=en&q=W25Q128JVSIQ), [Hirose exact product page](https://www.hirose.com/product/p/CL0609-0031-0-00) and [Hirose DM3 May 2026 catalog](https://www.hirose.com/en/product/document?documentid=D49662_en&documenttype=Catalog&lang=en&series=DM3). Distributor snapshots: [DigiKey flash](https://www.digikey.com/en/products/detail/winbond-electronics/W25Q128JVSIQ/5803943), [DigiKey crystal](https://www.digikey.com/en/products/detail/abracon-llc/ABM8-272-T3/22472366) and [DigiKey socket](https://www.digikey.com/en/products/detail/hirose-electric-co-ltd/DM3AT-SF-PEJM5/2533565).
+
+## Still open in this group
+
+The microphone, microSD media, USB-C receptacle, expansion connector and power/ESD support parts remain open. Current microphone candidates were not promoted because readily sourced 3.3 V parts reviewed in this pass were obsolete/NRND, while newer production parts may add a 1.8 V domain and translation. Resolve the acoustic port, lifecycle and voltage-domain trade together rather than selecting a footprint first.

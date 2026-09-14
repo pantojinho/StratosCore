@@ -27,6 +27,7 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | Area | Primary documents |
 | --- | --- |
 | Components and sourcing | [Component evidence](COMPONENT_EVIDENCE.md), [datasheet index](../hardware/datasheets/README.md), [preliminary BOM](../bom/preliminary_bom.csv) |
+| Digital support | [RP2040 flash/clock and microSD review](DIGITAL_SUPPORT_REVIEW.md) |
 | Display | [Display requirements](DISPLAY_REQUIREMENTS.md) |
 | GNSS | [GNSS architecture](GNSS_ARCHITECTURE.md) |
 | Sensors | [Sensor architecture](SENSOR_ARCHITECTURE.md) |
