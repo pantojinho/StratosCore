@@ -2,7 +2,7 @@
 
 ## Scope and authority
 
-Read `docs/DECISIONS.md` before modifying hardware and `docs/ASTRA_HANDOFF.md` before starting work. This is a new project; legacy repositories are read-only references. The architecture phase may create reviewed documentation, tests and gated schematic partitions. Do not create a speculative finished schematic, display footprint, routed PCB, or manufacturing release.
+Read `docs/DECISIONS.md` and `docs/PROJECT_STATUS.md` before modifying hardware. Read `docs/ASTRA_HANDOFF.md` only when preparing or executing the final KiCad task. This is a new project; legacy repositories are read-only references. The architecture phase may create reviewed documentation, tests and gated schematic partitions. Do not create a speculative finished schematic, display footprint, routed PCB, or manufacturing release.
 
 1. Never silently change a locked decision. Record proposals in `docs/DECISIONS.md` and obtain the project owner's acceptance before changing the baseline.
 2. Every component replacement proposal must include reason, dated cost comparison, availability comparison, electrical impact, firmware impact, and PCB/mechanical impact. Mark unverified data TBD.
@@ -13,7 +13,7 @@ Read `docs/DECISIONS.md` before modifying hardware and `docs/ASTRA_HANDOFF.md` b
 7. Do not connect two independently removable Li-ion cells directly in parallel. Protection, charging, reverse insertion, mismatch, and removal behavior must be resolved together.
 8. Run ERC after every schematic change and DRC before manufacturing output. Record versions, reports, and reviewed exceptions. A zero-item architecture sheet ERC proves file/hierarchy integrity only, never circuit correctness.
 9. Maintain source/license/reuse/modification records in `references/REUSE_REGISTER.md`. Public access is not permission to relicense. Preserve upstream notices and review dependencies individually.
-10. Maintain `docs/ASTRA_HANDOFF.md` after meaningful changes; keep it concise and execution-oriented. Update decisions, open questions, requirements, architecture, and BOM together when affected.
+10. Maintain `docs/PROJECT_STATUS.md` after meaningful changes and update decisions, open questions, requirements, architecture and BOM together when affected. Keep `docs/ASTRA_HANDOFF.md` reserved for final KiCad entry gates and execution instructions; update it only when those inputs or readiness change.
 11. Do not modify either legacy project or avBadge/ADSBee. Do not import their pin maps as StratosCore assignments.
 12. Keep every assumption distinguishable from a locked requirement, verified fact, proposal, or measured result. Supplier IDs, prices, runtime, RF performance, and test outcomes must never be fabricated.
 13. ADS-B is a core Rev A hardware feature with its own 1090 MHz RF path and RP2040 baseline. SX1262 is for LoRa, never the ADS-B receiver. Runtime profiles may power ADS-B down.

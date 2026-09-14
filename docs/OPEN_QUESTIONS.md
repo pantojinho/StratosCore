@@ -1,27 +1,33 @@
 # Open questions and closure evidence
 
-Unresolved issues do not authorize changing locked components. All are currently OPEN unless explicitly noted. Prioritize the numbered work sequence in [handoff](ASTRA_HANDOFF.md).
+This file lists unresolved work only. [Project status](PROJECT_STATUS.md) sets priority; [decisions](DECISIONS.md) records accepted and rejected choices. An accepted direction remains open here when exact engineering or test evidence is still required.
 
-| ID | Decision/question | Owner role | Closure evidence / dependency |
+| ID | Status | Type / owner | Question or required closure evidence |
 | --- | --- | --- | --- |
-| O01 | PARTIAL: exact C1 display drawing and connector? | Display/mechanical | Orient C1 selected for samples; obtain exact drawing, two samples, connector and power/readability measurements |
-| O02 | CLOSED 2026-09-13: replace ATGM332D-5NR32 for balloon altitude | GNSS | Owner accepted MAX-M10S-00B; exact CAD, antenna and configuration move to O03/implementation review |
-| O03 | GNSS antenna type, bias, connector and placement? | RF/mechanical | Link/noise budget, coexistence and both enclosure orientations |
-| O04 | PARTIAL: ADS-B conducted performance? | RF | BLB01/TA2003A/ADL5513/MCP6566 candidate selected; simulate S-parameters and pass conducted pulse/blocker tests |
-| O05 | OWNER ACCEPTED / REVIEW PENDING: two removable 21700 cells in 2S? | Power + reviewer | P14 accepted 2026-09-13; qualified electrical/battery review, exact 2S protection, holder verification and fault tests remain before freeze |
-| O06 | PARTIAL: USB-C input, 2S charger, regulators and state estimation? | Power | BQ25887 is the first balanced-charger candidate; USB current detection, discharge protection, system power path, buck rails and thermal settings remain |
-| O07 | Microphone MPN, I2S/PDM, port and optional DNP? | Audio/mechanical | Sample rate/clock budget, supply and acoustic tests |
-| O08 | PARTIAL: exact PCB/enclosure dimensions? | Mechanical | 84 x 60 mm PCB, 31/37 mm enclosure candidates; print/fit dummies and tolerances remain |
-| O09 | RF connector MPNs and GNSS/ADS-B connector styles? | RF/mechanical | U.FL retained for LoRa; cable loss, antenna access, mating and assembly drawings |
-| O10 | PARTIAL: production stackup and impedance? | PCB/manufacturer | JLC2313 1.6 mm candidate documented; confirm order stack and field-solver geometries |
-| O11 | PARTIAL: validate GPIO/bus map electrically? | Hardware/firmware | Resource allocation closes on paper; verify boot levels, exact peripherals and shared-SPI latency |
-| O12 | PARTIAL: implement RP2040/ESP transport and timing sync? | Firmware | UART 921600 with RTS/CTS selected; define record framing and run overflow/timestamp tests |
-| O13 | How will 12 h FLIGHT be achieved? | Power/product | Revised example yields 10.72 h for two 5 Ah cells; remove at least 0.207 W raw average and measure |
-| O14 | Firmware framework and MeshCore mode/port/dependencies? | Firmware | Compatibility and transitive license audit; supported node roles explicitly scoped |
-| O15 | Any reference code/circuit reuse? | Maintainer/license reviewer | File-level provenance and obligations; ADSBee GPL and avBadge uncertainty addressed |
-| O16 | Mission temperature/pressure/dynamics and weather resistance? | Product/test | Intended operating envelope, sensor/cell ratings, pressure and thermal limits |
-| O17 | Acquisition rates, SD capacity, audio format and allowed data loss? | Product/firmware | User workflow and throughput/power-loss tests; schema and rotation policy |
-| O18 | ADS-B sensitivity, range, contact limits and stale time? | Product/RF/firmware | RF performance target and repeatable test plan, not anecdotal reception |
-| O19 | PARTIAL: can ICM-42688-P be sourced and assigned a production CAD footprint? | Procurement/hardware | DS-000347 v1.9 and AN-000393 v2.4 release the pin/application entry; create and independently review the custom land/mask/stencil geometry, then recheck authorized stock/lead time |
+| O01 | IN PROGRESS + SAMPLE GATE | Display / Sol + procurement | Independently transcribe the exact C1 revision-J FPC geometry; select mating connectors, 1.8 V translation and backlight driver; obtain two labeled samples and verify connector, address, power, touch and readability |
+| O03 | IN PROGRESS | GNSS / Sol + RF | Close MAX-M10S-00B exact CAD, supply/backup, UART/timepulse, antenna bias/type/connector, placement and airborne configuration |
+| O04 | PROTOTYPE GATE | ADS-B / RF | Simulate and then measure the BLB01/TA2003A/ADL5513/MCP6566 candidate for sensitivity, blockers, gain, pulse timing and coexistence |
+| O05 | OWNER ACCEPTED; REVIEW BLOCKED | Power / qualified reviewer | Review the complete two-removable-cell 2S charger, common protection, holder and fault limits before schematic commitment or energizing |
+| O06 | IN PROGRESS | Power / Sol | Select exact USB-C input, balanced 2S charger application, discharge protection, system power path, buck rails, thermistors/fuses/FETs and state estimation |
+| O07 | OPEN | Audio/mechanical / Sol | Select microphone MPN and I2S/PDM interface; close supply, clock, footprint, acoustic port and optional DNP behavior |
+| O08 | PROTOTYPE GATE | Mechanical | Verify the 84 x 60 mm PCB and approximately 88 x 64 x 37 mm enclosure with exact component drawings and a printed fit dummy |
+| O09 | OPEN | RF/mechanical / Sol | Select exact RF connector MPNs and GNSS/ADS-B styles from cable loss, access, mating-cycle and assembly requirements; LoRa remains U.FL |
+| O10 | BLOCKED EXTERNALLY | PCB/manufacturer | Confirm the current four-layer production stack and field-solved 50-ohm RF/90-ohm USB geometries with the chosen factory |
+| O11 | IN PROGRESS | Hardware / Sol | Validate boot levels, voltage domains, I2C addresses/pullups, shared-SPI latency, interrupts, unpowered backfeed and complete GPIO/net allocation |
+| O12 | IN PROGRESS | RP2040 interface / Sol | Define the UART framing/time synchronization, implement PIO/DMA capture and pass overflow/timestamp/concurrency tests |
+| O13 | PROTOTYPE GATE | Power/product | Reduce at least 0.207 W from the current raw FLIGHT allowance or revise the 12-hour target; verify with a full measured profile |
+| O14 | DEFERRED | Firmware/license | Select firmware framework and define MeshCore mode/port/dependencies after the hardware baseline; complete transitive license audit |
+| O15 | CONTINUOUS | Maintainer/license reviewer | Record any reused circuit/code at file level; resolve ADSBee GPL and avBadge uncertainty before reuse |
+| O16 | OWNER INPUT + TEST | Product/test | Define mission temperature, pressure, dynamics, weather resistance and mass; validate sensors/cells/enclosure across that envelope |
+| O17 | DEFERRED | Product/firmware | Set acquisition rates, SD capacity, audio format and allowed data loss after hardware interfaces and power profiles are stable |
+| O18 | OWNER INPUT + RF TEST | ADS-B/product | Define sensitivity, range, contact/stale-time targets and a repeatable conducted/field test plan |
+| O19 | IN PROGRESS | Sensors/procurement | Create and independently review the ICM-42688-P land/mask/stencil footprint; recheck authorized stock and lead time |
 
-The owner accepted P07 and the P14 2S direction on 2026-09-13, and rejected P08. P14 still requires a separate qualified electrical/battery reviewer before topology freeze, schematic commitment or prototype energizing.
+## Recently closed owner decisions
+
+| ID | Closed | Outcome |
+| --- | --- | --- |
+| O02 / P07 | 2026-09-13 | Owner replaced ATGM332D-5NR32 with MAX-M10S-00B for the balloon altitude envelope |
+| P08 / P14 | 2026-09-13 | Owner rejected independent 1S bays and accepted two removable matched 21700 cells in 2S with one balanced charger and common protection direction |
+
+P14 is closed as a product direction but O05/O06 remain open engineering and review gates. The qualified electrical/battery review is mandatory before the exact topology is frozen, entered as a committed schematic or energized.

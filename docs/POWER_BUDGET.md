@@ -5,7 +5,7 @@
 | Block | BALLOON W | FLIGHT W | DESKTOP W | Basis to replace with measurement |
 | --- | ---: | ---: | ---: | --- |
 | ESP32 + Flash/PSRAM + wireless | 0.12 | 0.40 | 0.65 | CPU duty, Wi-Fi/BLE state and clock not fixed |
-| LCD + backlight + touch | 0.01 | 0.625 | 0.625 | Orient candidate related drawing; exact C1 sample and brightness profile still unmeasured |
+| LCD + backlight + touch | 0.01 | 0.625 | 0.625 | Exact Orient C1 revision-J module figure; 0.60 W backlight dominates; sample and brightness profile still unmeasured |
 | GNSS | 0.09 | 0.09 | 0.09 | Planning allowance near vendor listing; acquisition/antenna bias still unresolved |
 | Four sensors | 0.02 | 0.03 | 0.03 | Sample rate/filter/heater policy not fixed |
 | ADS-B complete subsystem | 0.00 | 0.60 | 0.60 | Two 3 V BLB01 stages, ADL5513, comparator, RP2040/support allowance; unmeasured |

@@ -1,0 +1,46 @@
+# Engineering documentation index
+
+Start with [project status](PROJECT_STATUS.md). It is the concise source for what is complete, what remains and who owns each next action. [Decisions](DECISIONS.md) is the change-controlled baseline. [Astra handoff](ASTRA_HANDOFF.md) is reserved for final KiCad execution and must not be used while it says **NOT READY**.
+
+## Control and current status
+
+| Document | Purpose |
+| --- | --- |
+| [Project status](PROJECT_STATUS.md) | Current phase, completed work, remaining gates and ordered next work |
+| [Decision register](DECISIONS.md) | Locked requirements, accepted/rejected proposals and owner decisions |
+| [Open questions](OPEN_QUESTIONS.md) | Closure evidence for every unresolved engineering item |
+| [Product requirements](PRODUCT_REQUIREMENTS.md) | Verifiable Rev A behavior and operating profiles |
+| [Astra final handoff](ASTRA_HANDOFF.md) | Final KiCad execution checklist; currently gated |
+| [Validation record](FOUNDATION_CHECKS.md) | Checks already run and their limited meaning |
+
+## System and interfaces
+
+| Document | Purpose |
+| --- | --- |
+| [System architecture](SYSTEM_ARCHITECTURE.md) | MCU ownership, buses, timing, storage and power domains |
+| [Block diagram](BLOCK_DIAGRAM.md) | Visual functional interconnect |
+| [GPIO and interface map](INTERFACE_GPIO_MAP.md) | ESP32 allocation, I2C addresses and shared-SPI contract |
+| [Expansion interface](EXPANSION_INTERFACE.md) | External I2C/SPI/UART/GPIO requirements |
+
+## Hardware subsystems
+
+| Area | Primary documents |
+| --- | --- |
+| Components and sourcing | [Component evidence](COMPONENT_EVIDENCE.md), [datasheet index](../hardware/datasheets/README.md), [preliminary BOM](../bom/preliminary_bom.csv) |
+| Display | [Display requirements](DISPLAY_REQUIREMENTS.md) |
+| GNSS | [GNSS architecture](GNSS_ARCHITECTURE.md) |
+| Sensors | [Sensor architecture](SENSOR_ARCHITECTURE.md) |
+| Power | [Accepted options](POWER_ARCHITECTURE_OPTIONS.md), [2S review](POWER_ARCHITECTURE_REVIEW.md), [power budget](POWER_BUDGET.md) |
+| RF | [RF architecture](RF_ARCHITECTURE.md), [ADS-B architecture](ADSB_ARCHITECTURE.md), [ADS-B validation](ADSB_VALIDATION.md) |
+| PCB and mechanics | [Stackup](PCB_STACKUP.md), [mechanical requirements](MECHANICAL_REQUIREMENTS.md), [mechanical/RF floorplan](MECHANICAL_RF_FLOORPLAN.md) |
+
+## Production
+
+| Document | Purpose |
+| --- | --- |
+| [Manufacturing strategy](MANUFACTURING_STRATEGY.md) | Chinese PCBA target, sourcing rules and release gates |
+| [Production-test plan](../manufacturing/test/README.md) | Qualification and factory screening plan |
+| [KiCad workspace](../hardware/kicad/README.md) | Current hierarchy, holds and ERC command |
+| [Reuse register](../references/REUSE_REGISTER.md) | Source, license and modification tracking |
+
+The documents are separated by engineering responsibility so evidence is reviewable without turning the root README into a design specification. Do not duplicate changing pinouts, thresholds or part status in several summaries; link to the subsystem source and update [project status](PROJECT_STATUS.md).

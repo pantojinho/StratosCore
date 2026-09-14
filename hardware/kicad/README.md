@@ -4,7 +4,7 @@
 
 Current holds:
 
-- display connector/footprint: exact Orient C1 drawing and sample;
+- display connector/footprint: exact Orient C1 revision-J specification is reviewed; independent FPC/connector transcription, 1.8 V translation, backlight design and samples remain;
 - GNSS: MAX-M10S-00B accepted; exact CAD, supply/backup application and antenna circuit review remain;
 - power: owner accepted two removable 21700 cells in 2S with one balanced charger; qualified battery/electrical review, exact holder, common protection, power path and regulators remain;
 - ICM-42688-P physical CAD: create/review the project footprint and stencil geometry from DS-000347 v1.9 and AN-000393 v2.4;

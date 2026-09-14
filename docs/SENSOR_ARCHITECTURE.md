@@ -21,7 +21,7 @@ Place SHT40 near an air exchange path and away from charger, regulators, ESP32, 
 
 Give BMP581 a static-pressure vent protected from direct airflow, moisture and enclosure pressure transients. Do not use a fully sealed box as an assumed atmospheric pressure source. Microphone acoustic vent and pressure vent may have incompatible membrane/response needs.
 
-Place ICM-42688-P on mechanically stable PCB area, not the flexible thermal island. Document body axes and transform to display coordinates in firmware. Keep MMC5983MA away from ferromagnetic fasteners, cell cans, inductors and current loops; test heading bias with one/two cells, charging and radio activity.
+Place ICM-42688-P on mechanically stable PCB area, not the flexible thermal island. Document body axes and transform to display coordinates in firmware. Keep MMC5983MA away from ferromagnetic fasteners, both cell cans, the 2S charger/buck inductors and current loops; test heading bias across pack state, charging and radio activity.
 
 ## Processing and acceptance
 

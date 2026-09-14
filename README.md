@@ -1,52 +1,68 @@
 # StratosCore
 
-Compact open-source field, aviation, meteorological, navigation, and radio computer based on **ESP32-S3-WROOM-1-N16R8**.
+StratosCore is an open-source portable field, aviation, meteorological, navigation and radio computer based on the **ESP32-S3-WROOM-1-N16R8**.
 
-**Status: Rev A architecture and validation phase.** A reviewed schematic hierarchy and host-side ADS-B timing fixture exist, but no completed circuit, PCB layout, hardware prototype, or manufacturing package exists yet. This is an experimental platform, **not a certified aviation instrument**, collision-avoidance system, or cockpit voice recorder.
+## Current status
+
+**Rev A is in pre-KiCad hardware engineering closure.** Sol-class work is closing exact parts, electrical compatibility, application circuits, footprints, mechanical constraints and review evidence. The final Astra task is deliberately held until it can concentrate on KiCad schematic capture and PCB implementation.
+
+| Complete | In progress | Externally blocked |
+| --- | --- | --- |
+| Product baseline and licensing | Display connectors/translation/driver; GNSS antenna and power choices | Display C1 samples and connector confirmation |
+| MAX-M10S GNSS decision | Complete 2S charger/protection/regulator selection | Qualified electrical/battery review |
+| Two removable 21700 cells in 2S decision | Remaining digital parts and footprints | RF performance and runtime measurements need prototypes |
+| ESP32 compute sheet and GPIO allocation | Sensor CAD, LoRa/ADS-B RF, stackup and mechanical dummy | Final factory stack confirmation |
+| KiCad hierarchy; latest ERC: zero violations | Orderable BOM and manufacturing inputs | |
+| ADS-B host fixture: four tests passing | | |
+
+There is no finished schematic, PCB layout, prototype or manufacturing package yet. Do not order boards from the current repository. See [project status](docs/PROJECT_STATUS.md) for the complete gate list.
 
 ## Rev A baseline
 
 | Block | Baseline |
 | --- | --- |
 | Compute | ESP32-S3-WROOM-1-N16R8; 16 MB Flash, 8 MB PSRAM; Wi-Fi/BLE and module PCB antenna |
-| User interface | 2.8-inch IPS, 320 x 240, capacitive touch; portrait/landscape; two physical buttons |
-| LoRa | Directly integrated SX1262, 915 MHz class hardware, SPI, PCB U.FL; optional SMA pigtail |
-| GNSS | u-blox MAX-M10S-00B; owner-approved replacement supporting documented airborne modes to 80 km |
-| Motion/environment | ICM-42688-P, MMC5983MA, BMP581, SHT40; no baseline BME688 |
-| ADS-B | Dedicated 1090 MHz RF frontend and RP2040 timing processor, feeding ESP32-S3 |
-| Logging | Mandatory microSD and digital MEMS microphone provision for optional synchronized audio |
-| Power | USB-C charging and native USB data target; two removable 21700 cells in 2S; one balanced charger and common protection direction accepted, safety review pending |
-| Expansion | 3V3, GND, I2C, SPI with separate CS, UART, GPIO/IRQ |
-| Construction | Four-layer PCB; 84 x 60 mm planning outline; printed enclosure with display and two 21700 cells, approximately 37 mm starting thickness |
+| User interface | 2.8-inch IPS 320 x 240 with capacitive touch; portrait/landscape; two physical buttons |
+| GNSS | u-blox MAX-M10S-00B, selected for documented airborne modes to 80 km |
+| Motion/environment | ICM-42688-P, MMC5983MA, BMP581 and SHT40-AD1B-R2 |
+| LoRa | SX1262 directly integrated, 915 MHz class hardware, SPI and PCB U.FL; regional TX configuration required |
+| ADS-B | Independent 1090 MHz receive chain with RP2040 timing processor |
+| Logging/audio | Mandatory microSD and provision for an optional digital MEMS microphone |
+| Power | USB-C target; two removable matched 21700 cells in 2S; one balanced charger and common protection direction |
+| Expansion | 3V3, GND, I2C, SPI with separate CS, UART and GPIO/IRQ |
+| Construction | Four-layer PCB; 84 x 60 mm planning outline; approximately 88 x 64 x 37 mm printed enclosure starting envelope |
 
-Potential uses include flight/vario instrumentation, traffic visualization, balloon experiments, weather stations, trackers, LoRa/MeshCore experiments, and portable or desktop logging. Hardware inclusion does not imply every feature runs in every power profile.
+Potential uses include flight/vario instruments, traffic visualization, balloon experiments, weather stations, trackers, LoRa/MeshCore experiments and portable logging. This experimental platform is not a certified aviation instrument, collision-avoidance system or cockpit voice recorder.
 
 ## Start here
 
-1. [Product requirements](docs/PRODUCT_REQUIREMENTS.md) and [decision register](docs/DECISIONS.md).
-2. [System architecture](docs/SYSTEM_ARCHITECTURE.md) and [block diagram](docs/BLOCK_DIAGRAM.md).
-3. [Power options](docs/POWER_ARCHITECTURE_OPTIONS.md), [power budget](docs/POWER_BUDGET.md), and [RF architecture](docs/RF_ARCHITECTURE.md).
-4. [Open questions](docs/OPEN_QUESTIONS.md), [preliminary BOM](bom/preliminary_bom.csv), and [reference/reuse register](references/REUSE_REGISTER.md).
-5. [Engineering handoff and next five tasks](docs/ASTRA_HANDOFF.md); contributors must read [AGENTS.md](AGENTS.md).
+1. [Project status: completed work and remaining gates](docs/PROJECT_STATUS.md)
+2. [Engineering documentation index](docs/README.md)
+3. [Locked decisions and accepted proposals](docs/DECISIONS.md)
+4. [Open engineering questions](docs/OPEN_QUESTIONS.md)
 
-The 12-hour runtime is a target, not a demonstrated result. The Orient C1 display is selected for sample validation, but its exact drawing/connector remains on hold. MAX-M10S-00B is now the accepted GNSS baseline. The two-cell 2S direction is owner-approved, while its charger, protection, power path and fault behavior remain gated by the qualified review described in [component evidence](docs/COMPONENT_EVIDENCE.md), [power review](docs/POWER_ARCHITECTURE_REVIEW.md) and [ADS-B validation](docs/ADSB_VALIDATION.md).
+[Astra final KiCad handoff](docs/ASTRA_HANDOFF.md) is intentionally marked **NOT READY**. It is not the current work queue.
 
 ## Repository layout
 
 ```text
 StratosCore/
-|-- AGENTS.md
-|-- README.md
-|-- LICENSES/          Official texts and scope
-|-- docs/              Requirements, architecture, decisions, handoff
-|-- hardware/          KiCad, library, datasheet and reference placeholders
-|-- bom/               Preliminary planning BOM; not an assembly BOM
-|-- firmware/          ESP32, RP2040 and bring-up plans
-|-- mechanical/        Enclosure and PCB dummy placeholders
-|-- manufacturing/     Empty release areas and verification plans
-`-- references/        Read-only research notes and reuse/license evidence
+|-- AGENTS.md          Engineering and review rules
+|-- README.md          Public project status and entry points
+|-- docs/              Status, decisions and subsystem specifications
+|-- bom/               Preliminary planning BOM; not orderable yet
+|-- hardware/          KiCad project and primary-source index
+|-- mechanical/        Enclosure and fit-study workspace
+|-- manufacturing/     Release and production-test placeholders
+|-- firmware/          Hardware-interface fixtures and future firmware
+|-- references/        Read-only research and reuse/license records
+`-- LICENSES/          Official license texts and scope
 ```
+
+## Manufacturing path
+
+The target is four-layer PCB fabrication and automated assembly at JLCPCB or a comparable Chinese PCBA supplier. Release requires an independently reviewed schematic and layout, clean ERC/DRC, confirmed stackup, exact orderable BOM, CPL, Gerbers/drill files, assembly drawings and a programming/production-test procedure. The owner must explicitly accept the manufacturing release before ordering.
 
 ## Licensing
 
-Original hardware, mechanical designs and hardware engineering documentation: **CERN-OHL-P-2.0**. Original firmware and its software documentation: **MIT**. See [license scope and provenance](LICENSES/README.md). Third-party work retains its own terms; no reference circuit or implementation code has been imported.
+Original hardware, mechanical designs and hardware engineering documentation use **CERN-OHL-P-2.0**. Original firmware and its software documentation use **MIT**. See [license scope and provenance](LICENSES/README.md). Third-party work retains its own terms.

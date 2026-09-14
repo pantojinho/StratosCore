@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block (title "08 Connectors") (rev "architecture-gate"))
 	(lib_symbols)
-	(text "USB-C, microSD, display/touch and expansion connectors. Exact display C1 drawing remains required." (exclude_from_sim no) (at 25.4 30.48 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "f0e4d278-3aaf-4a96-b57c-f707521a9329"))
+	(text "USB-C, microSD, display/touch and expansion connectors. C1 Rev J is reviewed; connector geometry and samples still gate footprints." (exclude_from_sim no) (at 25.4 30.48 0) (effects (font (size 1.27 1.27)) (justify left bottom)) (uuid "f0e4d278-3aaf-4a96-b57c-f707521a9329"))
 	(sheet_instances (path "/" (page "1")))
 	(embedded_fonts no)
 )

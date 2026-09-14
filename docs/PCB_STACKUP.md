@@ -25,6 +25,6 @@ Rules before layout:
 - separate noisy switch-node copper from GNSS, ADS-B, MMC5983MA and pressure/humidity zones;
 - every L4 high-speed segment needs an intentional reference/return path; move it to L1 if that cannot be shown;
 - do not reuse matching values or trace widths from a different stackup;
-- run a PDN/thermal review for two chargers and the 3.3 V buck-boost before copper pours freeze.
+- run a PDN/thermal review for the 2S boost charger, common protection/current path and all downstream buck rails before copper pours freeze.
 
 The stack is accepted as a calculation candidate only. Fabrication cannot be released until the manufacturer confirms the exact stack and KiCad constraints are updated from that confirmation.

@@ -8,7 +8,7 @@ The exact 80 x 60 x 32 mm target is not feasible for the accepted two-cell unit 
 
 | Item | Verified/planning envelope | Consequence |
 | --- | --- | --- |
-| Orient display candidate | 50.45 x 69.90 x 4.21 mm | Fits the front of an 84 x 60 mm board in portrait orientation |
+| Orient display candidate | 50.45 x 69.90 x 4.22 mm | Fits the front of an 84 x 60 mm board in portrait orientation |
 | Molicel M50A cell | 21.7 mm diameter x 70.2 mm max | Two bare cells consume 43.4 mm width before separation and contacts |
 | Keystone 1123 holder | approximately 82.2 x 45.1 mm; 17.27 mm holder height above PCB listed by distributor | Requires at least about 84 mm board/enclosure length |
 | PCB | 1.6 mm candidate | Four-layer stackup; final tolerance open |

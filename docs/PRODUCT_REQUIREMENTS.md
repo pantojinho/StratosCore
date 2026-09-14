@@ -41,4 +41,4 @@ Microphone logging is optional and experimental; it is not a certified cockpit v
 
 ## Current architecture acceptance
 
-All requested paths exist, locked parts and proposals are explicit in the preliminary BOM, unknown supplier IDs remain TBD, diagrams are conceptual, references have license assessments, official license texts are present, and the handoff lists ordered work. A valid gated KiCad hierarchy and host ADS-B timing fixture exist. No completed circuit, PCB routing or manufacturing release is included.
+All requested paths exist, locked parts and proposals are explicit in the preliminary BOM, unknown supplier IDs remain TBD, diagrams are conceptual, references have license assessments and official license texts are present. [Project status](PROJECT_STATUS.md) lists ordered work; [Astra handoff](ASTRA_HANDOFF.md) is reserved for final KiCad execution. A valid gated KiCad hierarchy and host ADS-B timing fixture exist. No completed circuit, PCB routing or manufacturing release is included.

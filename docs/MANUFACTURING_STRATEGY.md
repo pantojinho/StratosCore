@@ -6,7 +6,7 @@ The current priority is hardware readiness. Sol should close exact component evi
 
 ## Sourcing
 
-Use the exact locked MPNs and validated manufacturer package drawings. Some names, notably SHT40, identify a family pending ordering suffix; do not pretend the orderable suffix is selected. Record supplier, region/currency, quantity, quotation date, stock, lead time, package/reel and assembly fees. No price, stock or LCSC ID in the foundation is guessed. Multiple suppliers are preferable, but substitute MPNs require a decision proposal.
+Use the exact locked MPNs and validated manufacturer package drawings. SHT40-AD1B-R2 is selected; generic names that still lack an ordering suffix remain explicitly TBD. Record supplier, region/currency, quantity, quotation date, stock, lead time, package/reel and assembly fees. No price, stock or LCSC ID is guessed. Multiple suppliers are preferable, but substitute MPNs require a decision proposal.
 
 The [preliminary BOM](../bom/preliminary_bom.csv) is a functional planning list, not a purchasing or pick-and-place file. Logical references are placeholders. RF passives/filters, clocks, charger, connector variants and complete protection/decoupling networks are incomplete. Produce a real reference-designator/quantity BOM only after schematic review.
 

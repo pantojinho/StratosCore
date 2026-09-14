@@ -1,6 +1,6 @@
 # Decision register
 
-Baseline established from the owner's foundation brief; research reviewed 2026-09-11 UTC (2026-09-10 local session). LOCKED means a product constraint, not a validated design. OPEN means selection incomplete. PROPOSED means an engineering starting point requiring validation.
+Baseline established from the owner's foundation brief; register last updated 2026-09-14. Dated evidence and sourcing snapshots retain their individual review dates. LOCKED means a product constraint, not a validated design. OPEN means selection incomplete. PROPOSED means an engineering starting point requiring validation.
 
 ## Locked baseline
 
@@ -8,7 +8,7 @@ Baseline established from the owner's foundation brief; research reviewed 2026-0
 | --- | --- | --- |
 | D01 | Project/repository name StratosCore | Independent of legacy projects |
 | D02 | ESP32-S3-WROOM-1-N16R8 | 16 MB Flash, 8 MB PSRAM, Wi-Fi/BLE, module PCB antenna; no bare SoC substitution |
-| D03 | 2.8-inch IPS 320 x 240 and capacitive touch | Exact panel/controller/connector open; no speculative footprint |
+| D03 | 2.8-inch IPS 320 x 240 and capacitive touch | Orient C1 is the sample candidate; connector, translation, driver and sample evidence remain open; no speculative footprint |
 | D04 | Portrait and landscape support; two physical buttons | Mechanical access and coordinate transforms required |
 | D05 | SX1262 directly on PCB, SPI, 915 MHz class hardware | No E220/E32, UART radio module, or plug-in radio board; regional TX settings configurable |
 | D06 | LoRa PCB U.FL | Optional enclosure SMA via pigtail; exact connector ordering code open |
@@ -29,7 +29,7 @@ Baseline established from the owner's foundation brief; research reviewed 2026-0
 
 ## Open selections
 
-Display connector/drawing, GNSS antenna, microphone MPN, USB-C input controller, exact 2S charger/protection/regulators, holder ordering code, exact PCB dimensions, enclosure thickness, RF connector MPNs and GNSS/ADS-B connector styles remain OPEN. The display, ADS-B frontend, BQ25887 charger candidate, mechanical envelope and stackup are proposals or sample candidates with explicit gates below. The LoRa connector *family* remains U.FL despite the general connector-selection TODO.
+Display mating connectors/translation/backlight, GNSS antenna, microphone MPN, USB-C input controller, exact 2S charger/protection/regulators, holder ordering code, exact PCB dimensions, enclosure thickness, RF connector MPNs and GNSS/ADS-B connector styles remain OPEN. The display, ADS-B frontend, BQ25887 charger candidate, mechanical envelope and stackup are proposals or sample candidates with explicit gates below. The LoRa connector *family* remains U.FL despite the general connector-selection TODO.
 
 ## Proposals, not freezes
 
@@ -40,7 +40,7 @@ Display connector/drawing, GNSS antenna, microphone MPN, USB-C input controller,
 | P03 | Evaluate one protected 1S bay first; independently managed dual bays for larger version | SUPERSEDED by the owner-approved P14 two-cell-only 2S direction |
 | P04 | L1 components/signals, L2 solid ground, L3 power/signals, L4 signals/components | Manufacturer stackup, return-current review, controlled impedance |
 | P05 | ESP-IDF/FreeRTOS with separate board support and services | Toolchain/license audit and MeshCore port feasibility; no firmware build selected |
-| P06 | Orient `AFY240320A1-2.8INTH-C1` as display sample candidate using SPI | Exact C1 drawing, labeled samples, connector, backlight and readability/power tests; footprint remains prohibited |
+| P06 | Orient `AFY240320A1-2.8INTH-C1` as display sample candidate using SPI | Exact revision-J specification reviewed 2026-09-14; independently transcribe FPC geometry, select mating connectors/1.8 V translation/backlight driver, inspect labeled samples and run readability/power tests; footprint remains prohibited |
 | P07 | Replace ATGM332D-5NR32 with u-blox `MAX-M10S-00B` | ACCEPTED by owner 2026-09-13; verify exact symbol/footprint, antenna and configuration before schematic entry |
 | P08 | Two BQ25185 independent 1S bays feeding LTC4415, with per-bay fuse/reverse protection/NTC/gauge | REJECTED by owner 2026-09-13 as excessive complexity; retained only as comparison evidence |
 | P09 | 84 x 60 mm PCB and approximately 37 mm two-cell enclosure | Printed dummy and final component/connector tolerance stack |
