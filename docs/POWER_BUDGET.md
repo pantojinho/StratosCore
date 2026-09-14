@@ -11,7 +11,7 @@ Revision 2026-09-14: the ESP32-S3, GNSS and ADS-B rows were re-derived from exac
 | GNSS | 0.027 | 0.027 | 0.027 | MAX-M10S-00B datasheet UBX-20035208 Table 15 at 3.0 V: acquisition 13 mA + V_IO 2.3 mA, continuous tracking 5 mA + 2.3 mA; duty 20% acquisition / 80% tracking. Replaces the superseded ATGM-class allowance |
 | Four sensors | 0.02 | 0.03 | 0.03 | Sample rate/filter/heater policy not fixed |
 | ADS-B complete subsystem | 0.00 | 0.46 | 0.46 | Analog: two BLB01 at 27 mA and ADL5513 at 31 mA from 3.0 V plus MCP6566 IQ 0.1 mA maximum at 3.3 V (datasheet electrical characteristics). Digital: RP2040 datasheet Table 637 worst-case IOVDD 35.5 mA, DVDD 16.6 mA referred to the 3.3 V input through the internal LDO, flash active-read allowance 20 mA. Unmeasured; protocol-stage block reviews must confirm |
-| SX1262 and RF support | 0.02 | 0.03 | 0.03 | Duty-cycle allowance only; no universal TX settings |
+| SX1262 and RF support | 0.02 | 0.03 | 0.03 | Duty-cycle allowance only; no universal TX settings. SX1262 Rev 1.2 Table 3-6 confirms TX 118 mA typical at +22 dBm (915 MHz) — that burst is a transient peak on `3V3_MAIN`, not an average row |
 | microSD | 0.03 | 0.10 | 0.10 | Card and batching-dependent; write peaks much larger |
 | Microphone/audio increment | 0.00 | 0.03 | 0.03 | Audio enabled for conservative FLIGHT/DESKTOP example |
 | Gauge, control and other loads | 0.02 | 0.03 | 0.04 | PMIC idle, enables and miscellaneous allowances |

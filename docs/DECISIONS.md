@@ -10,7 +10,7 @@ Baseline established from the owner's foundation brief; register last updated 20
 | D02 | ESP32-S3-WROOM-1-N16R8 | 16 MB Flash, 8 MB PSRAM, Wi-Fi/BLE, module PCB antenna; no bare SoC substitution |
 | D03 | 2.8-inch IPS 320 x 240 and capacitive touch | Orient C1 is the sample candidate; connector, translation, driver and sample evidence remain open; no speculative footprint |
 | D04 | Portrait and landscape support; two physical buttons | Mechanical access and coordinate transforms required |
-| D05 | SX1262 directly on PCB, SPI, 915 MHz class hardware | No E220/E32, UART radio module, or plug-in radio board; regional TX settings configurable |
+| D05 | SX1262 directly on PCB, SPI, 915 MHz class hardware | No E220/E32, UART radio module, or plug-in radio board; regional TX settings configurable. Exact ordering code SX1262IMLTRT confirmed 2026-09-14 (QFN-24 4 x 4 mm; Rev 1.2 Table 3-6: 118 mA typical TX at +22 dBm, 915 MHz) |
 | D06 | LoRa PCB U.FL | Optional enclosure SMA via pigtail; exact connector ordering code open |
 | D07 | u-blox MAX-M10S-00B GNSS, UART | Owner accepted P07 on 2026-09-13; 80 km airborne mode resolves the balloon-altitude conflict; antenna open |
 | D08 | ICM-42688-P, MMC5983MA, BMP581, SHT40 | No BME688 baseline; isolate environmental sensors from heat |

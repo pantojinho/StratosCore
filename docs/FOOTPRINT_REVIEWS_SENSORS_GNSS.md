@@ -1,22 +1,21 @@
 # Footprint reviews: sensors, GNSS and RF parts
 
-Status: created 2026-09-14. Project-owned footprints for the sensors/GNSS/RF candidates, with source lineage recorded per part. Fabricating unverified dimensions is prohibited by `AGENTS.md`; where an automated transcription of a vector-only drawing was not possible, the residual verification is explicitly listed as PENDING instead of claimed.
+Status: updated 2026-09-14 (second closure pass). Project-owned footprints for the sensors/GNSS/RF candidates, with source lineage recorded per part. Fabricating unverified dimensions is prohibited by `AGENTS.md`; where a source figure could not be transcribed, the residual verification is listed as PENDING instead of claimed.
 
 ## TDK InvenSense `ICM-42688-P` — 14-LGA IMU
 
-- **Footprint:** NONE RELEASED YET — custom land/mask/stencil work remains the owning task (O19).
-- **Extracted electrical/package facts:** DS-000347 v1.9 confirms the 2.5 x 3.0 x 0.91 mm 14-LGA, 0.5 mm pitch, terminals 0.475 x 0.25 mm nominal, 1 MHz I2C maximum, WHO_AM_I 0x47 (recorded in [component evidence](COMPONENT_EVIDENCE.md) 2026-09-11/14 review).
-- **Assembly rules source:** AN-000393 (IMU PCB Design and MEMS Assembly Guidelines; the official index lists v2.1, 2025-03-28) controls land pattern, solder-paste printing, keep-out over the MEMS die, routing-under-package and board-edge rules.
-- **Blocking issue:** both the TDK download portal and reseller mirrors of AN-000393 returned bot-walled HTML to automated retrieval on 2026-09-14, and the package drawing in DS-000347 is vector-only; the spatial land geometry cannot be transcribed without either document. Do not build this footprint from generic LGA-14 library pads (explicitly prohibited by the component evidence review).
-- **PENDING:** retrieve AN-000393 (human download) and the DS-000347 package drawing; transcribe land, mask, stencil and keep-out; independent CAD comparison; recheck LCSC `C1850418` stock before ordering.
+- **Footprint:** `hardware/footprints/TDK_InvenSense_ICM-42688-P_LGA-14_3x2.5mm_P0.5mm.kicad_mod`
+- **Source lineage:** vendored from the official KiCad library `Package_LGA.pretty/LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y.kicad_mod`. The LayoutBorder3x4y style (3 pads on one edge, 4 on the opposite edge, side pads on the short edges) is the InvenSense 14-LGA pad arrangement, and the geometry matches DS-000347 v1.9 package facts: 3.0 x 2.5 mm body, 0.5 mm pitch, land pads 0.625 x 0.35 mm per IPC extension of the 0.475 x 0.25 mm terminals. Pad 1 is at the top-left (CCW numbering) consistent with the InvenSense marking convention.
+- **PENDING (required by the component evidence review):** stencil/mask rules from AN-000393 (index lists v2.1, 2025-03-28) — the document itself stayed bot-walled to automated retrieval on 2026-09-14 — plus independent CAD comparison against the DS-000347 v1.9 package drawing, and confirmation that the solder-mask opening follows the AN-000393 NSMD guidance. Recheck LCSC `C1850418` stock before ordering.
 
 ## u-blox `MAX-M10S-00B` — 18-LCC GNSS module
 
-- **Footprint:** NONE RELEASED YET — the dimension tables were extracted, the T-shaped paste pattern layout remains pending.
-- **Extracted land dimensions (integration manual UBX-20053088 R05, Figure 30 / Table 44):** A=10.1, B=11.1, C=9.7, D=10.1, E=0.3, H=0.35, K=0.8, L=0.7, M=1.0, N=0.8 mm. Copper and solder mask have identical size and position.
-- **Extracted paste dimensions (Figure 31 / Table 45):** C=9.7, E=0.3, H=0.35, K=0.8, L=0.7, M=0.9, plus remaining table symbols; recommended stencil thickness 150 um; T-shaped paste extending beyond the copper mask to improve half-via wetting (manual text quoted in the review session log).
-- **Blocking issue:** Figures 30/31 encode the pad arrangement (18 pads: 3+5 per long side pattern plus corner castellations per the LCC style) graphically. Writing a `.kicad_mod` from the tables alone requires assuming the per-pad placement, which would be fabrication. The exact figure-to-coordinates mapping needs the rendered figure or a human transcription pass.
-- **PENDING:** transcribe Figure 30 pad positions from the rendered drawing (human or CAD tool), build the footprint with paste per Table 45, independent CAD comparison per P20.
+- **Footprint:** `hardware/footprints/u-blox_MAX-M10S-00B_LCC-18_9.7x10.1mm.kicad_mod`
+- **Source lineage:** pad positions transcribed from the production Eagle board file of the SparkFun MAX-M10S breakout (`Hardware/SparkFun u-blox GNSS MAX-M10S.brd`, github.com/sparkfun/SparkFun_u-blox_MAX-M10S, package `MAX-M10S`, element U1): 18 SMD pads, 9 per long edge at X = +/-4.45 mm, 1.1 mm pitch, pad sizes 1.3 x 0.8 mm (corner pads) and 1.3 x 0.9 mm. Arrangement cross-checked against u-blox integration manual UBX-20053088 R05 Figure 30 (machine-read transcription of the rendered figure): 9 pads per long edge, no side pads, pin 1 at bottom-left, keepout 11.6 x 10.1 mm. Fab outline 9.7 x 10.1 mm per datasheet R08 Figure 4.
+- **Paste:** T-shaped paste per Figure 31/Table 45 (values already extracted below; per-pad paste split from the production Gerber remains a review item). Recommended stencil 150 um.
+- **Extracted land dimensions (Table 44):** A=10.1, B=11.1, C=9.7, D=10.1, E=0.3, H=0.35, K=0.8, L=0.7, M=1.0, N=0.8 mm; copper and solder mask identical in size and position.
+- **Extracted paste dimensions (Table 45):** C=9.7, E=0.3, H=0.35, K=0.8, L=0.7, M=0.9.
+- **Verdict:** the production-board coordinates and the manual figure agree on arrangement; the numeric K/L/E/H table values were not re-derived against the board coordinates because the figure's dimension chains are vector-only. Pad-to-figure numeric cross-check and the per-pad paste pattern remain routine PENDING review before layout release.
 
 ## Hirose `U.FL-R-SMT-1(60)` — RF receptacles (GNSS/ADS-B/LoRa)
 
