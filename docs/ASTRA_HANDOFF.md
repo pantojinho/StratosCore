@@ -25,10 +25,11 @@ Do not invoke Astra for StratosCore CAD yet. [Project status](PROJECT_STATUS.md)
 | --- | --- |
 | [Decision register](DECISIONS.md) | Locked baseline and accepted proposals |
 | [Orderable BOM](../bom/preliminary_bom.csv) | Replace this preliminary path with the final orderable BOM before READY |
-| [Interface/GPIO map](INTERFACE_GPIO_MAP.md) | Nets, buses, boot states and ownership |
+| [Interface/GPIO map](INTERFACE_GPIO_MAP.md) and [electrical matrix](ELECTRICAL_COMPATIBILITY_MATRIX.md) | Nets, buses, voltage domains, boot/off states and ownership |
 | [Datasheet index](../hardware/datasheets/README.md) | Exact primary-source revisions |
-| [Power review](POWER_ARCHITECTURE_REVIEW.md) | Reviewed 2S application and fault limits |
-| [RF architecture](RF_ARCHITECTURE.md) | RF references, stackup and placement constraints |
+| [Power review](POWER_ARCHITECTURE_REVIEW.md) and [rail plan](POWER_RAIL_PLAN.md) | Reviewed 2S application, fault limits, rails and sequencing |
+| [Display](DISPLAY_REQUIREMENTS.md), [GNSS](GNSS_ARCHITECTURE.md), [audio](AUDIO_ARCHITECTURE.md) and [connector package](CONNECTOR_ARCHITECTURE.md) | Exact accepted subsystem circuits, parts and implementation constraints |
+| [RF architecture](RF_ARCHITECTURE.md) and [RF connector selection](RF_CONNECTOR_SELECTION.md) | RF references, stackup, interconnect and placement constraints |
 | [Mechanical/RF floorplan](MECHANICAL_RF_FLOORPLAN.md) | Board outline, keepouts and enclosure interfaces |
 | [Manufacturing strategy](MANUFACTURING_STRATEGY.md) | Factory rules and release outputs |
 

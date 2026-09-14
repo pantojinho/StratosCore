@@ -8,11 +8,11 @@ StratosCore is an open-source portable field, aviation, meteorological, navigati
 
 | Complete | In progress | Externally blocked |
 | --- | --- | --- |
-| Product baseline and licensing | Display connectors/translation/driver; GNSS antenna and power choices | Display C1 samples and connector confirmation |
-| MAX-M10S GNSS decision | Complete 2S charger/protection/regulator selection | Qualified electrical/battery review |
-| Two removable 21700 cells in 2S decision | Review Molicel M50A cells, USB-C CC/input and remaining digital parts/footprints | RF performance and runtime measurements need prototypes |
+| Product baseline and licensing | Review/test exact display support and GNSS passive RF proposals | Display controlled drawing, C1 samples and connector confirmation |
+| MAX-M10S GNSS decision | Close complete 2S charger/protection/VBUS application | Qualified electrical/battery review and fault tests |
+| Two removable 21700 cells in 2S decision | Accept exact cells/holder and state estimation; finish rail calculations | RF performance and runtime measurements need prototypes |
 | ESP32 compute sheet and GPIO allocation | Sensor CAD, LoRa/ADS-B RF, stackup and mechanical dummy | Final factory stack confirmation |
-| RP2040 flash/clock and microSD candidates | Microphone, connectors and exact support circuits | Independent footprint and bring-up review |
+| Exact candidates for RP2040 support, microSD, audio, USB-C, expansion, buttons, rails and RF interconnects | Independent footprints, mechanical fit, off-state review and application tests | Independent footprint and bring-up review |
 | KiCad hierarchy; latest ERC: zero violations | Orderable BOM and manufacturing inputs | |
 | ADS-B host fixture: four tests passing | | |
 

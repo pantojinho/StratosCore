@@ -29,7 +29,7 @@ Baseline established from the owner's foundation brief; register last updated 20
 
 ## Open selections
 
-Display mating connectors/translation/backlight, GNSS antenna, microphone MPN, USB-C input controller, exact 2S charger/protection/regulators, holder ordering code, exact PCB dimensions, enclosure thickness, RF connector MPNs and GNSS/ADS-B connector styles remain OPEN. The display, ADS-B frontend, BQ25887 charger candidate, mechanical envelope and stackup are proposals or sample candidates with explicit gates below. The LoRa connector *family* remains U.FL despite the general connector-selection TODO.
+Exact display interface mode and controlled mechanical drawing, 2S protection/VBUS protection/holder/state estimation, RF circuits, exact PCB dimensions, enclosure thickness and production stackup remain OPEN. Preferred candidates now exist for the display connectors/translation/backlight, GNSS package, microphone, USB-C, expansion, regulators, buttons and RF interconnects, but their review/test gates below still prevent footprint or schematic release. The LoRa connector family remains locked to U.FL.
 
 ## Proposals, not freezes
 
@@ -40,7 +40,7 @@ Display mating connectors/translation/backlight, GNSS antenna, microphone MPN, U
 | P03 | Evaluate one protected 1S bay first; independently managed dual bays for larger version | SUPERSEDED by the owner-approved P14 two-cell-only 2S direction |
 | P04 | L1 components/signals, L2 solid ground, L3 power/signals, L4 signals/components | Manufacturer stackup, return-current review, controlled impedance |
 | P05 | ESP-IDF/FreeRTOS with separate board support and services | Toolchain/license audit and MeshCore port feasibility; no firmware build selected |
-| P06 | Orient `AFY240320A1-2.8INTH-C1` as display sample candidate using SPI | Exact revision-J specification reviewed 2026-09-14; independently transcribe FPC geometry, select mating connectors/1.8 V translation/backlight driver, inspect labeled samples and run readability/power tests; footprint remains prohibited |
+| P06 | Orient `AFY240320A1-2.8INTH-C1` as display sample candidate using SPI | Exact revision-J specification reviewed 2026-09-14; P21 selects preferred support candidates. Controlled drawing/SPI confirmation, independent CAD, labeled samples and prototype tests still gate release |
 | P07 | Replace ATGM332D-5NR32 with u-blox `MAX-M10S-00B` | ACCEPTED by owner 2026-09-13; verify exact symbol/footprint, antenna and configuration before schematic entry |
 | P08 | Two BQ25185 independent 1S bays feeding LTC4415, with per-bay fuse/reverse protection/NTC/gauge | REJECTED by owner 2026-09-13 as excessive complexity; retained only as comparison evidence |
 | P09 | 84 x 60 mm PCB and approximately 37 mm two-cell enclosure | Printed dummy and final component/connector tolerance stack |
@@ -54,6 +54,12 @@ Display mating connectors/translation/backlight, GNSS antenna, microphone MPN, U
 | P17 | Evaluate `TUSB320LAIRWBR` as the fixed-UFP USB-C CC controller; remain at 5 V without USB PD | TI documents default/1.5 A/3 A current detection at address 0x47. Hardware caps BQ25887 input at 500 mA until valid detection; exact connector, back-power, ESD/inrush and factory availability remain open |
 | P18 | Use `W25Q128JVSIQ` and `ABM8-272-T3` as the preferred RP2040 flash/clock candidates | Raspberry Pi's current guide uses W25Q128JVS and explicitly recommends the Abracon crystal/reference values; footprints, source status and corner bring-up remain gates |
 | P19 | Use Hirose `DM3AT-SF-PEJM5` as the preferred microSD socket candidate on shared SPI | Exact May 2026 controlled drawing, card-detect switch and mechanical envelope reviewed; final footprint, enclosure access, ESD/power switching and factory sourcing remain gates |
+| P20 | Use the passive Taoglas `FXP611.07.0092C` on Hirose `U.FL-R-SMT-1(60)` with TI `TPD1E0B04DPYR`; tie MAX-M10S VCC/V_IO to the always-on system 3.3 V rail and leave V_BCKP, RESET_N, EXTINT, LNA_EN and VCC_RF open | PREFERRED APPLICATION; RF/PDN review required. Reserve the antenna's 40 x 40 mm enclosure area and 10 mm metal/ground clearance, validate cable/strain relief, calculate the 50-ohm path, simulate/VNA-check ESD loading, measure coexistence and independently review all footprints before KiCad release |
+| P21 | Use `XF3M-4015-1B` and `XF3M-0615-1B` display connectors, `SN74AXC4T245PWR` plus `SN74LVC1G07DBVR` translation, and `TPS61169DCKR` backlight drive from `3V3_MAIN` | Preferred candidates only; obtain a controlled Orient drawing, confirm exact write-only SPI mode and FPC tolerance on two samples, independently review CAD and prototype backlight current/fault/EMI behavior |
+| P22 | Use `TPS62130ARGTR` for `3V3_MAIN`, `TPS7A2030PDBVR` for quiet ADS-B 3.0 V, `TPS7A2018PDBVR` for 1.8 V logic and `TPS22918DBVR` for justified switchable domains | Preferred rail candidates only; close simultaneous peak loads, passives, grouping, sequencing, back-power, transient, thermal and EMI evidence; exact 2S protection and VBUS path remain separate safety gates |
+| P23 | Use TDK `MMICT5838-00-012` PDM microphone with TI `TXU0202DCUR` translator | Preferred candidates only; independently review CAD, 1.8 V sequencing, acoustic port/gasket, timing and audio/RF tests |
+| P24 | Use GCT `USB4105-GF-A`, TI `TPD4E05U06DQARG4`, JST `BM12B-GHS-TBT`/`GHR-12V-S`, Alps `SKSCLCE010` buttons and TI `TCA9535PWR` slow I/O | Preferred support candidates only; VBUS protection remains open and every footprint, cable, current limit, reset default, hot-plug/back-power and enclosure fit must be independently reviewed |
+| P25 | Standardize PCB RF receptacles on Hirose `U.FL-R-SMT-1(60)` and use Taoglas `CAB.721` for the ADS-B and optional LoRa SMA bulkheads | PREFERRED INTERCONNECT; RF/CAD review required. U.FL is an internal 30-cycle interface. Confirm complete RF loss/match, exact footprints, factory stackup, panel/cable fit, port labels and coexistence before layout release |
 
 ## Conflicts requiring explicit resolution
 

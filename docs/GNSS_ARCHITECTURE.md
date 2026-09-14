@@ -1,6 +1,6 @@
 # GNSS architecture
 
-Rev A is locked to **u-blox `MAX-M10S-00B` via UART**, accepted by the owner on 2026-09-13. This review prepares the exact module interface for later KiCad entry; it does not select the antenna, connector, backup supply, or production RF geometry.
+Rev A is locked to **u-blox `MAX-M10S-00B` via UART**, accepted by the owner on 2026-09-13. This review prepares a preferred module and RF application for final RF/PDN review before later KiCad entry. No footprint or production RF geometry is released here.
 
 Status terms in this document are intentional:
 
@@ -11,15 +11,18 @@ Status terms in this document are intentional:
 
 ## Controlled source set
 
-Reviewed 2026-09-13 against current documents published by u-blox:
+The receiver sources were reviewed 2026-09-13 and the antenna-path sources 2026-09-14:
 
 | Document | Revision/date | Sections used |
 | --- | --- | --- |
 | [MAX-M10S data sheet, UBX-20035208](https://content.u-blox.com/sites/default/files/MAX-M10S_DataSheet_UBX-20035208.pdf) | R08, 2026-01-30 | 1.2-1.5, 3, 4, 5, 6, 9 |
 | [MAX-M10S integration manual, UBX-20053088](https://content.u-blox.com/sites/default/files/MAX-M10S_IntegrationManual_UBX-20053088.pdf) | R05, 2026-04-28 | 1.3, 2.1, 3.2-3.4, 4.1-4.4, appendices B-C |
 | [u-blox M10 SPG 5.10 interface description, UBX-21035062](https://content.u-blox.com/sites/default/files/u-blox-M10-SPG-5.10_InterfaceDescription_UBX-21035062.pdf) | R03, protocol 34.10 | `CFG-NAVSPG-DYNMODEL`, `CFG-TP-*`, configuration layers |
+| [Taoglas FXP611.07.0092C specification](https://www.taoglas.com/datasheets/FXP611.07.0092C.pdf) | SPE-13-8-010-G; document date not stated | Electrical, environmental and mechanical specification; cable and connector |
+| [Hirose U.FL catalog](https://www.hirose.com/en/product/document?clcode=CL0321-6226-1-08&documentid=ed_U.FL_CAT&documenttype=Catalog&lang=en&productname=U.FL-2LPHF6-066N2-A-100&series=U.FL) | 2026-04-01 | `U.FL-R-SMT-1(60)` identity, ratings and PCB/mask drawings |
+| [TI TPD1E0B04 data sheet](https://www.ti.com/lit/gpn/TPD1E0B04) | Rev C, 2025-06 | `TPD1E0B04DPYR` electrical limits, DPY package and antenna use |
 
-Recheck all three at design freeze and subscribe to the u-blox product-change notices. Distributor and marketplace drawings do not control the symbol, footprint, or antenna circuit.
+Recheck the controlled sources at design freeze and subscribe to the applicable manufacturer change notices. Distributor and marketplace drawings do not control the symbol, footprint, or antenna circuit.
 
 ## Exact identity and verified capability
 
@@ -37,16 +40,16 @@ The directions below are from the module perspective. ESP32 net names are from t
 | 2 | TXD | UART output | Connect to `GNSS_RX` / ESP32 GPIO18 |
 | 3 | RXD | UART input | Connect from `GNSS_TX` / ESP32 GPIO17; unpowered-state drive must be resolved |
 | 4 | TIMEPULSE | Time-pulse output, shared internally with SAFEBOOT_N through 1 kOhm | Connect to `GNSS_PPS` / ESP32 GPIO21; the host pin must remain high-impedance and must not pull this node low during GNSS startup |
-| 5 | EXTINT | External interrupt, time/frequency aiding, wake and host-controlled power-save input | **TBD:** leave open unless the power-state plan assigns a host signal and validates its unpowered state |
-| 6 | V_BCKP | Optional backup-domain supply | **TBD:** if backup is rejected, leave open exactly as u-blox directs; do not tie to ground |
+| 5 | EXTINT | External interrupt, time/frequency aiding, wake and host-controlled power-save input | **PROPOSED:** leave open in Rev A; no host wake or antenna-supervisor role |
+| 6 | V_BCKP | Optional backup-domain supply | **PROPOSED:** leave open in Rev A exactly as u-blox directs; do not tie to ground |
 | 7 | V_IO | Digital-I/O and backup-domain supply | **PROPOSED:** tie to the same quiet 3.3 V rail as VCC |
 | 8 | VCC | Core and RF main supply | **PROPOSED:** quiet 3.3 V rail sized for startup current |
-| 9 | RESET_N | Active-low reset; internal pull-up; low for at least 1 ms | **PROPOSED:** leave open in the minimum design or drive only with a reviewed high-impedance/open-drain recovery circuit; never add a capacitor to ground |
+| 9 | RESET_N | Active-low reset; internal pull-up; low for at least 1 ms | **PROPOSED:** leave open in Rev A; use documented UBX reset commands and a whole-domain power cycle for hard recovery; never add a capacitor to ground |
 | 10 | GND | Ground | Connect to the ground plane |
 | 11 | RF_IN | 50-ohm GNSS input; DC blocked inside the module | Route only through the selected 50-ohm antenna network |
 | 12 | GND | Ground | Connect to the ground plane |
-| 13 | LNA_EN | Active-high control for the integrated LNA and optional external LNA/active-antenna switch | **TBD:** leave open for a passive antenna; use only as shown in the selected active-antenna design |
-| 14 | VCC_RF | Filtered RF supply output, nominally VCC minus 0.1 V, 50 mA maximum operating output current | **TBD:** leave open for a passive antenna; use only after active-antenna voltage/current and fault behavior are verified |
+| 13 | LNA_EN | Active-high control for the integrated LNA and optional external LNA/active-antenna switch | **PROPOSED:** leave open because the selected antenna candidate is passive |
+| 14 | VCC_RF | Filtered RF supply output, nominally VCC minus 0.1 V, 50 mA maximum operating output current | **PROPOSED:** leave open; the Rev A candidate RF path carries no DC bias and does not support an active antenna |
 | 15 | VIO_SEL | V_IO range select | Leave open for the proposed 3.3 V V_IO design; connect to ground only in an accepted 1.8 V design |
 | 16 | SDA | I2C data | Leave open because UART is locked for Rev A |
 | 17 | SCL | I2C clock | Leave open because UART is locked for Rev A |
@@ -66,16 +69,13 @@ Pins 1, 10, and 12 are all ground connections, not optional no-connect pads. Pin
 
 ### Proposed Rev A power arrangement
 
-Use one quiet 3.3 V GNSS domain for VCC and V_IO and leave VIO_SEL open. This removes level shifting against the 3.3 V ESP32 and matches u-blox's typical 3.3 V design. Confirm the regulator/load-switch transient response with the documented 100 mA startup demand.
+Use the board's quiet, always-on-during-system-operation 3.3 V domain for both VCC and V_IO and leave VIO_SEL open. Do not add a GNSS-only load switch in Rev A. This removes level shifting against the 3.3 V ESP32, matches u-blox's typical 3.3 V design, and eliminates the normal case where the host UART can drive an unpowered receiver. The system 3.3 V regulator and PDN must still meet the documented 100 mA startup demand with no more than 0.2 ohm added VCC series resistance.
 
-There is **no dedicated enable pin** on MAX-M10S. EXTINT can control supported power-save behavior but is not a replacement for a supply enable. If Rev A must fully remove GNSS power, use an external reviewed load switch and ensure the ESP32 TX/PPS connections cannot back-power or drive an unpowered module.
+There is **no dedicated enable pin** on MAX-M10S. EXTINT can control supported power-save behavior but is not a supply enable. The Rev A proposal leaves EXTINT open and keeps the receiver powered whenever the system 3.3 V rail is present. Any later request for independent hard power-off is a design change that must add a reviewed load switch plus UART/PPS isolation or host-state guarantees.
 
-**TBD backup choice:**
+**PROPOSED backup choice:** leave V_BCKP open for Rev A. The host must reapply and verify configuration after every cold power-up and accept cold-start TTFF, or provide documented time/orbit assistance. This avoids a coin cell, supercapacitor and leakage/service-life path. Adding retention later requires a separately reviewed 1.65-3.6 V source and new sequencing and lifetime evidence.
 
-- Minimal option: leave V_BCKP open and send time/orbit assistance and the required configuration from the host at every cold power-up.
-- Retention option: supply V_BCKP from a separately reviewed 1.65-3.6 V source. Avoid high series resistance and validate source capacity, leakage, power sequencing, and service life.
-
-RESET_N should be reserved for exceptional recovery. A hardware reset clears RAM, battery-backed RAM, receiver configuration, RTC, and orbit data and therefore behaves like a cold start. Normal reconfiguration/restart should use documented UBX commands. If RESET_N is implemented, use a default-high-impedance control, meet the 1 ms low time, and place no capacitor from RESET_N to ground.
+**PROPOSED reset choice:** leave RESET_N open. A hardware reset clears RAM, battery-backed RAM, receiver configuration, RTC and orbit data and therefore behaves like a cold start. Normal reconfiguration/restart uses documented UBX commands; hard recovery power-cycles the whole switched system domain. Any later RESET_N control must be default-high-impedance, meet the 1 ms low time and place no capacitor from RESET_N to ground.
 
 ## Host interface and time pulse
 
@@ -93,10 +93,17 @@ For balloon operation, firmware must set `CFG-NAVSPG-DYNMODEL` to `AIR4` (value 
 
 **VERIFIED:** RF_IN is internally DC blocked and presents 50 ohms. MAX-M10S includes a Band 13 notch filter, an LNA, and a SAW filter; u-blox states that no additional RF front-end is needed for the typical passive-antenna design. The default internal-LNA setting is low gain. Bypass mode is recommended when total external gain is 10-15 dB or more; normal-gain mode is not recommended for MAX-M10S.
 
-The mechanical/RF floorplan proposes an external antenna for the first prototype, but the following remain **TBD**: passive versus active, exact orderable antenna, connector, cable length/loss, antenna ground/placement, ESD part, optional external SAW filter, and bias/supervisor circuit.
+### Proposed Rev A RF package
 
-- **Passive candidate path:** antenna/connector to a short 50-ohm RF_IN route. Do not fit an arbitrary bias network. Validate cable loss and the antenna response across the enabled L1 signals.
-- **Active candidate path:** verify antenna voltage and current before using VCC_RF. u-blox's reference network uses a bias inductor with impedance greater than 500 ohms at GNSS L1 (example 27 nH), a 10 nF supply filter, and a 10-ohm current-limiting/shunt resistor; exact values and ratings belong only to the reviewed reference topology. Short/open detection requires the corresponding external switches/buffers/comparator and firmware configuration. Do not copy the reference BOM without selecting the two-pin or three-pin supervisor architecture.
+Use the passive Taoglas `FXP611.07.0092C` antenna, terminated in its factory 92 mm 1.37 mm coax and I-PEX MHF I plug, mated to a Hirose `U.FL-R-SMT-1(60)` board receptacle. Route the connector center contact to MAX-M10S RF_IN as a short calculated 50-ohm line, with one shunt `TPD1E0B04DPYR` ESD device at the connector. Do not fit a bias tee, external LNA or external SAW filter in the baseline. Leave LNA_EN and VCC_RF open and retain the MAX-M10S default low-gain internal-LNA mode.
+
+This is a **PROPOSED** package pending owner and RF review. It is viable because it avoids the antenna-bias and short-circuit supervisor, covers the complete 1559-1610 MHz L1 span used by GPS, Galileo, GLONASS and BeiDou, and lets the 0.9 g flex attach to the inside of the 3D-printed enclosure. The antenna is 38 x 37 x 0.15 mm, requires a 40 x 40 x 0.2 mm allocation and at least 10 mm clearance from metal or the main device ground plane. Taoglas measured the published 80% efficiency and radiation behavior on a 30 x 30 cm ABS fixture, so those numbers are not claimed for the StratosCore enclosure.
+
+The exact board receptacle is the reel-pack `U.FL-R-SMT-1(60)`, HRS `CL0331-0472-2-60`, 50 ohms, rated beyond the 1.61 GHz GNSS band and for 30 mating cycles. The mechanical team must provide cable bend radius, strain relief, connector tool access and a nonmetallic 40 x 40 mm antenna window. This connector is an internal assembly interconnect, not a user-serviceable external port.
+
+The proposed TI `TPD1E0B04DPYR` is the 0402-class DPY package. TI specifies 3.6 V working voltage, 0.18 pF maximum I/O capacitance, ±8 kV IEC 61000-4-2 contact protection and antenna use. Place it adjacent to the U.FL signal pad with the shortest possible ground return and multiple nearby ground vias. Its S-parameter model and the complete connector/trace/ESD path must be simulated or VNA-checked at 1559-1610 MHz; the data-sheet bandwidth does not prove negligible loss in this layout.
+
+An active antenna is deliberately unsupported by this candidate path because the connector carries no DC bias. Substituting an active antenna requires a new recorded decision and the u-blox bias/supervisor design, current/fault analysis and firmware configuration.
 
 The 915 MHz LoRa transmitter is a documented interferer. At 915 MHz the MAX-M10S R05 manual lists a typical low-gain-mode immunity level of -17 dBm at RF_IN. Antenna isolation, filtering, and acceptable GNSS C/N0/fix degradation must be measured with LoRa TX, Wi-Fi/BLE, display, SD, and charging active.
 
@@ -129,9 +136,9 @@ Do not derive pad centers or shapes from this prose alone; reproduce the manufac
 
 The exact identity, 18-pin symbol map, 3.3 V supply option, UART/PPS behavior, manufacturer land-pattern source, and layout constraints are now documented. Before the GNSS circuit or footprint is approved for a prototype:
 
-1. accept or replace the proposed tied 3.3 V VCC/V_IO arrangement and close rail capacitance, filtering, load switch, ramp, and unpowered-I/O behavior;
-2. decide V_BCKP and RESET_N implementation;
-3. select the exact antenna, connector, cable, ESD and passive/active bias-supervisor path from an RF review;
+1. accept or replace the proposed tied always-on 3.3 V VCC/V_IO arrangement, open V_BCKP/RESET_N/EXTINT choice and no-independent-power-gating policy; close rail capacitance, filtering and ramp behavior in the system PDN review;
+2. accept or replace the proposed `FXP611.07.0092C` / `U.FL-R-SMT-1(60)` / `TPD1E0B04DPYR` passive RF package and its no-bias restriction;
+3. reserve and mechanically verify the 40 x 40 mm enclosure area, 10 mm metal/ground clearance, 92 mm cable path, bend radius, strain relief and connector access;
 4. create the project symbol and footprint, then independently compare every pin, dimension, mask layer, paste aperture, courtyard, height and pin-1 mark to R08/R05;
 5. calculate the 50-ohm route from the confirmed production stackup and review the complete RF return path;
 6. test cold/warm start, receiver identity, configuration acknowledgement/persistence, UART overflow, PPS/UTC validity, Airborne 4 g mode, antenna faults where applicable, and no-sky recovery;

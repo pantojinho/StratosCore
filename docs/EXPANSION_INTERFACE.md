@@ -1,6 +1,6 @@
 # Expansion interface
 
-Logical interface required in Rev A. This table is **not a physical pin order**. Connector family, pitch, orientation, number of ground contacts, ESD parts and GPIO assignment are TBD.
+Logical interface required in Rev A. JST `BM12B-GHS-TBT` is now the preferred 12-position, 1.25 mm board-header candidate; [the connector architecture](CONNECTOR_ARCHITECTURE.md) controls its candidate physical pin order and mating parts. The table below defines behavior rather than footprint orientation.
 
 | Signal | Direction at StratosCore | Required behavior |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ Logical interface required in Rev A. This table is **not a physical pin order**.
 | UART TX | Out | Board transmit to peripheral receive |
 | UART RX | In | Board receive from peripheral transmit |
 | GPIO / IRQ | Configurable | Default high impedance; interrupt polarity and wake capability specified later |
-| 5V | Optional power out | Only if available, protected and budgeted; not a locked requirement |
+| 5V | Not assigned in the current 12-pin proposal | Adding it requires a recorded decision, protection and current budget |
 
 Nominal logic domain is 3.3 V, pending exact interface buffer ratings. Do not claim 5 V tolerance. Key or clearly label the connector, protect accessible contacts and prevent an unpowered peripheral from feeding internal rails. Hot-plug capability is unproven and must not be advertised until tested.
 

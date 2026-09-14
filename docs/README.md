@@ -20,6 +20,7 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | [System architecture](SYSTEM_ARCHITECTURE.md) | MCU ownership, buses, timing, storage and power domains |
 | [Block diagram](BLOCK_DIAGRAM.md) | Visual functional interconnect |
 | [GPIO and interface map](INTERFACE_GPIO_MAP.md) | ESP32 allocation, I2C addresses and shared-SPI contract |
+| [Electrical compatibility matrix](ELECTRICAL_COMPATIBILITY_MATRIX.md) | Rail, voltage, address, boot-state and back-power closure map |
 | [Expansion interface](EXPANSION_INTERFACE.md) | External I2C/SPI/UART/GPIO requirements |
 
 ## Hardware subsystems
@@ -27,12 +28,13 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | Area | Primary documents |
 | --- | --- |
 | Components and sourcing | [Component evidence](COMPONENT_EVIDENCE.md), [datasheet index](../hardware/datasheets/README.md), [preliminary BOM](../bom/preliminary_bom.csv) |
-| Digital support | [RP2040 flash/clock and microSD review](DIGITAL_SUPPORT_REVIEW.md) |
+| Digital support | [RP2040 flash/clock and microSD review](DIGITAL_SUPPORT_REVIEW.md), [buttons and slow-control I/O](CONTROL_IO_REVIEW.md) |
 | Display | [Display requirements](DISPLAY_REQUIREMENTS.md) |
 | GNSS | [GNSS architecture](GNSS_ARCHITECTURE.md) |
 | Sensors | [Sensor architecture](SENSOR_ARCHITECTURE.md) |
-| Power | [Accepted options](POWER_ARCHITECTURE_OPTIONS.md), [2S review](POWER_ARCHITECTURE_REVIEW.md), [power budget](POWER_BUDGET.md) |
-| RF | [RF architecture](RF_ARCHITECTURE.md), [ADS-B architecture](ADSB_ARCHITECTURE.md), [ADS-B validation](ADSB_VALIDATION.md) |
+| Audio | [Digital microphone architecture](AUDIO_ARCHITECTURE.md) |
+| Power and wired connectors | [Accepted options](POWER_ARCHITECTURE_OPTIONS.md), [2S review](POWER_ARCHITECTURE_REVIEW.md), [rail plan](POWER_RAIL_PLAN.md), [USB-C/expansion connectors](CONNECTOR_ARCHITECTURE.md), [power budget](POWER_BUDGET.md) |
+| RF | [RF architecture](RF_ARCHITECTURE.md), [RF connector selection](RF_CONNECTOR_SELECTION.md), [ADS-B architecture](ADSB_ARCHITECTURE.md), [ADS-B validation](ADSB_VALIDATION.md) |
 | PCB and mechanics | [Stackup](PCB_STACKUP.md), [mechanical requirements](MECHANICAL_REQUIREMENTS.md), [mechanical/RF floorplan](MECHANICAL_RF_FLOORPLAN.md) |
 
 ## Production

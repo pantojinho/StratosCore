@@ -5,16 +5,17 @@ Phase: Rev A pre-KiCad engineering closure, last reviewed 2026-09-14. These are 
 | Check | Result |
 | --- | --- |
 | Required engineering and reference documents | Present; project status and documentation index now provide the controlled entry points |
-| Preliminary BOM | Exact 13-column schema and 40 functional rows; display, GNSS, USB-C/2S power, RP2040 flash/clock and microSD candidates synchronized |
-| Locked part coverage | All eight selected MPNs present; no BME688 component row |
+| Preliminary BOM | Exact 13-column schema, 57 unique functional rows and no duplicate references; display, GNSS, USB-C/2S power, rail, audio, expansion, control, RF interconnect, RP2040 and microSD candidates synchronized |
+| Locked part coverage | All nine baseline MPNs checked by the validation script are present; no BME688 component row |
 | Supplier identifiers | Verified C3037611 recorded; other unknown supplier IDs remain TBD |
-| Relative Markdown links and code fences | Resolved/balanced in repository files |
+| Relative Markdown links and code fences | 54 Markdown files checked; all relative links resolved and fences balanced |
 | License provenance | Included SHA-256 values match retrieved official texts; MIT substitutions limited to holder/year |
 | Power calculation | 2S energy, totals, margin and runtime independently recomputed; FLIGHT example remains 10.72 h |
 | ADS-B host fixture | Known DF17 decode/CRC, corruption rejection and sample-jitter tests pass |
-| Display evidence | Exact AFY240320A1-2.8INTH-C1 revision-J electrical/pin tables reviewed; 1.8 V TFT logic and touch address 0x70 propagated; connectors/footprints remain gated |
-| GNSS evidence | MAX-M10S-00B exact 18-pin map, supply/reset/backup limits, UART/PPS, RF input and manufacturer CAD sources reviewed; remaining circuit choices stay explicit |
-| KiCad structure | KiCad 10.0.6 parsed the root/eight children, populated ESP32 compute entry and reviewed MMC5983MA/BMP581/SHT40 sensor subset; ERC rerun 2026-09-14: 0 errors, 0 warnings |
+| Display evidence | Exact C1 electrical/contact tables plus XF3M, AXC/LVC and TPS61169 support candidates reviewed; controlled drawing/SPI, samples, footprints and board tests remain gated |
+| GNSS evidence | MAX-M10S exact application evidence plus preferred passive FXP611/U.FL/TPD1E0B04 proposal documented; RF/PDN review, fit, footprints and RF tests remain gated |
+| Electrical compatibility | Candidate rail tree and complete voltage/address/boot/off-state matrix added; OPEN rows remain explicit and prevent Astra readiness |
+| KiCad structure | KiCad 10.0.6 parsed the root/eight children, populated ESP32 compute entry and reviewed MMC5983MA/BMP581/SHT40 sensor subset; ERC rerun 2026-09-14: 0 violations |
 | Whitespace / patch integrity | `git diff --check` clean at review |
 | Scope | Gated `.kicad_sch` hierarchy only; no completed circuit, `.kicad_pcb`, Gerber, drill or legacy code/circuit import |
 

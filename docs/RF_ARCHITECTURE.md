@@ -5,7 +5,7 @@ Status: mandatory pre-layout concept; no antenna placement or matching network i
 | System | RF path | Constraints |
 | --- | --- | --- |
 | Wi-Fi / BLE | ESP32-S3-WROOM-1 module PCB antenna, 2.4 GHz | Preserve exact module antenna keepout in all relevant layers and enclosure materials; no external-antenna module substitution |
-| GNSS | Antenna TBD for accepted MAX-M10S-00B | Separate clean receive path; antenna bias, passband and footprint follow the exact u-blox integration evidence |
+| GNSS | P20 passive FXP611/U.FL/TPD1E0B04 proposal for accepted MAX-M10S-00B | Separate no-bias receive path; RF/PDN review, fit, calculated geometry and VNA/coexistence tests remain |
 | LoRa | SX1262, reference matching/filter/switch network, U.FL, 915 MHz class antenna | Direct IC integration; oscillator/TCXO and RF switch policy chosen with Semtech reference; region-specific transmission |
 | ADS-B | Separate 1090 MHz antenna, preselection, LNA/filtering, detector/comparator, RP2040 | Receiver blocker tolerance and analog bandwidth must be demonstrated; never shared with SX1262 |
 
@@ -30,4 +30,4 @@ L2 is proposed solid ground. L1 RF referenced to L2 is a starting point. L3 powe
 
 Use conducted input first, known ADS-B messages and known GNSS signal/sky conditions, then assembled radiated comparison. Record baseline and delta, not just "works." Simultaneous LoRa TX and reception are not guaranteed. If blanking receivers is necessary, explicitly log blind intervals and evaluate the FLIGHT impact before acceptance.
 
-Power the analog RF path from a domain with noise and headroom verified against selected components. Add low-capacitance ESD appropriate to RF ports; select its parasitics in matching analysis. Reserve instrument access and antenna strain relief. LoRa U.FL is locked; GNSS/ADS-B connector styles and all exact connector MPNs remain open.
+Power the analog RF path from a domain with noise and headroom verified against selected components. Add low-capacitance ESD appropriate to RF ports; select its parasitics in matching analysis. Reserve instrument access and antenna strain relief. P25 proposes one exact Hirose U.FL receptacle for all three board RF paths and Taoglas CAB.721 for ADS-B plus optional LoRa SMA bulkheads. These remain RF/CAD/test gates as detailed in [RF connector selection](RF_CONNECTOR_SELECTION.md).
