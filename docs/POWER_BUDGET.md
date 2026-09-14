@@ -18,7 +18,7 @@
 
 ## Energy and runtime arithmetic
 
-Example only: one 5.0 Ah cell at 3.6 V nominal gives 18 Wh nameplate energy. Cell MPN/capacity is **not selected**. Assume 80% usable energy for capacity reserve/temperature/aging combined and 90% conversion efficiency. Delivered usable energy = 18 x 0.80 x 0.90 = **12.96 Wh per cell**.
+Example only: one 5.0 Ah cell at 3.6 V nominal gives 18 Wh nameplate energy. Molicel `INR-21700-M50A` now matches this basis as the first sample candidate, but the cell is **not locked**. Assume 80% usable energy for capacity reserve/temperature/aging combined and 90% conversion efficiency. Delivered usable energy = 18 x 0.80 x 0.90 = **12.96 Wh per cell**.
 
 `runtime_h = cell_count x nominal_V x capacity_Ah x usable_fraction x efficiency / margin_adjusted_load_W`
 

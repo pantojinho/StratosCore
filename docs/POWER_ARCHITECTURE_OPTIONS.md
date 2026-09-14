@@ -16,7 +16,7 @@
 
 - Use two cells of the same approved model, capacity class, age and verified state; service them as a pair.
 - The holder must expose pack negative, series midpoint and pack positive with a documented 2S connection. A marketplace photo or title does not establish its wiring or rating.
-- A single charger must measure both cells and actively balance them. TI `BQ25887` is the first candidate, not a frozen selection.
+- A single charger must measure both cells and actively balance them, either internally or through a separately reviewed balancing function. TI `BQ25887` remains the preferred first candidate because it integrates both; it does not integrate a system power path.
 - A common 2S discharge-protection path must cover pack overvoltage, per-cell undervoltage, overcurrent/short and temperature. The charger alone is not assumed to provide all discharge protection.
 - Missing-cell, reversed-cell, mixed-state, hot insertion/removal and USB transitions require hardware-safe behavior. Firmware is monitoring and policy, not the only safety layer.
 - The system must regulate from the approximately 6.0-8.4 V 2S pack range. Exact buck rails, charging-while-operating behavior and shutdown thresholds remain open.
@@ -25,8 +25,12 @@
 
 | Function | Candidate / source | Relevance and limitation |
 | --- | --- | --- |
-| Balanced 2S USB-input charger | [TI BQ25887](https://www.ti.com/product/BQ25887), Rev B data sheet | 2S boost charger, I2C, per-cell ADC and integrated balancing; no claim here that it provides the complete system power path or discharge protection |
+| Balanced 2S USB-input charger | [TI BQ25887](https://www.ti.com/product/BQ25887), Rev B data sheet | 2S boost charger, I2C, per-cell ADC and integrated balancing; TI table 5 confirms no power path; it does not provide common discharge protection |
+| NVDC charger alternative | [TI BQ25792](https://www.ti.com/product/BQ25792), Rev C data sheet | Adds batteryless/system power path but has no per-cell balancing; retain only if that product requirement is added |
+| Common protection candidate | [TI BQ77307](https://www.ti.com/product/BQ77307), production data | Full 2S protection feature set, but low-volume host configuration and safe startup defaults require review |
+| Autonomous protection family | [ABLIC S-8252](https://www.ablic.com/en/semicon/datasheets/power-management-ic/lithium-ion-battery-protection-ic/s-8252/) | Simple firmware-independent 2S protection; exact threshold/delay suffix depends on the accepted cell and fault limits |
+| USB Type-C CC candidate | [TI TUSB320LAI](https://www.ti.com/product/TUSB320LAI), Rev D data sheet | Fixed UFP/sink current-class detection at I2C address 0x47; no USB PD; keep the charger at 500 mA until valid detection |
 | Previous independent 1S charger | [TI BQ25185](https://www.ti.com/product/BQ25185) | Historical P08 comparison only; no longer the Rev A direction |
 | Previous source OR | [ADI LTC4415](https://www.analog.com/en/products/ltc4415.html) | Historical P08 comparison only; removed by the accepted 2S direction |
 
-No exact 2S protection IC/FETs, fuse, holder, thermistor, fuel gauge, buck regulator or USB-C input controller is assigned here. Those parts and values require the selected cells, exact holder evidence, power-path choice and accepted fault-test limits.
+No exact 2S protection IC/FETs, fuse, holder, thermistor, fuel gauge, buck regulator, USB-C receptacle or input-protection circuit is assigned here. The TUSB320LAI is a CC-policy candidate only. Those parts and values require the selected cells, exact holder evidence, power-path choice and accepted fault-test limits.

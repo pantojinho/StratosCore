@@ -8,7 +8,7 @@ This file lists unresolved work only. [Project status](PROJECT_STATUS.md) sets p
 | O03 | IN PROGRESS | GNSS / Sol + RF | Close MAX-M10S-00B exact CAD, supply/backup, UART/timepulse, antenna bias/type/connector, placement and airborne configuration |
 | O04 | PROTOTYPE GATE | ADS-B / RF | Simulate and then measure the BLB01/TA2003A/ADL5513/MCP6566 candidate for sensitivity, blockers, gain, pulse timing and coexistence |
 | O05 | OWNER ACCEPTED; REVIEW BLOCKED | Power / qualified reviewer | Review the complete two-removable-cell 2S charger, common protection, holder and fault limits before schematic commitment or energizing |
-| O06 | IN PROGRESS | Power / Sol | Select exact USB-C input, balanced 2S charger application, discharge protection, system power path, buck rails, thermistors/fuses/FETs and state estimation |
+| O06 | IN PROGRESS | Power / Sol | Review Molicel M50A cell candidate; select exact holder and USB-C receptacle/input protection; close the TUSB320LAI and preferred BQ25887 applications, common protection, buck rails, thermistors/fuses/FETs and state estimation; no batteryless operation or USB PD is currently proposed |
 | O07 | OPEN | Audio/mechanical / Sol | Select microphone MPN and I2S/PDM interface; close supply, clock, footprint, acoustic port and optional DNP behavior |
 | O08 | PROTOTYPE GATE | Mechanical | Verify the 84 x 60 mm PCB and approximately 88 x 64 x 37 mm enclosure with exact component drawings and a printed fit dummy |
 | O09 | OPEN | RF/mechanical / Sol | Select exact RF connector MPNs and GNSS/ADS-B styles from cable loss, access, mating-cycle and assembly requirements; LoRa remains U.FL |

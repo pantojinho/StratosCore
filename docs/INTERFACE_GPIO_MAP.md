@@ -39,10 +39,11 @@ GPIO3, GPIO45 and GPIO46 remain unused because they are strapping pins; GPIO46 i
 | 0x6B | BQ25887 2S charger candidate | Seven-bit default address verified in TI SLUSD89B section 8.3.11.5/Table 6; any separate state-of-charge gauge remains open |
 | 0x44 | SHT40 | Locked humidity/temperature sensor |
 | 0x46 | BMP581 | SDO-low candidate; 0x47 remains alternate |
+| 0x47 | TUSB320LAI candidate | ADDR-low, fixed-UFP USB-C current detection; review VBUS-powered unpowered-bus behavior |
 | 0x70 | ST1633I touch | Seven-bit address specified by Orient C1 revision J; confirm on both labeled samples |
 | 0x68 | ICM-42688-P | AD0-low candidate; 0x69 remains alternate |
 
-The bus starts at 400 kHz. Interrupt/polling policy: direct touch and IMU interrupts; poll BMP581/MMC5983MA at scheduled rates. The BQ25887 interrupt and any separate gauge alert allocation remain open until the exact power application is reviewed. Expansion bus capacitance and stuck-bus recovery require a measured cable limit.
+The bus starts at 400 kHz. Interrupt/polling policy: direct touch and IMU interrupts; poll BMP581/MMC5983MA at scheduled rates. The BQ25887 and TUSB320LAI interrupt/status allocation and any separate gauge alert remain open until the exact power application is reviewed. If TUSB320LAI is VBUS-powered, prevent the always-on 3.3 V pullups from back-powering it while VBUS is absent. Expansion bus capacitance and stuck-bus recovery require a measured cable limit.
 
 ## Shared SPI service contract
 

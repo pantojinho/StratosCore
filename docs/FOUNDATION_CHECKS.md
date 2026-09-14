@@ -5,7 +5,7 @@ Phase: Rev A pre-KiCad engineering closure, last reviewed 2026-09-14. These are 
 | Check | Result |
 | --- | --- |
 | Required engineering and reference documents | Present; project status and documentation index now provide the controlled entry points |
-| Preliminary BOM | Exact 13-column schema and 38 functional rows; MAX-M10S, 2S direction and exact C1 electrical evidence synchronized |
+| Preliminary BOM | Exact 13-column schema and 40 functional rows; display, GNSS, USB-C CC policy and separate 2S holder/cell/charger/protection candidates synchronized |
 | Locked part coverage | All eight selected MPNs present; no BME688 component row |
 | Supplier identifiers | Verified C3037611 recorded; other unknown supplier IDs remain TBD |
 | Relative Markdown links and code fences | Resolved/balanced in repository files |

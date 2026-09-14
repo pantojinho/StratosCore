@@ -25,7 +25,7 @@ The immediate objective is to finish exact component selection, electrical compa
 | Priority | Gate | Sol/external work needed | Closure evidence |
 | ---: | --- | --- | --- |
 | 1 | Exact display | Independently transcribe revision-J FPC geometry; select mating connectors, 1.8 V translation and backlight driver; obtain two labeled samples | Verified connector footprints plus backlight, address, power, touch/readability and shared-bus tests |
-| 2 | 2S power | Select exact holder, charger application, common protection, USB-C input, power path, buck rails, NTC/fuse/FETs and state estimation | Qualified reviewer signs schematic plan and fault limits before KiCad commitment |
+| 2 | 2S power | Accept exact cell and holder; close preferred BQ25887 application, TUSB320LAI candidate/unpowered states, common protection, USB-C input protection, buck rails, NTC/fuse/FETs and state estimation | Qualified reviewer signs schematic plan and fault limits before KiCad commitment |
 | 3 | GNSS implementation package | Decide MAX-M10S-00B backup/power-gating and exact antenna/connector/ESD; construct and independently compare the footprint | Accepted circuit choices, exact footprint and antenna/layout checklist with official revisions |
 | 4 | Remaining digital parts | Select exact microSD socket, microphone, USB-C connector, expansion connector, RP2040 flash/clock and support parts | Orderable MPNs, pin maps, footprints and interface/voltage review |
 | 5 | Sensors | Create/review ICM-42688-P and other gated physical footprints; close thermal, magnetic and vent constraints | Independent CAD comparison and placement rules |
