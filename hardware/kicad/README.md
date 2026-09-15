@@ -5,7 +5,7 @@
 Current holds:
 
 - display connector/footprint: P21 support candidates are documented; controlled Orient drawing/SPI evidence, independent CAD, samples and translated-interface/backlight tests remain;
-- GNSS: MAX-M10S-00B accepted and P20 provides a preferred passive application; RF/PDN review, fit, calculated RF path, independent CAD and tests remain;
+- GNSS: MAX-M10S-00B accepted and P20 provides a preferred passive application; a manufacturer-derived footprint candidate now includes the u-blox T-paste recommendation, while independent CAD/assembler review, RF/PDN review, fit, calculated RF path and tests remain;
 - power: owner accepted two removable 21700 cells in 2S with one balanced charger; regulator candidates are documented, while qualified battery/electrical review, exact holder, common protection, VBUS/power path and complete application remain;
 - ICM-42688-P physical CAD: create/review the project footprint and stencil geometry from DS-000347 v1.9 and AN-000393 v2.4;
 - ADS-B: S-parameter simulation and conducted prototype measurements.

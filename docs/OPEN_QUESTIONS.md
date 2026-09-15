@@ -22,7 +22,7 @@ This file lists unresolved work only. [Project status](PROJECT_STATUS.md) sets p
 | O17 | DEFERRED | Product/firmware | Set acquisition rates, SD capacity, audio format and allowed data loss after hardware interfaces and power profiles are stable |
 | O18 | OWNER INPUT + RF TEST | ADS-B/product | Define sensitivity, range, contact/stale-time targets and a repeatable conducted/field test plan |
 | O19 | OPEN - EXACT FOOTPRINT REQUIRED | Sensors/procurement | No ICM-42688-P project footprint is accepted. The generic KiCad LGA candidate was removed because its embedded source points to an ST package. Retrieve AN-000393, derive the land/mask/stencil geometry from TDK sources, obtain an independent CAD comparison and recheck stock before ordering |
-| O20 | IN PROGRESS - CANDIDATES GATED | Digital/GNSS/RF CAD | W25Q128JVSIQ, ABM8-272-T3, DM3AT-SF-PEJM5, U.FL-R-SMT-1(60) and TPD1E0B04DPYR candidate footprints are present with provenance; all still require the listed independent checks. No MAX-M10S footprint is accepted: transcribe Figure 30/31 and Tables 44/45 directly from u-blox, including paste and keepout. Then perform RP2040 boot/clock and microSD mechanical/power-fail board tests |
+| O20 | IN PROGRESS - CANDIDATES GATED | Digital/GNSS/RF CAD | Six footprint candidates are present with provenance. The MAX-M10S candidate is now derived directly from u-blox R05 Figure 30/31 and Tables 44/45, including coincident copper/mask, pin order, keepout and T-paste; KiCad parsing/export and automated geometry checks pass. Remaining: independent reviews for every candidate, assembler approval of MAX-M10S paste, ABM8 land-style and DM3/U.FL comparisons, plus RP2040 boot/clock and microSD mechanical/power-fail board tests |
 
 ## Recently closed owner decisions
 

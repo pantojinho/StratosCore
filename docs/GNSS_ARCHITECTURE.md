@@ -130,7 +130,7 @@ The project footprint must be created from integration manual R05 Figure 30/Tabl
 | Paste-mask table | C 9.7, E 0.3, H 0.35, K 0.8, L 0.7, M 0.9, N 1.4, P 0.6, R 0.5, S 7.9, T 12.5 mm |
 | Stencil recommendation | 150 micrometers; T-shaped/equivalent paste extension to improve castellated wetting |
 
-Do not derive pad centers or shapes from this prose alone; reproduce the manufacturer figures, including pin-1 orientation, corner-pad differences, de-paneling-tab clearance, copper/mask coincidence, and T-shaped paste. The paste geometry is a u-blox recommendation that must be adapted with the selected assembler. No matching generic KiCad footprint has been accepted.
+The project candidate now reproduces the manufacturer figures: 1.1 mm pitch; 0.7 mm corner and 0.8 mm regular land widths; 1.8 mm copper/mask length centered at Y = +/-4.75 mm; pin 1 at bottom-left; and T-shaped paste with 1.4 mm full-width outer plus 0.9 mm reduced-width inner segments. The paste geometry remains a u-blox recommendation that must be adapted with the selected assembler. KiCad parsing and an automated geometry audit passed, but an independent pad-by-pad comparison still gates release.
 
 ## Release gates for KiCad and prototype validation
 
@@ -139,7 +139,7 @@ The exact identity, 18-pin symbol map, 3.3 V supply option, UART/PPS behavior, m
 1. accept or replace the proposed tied always-on 3.3 V VCC/V_IO arrangement, open V_BCKP/RESET_N/EXTINT choice and no-independent-power-gating policy; close rail capacitance, filtering and ramp behavior in the system PDN review;
 2. accept or replace the proposed `FXP611.07.0092C` / `U.FL-R-SMT-1(60)` / `TPD1E0B04DPYR` passive RF package and its no-bias restriction;
 3. reserve and mechanically verify the 40 x 40 mm enclosure area, 10 mm metal/ground clearance, 92 mm cable path, bend radius, strain relief and connector access;
-4. create the project symbol and footprint, then independently compare every pin, dimension, mask layer, paste aperture, courtyard, height and pin-1 mark to R08/R05;
+4. independently compare the project symbol and manufacturer-derived footprint against every pin, dimension, mask layer, paste aperture, courtyard, height and pin-1 mark in R08/R05;
 5. calculate the 50-ohm route from the confirmed production stackup and review the complete RF return path;
 6. test cold/warm start, receiver identity, configuration acknowledgement/persistence, UART overflow, PPS/UTC validity, Airborne 4 g mode, antenna faults where applicable, and no-sky recovery;
 7. measure C/N0, fix stability, spectrum, supply current, and recovery while LoRa TX, Wi-Fi/BLE, display refresh, SD writes and USB charging are active.
