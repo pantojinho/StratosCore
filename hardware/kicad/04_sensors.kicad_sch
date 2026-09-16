@@ -2443,7 +2443,7 @@
 		)
 		(uuid "867d99df-d761-40cb-8490-e7457b7cd2ea")
 	)
-	(text_box "ICM-42688-P NEXT: DS-000347 v1.9 pin/application circuit and AN-000393 v2.4 layout guidance reviewed. Enter the circuit, then create and independently check the custom land/mask/stencil footprint; do not use the larger generic KiCad LGA pads."
+	(text_box "ICM-42688-P NEXT: DS-000347 v1.9 pin/application circuit and AN-000393 v2.4 layout guidance reviewed. Manufacturer-derived custom land/mask/paste candidate passed an independent dimensional second pass; obtain assembler approval and verify its no-copper rule before assignment. Do not use the larger generic KiCad LGA pads."
 		(exclude_from_sim no)
 		(at 60.96 135.255 0.0000)
 		(size 143.51 12.7)

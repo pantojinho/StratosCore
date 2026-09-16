@@ -1,6 +1,6 @@
 # Decision register
 
-Baseline established from the owner's foundation brief; register last updated 2026-09-14. Dated evidence and sourcing snapshots retain their individual review dates. LOCKED means a product constraint, not a validated design. OPEN means selection incomplete. PROPOSED means an engineering starting point requiring validation.
+Baseline established from the owner's foundation brief; register last updated 2026-09-15. Dated evidence and sourcing snapshots retain their individual review dates. LOCKED means a product constraint, not a validated design. OPEN means selection incomplete. PROPOSED means an engineering starting point requiring validation.
 
 ## Locked baseline
 
@@ -47,7 +47,7 @@ Exact display interface mode and controlled mechanical drawing, 2S protection/VB
 | P10 | JLCPCB 1.6 mm four-layer JLC2313 stack as field-solver candidate | Current manufacturer order confirmation and impedance geometries before layout |
 | P11 | BLB01/TA2003A/ADL5513/MCP6566 ADS-B frontend | S-parameter simulation, supply quote, conducted sensitivity/blocker/pulse tests and RF review |
 | P12 | Shared SPI plus dedicated high-speed flow-controlled RP2040 UART; GPIO map in `INTERFACE_GPIO_MAP.md` | Boot-state electrical review and full concurrency logic-analyzer test |
-| P13 | Implement ICM-42688-P, MMC5983MA, BMP581 and SHT40-AD1B-R2 on the 3.3 V I2C bus; direct interrupt only for the IMU | MMC5983MA/BMP581 logical pin maps and exact SHT40 entry complete; ICM v1.9 pin/application evidence released and custom footprint pending; physical CAD reviews, bus capacitance, identity tests and magnetic/thermal/pressure-port validation remain |
+| P13 | Implement ICM-42688-P, MMC5983MA, BMP581 and SHT40-AD1B-R2 on the 3.3 V I2C bus; direct interrupt only for the IMU | MMC5983MA/BMP581 logical pin maps and exact SHT40 entry complete; ICM v1.9 pin/application evidence released and manufacturer-derived footprint candidate created; independent CAD/assembler reviews, bus capacitance, identity tests and magnetic/thermal/pressure-port validation remain |
 | P14 | Two removable matched 21700 cells in series, one balanced 2S charger and common 2S protection; BQ25887 is the first charger candidate | OWNER ACCEPTED 2026-09-13; qualified electrical/battery review, exact holder continuity, missing/reversed-cell handling, discharge protection, power-path behavior, regulator design and fault tests remain mandatory before freeze or energizing |
 | P15 | Molicel `INR-21700-M50A` as the first matched-cell sample candidate | Official sheet matches the 5 Ah runtime basis and exact mechanical envelope; owner/reviewer acceptance, Brazilian sourcing, mission-temperature and holder-fit evidence remain |
 | P16 | Keep `BQ25887RGER` as preferred charger candidate without batteryless operation; compare `BQ25792RQMR` only if an NVDC power path becomes required | BQ25887 integrates 2S balancing but TI confirms no power path; exact protection, current, termination-under-load and USB behavior remain review gates |

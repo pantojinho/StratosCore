@@ -4,7 +4,7 @@ Locked set: **ICM-42688-P**, **MMC5983MA**, **BMP581**, **SHT40**. BME688 gas/VO
 
 | Sensor | Function | Interface plan | Primary source |
 | --- | --- | --- | --- |
-| ICM-42688-P | Accelerometer + gyro | I2C at 0x68 plus INT1; pin/application entry released, custom physical footprint pending | [TDK DS-000347 v1.9](https://www.invensense.tdk.com/en-us/download-resource/ds-000347-icm-42688-p-datasheet) |
+| ICM-42688-P | Accelerometer + gyro | I2C at 0x68 plus INT1; pin/application entry released; manufacturer-derived footprint passed dimensional second pass and awaits assembler/final-layout review | [TDK DS-000347 v1.9](https://d17t6iyxenbwp1.cloudfront.net/s3fs-public/2026-06/DS-000347%20ICM-42688-P%20v1.9.pdf?VersionId=XL060vOv88u6zsKx9dkBVJEyV452m0eq) |
 | MMC5983MA | Three-axis magnetic field and calibrated heading input | I2C at 0x30; polled in Rev A; logical pin carrier entered, no footprint | [MEMSIC datasheet Rev A](https://www.memsic.com/Public/Uploads/uploadfile/files/20220119/MMC5983MADatasheetRevA.pdf) |
 | BMP581 | Pressure, barometric altitude and variometer input | I2C at 0x46; polled in Rev A; logical pin carrier entered, no footprint | [Bosch BST-BMP581-DS004](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp581-ds004.pdf) |
 | SHT40-AD1B-R2 | Ambient temperature/humidity | I2C at 0x44; exact symbol/footprint entered; heater normally disabled during ambient measurements | [Sensirion SHT4x datasheet v7.3](https://sensirion.com/media/documents/33FD6951/6A7C10A0/HT_DS_Datasheet_SHT4x_V7.3.pdf) |
@@ -13,7 +13,7 @@ Do not assign final I2C addresses until strap states and exact ordering codes ar
 
 The reviewed schematic subset implements MMC5983MA with its 10 µF CAP capacitor and 1 µF VDD decoupling, BMP581 with 100 nF on each rail, and SHT40-AD1B-R2 with 100 nF decoupling. BMP581 VDD is 1.71–3.6 V and VDDIO is 1.08–3.6 V. Bosch DS004-13 Figure 28 requires 10 Ω in VDD and 100 Ω in VDDIO if either rail rises in less than 10 µs; the schematic keeps selectable positions until the rail ramps are measured. Shared I2C pull-ups remain assigned to the interfaces sheet.
 
-ICM-42688-P DS-000347 v1.9 confirms AD0 low for 0x68, AP_CS tied to VDDIO for I2C, pin 7 tied to ground, and INT2/FSYNC/CLKIN grounded when unused. Its application circuit requires 0.1 µF plus 2.2 µF at VDD and 10 nF at VDDIO. AN-000393 v2.4 says the LGA PCB lands follow the package terminals, mask openings add 0.1 mm to land length and width, and stencil opening area is 90% of land area. The similar generic KiCad LGA footprint has larger pads and is not accepted for this device.
+ICM-42688-P DS-000347 v1.9 confirms AD0 low for 0x68, AP_CS tied to VDDIO for I2C, pin 7 tied to ground, and INT2/FSYNC/CLKIN grounded when unused. Its application circuit requires 0.1 µF plus 2.2 µF at VDD and 10 nF at VDDIO. AN-000393 v2.4 says the LGA PCB lands follow the package terminals, recommends clearing solder mask under the body where the board process permits it, gives a 0.1 mm per-pad opening expansion as the fallback, and specifies a 90% stencil-opening-to-land ratio. The project candidate interprets the latter as 90% area while preserving aspect ratio; the assembler must approve the final mask and paste. The similar generic KiCad LGA footprint has larger pads and is not accepted for this device.
 
 ## Mechanical and thermal integration
 

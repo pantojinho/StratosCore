@@ -1,6 +1,6 @@
 # Architecture validation record
 
-Phase: Rev A pre-KiCad engineering closure, last reviewed 2026-09-14. These are documentation, file-format and host-model checks, not hardware qualification results.
+Phase: Rev A pre-KiCad engineering closure, last reviewed 2026-09-15. These are documentation, file-format and host-model checks, not hardware qualification results.
 
 | Check | Result |
 | --- | --- |
@@ -15,7 +15,7 @@ Phase: Rev A pre-KiCad engineering closure, last reviewed 2026-09-14. These are 
 | Display evidence | Exact C1 electrical/contact tables plus XF3M, AXC/LVC and TPS61169 support candidates reviewed; controlled drawing/SPI, samples, footprints and board tests remain gated |
 | GNSS evidence | MAX-M10S exact application evidence plus preferred passive FXP611/U.FL/TPD1E0B04 proposal documented; RF/PDN review, fit, footprints and RF tests remain gated |
 | Electrical compatibility | Candidate rail tree and complete voltage/address/boot/off-state matrix added; OPEN rows remain explicit and prevent Astra readiness |
-| Footprint candidates | Six files have recorded provenance and parse in KiCad. The MAX-M10S candidate is directly transcribed from u-blox copper/mask/paste figures and passes an automated geometry audit; ICM-42688-P remains absent. Every retained file still requires its listed independent check before release |
+| Footprint candidates | Seven files have recorded provenance and parse in KiCad. The MAX-M10S and ICM-42688-P candidates are directly transcribed from manufacturer drawings and pass automated geometry audits; ICM also passed an independent dimensional second pass. Every retained file still requires its listed release checks; MAX/ICM require assembler paste approval |
 | KiCad structure | KiCad 10.0.6 parsed the root/eight children, populated ESP32 compute entry and reviewed MMC5983MA/BMP581/SHT40 sensor subset; ERC rerun 2026-09-14: 0 violations |
 | Whitespace / patch integrity | `git diff --check` clean at review |
 | Scope | Gated `.kicad_sch` hierarchy only; no completed circuit, `.kicad_pcb`, Gerber, drill or legacy code/circuit import |
