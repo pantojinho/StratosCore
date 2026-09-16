@@ -1,6 +1,6 @@
 # Reference and reuse register
 
-Reviewed 2026-09-11 UTC. **No external implementation code, circuit, footprint or artwork is incorporated.** These entries record research; links and original analysis are the only reference-derived additions. Official license texts are intentionally included under their publication terms.
+Reviewed 2026-09-15 UTC. **No external implementation code, circuit, CAD footprint or artwork is copied into the project.** These entries record research; links, original analysis and independently written geometric transcriptions from manufacturer drawings are the only reference-derived additions. Official license texts are intentionally included under their publication terms.
 
 | Source / exact revision | License evidence | Is reuse permitted? | Use here / modifications |
 | --- | --- | --- | --- |
@@ -10,7 +10,7 @@ Reviewed 2026-09-11 UTC. **No external implementation code, circuit, footprint o
 | ADSBee, 2942116b726f3b014605fc78af5373c6452c721d | [GPL v3](https://github.com/PantsForBirds/adsbee/blob/2942116b726f3b014605fc78af5373c6452c721d/LICENSE) and project declaration | Conditional on GPL compliance; not MIT relicensing | [Architecture/PIO study](ADSBEE_NOTES.md); none |
 | MeshCore, 0679dbeffc504d562d2f09eb072fdc223f8ffc2a | [Root MIT license](https://github.com/meshcore-dev/MeshCore/blob/0679dbeffc504d562d2f09eb072fdc223f8ffc2a/LICENSE) | Root-covered work with notices; transitive libraries separately | Compatibility objective only; no port/import |
 | Junzi Sun, *The 1090 Megahertz Riddle*, online edition | [Published example](https://mode-s.org/1090mhz/content/ads-b/3-airborne-position.html) | Factual captured frame used as a test fixture; no implementation copied | One 14-byte DF17 message retained in independently written host validation; CRC verified locally |
-| Manufacturer documentation linked in [source index](../hardware/datasheets/README.md) | Individual vendor copyright/terms | Electrical use and redistribution terms vary; check exact asset | Links and independently written analysis; no document redistribution |
+| Manufacturer documentation linked in [source index](../hardware/datasheets/README.md) | Individual vendor copyright/terms | Electrical use and redistribution terms vary; check exact asset | Links, independently written analysis and original footprint files transcribed from published dimensions; no vendor document or CAD asset redistributed |
 | CERN-OHL-P-2.0 / MIT official text | [Provenance and scope](../LICENSES/README.md) | Official published license text used as supplied | License text only; MIT holder/year substituted |
 
 Before importing any asset add: exact URL and commit/revision; file/circuit and destination; copyright holder; SPDX identifier or exact terms; permission evidence; obligations and compatibility decision; modifications; reviewer and date. Include modifications even if the answer is "none." Do not interpret a public repository, a vendor CAD download, or a GPL component running on another MCU as blanket permission.
