@@ -7,7 +7,7 @@
 ## Project context (quick orientation)
 
 - Open-source portable field computer (ESP32-S3-WROOM-1-N16R8, RP2040 ADS-B coprocessor, LoRa SX1262, GNSS MAX-M10S, 2S 21700 battery).
-- Current phase: **pre-KiCad hardware engineering closure**. Read `docs/PROJECT_STATUS.md` (nine gates), `docs/OPEN_QUESTIONS.md` and `docs/DECISIONS.md` before changing anything hardware-related.
+- Current phase: **pre-KiCad hardware engineering closure**. Read `docs/PROJECT_STATUS.md` (ten gates), `docs/OPEN_QUESTIONS.md` and `docs/DECISIONS.md` before changing anything hardware-related.
 - `docs/ASTRA_HANDOFF.md` is **NOT READY**; Astra (final KiCad capture) may not run yet.
 - All repo docs are written in **English**; keep it that way.
 
