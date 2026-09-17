@@ -29,6 +29,8 @@ This file lists unresolved work only. [Project status](PROJECT_STATUS.md) sets p
 | O24 | OWNER INPUT + REVIEW - UNTRACKED UNTIL 2026-09-17 AUDIT | Battery/logistics | UN38.3 transport qualification and disposal plan for the 21700 cells if the assembled unit ships; interacts with O05 and the removable-cell decision |
 | O25 | PLANNING - UNTRACKED UNTIL 2026-09-17 AUDIT | Manufacturing/test | Define factory firmware image, provisioning and serial-number scheme before the production test plan; extends `manufacturing/test/README.md` |
 | O26 | ENGINEERING + TEST - UNTRACKED UNTIL 2026-09-17 AUDIT | Process/mechanical | Decide conformal coating and condensation management for the altitude profile (balloon crosses the dew point); affects PCBA process, connector choice and enclosure venting |
+| O27 | PLANNING - UNTRACKED UNTIL 2026-09-17 AUDIT | Sourcing/BOM | Convert `bom/preliminary_bom.csv` into an orderable BOM: the file has no quantity column, `PASSIVES_DEBUG` is recorded as "Not quantity-complete", 7 rows still carry `MPN=TBD` and 36 rows have no supplier part number. Astra entry gate 11 requires quantities and approved sourcing status, and no O/P tracked this before the 2026-09-17 audit. Quantities follow schematic capture; supplier approval and the TBD rows do not |
+| O28 | ENGINEERING - UNTRACKED UNTIL 2026-09-17 AUDIT | Test/DFT | Define the test-point and test-access strategy: which nets get pads, programming/SWD and BOOTSEL access, fixture probing and the rail/current measurement points feeding O13. `manufacturing/test/README.md` defers this to "after schematic review" and Astra entry gate 8 requires it, but no O/P tracked it before the 2026-09-17 audit. Must be settled before placement, not after |
 
 ## Recently closed owner decisions
 

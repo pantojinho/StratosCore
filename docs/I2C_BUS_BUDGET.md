@@ -143,8 +143,8 @@ The session that opened this worksheet could not reach the manufacturer hosts, s
 This worksheet closes, and the O11 / gate 9 pull-up item with it, when all of the following hold:
 
 1. The `UM10204` revision and section backing `tr`, `Cb` and the rise-time relation are recorded above.
-2. Every `Ci`, `IOL`/`VOL` and `Ii` cell in the device inventory carries a transcribed figure with datasheet revision, section and review date.
-3. `Cb` is totalled from those figures plus a routed-length trace estimate and an accepted expansion-cable limit.
+2. Every `Ci`, `IOL`/`VOL` and `Ii` cell in the device inventory is resolved — either a transcribed figure with datasheet revision, section and review date, or an explicit **"not stated"** backed by a named review of that exact document. Six devices currently read "not stated" for `Ci`; that is a verified property of those datasheets, not outstanding transcription work, so this criterion is met for them and the burden moves to item 3.
+3. `Cb` is totalled from the transcribed figures plus a routed-length trace estimate and an accepted expansion-cable limit, **with a declared substitute for every "not stated" device** — the I2C-specification per-pin allowance, a manufacturer application figure, or measurement. The substitute and its basis are recorded here; an unmeasured device is never assumed to contribute zero.
 4. `Rp_min` and both `Rp_max` bounds are evaluated from the real figures, the admissible window is shown to be non-empty, and a preferred value with tolerance and power rating is proposed.
 5. The pull-up rail and every participant's off-state behavior are accepted, including touch and the power devices.
 6. The result is confirmed by measured rise time and `VOL` on a prototype, per the gate 9 board tests.
