@@ -10,11 +10,11 @@ Status: calculation worksheet opened and substantially filled 2026-09-17. The me
 | --- | --- | --- |
 | Bus speed target | 400 kHz (I2C Fast-mode) | "The bus starts at 400 kHz" — [GPIO and interface map](INTERFACE_GPIO_MAP.md) |
 | Bus logic level | 3.3 V | [Electrical compatibility matrix](ELECTRICAL_COMPATIBILITY_MATRIX.md) I2C address and voltage check |
-| Maximum rise time `tr` at Fast-mode | 300 ns | I2C-bus specification Fast-mode limit — **cited in-repo**: Bosch BMP581 BST-BMP581-DS004-13 §5.2.2 defers to "I2C-bus specification and user manual, UM10204, Rev.6, NXP Semiconductors"; Sensirion SHT4x v7.3 Table 4 restates `Cb < trise/(0.8473*Rp)` with `trise = 300 ns` for fast mode. Recorded 2026-09-17 |
-| Maximum bus capacitance `Cb` at Fast-mode | 400 pF | I2C-bus specification limit — restated by SHT4x v7.3 Table 4 (400 pF at fast mode with Rp <= 820 ohm) |
+| Maximum rise time `tr` at Fast-mode | 300 ns | **Primary source retrieved 2026-09-17: NXP UM10204 Rev. 7.0 (1 October 2021)** — Table 10 Fast-mode `tr` 300 ns (note [5] explains the 300 ns bus-line figure vs the 250 ns output-stage figure); rise-time relation `T = t2 - t1 = 0.8473 x Rp x Cb` derived in §7.2 (Eq. 1 / Figure 41). Corroborated in-repo by Bosch BMP581 §5.2.2 (quotes UM10204 Rev.6) and Sensirion SHT4x Table 4 (300 ns / 400 pF with the same 0.8473 formula) |
+| Maximum bus capacitance `Cb` at Fast-mode | 400 pF | UM10204 Rev. 7.0 Table 10 Fast-mode column (400 pF max; Standard-mode also 400 pF). Note: NXP's own worked example (§7.2, Rp_min = 1.7 k at 5 V/3 mA) limits Cb to about 200 pF for the 300 ns rise time — the same regime this budget derives independently below |
 | Pull-up source rail | `3V3_MAIN` proposed | Proposal only, see "Pull-up rail ownership" |
 
-**PENDING CITATION:** ~~the `tr` and `Cb` limits and the rise-time formula below are the standard I2C-bus specification values...~~ **RESOLVED 2026-09-17:** the UM10204 Rev.6 reference and the fast-mode 300 ns / 400 pF limits are now anchored through the in-repository manufacturer sources recorded in the bus-definition table above (Bosch BMP581 §5.2.2 quotes UM10204 Rev.6 directly; Sensirion SHT4x Table 4 restates the limits and the 0.8473·Rp·Cb relation).
+**PENDING CITATION:** ~~the `tr` and `Cb` limits and the rise-time formula below are the standard I2C-bus specification values...~~ **RESOLVED 2026-09-17, primary source:** UM10204 **Rev. 7.0** (1 October 2021) was retrieved directly from NXP and its Fast-mode values confirmed: `tr` 300 ns (Table 10), `Cb` 400 pF (Table 10), rise-time relation `T = 0.8473 x Rp x Cb` (§7.2 Eq. 1). Note the BMP581/SHT4x in-repo citations reference **Rev. 6 (2014)**; Rev. 7.0 changed terminology (master/slave to controller/target) and Table 5 only — the electrical values used here are unchanged between the revisions, so the second-hand citations remain valid corroboration.
 
 ## Governing relations
 
