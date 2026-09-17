@@ -1,6 +1,6 @@
 # Shared I2C bus capacitance and pull-up budget
 
-Status: calculation worksheet opened 2026-09-17. This document closes the method, the bounds and the disqualifying results for the shared-bus pull-up item named in [open questions](OPEN_QUESTIONS.md) O11 and gate 9 of [project status](PROJECT_STATUS.md). It does **not** yet publish a final resistance: the per-device figures marked TBD below must be transcribed from the exact datasheets already indexed in [the datasheet index](../hardware/datasheets/README.md) before a value enters a schematic.
+Status: calculation worksheet opened and substantially filled 2026-09-17. The method, bounds, device inventory and evaluated pull-up window are recorded below; the remaining open element is the **owner/reviewer decision** among the bus options in Result 3 (plus the touch device figures and the expansion-cable limit), not the transcription work.
 
 **No number in this document is a measurement, and no per-device figure has been invented.** Every quantity is either (a) arithmetic derived in-document from the stated inputs, (b) a figure already cited elsewhere in this repository with its source, or (c) an explicit TBD naming the document and section that must supply it.
 
@@ -14,7 +14,7 @@ Status: calculation worksheet opened 2026-09-17. This document closes the method
 | Maximum bus capacitance `Cb` at Fast-mode | 400 pF | I2C-bus specification limit — restated by SHT4x v7.3 Table 4 (400 pF at fast mode with Rp <= 820 ohm) |
 | Pull-up source rail | `3V3_MAIN` proposed | Proposal only, see "Pull-up rail ownership" |
 
-**PENDING CITATION:** ~~the `tr` and `Cb` limits and the rise-time formula below are the standard I2C-bus specification values...~~ **RESOLVED 2026-09-17:** the UM10204 Rev.6 reference and the fast-mode 300 ns / 400 pF limits are now anchored through the in-repository manufacturer sources recorded in the bus-definition table above (Bosch BMP581 §5.22 quotes UM10204 Rev.6 directly; Sensirion SHT4x Table 4 restates the limits and the 0.8473·Rp·Cb relation).
+**PENDING CITATION:** ~~the `tr` and `Cb` limits and the rise-time formula below are the standard I2C-bus specification values...~~ **RESOLVED 2026-09-17:** the UM10204 Rev.6 reference and the fast-mode 300 ns / 400 pF limits are now anchored through the in-repository manufacturer sources recorded in the bus-definition table above (Bosch BMP581 §5.2.2 quotes UM10204 Rev.6 directly; Sensirion SHT4x Table 4 restates the limits and the 0.8473·Rp·Cb relation).
 
 ## Governing relations
 
@@ -121,7 +121,7 @@ Cross-check against the other sinks: ICM-42688-P 967 ohm; TCA9535 SDA 967 ohm-cl
 | 200 pF | 1770 Ω | **empty** — no valid resistance at 400 kHz |
 | 400 pF | 885 Ω | empty |
 
-**Blocking conclusion (supersedes the provisional 967 Ω reading above):** at 400 kHz the bus capacitance budget is bound by **two** constraints: the rise-time window (Rp_min 1812 Ω caps Cb at ~197 pF) and — tighter — the **TUSB320LAI's own device limit of CBUS = 100 pF at 400 kHz** (SLLSEQ8D §6.6). The effective 400 kHz ceiling is therefore **100 pF total**, which nine device pin capacitances (~45-65 pF) plus traces will likely already exceed. At 100 kHz the same device allows 400 pF and the rise-time window opens to Rp_max ~5901 Ω at 200 pF / ~2951 Ω at 400 pF — 2.2 k fits everywhere. Options for O06/O11 review, none selected here: (a) run the shared bus at 100 kHz (or drop to 100 kHz whenever the expansion cable is attached); (b) move TUSB320LAI off the shared I2C — it is USB-C control with a GPIO mode per SLLSEQ8D, its CC-line function does not need the bus during flight, and removing it also clears the 0x46/0x47 address constraint; (c) accept 400 kHz on-board only with a measured, enforced <=100 pF limit (unrealistic with the touch controller and expander attached). These are product decisions requiring owner/reviewer acceptance.
+**Blocking conclusion (supersedes the provisional 967 Ω reading above):** at 400 kHz the bus capacitance budget is bound by **two** constraints: the rise-time window (Rp_min 1812 Ω caps Cb at ~197 pF) and — tighter — the **TUSB320LAI's own device limit of CBUS = 100 pF at 400 kHz** (SLLSEQ8D §6.6). The effective 400 kHz ceiling is therefore **100 pF total**; a sum cannot be computed yet because six of nine devices do not publish Ci (their rows say "not stated" above), so even the on-board-only case is unproven and trace/cable capacitance adds on top. At 100 kHz the same device allows 400 pF and the rise-time window opens to Rp_max ~5901 Ω at 200 pF / ~2951 Ω at 400 pF — 2.2 k fits everywhere. Options for O06/O11 review, none selected here: (a) run the shared bus at 100 kHz (or drop to 100 kHz whenever the expansion cable is attached); (b) move TUSB320LAI off the shared I2C — it is USB-C control with a GPIO mode per SLLSEQ8D, its CC-line function does not need the bus during flight, and removing it also clears the 0x46/0x47 address constraint; (c) accept 400 kHz on-board only with a measured, enforced <=100 pF limit (unrealistic with the touch controller and expander attached). These are product decisions requiring owner/reviewer acceptance.
 
 ## Pull-up rail ownership — proposal, not a decision
 
@@ -134,11 +134,9 @@ The pull-ups must sit on a rail that is present whenever any bus participant is 
 
 The touch controller and the power devices are the specific unresolved cases: the matrix records "resolve touch/power-device off-state behavior" as part of this same item.
 
-## Evidence access blocker
+## Evidence access blocker — RESOLVED 2026-09-17
 
-The session that opened this worksheet could not reach `ti.com`, `sensirion.com`, `bosch-sensortec.com`, `invensense.tdk.com`, `memsic.com`, `documentation.espressif.com`, `microchip.com` or `semtech.com`. All were refused by the execution environment's network egress policy, not by the hosts. Transcribing the TBD columns therefore requires either a session with outbound access to those hosts or a manual download by the maintainer.
-
-Per `AGENTS.md` rule 3 and rule 12, no pin capacitance, sink current or leakage figure has been supplied from memory, inference or a marketplace listing. The columns stay TBD.
+The session that opened this worksheet could not reach the manufacturer hosts, so it correctly left the columns TBD rather than invent figures. The blocker was lifted the same day: a session with outbound access retrieved the exact datasheets (Espressif v1.8, TI SCPS201F, MEMSIC Rev A, Sensirion v7.3, Bosch DS004-13, TI SLLSEQ8D, TDK DS-000347 v1.9, TI SLUSD89B), and the inventory table above was transcribed from those documents with revision/section provenance. Figures marked "not stated" are genuine absences from the manufacturer text, verified by two independent extractions; they are not outstanding work unless the closure criteria below require a value the datasheet does not publish.
 
 ## Closure criteria for this item
 

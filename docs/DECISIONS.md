@@ -60,6 +60,7 @@ The display's revision-J serial straps are verified and Rev A provisionally pref
 | P23 | Use TDK `MMICT5838-00-012` PDM microphone with TI `TXU0202DCUR` translator | Preferred candidates only; independently review CAD, 1.8 V sequencing, acoustic port/gasket, timing and audio/RF tests |
 | P24 | Use GCT `USB4105-GF-A`, TI `TPD4E05U06DQARG4`, JST `BM12B-GHS-TBT`/`GHR-12V-S`, Alps `SKSCLCE010` buttons and TI `TCA9535PWR` slow I/O | Preferred support candidates only; VBUS protection remains open and every footprint, cable, current limit, reset default, hot-plug/back-power and enclosure fit must be independently reviewed |
 | P25 | Standardize PCB RF receptacles on Hirose `U.FL-R-SMT-1(60)` and use Taoglas `CAB.721` for the ADS-B and optional LoRa SMA bulkheads | PREFERRED INTERCONNECT; RF/CAD review required. U.FL is an internal 30-cycle interface. Confirm complete RF loss/match, exact footprints, factory stackup, panel/cable fit, port labels and coexistence before layout release |
+| P26 | PROPOSED, owner decision required — shared I2C bus policy: (a) run the shared bus at 100 kHz, (b) remove TUSB320LAI from the shared bus (GPIO mode per SLLSEQ8D; also clears the 0x46/0x47 address constraint), or (c) 400 kHz with a measured <=100 pF on-board limit | Basis: `I2C_BUS_BUDGET.md` Result 3 — TUSB320LAI sink 1.6 mA (Rp_min 1812 ohm) and its 100 pF CBUS limit at 400 kHz make 400 kHz unworkable with the current participant set; none of the three options is accepted yet |
 
 ## Conflicts requiring explicit resolution
 
