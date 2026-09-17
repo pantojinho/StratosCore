@@ -1,14 +1,15 @@
 # Footprint reviews: RP2040 support and storage parts
 
-Status: reviewed through 2026-09-15. Project-owned footprints for the RP2040 support and storage candidates. Provenance and residual release gates are recorded per part; anything not yet verified against the exact manufacturer drawing is explicitly marked PENDING. Fabrication of unverified dimensions is prohibited by `AGENTS.md`, so this document records source lineage instead of pretending a completed independent transcription.
+Status: reviewed through 2026-09-17. Project-owned footprints for the RP2040 support and storage candidates. Provenance and residual release gates are recorded per part; anything not yet verified against the exact manufacturer drawing is explicitly marked PENDING.
 
 ## Winbond `W25Q128JVSIQ` — boot flash
 
 - **Footprint:** `hardware/footprints/Winbond_W25Q128JVSIQ_SOIC-8_5.3x5.3mm_P1.27mm.kicad_mod`
-- **Source lineage:** vendored from the upstream KiCad footprint library `Package_SO.pretty/SOIC-8_5.3x5.3mm_P1.27mm.kicad_mod` (footprint-generator output, JEITA ED-7311-19 variation 08-001-BBA, 208-mil body width). This is the 5.3 x 5.3 mm, 1.27 mm pitch SOIC-8 body family that the Winbond W25Q128JV DTR Rev B datasheet specifies.
-- **Key geometry (from the vendored library file):** 8 x SMD rect pads 1.625 x 0.65 mm, X = +/-3.5875 mm, Y pitch 1.905 mm; courtyard 4.65 mm half-span; pin-1 silk triangle.
-- **Verdict:** standard library matches the package family; the project owns a vendored copy so PCB data does not depend on external library versions.
-- **Remaining:** pad-to-datasheet cross-check against the Winbond package drawing page, and status-register/boot bring-up per [digital support review](DIGITAL_SUPPORT_REVIEW.md) remain PENDING (bring-up is a prototype gate regardless).
+- **Controlling sources:** Winbond W25Q128JV data sheet Rev M, 2024-12-24, sections 3.1/10.1/11.1, and Winbond `AN0000009` Serial Flash PCB Layout Guidelines Rev 2.1, 2020-06-12, pages 6-7.
+- **Key geometry:** package-S body 5.18-5.38 mm, lead span 7.70-8.10 mm and 1.27 mm pitch. Manufacturer copper is `1.90 x 0.80 mm` at X = +/-3.95 mm; the distinct 0.10 mm-stencil aperture is `1.80 x 0.70 mm` at X = +/-4.00 mm. Y centers are +/-1.905 and +/-0.635 mm.
+- **Review correction 2026-09-17:** replaced the earlier generic KiCad 1.625 x 0.65 mm roundrect land, expanded the courtyard to contain the manufacturer pattern, retained correct top-view pin order and rewrote the project footprint as an original geometric transcription.
+- **Independent second pass:** confirmed package/pin orientation, all copper/paste sizes and centers, body/lead envelopes and courtyard containment against both Winbond sources with no critical/high/medium mismatch; KiCad 10.0.6 export returned success.
+- **Verdict:** manufacturer-derived candidate passes dimensional review and KiCad parse/export. Solder-mask expansion, courtyard excess and assembler process remain release gates; status-register/boot bring-up remains a prototype gate.
 - **Supply snapshot:** DigiKey showed 57,555 units at USD 4.21 (quantity 1) on 2026-09-14 (project snapshot; recheck at purchase).
 
 ## Abracon `ABM8-272-T3` — 12 MHz RP2040 reference clock
@@ -32,4 +33,4 @@ Status: reviewed through 2026-09-15. Project-owned footprints for the RP2040 sup
 
 ## Process note
 
-Manufacturer drawings control every project-owned footprint. The ABM8 geometry has replaced the earlier generic library land, and the DM3 comparison has identified its remaining shell/mechanical work. The W25Q128 and residual DM3 items remain explicit rather than treating a KiCad library name as manufacturer proof. The sensors/GNSS/RF footprints are covered by [FOOTPRINT_REVIEWS_SENSORS_GNSS.md](FOOTPRINT_REVIEWS_SENSORS_GNSS.md).
+Manufacturer drawings control every project-owned footprint. The W25Q128 and ABM8 geometries have replaced earlier generic library lands, and the DM3 comparison has identified its remaining shell/mechanical work. The sensors/GNSS/RF footprints are covered by [FOOTPRINT_REVIEWS_SENSORS_GNSS.md](FOOTPRINT_REVIEWS_SENSORS_GNSS.md).

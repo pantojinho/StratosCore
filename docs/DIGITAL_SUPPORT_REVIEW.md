@@ -1,10 +1,12 @@
 # Digital support parts review
 
-Status: exact engineering candidates reviewed through 2026-09-15. These selections reduce the pre-KiCad queue but remain subject to the recorded footprint/process gates, factory availability and board-level bring-up.
+Status: exact engineering candidates reviewed through 2026-09-17. These selections reduce the pre-KiCad queue but remain subject to the recorded footprint/process gates, factory availability and board-level bring-up.
 
 ## RP2040 boot flash
 
 `W25Q128JVSIQ` is the preferred RP2040 boot-flash candidate. Raspberry Pi's current *Hardware design with RP2040* uses the Winbond `W25Q128JVS` family in its minimal design, and RP2040 supports up to 16 MB of external QSPI flash. The exact `W25Q128JVSIQ` provides 128 Mbit/16 MB, 2.7-3.6 V operation, industrial -40 to 85 °C rating and an 8-SOIC package. The larger package is deliberate for Rev A inspectability and rework; a smaller suffix would require a separate footprint and availability review.
+
+The project footprint now transcribes Winbond Rev-M package/pin data and `AN0000009` Rev 2.1 copper/stencil geometry. Its corrected 1.90 x 0.80 mm copper and distinct 1.80 x 0.70 mm paste apertures passed an independent dimensional second pass and KiCad 10 export on 2026-09-17. Assembler mask/courtyard approval and boot/reset/program/temperature bring-up remain.
 
 Route the six QSPI signals directly between RP2040 and flash, keep them short, follow the Raspberry Pi reference pullup/decoupling arrangement and expose the documented BOOTSEL recovery path. The final schematic review must confirm the exact Winbond status-register defaults, RP2040 boot-ROM compatibility and maximum XIP clock. Bring-up must prove cold boot, repeated reset, full-image programming, checksum and operation across the accepted temperature and voltage range.
 
@@ -30,7 +32,7 @@ Checked 2026-09-14 for prototype planning only:
 | `ABM8-272-T3` | DigiKey displayed 29,393 in stock at USD 0.71 quantity one | Exact Raspberry Pi recommendation remains practical |
 | `DM3AT-SF-PEJM5` | DigiKey regional pages displayed about 29,700 in stock and about USD 5.20 quantity one | Mechanically robust but relatively expensive; do not substitute without controlled-drawing review |
 
-Primary evidence: [Raspberry Pi hardware design guide](https://datasheets.raspberrypi.com/rp2040/hardware-design-with-rp2040.pdf), [Winbond W25Q128JV product search](https://www.winbond.com/hq/search/?__locale=en&q=W25Q128JVSIQ), [Hirose exact product page](https://www.hirose.com/product/p/CL0609-0031-0-00) and [Hirose DM3 May 2026 catalog](https://www.hirose.com/en/product/document?documentid=D49662_en&documenttype=Catalog&lang=en&series=DM3). Distributor snapshots: [DigiKey flash](https://www.digikey.com/en/products/detail/winbond-electronics/W25Q128JVSIQ/5803943), [DigiKey crystal](https://www.digikey.com/en/products/detail/abracon-llc/ABM8-272-T3/22472366) and [DigiKey socket](https://www.digikey.com/en/products/detail/hirose-electric-co-ltd/DM3AT-SF-PEJM5/2533565).
+Primary evidence: [Raspberry Pi hardware design guide](https://datasheets.raspberrypi.com/rp2040/hardware-design-with-rp2040.pdf), [Winbond W25Q128JV Rev M](https://www.winbond.com/resource-files/W25Q128JV%20RevM%2012242024%20Plus.pdf), [Winbond AN0000009 Rev 2.1](https://www.winbond.com/resource-files/AN0000009%20SpiFlash%20PCB%20Layout%20Guideline%20v2.1%2006122020.pdf), [Hirose exact product page](https://www.hirose.com/product/p/CL0609-0031-0-00) and [Hirose DM3 May 2026 catalog](https://www.hirose.com/en/product/document?documentid=D49662_en&documenttype=Catalog&lang=en&series=DM3). Distributor snapshots: [DigiKey flash](https://www.digikey.com/en/products/detail/winbond-electronics/W25Q128JVSIQ/5803943), [DigiKey crystal](https://www.digikey.com/en/products/detail/abracon-llc/ABM8-272-T3/22472366) and [DigiKey socket](https://www.digikey.com/en/products/detail/hirose-electric-co-ltd/DM3AT-SF-PEJM5/2533565).
 
 ## Related support selections
 

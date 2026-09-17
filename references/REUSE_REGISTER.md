@@ -1,6 +1,6 @@
 # Reference and reuse register
 
-Reviewed 2026-09-15 UTC. **No external implementation code, circuit, CAD footprint or artwork is copied into the project.** These entries record research; links, original analysis and independently written geometric transcriptions from manufacturer drawings are the only reference-derived additions. Official license texts are intentionally included under their publication terms.
+Reviewed 2026-09-17 UTC. **No external implementation code, circuit, CAD footprint or artwork is copied into the project.** These entries record research; links, original analysis and independently written geometric transcriptions from manufacturer drawings are the only reference-derived additions. The former generic KiCad W25Q footprint was replaced on 2026-09-17 by an original transcription of Winbond's published land/stencil dimensions. Official license texts are intentionally included under their publication terms.
 
 | Source / exact revision | License evidence | Is reuse permitted? | Use here / modifications |
 | --- | --- | --- | --- |

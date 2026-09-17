@@ -28,8 +28,8 @@
 | Balanced 2S USB-input charger | [TI BQ25887](https://www.ti.com/product/BQ25887), Rev B data sheet | 2S boost charger, I2C, per-cell ADC and integrated balancing; TI table 5 confirms no power path; it does not provide common discharge protection |
 | NVDC charger alternative | [TI BQ25792](https://www.ti.com/product/BQ25792), Rev C data sheet | Adds batteryless/system power path but has no per-cell balancing; retain only if that product requirement is added |
 | Common protection candidate | [TI BQ77307](https://www.ti.com/product/BQ77307), production data | Full 2S protection feature set, but low-volume host configuration and safe startup defaults require review |
-| Autonomous protection family | [ABLIC S-8252](https://www.ablic.com/en/semicon/datasheets/power-management-ic/lithium-ion-battery-protection-ic/s-8252/) | Simple firmware-independent 2S protection; exact threshold/delay suffix depends on the accepted cell and fault limits |
-| USB Type-C CC candidate | [TI TUSB320LAI](https://www.ti.com/product/TUSB320LAI), Rev D data sheet | Fixed UFP/sink current-class detection at I2C address 0x47; no USB PD; keep the charger at 500 mA until valid detection |
+| Autonomous protection family | [ABLIC S-8252](https://www.ablic.com/en/semicon/datasheets/power-management-ic/lithium-ion-battery-protection-ic/s-8252/) | Firmware-independent protection candidate, but its typical low-side cutoff conflicts with BQ25887 ground-referenced sensing/balancing; topology and exact suffix require qualified review |
+| USB Type-C CC candidate | [TI TUSB320LAI](https://www.ti.com/product/TUSB320LAI), Rev D data sheet | Fixed UFP/sink current-class detection at I2C address 0x47; no USB PD; keep charging disabled until cell checks and an accepted USB attach/enumeration/current state permit it |
 | Previous independent 1S charger | [TI BQ25185](https://www.ti.com/product/BQ25185) | Historical P08 comparison only; no longer the Rev A direction |
 | Previous source OR | [ADI LTC4415](https://www.analog.com/en/products/ltc4415.html) | Historical P08 comparison only; removed by the accepted 2S direction |
 

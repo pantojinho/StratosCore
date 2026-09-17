@@ -12,7 +12,7 @@ Status: reviewed allocation entered in KiCad sheet `01_compute`; assignments rem
 | 5 | SX1262_DIO1 | Input/IRQ |
 | 6 | SX1262_BUSY | Input |
 | 7 | LCD_BL_PWM | PWM to backlight driver enable/dimming |
-| 8 | LCD_DC | Output through the reviewed 3.3-to-1.8 V TFT translator |
+| 8 | LCD_AUX | Reserved display control / recovery GPIO; three-line SPI carries command/data in-band, so this is not a D/C requirement |
 | 9 | SX1262_NSS | Shared SPI chip select |
 | 10 | LCD_CS | Shared SPI chip select; TFT branch requires 1.8 V translation |
 | 11, 12, 13 | SPI MOSI, SCLK, MISO | Shared LCD/microSD/SX1262 bus; TFT MOSI/SCLK branch requires 1.8 V translation; transactions bounded by owner |
@@ -40,14 +40,14 @@ GPIO3, GPIO45 and GPIO46 remain unused because they are strapping pins; GPIO46 i
 | 0x44 | SHT40 | Locked humidity/temperature sensor |
 | 0x46 | BMP581 | SDO-low candidate; 0x47 remains alternate |
 | 0x47 | TUSB320LAI candidate | ADDR-low, fixed-UFP USB-C current detection; review VBUS-powered unpowered-bus behavior |
-| 0x70 | ST1633I touch | Seven-bit address specified by Orient C1 revision J; confirm on both labeled samples |
+| Published `0x70` | ST1633I touch | Orient C1 revision J does not identify seven-bit versus eight-bit-write convention; confirm controller source and both labeled samples before declaring the address map collision-free |
 | 0x68 | ICM-42688-P | AD0-low candidate; 0x69 remains alternate |
 
 The bus starts at 400 kHz. Interrupt/polling policy: direct touch and IMU interrupts; poll BMP581/MMC5983MA at scheduled rates. The BQ25887 and TUSB320LAI interrupt/status allocation and any separate gauge alert remain open until the exact power application is reviewed. If TUSB320LAI is VBUS-powered, prevent the always-on 3.3 V pullups from back-powering it while VBUS is absent. Expansion bus capacitance and stuck-bus recovery require a measured cable limit.
 
 ## Shared SPI service contract
 
-LCD, microSD and SX1262 share one hardware SPI host with separate chip selects. The TFT branch needs reviewed unidirectional 3.3-to-1.8 V translation for clock, data, chip select, command/data and reset; do not place a translator on the entire shared bus. Drivers must hold the bus only for bounded chunks, restore mode/frequency on every transaction and never wait for radio BUSY while owning the bus. The storage task batches writes; the UI uses partial rectangles; the radio IRQ path preempts between chunks. A logic-analyzer stress test must show that maximum LCD/SD occupancy does not violate SX1262 service timing.
+LCD, microSD and SX1262 share one hardware SPI host with separate chip selects. The provisional three-line TFT branch needs reviewed unidirectional 3.3-to-1.8 V translation for clock, data and chip select plus a separate open-drain reset path; its ninth serial bit carries command/data. Do not place a translator on the entire shared bus. Drivers must hold the bus only for bounded chunks, restore mode/frequency on every transaction and never wait for radio BUSY while owning the bus. The storage task batches writes; the UI uses partial rectangles; the radio IRQ path preempts between chunks. A logic-analyzer stress test must show that maximum LCD/SD occupancy does not violate SX1262 service timing.
 
 ## RP2040 and expansion transport
 

@@ -2,17 +2,18 @@
 
 Locked product target: **2.8-inch IPS LCD, 320 x 240 in landscape or 240 x 320 in portrait, capacitive touch and both orientations**. Orient Display `AFY240320A1-2.8INTH-C1` remains the selected sample candidate; the exact part is not locked until sample and sourcing review.
 
-Status: the exact manufacturer specification and candidate support circuit are now documented. Aratas/Omron `XF3M-4015-1B` and `XF3M-0615-1B`, TI `SN74AXC4T245PWR` plus `SN74LVC1G07DBVR`, and TI `TPS61169DCKR` are preferred candidates, not frozen parts. Connector footprints and schematic entry remain gated by the drawing ambiguity, exact SPI-mode confirmation, independent CAD review and labeled samples.
+Status: the exact manufacturer specification and candidate support circuit are now documented. The revision-J mode table verifies three-line, nine-bit SPI at `IM2/IM1/IM0 = 1/0/1` and four-line, eight-bit SPI at `1/1/0`; Rev A provisionally prefers the unambiguous three-line write-only path. Aratas/Omron `XF3M-4015-1B` and `XF3M-0615-1B`, TI `SN74AXC4T245PWR` plus `SN74LVC1G07DBVR`, and TI `TPS61169DCKR` are preferred candidates, not frozen parts. Connector footprints and schematic entry remain gated by the controlled-drawing power/FPC ambiguities, independent CAD review and labeled samples.
 
 ## Controlled sources
 
-Reviewed 2026-09-14:
+Reviewed through 2026-09-17:
 
 - [Orient AFY240320A1-2.8INTH-C1 specification](https://www.orientdisplay.com/wp-content/uploads/2021/11/AFY240320A1-2.8INTH-C1.pdf), revision J dated 2021-07-20; sections 1-10 and drawing page 5.
 - [Orient product page](https://orientdisplay.com/products/2-8-sunlight-readable-ips-240x320-900-nits-with-capacitive-touch-panel-rgb-mcu-spi-interface-new-ctp-ic/), exact SKU.
 - [Omron XF3M/XF2M catalog](https://components.omron.com/us-en/system/files/2025-03/datasheet_pdf/G146-E1.pdf), catalog G146-E1-05 dated 2025-03; exact 0.5 mm dual-contact connector family and recommended FPC geometry.
 - [TI SN74AXC4T245 data sheet](https://www.ti.com/lit/ds/symlink/sn74axc4t245.pdf), SCES877B revised 2024-04; and [TI SN74LVC1G07 data sheet](https://www.ti.com/lit/ds/symlink/sn74lvc1g07.pdf), SCES296AG revised 2025-10.
 - [TI TPS61169 data sheet](https://www.ti.com/lit/ds/symlink/tps61169.pdf), SNVSA40B revised 2024-06.
+- [TI TPS61169EVM guide](https://www.ti.com/lit/pdf/snvu455), SNVU455, for the manufacturer evaluation topology.
 - [DigiKey exact-part listing](https://www.digikey.com/en/products/detail/orient-display/AFY240320A1-2-8INTH-C1/22531939), checked 2026-09-14 for dated price/availability only.
 - DigiKey dated sourcing pages: [XF3M-4015-1B](https://www.digikey.com/en/products/detail/omron-electronics-inc-emc-div/XF3M-4015-1B/4331809), [XF3M-0615-1B](https://www.digikey.com/en/products/detail/aratas-formerly-omron-components/XF3M-0615-1B/4840775), [SN74AXC4T245PWR](https://www.digikey.com/en/products/detail/texas-instruments/SN74AXC4T245PWR/10060449), [SN74LVC1G07DBVR](https://www.digikey.com/en/products/detail/texas-instruments/SN74LVC1G07DBVR/377455) and [TPS61169DCKR](https://www.digikey.com/en/products/detail/texas-instruments/TPS61169DCKR/5048578).
 
@@ -28,7 +29,7 @@ The specification identifies ST7789VI or compatible for the TFT and ST1633I for 
 | TFT supply | 2.4-3.6 V, 2.8 V typical; 9 mA typical in the published condition |
 | TFT logic | VDDIO specified at 1.8 V; VIH >= 0.7 x VDDIO |
 | Touch supply | 2.8-3.6 V, 3.3 V typical; 16.1 mA typical, 24 mA maximum |
-| Touch I/O | 1.6-3.6 V; I2C address `0x70` in the module specification; top-left coordinate origin |
+| Touch I/O | 1.6-3.6 V; module specification publishes I2C value `0x70` without stating whether it is seven-bit or an eight-bit write byte; top-left coordinate origin |
 | Backlight | Specification states 5.8-6.4 V, 100 mA typical, 125 mA absolute maximum and 0.60 W typical; it describes five LEDs in parallel |
 | Power | 0.625 W module figure in the general table; backlight dominates and must be measured at the selected brightness |
 
@@ -44,13 +45,13 @@ The TFT interface table defines a 40-contact FPC:
 | --- | --- | --- |
 | 1, 2 | LEDK, LEDA | Backlight cathode/anode; use reviewed current driver |
 | 3, 14 | GND | Ground |
-| 4-6 | IM0, IM1, IM2 | Interface-mode straps; exact SPI strap table must be checked visually against revision J before schematic entry |
+| 4-6 | IM0, IM1, IM2 | Revision-J straps: three-line, nine-bit SPI = `IM2/IM1/IM0 1/0/1`; four-line, eight-bit SPI = `1/1/0`. Rev A provisionally uses three-line `101` because its command/data bit is carried in-band |
 | 7 | SDA | SPI data input |
 | 8-11 | DOTCLK, DE, VSYNC, HSYNC | RGB signals; unused in the selected SPI mode only after the exact mode table defines required ties |
 | 12 | VCC | TFT supply |
 | 13 | RESET | TFT reset |
 | 15-32 | DB17-DB0 | Parallel/RGB data bus; unused-pin treatment follows the exact selected SPI mode and controller specification |
-| 33, 34 | RD, WR | Mode-dependent inputs; revision J says tie to VCC or ground for RGB but does not by itself release SPI strapping |
+| 33, 34 | RD, WR | Mode-dependent inputs. Four-line timing names `D/CX` without mapping it to an FPC contact; pin 34 is only labeled `WR`, so four-line remains blocked |
 | 35 | RS | Serial-interface clock in the module table |
 | 36 | CS | Active-low chip select |
 | 37-40 | XR, YD, XL, YU | Marked NC for this capacitive-touch variant |
@@ -81,18 +82,22 @@ The drawing explicitly identifies a contact side for the TFT tail, but the CTP t
 
 The Omron recommended FPC drawing calls for at least 3.5 mm in the terminal region, while the Orient nominal exposed length is 3.50 mm with a -0.30 mm tolerance. Resolve that tolerance boundary with Orient before connector release. Secure both tails against vibration and reserve actuator-operating space as required by the connector manufacturer.
 
+The exact Omron recommended board lands are available for later controlled CAD: signal lands are `0.30 x 1.30 mm` on `0.50 mm` pitch and hold-down lands are `1.50 x 2.20 mm`. For the 40-pin part, catalog dimensions A/B/C/D/E/F/G are `19.50/23.10/24.10/20.55/20.50/21.50/25.10 mm`; for the six-pin part they are `2.50/6.10/7.10/3.55/3.50/4.50/8.10 mm`. These values close manufacturer-land availability, but do not override the unresolved Orient tail tolerance or authorize a footprint yet.
+
 Do not create or assign either connector footprint until the exact manufacturer land pattern is independently overlaid, the controlled Orient drawing is obtained or its ambiguity is dispositioned, and two labeled display samples pass insertion/retention/continuity checks.
 
 ## TFT logic translation proposal
 
 Use a display-only branch; the shared 3.3 V SPI trunk to microSD and SX1262 remains unshifted.
 
-- Preferred bus translator: TI `SN74AXC4T245PWR`, TSSOP-16. Connect VCCA to `3V3_MAIN`, VCCB to the existing `1V8_LOGIC` candidate rail, and fix both direction groups A-to-B. Allocate SCLK, SDA/MOSI, CS and D/C if four-line SPI is confirmed. In three-line SPI, the fourth channel is spare.
+- Preferred bus translator: TI `SN74AXC4T245PWR`, TSSOP-16. Connect pin 1 VCCA to `3V3_MAIN`, pin 16 VCCB to `1V8_LOGIC`, and hold both direction inputs (pins 2 and 3) high for A-to-B. Use channels pins 4-to-13, 5-to-12 and 6-to-11 for SCLK, SDA and CS. Give unused A4 pin 7 a defined level if B4 pin 10 is unused.
 - Pull each active-low OE to VCCA so outputs remain high impedance during power-up/down, as TI requires. A host-controlled pull-down may enable the translator only after `1V8_LOGIC` and TFT VCC are valid. Place one local bypass capacitor at each supply pin pair and keep translated traces short.
-- Preferred reset translator: TI `SN74LVC1G07DBVR` powered from `1V8_LOGIC`, with its 5.5 V-tolerant input driven from the 3.3 V reset control, an input pull-down to hold reset asserted at boot, and an output pull-up to `1V8_LOGIC`. This open-drain path prevents a 3.3 V high level at the TFT reset pin and keeps reset asserted while 1.8 V is present and the host is not driving.
+- Preferred reset translator: TI `SN74LVC1G07DBVR`: pin 2 input from the 3.3 V reset control, pin 3 ground, pin 4 open-drain TFT reset, pin 5 `1V8_LOGIC`, pin 1 NC. An input pull-down holds reset asserted at boot and an output pull-up to `1V8_LOGIC` prevents a 3.3 V high level at the TFT reset pin.
 - The AXC device supports either rail from 0.65 to 3.6 V, Ioff partial-power-down protection, VCC isolation and supply sequencing in either order. The LVC buffer supports 1.65-5.5 V operation, overvoltage-tolerant input and Ioff. These properties reduce back-power risk but do not replace a measured rail/reset sequence.
 
-The module labels SDA as I/O. The fixed direction above intentionally provides write-only display traffic. If register/pixel readback is required, the design must add controlled turnaround and prove there is no bus contention; do not change direction dynamically without a timing review. Exact IM0-IM2 straps, D/C pin mapping and unused inputs remain blocked because the module exposes no IM3 pin and its interface table is ambiguous about `WR`/`RS` behavior in four-line SPI. Obtain Orient confirmation or validate a manufacturer-provided sample interface board before schematic freeze.
+The module labels SDA as I/O. The fixed direction above intentionally provides write-only display traffic. In the preferred three-line mode, the ninth serial bit carries command/data state, so the unexplained four-line `D/CX` contact is avoided. The published 66 ns minimum serial write cycle limits the panel clock to about 15.15 MHz. If register/pixel readback is required, the design must add controlled turnaround and prove there is no bus contention. Four-line SPI remains blocked until Orient maps `D/CX` to an exact FPC contact.
+
+Revision J still contains a supply-domain contradiction: timing/sequencing pages refer to separate `VDDI` and `VDD`, the DC table names `VDDIO = 1.8 V`, and the FPC exposes only one TFT `VCC` contact. Obtain a controlled electrical clarification before freezing TFT power, even though the serial strap table itself is now readable.
 
 `1V8_LOGIC` is supplied by the already proposed `TPS7A2018PDBVR`; this display work does not replace that regulator. The rail load calculation remains open because Orient does not publish a VDDIO current maximum.
 
@@ -102,11 +107,11 @@ Preferred candidate: TI `TPS61169DCKR`, an active SC70-5 boost WLED driver with 
 
 Application starting point from the TI topology:
 
-1. `3V3_MAIN` through a 10 uH inductor to SW; the TI-listed `LPS4018-103ML` is a candidate with 1.3 A saturation rating. Final inductor MPN remains gated by peak-current, DCR, temperature and PCBA sourcing review.
-2. Use a low-capacitance Schottky from SW to LEDA with reverse rating above the driver's open-LED protection voltage; TI recommends `NSR0240`. Confirm its exact suffix/package and stock before BOM freeze.
-3. Place 1 uF ceramic at VIN and 1-4.7 uF ceramic from LEDA/output to ground, with voltage derating checked. Connect LEDK to FB and place the current-set resistor from FB to ground next to the IC.
-4. Start with `RSET = 2.21 ohm, 1%`, which gives about 92.3 mA at the typical 204 mV reference. Using the published 188-220 mV feedback range and resistor tolerance gives approximately 84.2-100.5 mA, below the panel's 125 mA absolute maximum and near/below its 100 mA life-test current. Verify actual sample current, luminance and temperature before freeze.
-5. Drive CTRL from `LCD_BL_PWM` with a pull-down that guarantees off at reset. TI recommends 5-100 kHz PWM; use 20 kHz as the initial bring-up setting. A constant high CTRL requests the set current.
+1. `3V3_MAIN` through a 10 uH `LPS4018-103MRC` candidate to SW. The older `-103ML` suffix is not the current ordering code. A pessimistic 2.7 V input/6.62 V output calculation gives roughly 0.44-0.46 A peak; final saturation current, DCR, temperature and sourcing remain gated.
+2. Use a Schottky from SW to LEDA. The EVM's 40 V `NSR0240V2T1G` leaves only 1 V above the published 39 V maximum OVP corner, so select an exact 60 V-class part with adequate repetitive peak current before freeze.
+3. Place at least 1 uF ceramic at VIN; 4.7 uF local bulk is a reasonable prototype start. Use 1-4.7 uF **effective** output capacitance with a 50 V rating because an open LED can raise the node toward the 36-39 V OVP range. Connect LEDK to FB and place RSET from FB to ground at the IC.
+4. Start with `RSET = 2.21 ohm, 1%, at least 0.1 W`, which gives about 92.3 mA at the typical 204 mV reference. Using 188-220 mV and resistor tolerance gives approximately 84.2-100.5 mA. Verify sample current, luminance and temperature before freeze.
+5. Drive CTRL from `LCD_BL_PWM`; the IC already has a 300 kOhm internal pull-down, while an external pull-down may reinforce reset behavior. TI recommends 5-100 kHz PWM; use 20 kHz as the initial bring-up setting.
 
 At 0.60 W output, estimated input current from 3.3 V is about 202 mA at TI's 90% peak efficiency or 214 mA at an 85% planning efficiency. Reserve at least 250 mA of `3V3_MAIN` peak budget pending measured efficiency and transient data. Because the panel's minimum 5.8 V LED forward voltage exceeds the 3.3 V driver input, the TPS61169 shutdown-path condition for keeping the LEDs off is met on paper; verify leakage on both samples.
 
@@ -114,9 +119,9 @@ Keep the SW/inductor/diode loop short, place CIN/COUT and RSET at the IC, separa
 
 ## Host and sequencing plan
 
-SPI remains the selected first interface because it fits the GPIO budget. The published module supports 3-line and 4-line serial timing, but the exact Rev A mode, IM0-IM2 straps, command/data signaling and unused-pin ties remain a review item. RGB or 8080 MCU mode requires a new documented GPIO/bandwidth decision.
+SPI remains the selected first interface because it fits the GPIO budget. Rev A provisionally uses write-only three-line, nine-bit SPI with `IM2/IM1/IM0 = 1/0/1` and a panel clock no faster than 15 MHz. Sample validation, unused-pin ties and the TFT supply clarification remain gates. RGB or 8080 MCU mode requires a new documented GPIO/bandwidth decision.
 
-Keep the TFT translator disabled and TFT reset asserted while `3V3_MAIN`, TFT VCC and `1V8_LOGIC` rise; release reset and then enable bus traffic only after the official timing is satisfied. Before shutting down a display rail, stop SPI traffic, disable the translator and assert reset. For the touch controller, revision J states RESET must be low before power-on and power-off and must remain low for at least 5 ms after its supplies reach normal voltage. Its 3.3 V reset implementation must guarantee that behavior without relying on an undefined expander default. Confirm reset polarity/timing for both controllers against their exact controller specifications and samples.
+Keep the TFT translator disabled and TFT reset asserted while `3V3_MAIN`, TFT VCC and `1V8_LOGIC` rise; release reset and then enable bus traffic only after the official timing is satisfied. Before shutting down a display rail, stop SPI traffic, disable the translator and assert reset. Touch RESET needs its own 3.3 V-safe implementation: revision J requires it low before power-on/off, held low for at least 5 ms after rails become valid, and asserted at least 100 us before power-off. Do not rely on an undefined expander default.
 
 At RGB565, a full 320 x 240 frame is 153,600 bytes. Thirty full frames/s requires 4.608 MB/s, or 36.864 Mbit/s of payload before command overhead and bus gaps. Prefer partial updates and measure contention with microSD and SX1262 on the shared SPI host.
 
@@ -130,7 +135,7 @@ Before connector or footprint freeze:
 
 1. obtain a controlled/current Orient mechanical drawing that resolves the revision-J/revision-G mismatch and ambiguous CTP terminal width/contact side;
 2. obtain at least two labeled C1 samples and confirm controller identification, both tail geometries, contact engagement, retention, continuity and bend/actuator clearances with the proposed XF3M connectors;
-3. review the `SN74AXC4T245PWR` plus `SN74LVC1G07DBVR` circuit, exact 1.8 V/TFT/touch rails, resets and back-power behavior; confirm whether write-only three-line or four-line SPI is supported and select exact straps/unused-pin ties;
+3. review the `SN74AXC4T245PWR` plus `SN74LVC1G07DBVR` circuit, exact 1.8 V/TFT/touch rails, resets and back-power behavior; validate the provisional write-only three-line `101` mode on both samples and select unused-pin ties;
 4. prototype `TPS61169DCKR` from 3.3 V with the proposed 2.21 ohm limit; measure current, luminance, leakage, efficiency, temperature, PWM behavior, startup and open/short faults;
 5. run address, touch, orientation, shared-bus, sleep/wake and RF-coexistence tests;
 6. create connector and IC footprints only from exact manufacturer drawings and independently overlay/review them before release.

@@ -1,6 +1,6 @@
 # Footprint reviews: sensors, GNSS and RF parts
 
-Status: reviewed 2026-09-15. This file separates accepted project candidates from examined geometry that is not safe to release. A filename that names an exact component is not evidence that its land pattern matches that component.
+Status: reviewed through 2026-09-17. This file separates accepted project candidates from examined geometry that is not safe to release. A filename that names an exact component is not evidence that its land pattern matches that component.
 
 ## MEMSIC `MMC5983MA` — manufacturer-derived candidate
 
@@ -59,9 +59,12 @@ Status: reviewed 2026-09-15. This file separates accepted project candidates fro
 ## TI `TPD1E0B04DPYR` — GNSS RF ESD shunt
 
 - **Candidate footprint:** `hardware/footprints/TI_TPD1E0B04DPYR_X1SON-2_DPY0002A.kicad_mod`
-- **Source lineage:** built from the example-board-layout dimensions in TI datasheet `TPD1E0B04`, package DPY0002A: two 0.3 x 0.5 mm lands on a 0.7 mm span, with TI's solder-mask-defined preference recorded.
-- **Status:** direct manufacturer transcription completed; an independent visual/dimensional check still gates layout release.
+- **Controlling source:** TI TPD1E0B04 data sheet Rev C, June 2025, package drawing `4224561/C` dated 2024-07, pages 23-25.
+- **Exact geometry:** terminal centers X = +/-0.35 mm; exposed SMD land and 0.10 mm-stencil apertures `0.30 x 0.50 mm`, R0.05. TI prefers solder-mask-defined lands with copper extending at least 0.07 mm under mask on all sides.
+- **Review correction 2026-09-17:** corrected the earlier 90-degree pad-axis error. The candidate now uses `0.44 x 0.64 mm` copper with separate `0.30 x 0.50 mm` rounded mask and paste apertures, expands the courtyard beyond maximum body/copper and adds a fab pin-1 index.
+- **Independent second pass:** confirmed centers, pin orientation, SMD opening, derived minimum copper overlap, paste, body and courtyard against drawing 4224561/C with no critical/high/medium mismatch; KiCad 10.0.6 export returned success.
+- **Status:** exact dimensions passed independent review and the corrected footprint parses/exports in KiCad. Assembler approval of mask registration/web, copper enlargement, paste and courtyard remains mandatory.
 
 ## Release boundary
 
-The MMC5983MA, BMP581, ICM-42688-P, MAX-M10S, U.FL and TPD1E0B04 candidate files remain in `hardware/footprints/` from this review. MAX-M10S and U.FL have now completed dimensional second passes; TPD1E0B04 still requires its independent dimensional check. None is released for manufacture until the remaining assembler, RF, mechanical and part-specific checks are recorded. The RP2040 support and storage group is covered by [the digital footprint review](FOOTPRINT_REVIEWS_DIGITAL.md).
+The MMC5983MA, BMP581, ICM-42688-P, MAX-M10S, U.FL and TPD1E0B04 candidate files remain in `hardware/footprints/` from this review. MAX-M10S, U.FL and the corrected TPD1E0B04 have completed dimensional evidence comparisons. None is released for manufacture until the remaining assembler, RF, mechanical and part-specific checks are recorded. The RP2040 support and storage group is covered by [the digital footprint review](FOOTPRINT_REVIEWS_DIGITAL.md).
