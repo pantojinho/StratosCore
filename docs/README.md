@@ -22,6 +22,7 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | [GPIO and interface map](INTERFACE_GPIO_MAP.md) | ESP32 allocation, I2C addresses and shared-SPI contract |
 | [Electrical compatibility matrix](ELECTRICAL_COMPATIBILITY_MATRIX.md) | Rail, voltage, address, boot-state and back-power closure map |
 | [I2C bus budget](I2C_BUS_BUDGET.md) | Shared-bus capacitance, pull-up window and per-device transcription worksheet |
+| [Power input evidence](POWER_INPUT_EVIDENCE.md) | USB eFuse and 2S charger datasheet facts feeding O05/O06 |
 | [Expansion interface](EXPANSION_INTERFACE.md) | External I2C/SPI/UART/GPIO requirements |
 
 ## Hardware subsystems
