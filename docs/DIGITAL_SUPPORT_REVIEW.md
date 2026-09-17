@@ -8,7 +8,14 @@ Status: exact engineering candidates reviewed through 2026-09-17. These selectio
 
 The project footprint now transcribes Winbond Rev-M package/pin data and `AN0000009` Rev 2.1 copper/stencil geometry. Its corrected 1.90 x 0.80 mm copper and distinct 1.80 x 0.70 mm paste apertures passed an independent dimensional second pass and KiCad 10 export on 2026-09-17. Assembler mask/courtyard approval and boot/reset/program/temperature bring-up remain.
 
-Route the six QSPI signals directly between RP2040 and flash, keep them short, follow the Raspberry Pi reference pullup/decoupling arrangement and expose the documented BOOTSEL recovery path. The final schematic review must confirm the exact Winbond status-register defaults, RP2040 boot-ROM compatibility and maximum XIP clock. Bring-up must prove cold boot, repeated reset, full-image programming, checksum and operation across the accepted temperature and voltage range.
+Route the six QSPI signals directly between RP2040 and flash, keep them short, follow the Raspberry Pi reference pullup/decoupling arrangement and expose the documented BOOTSEL recovery path. The previously open items are now closed from the primary sources (reviewed 2026-09-17):
+
+- **Ordering code:** Winbond W25Q128JV Rev M ordering table confirms `W25Q128JVSIQ` = 128 Mbit, SOIC-8 208-mil, industrial-plus-style `IQ` speed/temperature grade with 133 MHz fast-read support (VCC 3.0-3.6 V; 2.7-3.6 V operation limits fast read to 104 MHz).
+- **Quad mode:** the QE bit is non-volatile in Status Register-2; QE=1 makes /WP→IO2 and /HOLD→IO3 (Rev M section 7.1.4). RP2040 quad-XIP boot requires QE set; the Raspberry Pi reference found the external QSPI_SS pull-up unnecessary with this device (R2 = 10 kΩ DNF in the reference design).
+- **BOOTSEL strap:** QSPI_SS doubles as the boot strap; the reference uses R1 = 1 kΩ from QSPI_SS to a `USB_BOOT` header, and BOOTSEL is entered by grounding it while toggling RUN (active-low reset, pulled high on-board). R1 must be present so RP2040 can safely over-drive the applied pull-down when booting.
+- **Maximum XIP clock:** bootrom ENTER_XIP uses a conservative 03h serial read; the SSI SCKDV divider scales the QSPI clock from the system clock, so 3.3 V operation allows up to 133 MHz flash commands with margin — final XIP speed is a firmware/bring-up setting, not a hardwire.
+
+Bring-up must prove cold boot, repeated reset, full-image programming, checksum and operation across the accepted temperature and voltage range.
 
 ## RP2040 reference clock
 
