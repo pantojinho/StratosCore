@@ -15,9 +15,9 @@ Do not invoke Astra for StratosCore CAD yet. [Project status](PROJECT_STATUS.md)
 - [ ] SX1262 and ADS-B RF chains have exact suffixes, reference revisions, stackup inputs, placement constraints and conducted-test provisions.
 - [ ] ESP32/RP2040/display/SD/radio/GNSS/audio/expansion interfaces have a collision-free net and GPIO map, including boot states and test points.
 - [ ] Exact USB-C, microSD, microphone, expansion and RF connector MPNs and footprints are reviewed.
-- [ ] PCB outline, mounting, enclosure, battery holder, display/FPC, access, antenna keepouts and four-layer production stack are confirmed.
+- [ ] PCB outline, mounting, enclosure (including O26 condensation/venting), battery holder, display/FPC, access, antenna keepouts and four-layer production stack are confirmed.
 - [ ] Preliminary BOM has been converted to an orderable schematic BOM with quantities and approved sourcing status.
-- [ ] `PROJECT_STATUS.md` and `OPEN_QUESTIONS.md` contain no unresolved item that affects schematic connectivity, footprint choice, placement or routing.
+- [ ] `PROJECT_STATUS.md` and `OPEN_QUESTIONS.md` contain no unresolved item that affects schematic connectivity, footprint choice, placement or routing — including the owner-input entries O21-O26 (regulatory regime ANATEL/ANAC, cost target, UN38.3 transport, factory firmware/provisioning) and the conformal-coating/condensation decision O26, which gates PCBA process and enclosure venting.
 
 ## Authoritative inputs when READY
 
