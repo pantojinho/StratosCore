@@ -1,6 +1,6 @@
 # RF connector selection for Rev A
 
-Status: **PROPOSED, not released for KiCad**. Review date: 2026-09-14. This document selects exact connector candidates and mechanical interfaces only. It does not freeze an RF circuit, transmission-line geometry, antenna match, ESD network or PCB footprint.
+Status: **PROPOSED, not released for KiCad**. Review date: 2026-09-15. This document selects exact connector candidates and mechanical interfaces only. It does not freeze an RF circuit, transmission-line geometry, antenna match, ESD network or PCB footprint.
 
 ## Proposed connector set
 
@@ -16,7 +16,7 @@ These are preferred candidates pending RF/CAD review. The shared U.FL part reduc
 
 The exact manufacturer ordering code is Hirose `U.FL-R-SMT-1(60)`, HRS `CL0331-0472-2-60`. Hirose lists it as a sales product, 50 ohms, 8 GHz maximum, VSWR 1.3 maximum, 30 mating/unmating cycles, and 1.9 mm nominal mated height. The receptacle body is about 3.0 x 3.1 x 1.25 mm. The `(60)` suffix is the 4,000-piece reel version at 8 mm tape pitch; it is not a different RF interface.
 
-Use the exact Hirose drawing and catalog during footprint review. The drawing calls out the signal and two ground lands, a no-conductive-traces region, solder-mask/metal-mask information and 0.1/0.12 mm stencil assumptions. These dimensions are inputs for an independently transcribed project footprint, not authorization to copy a third-party library.
+The exact drawing `0001257918 / EDC-302540-60-80` and catalog were independently compared on 2026-09-15. The project footprint now carries the exact signal/two-ground copper rectangles and separate manufacturer metal-mask apertures. The central callout prohibits a board cut-out; it does not prescribe a copper keepout or a solder-mask opening, so both provisional library features were removed. RF return copper remains a final-layout decision. Final solder-mask/process treatment, stencil compatibility and tool/cable clearance remain assembler/RF/mechanical gates.
 
 The 30-cycle rating makes U.FL an internal assembly/service connection. It is not a user-accessible antenna jack. Production assembly needs the Hirose insertion/extraction tool or a controlled equivalent process, cable slack and strain relief; repeated bench swaps should occur at the external SMA connector.
 
@@ -64,7 +64,7 @@ Authorized availability snapshot checked 2026-09-14: DigiKey listed 2,809 pieces
 ## Remaining release gates
 
 1. RF reviewer accepts the exact `U.FL-R-SMT-1(60)` use for LoRa, GNSS and ADS-B and `CAB.721` for ADS-B plus optional LoRa SMA.
-2. Independently transcribe and compare the Hirose footprint, solder mask, paste mask and keepout against the controlled 2D drawing; record reviewer and evidence.
+2. Obtain assembler approval for the corrected Hirose copper/mask/paste implementation and confirm the controlled drawing's stencil assumptions; the exact dimensional comparison is complete.
 3. Independently transcribe the `CAB.721` bulkhead drawing; confirm panel hole, wall thickness, nut/washer stack, torque, cable exit and actual minimum bend radius with Taoglas.
 4. Fit physical samples in the printed enclosure dummy with display, exact holder and both cells installed; verify tool access, strain relief, drop loads and that cables do not cross antenna or magnetic/thermal keepouts.
 5. Freeze the factory four-layer stackup, calculate each 50-ohm path and review return-current/via placement. Do not reuse a trace width from another board.

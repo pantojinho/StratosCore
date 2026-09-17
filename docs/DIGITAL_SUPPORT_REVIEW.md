@@ -1,6 +1,6 @@
 # Digital support parts review
 
-Status: exact engineering candidates reviewed 2026-09-14. These selections reduce the pre-KiCad queue but remain subject to independent footprint comparison, factory availability and board-level bring-up.
+Status: exact engineering candidates reviewed through 2026-09-15. These selections reduce the pre-KiCad queue but remain subject to the recorded footprint/process gates, factory availability and board-level bring-up.
 
 ## RP2040 boot flash
 
@@ -12,13 +12,13 @@ Route the six QSPI signals directly between RP2040 and flash, keep them short, f
 
 `ABM8-272-T3` is the preferred 12 MHz crystal. Raspberry Pi explicitly recommends this exact Abracon part at 3.3 V and documents 30 ppm tolerance/stability, 50 ohm maximum ESR and 10 pF load capacitance. Its reference circuit uses two 15 pF load capacitors and a 1 kohm series damping resistor. Preserve that starting circuit and keep XIN/XOUT traces short and symmetric; any part/value or IOVDD change requires oscillator startup and drive-level requalification.
 
-This clock is required for deterministic ADS-B capture timing and reliable USB/debug behavior. Test startup at voltage and temperature corners and compare the RP2040 timebase against GNSS PPS before accepting timing performance.
+The project footprint now uses the exact Abracon 1.30 x 0.70 mm lands at X = +/-1.15 mm and Y = +/-0.875 mm; the earlier generic 1.4 x 1.2 mm land was rejected. The 1:1 mask/paste remains an assembler-approved process starting point. This clock is required for deterministic ADS-B capture timing and reliable USB/debug behavior. Test startup at voltage and temperature corners and compare the RP2040 timebase against GNSS PPS before accepting timing performance.
 
 ## microSD socket
 
 `DM3AT-SF-PEJM5` is the preferred socket candidate. Hirose's May 2026 DM3 catalog identifies the exact part as an eight-contact, top-board, right-angle SMT, push-push microSD socket with a card-detection switch. The official product page gives a 13.85 x 15.95 mm body, 1.68 mm height, 0.5 A rating, gold-plated contacts and 10,000 mating cycles; official 2D/3D files are available.
 
-Use the already budgeted shared SPI interface for Rev A. Route card detect to a slow I2C-expander input; no safety function depends on it. Add separately selected ESD protection, required SD pullups and a reviewed load switch if power cycling is retained. The socket must sit at the enclosure edge with the full insertion, locked, over-travel and eject envelopes from the controlled drawing. The exact footprint must be independently transcribed and compared before KiCad release.
+Use the already budgeted shared SPI interface for Rev A. Route card detect to a slow I2C-expander input; no safety function depends on it. Add separately selected ESD protection, required SD pullups and a reviewed load switch if power cycling is retained. The exact drawing `0000947170 / EDC-325165-00-00` Rev 4 was compared on 2026-09-15. Electrical contacts, card detect and shell-land placement match. The drawing's C0.15 +/-0.05 terminal feature lies inside the correct rectangular PCB land. The footprint now marks the 11.0 mm operational card envelope, 0.8 mm inward overstroke edge at Y = 8.925, locked edge at Y = 9.725 and ejected edge at Y = 13.725 on `Cmts.User`. The socket must sit at the enclosure edge; assembler paste approval and final enclosure access/clearance remain before KiCad release.
 
 ## Availability snapshots
 

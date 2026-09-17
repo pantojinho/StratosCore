@@ -1,6 +1,6 @@
 # Electrical compatibility matrix
 
-Status: system-level pre-schematic review. Created 2026-09-14; evidence rows updated 2026-09-14 with exact component datasheet figures where noted. A row marked OPEN prevents the affected circuit from being treated as KiCad-ready.
+Status: system-level pre-schematic review. Created 2026-09-14; evidence rows updated 2026-09-15 with exact component/manufacturer-EVM figures where noted. A row marked OPEN prevents the affected circuit from being treated as KiCad-ready.
 
 ## Supply domains
 
@@ -20,7 +20,7 @@ The proposed main buck's 3 A rating is an upper component capability, not a veri
 
 | Interface | Participants and levels | Current disposition | Blocking issue |
 | --- | --- | --- | --- |
-| Shared I2C | ESP32 3.3 V; ICM-42688-P, MMC5983MA, BMP581, SHT40, touch, BQ25887, TUSB320LAI and expansion | Logical address map has no known collision | Calculate capacitance/pullups and resolve unpowered TUSB/touch/power-device backfeed; external cable limit and stuck-bus recovery. BQ25887 I2C thresholds (SLUSD89B): VIH 1.3 V, VIL 0.4 V, 1 uA leakage characterized for a 1.8 V pull-up rail; the 3.3 V pull-up candidate is within the 6 V absolute maximum of SDA/SCL/INT/CD/PSEL but the threshold table for a 3.3 V rail must be confirmed before commit. TUSB320LAI (SLLSEQ8D note 2): with 3.3 V I2C the device VDD must stay at or above 3.0 V or the bus back-powers the device - disposition is to power TUSB320LAI VDD from `3V3_MAIN` (always on during operation) and pull VBUS_DET to VBUS through the datasheet 900 kohm |
+| Shared I2C | ESP32 3.3 V; ICM-42688-P, MMC5983MA, BMP581, SHT40, touch, BQ25887, TUSB320LAI and expansion | Logical address map has no known collision; BQ25887 3.3 V bus level is supported by TI's BQ25887EVM-001 | Calculate total capacitance and pull-ups; resolve touch/power-device off-state behavior, external cable limit and stuck-bus recovery. BQ25887 SLUSD89B gives VIH 1.3 V, VIL 0.4 V and 1 uA leakage at a characterized 1.8 V pull-up; TI EVM guide SLUUC12 Table 3 independently implements SDA/SCL/INT pull-ups from an onboard 3.3 V LDO and JP12/JP13 use 10 kOhm. TUSB320LAI (SLLSEQ8D note 2): with 3.3 V I2C the device VDD must stay at or above 3.0 V or the bus back-powers the device - disposition is to power TUSB320LAI VDD from `3V3_MAIN` and pull VBUS_DET to VBUS through the datasheet 900 kOhm |
 | Shared SPI trunk | ESP32 3.3 V to microSD and SX1262; TFT uses a translated branch | Separate chip selects and bounded service policy defined | Exact TFT translator, loading, maximum clocks/modes and concurrency measurement |
 | TFT branch | ESP32 3.3 V outputs to 1.8 V display logic; readback need depends on selected serial mode | Translation required only on the display branch | Exact direction/channel count, reset/enable startup levels and display sample timing |
 | PDM microphone | ESP32 3.3 V clock/data domain; T5838 is 1.8 V | `TXU0202DCUR` provides one channel each direction | Confirm OE/rail sequence, PDM clock quality, footprint/acoustic port and RF-noise test |
@@ -39,7 +39,7 @@ The proposed main buck's 3 A rating is an upper component capability, not a veri
 | 0x46 | BMP581, SDO low | 3.3 V VDDIO | Compatible; 0x47 alternate is prohibited while TUSB uses 0x47 |
 | 0x47 | TUSB320LAI, ADDR low | 3.3 V bus candidate | No collision only while BMP581 stays at 0x46; unpowered state resolved by powering the device from `3V3_MAIN` per the back-power note above, pending schematic capture |
 | 0x68 | ICM-42688-P, AD0 low | 3.3 V | Compatible |
-| 0x6B | BQ25887 | 3.3 V bus candidate | Logical address and open-drain behavior verified. The published threshold table is characterized with a 1.8 V pull-up; a 6 V absolute maximum does not establish recommended 3.3 V operation, so TI confirmation or a documented level-translation choice remains open |
+| 0x6B | BQ25887 | 3.3 V | Logical address and open-drain behavior verified; TI BQ25887EVM-001 uses a 3.3 V LDO pull-up source for SDA/SCL/INT, closing the bus-voltage question. Final shared pull-up resistance remains open pending capacitance/sink/rise-time calculation |
 | 0x70 | ST1633I touch | 3.3 V I/O permitted by display specification | No collision; confirm address on two labeled display samples |
 
 MAX-M10S uses UART in Rev A, so its default I2C address 0x42 is not placed on this bus.

@@ -9,10 +9,11 @@ StratosCore is an open-source portable field, aviation, meteorological, navigati
 | Complete | In progress | Externally blocked |
 | --- | --- | --- |
 | Product baseline and licensing | Review/test exact display support and GNSS passive RF proposals | Display controlled drawing, C1 samples and connector confirmation |
-| MAX-M10S GNSS decision | Close complete 2S charger/protection/VBUS application | Qualified electrical/battery review and fault tests |
+| MAX-M10S decision and independently reviewed footprint geometry | Close complete 2S charger/protection/VBUS application | Qualified electrical/battery review and fault tests |
 | Two removable 21700 cells in 2S decision | Accept exact cells/holder and state estimation; finish rail calculations | RF performance and runtime measurements need prototypes |
 | ESP32 compute sheet and GPIO allocation | Sensor CAD, LoRa/ADS-B RF, stackup and mechanical dummy | Final factory stack confirmation |
-| Exact candidates for RP2040 support, microSD, audio, USB-C, expansion, buttons, rails and RF interconnects | Independent footprints, mechanical fit, off-state review and application tests | Independent footprint and bring-up review |
+| Exact candidates for RP2040 support, microSD, audio, USB-C, expansion, buttons, rails and RF interconnects | Assembler process approvals, residual W25Q/ESD CAD, mechanical fit, off-state review and application tests | Independent final schematic/layout and bring-up review |
+| Independent dimensions for ICM/MMC/BMP, ABM8, U.FL and DM3 electrical/mechanical envelope | RF return paths, enclosure access and prototype qualification | PCBA assembler stencil/mask confirmation |
 | KiCad hierarchy; latest ERC: zero violations | Orderable BOM and manufacturing inputs | |
 | ADS-B host models: 24 tests passing | UART/PIO/DMA implementation and sustained-link bench proof | |
 

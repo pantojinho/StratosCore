@@ -3,7 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "10.0")
 	(layer "F.Cu")
-	(descr "Micro SD, SMD, right-angle, push-pull (https://www.hirose.com/product/en/download_file/key_name/DM3AT-SF-PEJM5/category/Drawing%20(2D)/doc_file_id/44099/?file_category_id=6&item_id=06090031000&is_series=)")
+	(descr "Hirose DM3AT-SF-PEJM5 push-push microSD; exact drawing 0000947170 / EDC-325165-00-00 Rev 4, 2026-08-01; electrical lands reviewed 2026-09-15; operational card envelope shown on Cmts.User; assembler/process gate open")
 	(tags "Micro SD")
 	(property "Reference" "REF**"
 		(at -0.075 -9.525 0)
@@ -52,6 +52,16 @@
 				(thickness 0.15)
 			)
 		)
+	)
+	(property "Manufacturer_Drawing" "Hirose 0000947170 / EDC-325165-00-00 Rev 4"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+	)
+	(property "Review_Status" "Electrical lands/pin map reviewed 2026-09-15; card envelope recorded; assembler/mechanical gates open"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
 	)
 	(attr smd)
 	(duplicate_pad_numbers_are_jumpers no)
@@ -467,6 +477,70 @@
 			(font
 				(size 0.6 0.6)
 				(thickness 0.09)
+			)
+		)
+	)
+	(fp_rect
+		(start -5.925 8.325)
+		(end 5.075 13.725)
+		(stroke
+			(width 0.1)
+			(type dash)
+		)
+		(fill no)
+		(layer "Cmts.User")
+		(uuid "b0c92c63-d88f-44f5-93fb-c8a03cff8d75")
+	)
+	(fp_line
+		(start -5.925 9.725)
+		(end 5.075 9.725)
+		(stroke
+			(width 0.1)
+			(type dash)
+		)
+		(layer "Cmts.User")
+		(uuid "c70f4446-4959-42e4-a287-7c22198127e1")
+	)
+	(fp_line
+		(start -5.925 8.925)
+		(end 5.075 8.925)
+		(stroke
+			(width 0.1)
+			(type dash)
+		)
+		(layer "Cmts.User")
+		(uuid "8f9e84e7-282d-44e1-a6a6-8843607290d2")
+	)
+	(fp_text user "CARD OVERSTROKE EDGE"
+		(at -0.425 8.6 0)
+		(layer "Cmts.User")
+		(uuid "f67351c8-b319-478d-8964-220e26d543aa")
+		(effects
+			(font
+				(size 0.55 0.55)
+				(thickness 0.08)
+			)
+		)
+	)
+	(fp_text user "CARD LOCKED EDGE"
+		(at -0.425 9.4 0)
+		(layer "Cmts.User")
+		(uuid "a51c8a9a-f74b-40c9-a4e1-e12842a528a5")
+		(effects
+			(font
+				(size 0.55 0.55)
+				(thickness 0.08)
+			)
+		)
+	)
+	(fp_text user "CARD EJECTED EDGE"
+		(at -0.425 13.4 0)
+		(layer "Cmts.User")
+		(uuid "18c7346b-e221-4947-a18f-f047d569ac27")
+		(effects
+			(font
+				(size 0.55 0.55)
+				(thickness 0.08)
 			)
 		)
 	)

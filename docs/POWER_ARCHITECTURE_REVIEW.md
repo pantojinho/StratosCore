@@ -28,6 +28,12 @@ TI `BQ25887RGER` is the first candidate for engineering review. TI data sheet SL
 
 TI's device-comparison table explicitly marks the BQ25887 as **no power path**. The load therefore remains on the protected battery bus; USB does not create an independently regulated system rail and the design does not promise batteryless operation. This is compatible with the accepted requirement that both cells be installed, but charging while the system is operating, termination under load, cold-start with a deeply discharged pack and every USB transition require review and measurement. Do not assume the charger replaces common discharge protection.
 
+### 3.3 V I2C evidence
+
+The BQ25887 data-sheet threshold table characterizes SDA/SCL with a 1.8 V pull-up rail, which previously left the proposed 3.3 V shared bus open. TI's own `BQ25887EVM-001` user guide `SLUUC12`, February 2019, closes the voltage-level question: Table 3 identifies an onboard 3.3 V LDO as the pull-up source for SDA, SCL, INT and the other open-drain/status pins, and JP12/JP13 use 10 kOhm pull-ups for SDA/SCL. The 3.3 V bus level is therefore supported by a manufacturer evaluation implementation and remains below the device's 6 V absolute maximum.
+
+This evidence does not select the StratosCore pull-up resistance. The final shared-bus value must be calculated from the total device, trace, connector and expansion capacitance, the slowest permitted rise time and every participant's low-level sink limit. BQ25887 keeps its documented seven-bit address `0x6B`.
+
 ### Charger topology comparison refreshed 2026-09-14
 
 | Candidate | What it resolves | Added consequence | Current disposition |
@@ -48,7 +54,7 @@ The charger is not the pack protector. Two candidate families were reviewed with
 
 DigiKey displayed 2,296 `BQ77307RGRR` at USD 1.95 quantity one on 2026-09-14. ABLIC lists S-8252 as a family with multiple factory configurations; exact authorized stock remains TBD. The simpler S-8252 path currently better satisfies firmware-independent protection, but no suffix is proposed until the cell/reviewer limits are known.
 
-Primary evidence: [BQ25887 Rev B](https://www.ti.com/lit/ds/symlink/bq25887.pdf), especially device comparison table 5 and sections 8.3/9/11; [BQ25792 Rev C](https://www.ti.com/lit/ds/symlink/bq25792.pdf), especially section 9.3.8; [BQ77307 production data](https://www.ti.com/lit/ds/symlink/bq77307.pdf), especially sections 7.3-7.5 and 8; and [ABLIC S-8252 revision 4.0](https://www.ablic.com/en/doc/datasheet/battery_protection/S8252_E.pdf). Distributor snapshots: [DigiKey BQ25792RQMR](https://www.digikey.com/en/products/detail/texas-instruments/BQ25792RQMR/13577777) and [DigiKey BQ77307RGRR](https://www.digikey.com/en/products/detail/texas-instruments/BQ77307RGRR/22119518).
+Primary evidence: [BQ25887 Rev B](https://www.ti.com/lit/ds/symlink/bq25887.pdf), especially device comparison table 5 and sections 8.3/9/11; [BQ25887EVM-001 user guide SLUUC12](https://www.ti.com/lit/ug/sluuc12/sluuc12.pdf), especially Table 3 and the schematic; [BQ25792 Rev C](https://www.ti.com/lit/ds/symlink/bq25792.pdf), especially section 9.3.8; [BQ77307 production data](https://www.ti.com/lit/ds/symlink/bq77307.pdf), especially sections 7.3-7.5 and 8; and [ABLIC S-8252 revision 4.0](https://www.ablic.com/en/doc/datasheet/battery_protection/S8252_E.pdf). Distributor snapshots: [DigiKey BQ25792RQMR](https://www.digikey.com/en/products/detail/texas-instruments/BQ25792RQMR/13577777) and [DigiKey BQ77307RGRR](https://www.digikey.com/en/products/detail/texas-instruments/BQ77307RGRR/22119518).
 
 ## USB-C input policy candidate
 

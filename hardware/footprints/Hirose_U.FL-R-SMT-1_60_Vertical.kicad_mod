@@ -3,7 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "10.0")
 	(layer "F.Cu")
-	(descr "Hirose U.FL Coaxial (https://www.hirose.com/en/product/document?clcode=CL0331-0472-2-01&productname=U.FL-R-SMT-1(01)&series=U.FL&documenttype=2DDrawing&lang=en&documentid=0000940668)")
+	(descr "Hirose U.FL-R-SMT-1(60), CL0331-0472-2-60; copper and metal-mask pattern transcribed from exact drawing 0001257918 / EDC-302540-60-80; reviewed 2026-09-15; assembler approval and RF/tool-clearance gates remain")
 	(tags "Hirose U.FL Coaxial")
 	(property "Reference" "REF**"
 		(at 0 -3.2 0)
@@ -53,19 +53,18 @@
 			)
 		)
 	)
+	(property "Manufacturer_Drawing" "Hirose 0001257918 / EDC-302540-60-80"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+	)
+	(property "Review_Status" "Exact copper/paste dimensions independently reviewed 2026-09-15; assembler and RF/mechanical gates open"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+	)
 	(attr smd)
 	(duplicate_pad_numbers_are_jumpers no)
-	(fp_rect
-		(start -0.99 -0.94)
-		(end 1.1 0.94)
-		(stroke
-			(width 0)
-			(type solid)
-		)
-		(fill yes)
-		(layer "F.Mask")
-		(uuid "b9af4ab4-65ac-4231-8852-ded0d1374aa2")
-	)
 	(fp_line
 		(start -1.36 -1.4)
 		(end -1.36 -0.76)
@@ -301,57 +300,41 @@
 			)
 		)
 	)
-	(pad "1" smd roundrect
+	(pad "1" smd rect
 		(at -1.525 0)
 		(size 1.05 1)
-		(layers "F.Cu" "F.Mask" "F.Paste")
-		(roundrect_rratio 0.25)
+		(layers "F.Cu" "F.Mask")
 		(uuid "d78d8383-8664-4e6b-bb5e-9b8707b7ca09")
 	)
-	(pad "2" smd roundrect
+	(pad "2" smd rect
 		(at 0 -1.475)
 		(size 2.2 1.05)
-		(layers "F.Cu" "F.Mask" "F.Paste")
-		(roundrect_rratio 0.2380952381)
+		(layers "F.Cu" "F.Mask")
 		(uuid "7ba99b6f-8bb9-4777-84b6-38edaa8dc433")
 	)
-	(pad "2" smd roundrect
+	(pad "2" smd rect
 		(at 0 1.475)
 		(size 2.2 1.05)
-		(layers "F.Cu" "F.Mask" "F.Paste")
-		(roundrect_rratio 0.2380952381)
+		(layers "F.Cu" "F.Mask")
 		(uuid "6bb34dfb-08b9-40f3-9b09-1762a87b8d0a")
 	)
-	(zone
-		(layer "F.Cu")
-		(uuid "18f54a49-6a7a-4690-a1cd-b6eba03e1ef7")
-		(name "top_keepout")
-		(hatch edge 0.5)
-		(connect_pads
-			(clearance 0)
-		)
-		(min_thickness 0.25)
-		(keepout
-			(tracks not_allowed)
-			(vias not_allowed)
-			(pads not_allowed)
-			(copperpour not_allowed)
-			(footprints allowed)
-		)
-		(placement
-			(enabled no)
-			(sheetname "")
-		)
-		(fill
-			(thermal_gap 0.5)
-			(thermal_bridge_width 0.5)
-			(island_removal_mode 0)
-		)
-		(polygon
-			(pts
-				(xy 1.1 -0.95) (xy -0.99 -0.95) (xy -0.99 0.95) (xy 1.1 0.95)
-			)
-		)
+	(pad "" smd rect
+		(at -1.525 0)
+		(size 0.85 0.8)
+		(layers "F.Paste")
+		(uuid "0f38d2a8-cd22-4e0c-a8e7-556a161265cc")
+	)
+	(pad "" smd rect
+		(at 0 -1.5)
+		(size 2 0.9)
+		(layers "F.Paste")
+		(uuid "35f9dfdc-3ad2-48de-80f2-a83209c971b4")
+	)
+	(pad "" smd rect
+		(at 0 1.5)
+		(size 2 0.9)
+		(layers "F.Paste")
+		(uuid "87d28044-48f6-4ad2-91ef-782147a78e9f")
 	)
 	(embedded_fonts no)
 	(model "${KICAD10_3DMODEL_DIR}/Connector_Coaxial.3dshapes/U.FL_Hirose_U.FL-R-SMT-1_Vertical.step"

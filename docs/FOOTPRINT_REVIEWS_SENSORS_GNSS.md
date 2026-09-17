@@ -44,14 +44,17 @@ Status: reviewed 2026-09-15. This file separates accepted project candidates fro
 - **Copper and solder mask:** 18 rectangular lands at 1.1 mm pitch. Pads 1/9/10/18 are 0.7 x 1.8 mm; the other pads are 0.8 x 1.8 mm. Land centers are X = -4.4 through +4.4 mm and Y = +/-4.75 mm in the Figure 30 orientation. Copper and mask are coincident, as u-blox requires.
 - **Pin order:** Figure 30 puts pin 1 at bottom-left; pins 1-9 run left-to-right on the bottom row and 10-18 run right-to-left on the top row. This was cross-checked against the datasheet top view, which is rotated 90 degrees relative to Figure 30.
 - **Paste:** each terminal uses the u-blox T-shaped recommendation. The outer segment is 1.4 mm long at full 0.7/0.8 mm land width; the inner segment is 0.9 mm long at 0.5/0.6 mm width. Outer-to-outer paste span is 12.5 mm and the inner gap is 7.9 mm. The manual recommends a 150 micrometer stencil and says the assembler must adapt the recommendation to its process.
-- **Mechanical/review boundary:** the 10.1 x 9.7 mm nominal body, 11.1 x 10.1 mm manufacturer keepout and de-paneling-tab warning are recorded. KiCad 10 parsed and exported the footprint to SVG, and an automated geometry audit passed. **Independent pad-by-pad review and assembler paste approval still gate release.**
+- **Independent second pass:** a separate dimensional review on 2026-09-15 confirmed all 18 copper/mask lands, 1.1 mm pitch, corner/standard pad sizes, row centers, top-view pin order and the exact T-paste dimensions, including the 7.9 mm inner gap and 12.5 mm outside span. It found no electrical or dimensional mismatch. The review moved the two side silk lines clear of the 10.7 mm maximum-width body and added an F.Fab pin-1 chamfer as a CAD convention; the physical module identifies pin 1 with a dot.
+- **Mechanical/review boundary:** the 10.1 x 9.7 mm nominal body, 11.1 x 10.1 mm manufacturer keepout and de-paneling-tab warning are recorded. KiCad 10 parses and exports the corrected footprint, and the automated geometry audit passes. **Assembler approval of the 150 micrometer/T-paste process, RF/PDN review and final placement constraints still gate release.**
 - A previous SparkFun-derived candidate was rejected and removed because it lacked a direct manufacturer derivation and the prescribed paste pattern.
 
 ## Hirose `U.FL-R-SMT-1(60)` — RF receptacles
 
 - **Candidate footprint:** `hardware/footprints/Hirose_U.FL-R-SMT-1_60_Vertical.kicad_mod`
-- **Source lineage:** vendored from the upstream KiCad library `Connector_Coaxial.pretty/U.FL_Hirose_U.FL-R-SMT-1_Vertical.kicad_mod`, whose embedded description cites Hirose drawing 0000940668 for the U.FL-R-SMT-1 family. The `(60)` suffix is reel packaging and does not change the SMT land.
-- **Status:** candidate only. Independent comparison against Hirose drawing CL0331-0472-2-60, the manufacturer no-trace area and the cable/tool access envelope remains mandatory before layout release.
+- **Controlling sources:** exact Hirose drawing `0001257918 / EDC-302540-60-80` for ordering variant `(60)` and the U.FL catalog's receptacle/metal-mask page, independently reviewed 2026-09-15.
+- **Copper and drawing restriction:** signal pad 1 is a 1.05 x 1.00 mm rectangle centered at (-1.525, 0); the two pad-2 ground lands are 2.20 x 1.05 mm rectangles centered at (0, -1.475) and (0, +1.475). The exact drawing's central callout prohibits a PCB cut-out; it does not prescribe a copper keepout. The earlier library's central F.Mask opening and the provisional F.Cu keepout were therefore removed. Final RF return copper is a layout decision.
+- **Metal mask:** separate F.Paste apertures reproduce the exact drawing: 0.85 x 0.80 mm at (-1.525, 0), and 2.00 x 0.90 mm at (0, +/-1.50). The assembler must confirm stencil/process compatibility.
+- **Status:** the exact land and paste dimensions plus the board-cut-out restriction completed an independent comparison and the corrected footprint parses in KiCad. RF layout, mask/process approval, insertion/extraction-tool access, cable strain relief and the final mechanical envelope remain mandatory before layout release.
 
 ## TI `TPD1E0B04DPYR` — GNSS RF ESD shunt
 
@@ -61,4 +64,4 @@ Status: reviewed 2026-09-15. This file separates accepted project candidates fro
 
 ## Release boundary
 
-The MMC5983MA, BMP581, ICM-42688-P, MAX-M10S, U.FL and TPD1E0B04 candidate files remain in `hardware/footprints/` from this review. None is released for manufacture until the remaining independent and assembler checks are recorded. The RP2040 support and storage group is covered by [the digital footprint review](FOOTPRINT_REVIEWS_DIGITAL.md).
+The MMC5983MA, BMP581, ICM-42688-P, MAX-M10S, U.FL and TPD1E0B04 candidate files remain in `hardware/footprints/` from this review. MAX-M10S and U.FL have now completed dimensional second passes; TPD1E0B04 still requires its independent dimensional check. None is released for manufacture until the remaining assembler, RF, mechanical and part-specific checks are recorded. The RP2040 support and storage group is covered by [the digital footprint review](FOOTPRINT_REVIEWS_DIGITAL.md).
