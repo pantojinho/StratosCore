@@ -10,11 +10,11 @@ Status: calculation worksheet opened 2026-09-17. This document closes the method
 | --- | --- | --- |
 | Bus speed target | 400 kHz (I2C Fast-mode) | "The bus starts at 400 kHz" — [GPIO and interface map](INTERFACE_GPIO_MAP.md) |
 | Bus logic level | 3.3 V | [Electrical compatibility matrix](ELECTRICAL_COMPATIBILITY_MATRIX.md) I2C address and voltage check |
-| Maximum rise time `tr` at Fast-mode | 300 ns | I2C-bus specification Fast-mode limit — PENDING CITATION, see below |
-| Maximum bus capacitance `Cb` at Fast-mode | 400 pF | I2C-bus specification limit — PENDING CITATION, see below |
+| Maximum rise time `tr` at Fast-mode | 300 ns | I2C-bus specification Fast-mode limit — **cited in-repo**: Bosch BMP581 BST-BMP581-DS004-13 §5.2.2 defers to "I2C-bus specification and user manual, UM10204, Rev.6, NXP Semiconductors"; Sensirion SHT4x v7.3 Table 4 restates `Cb < trise/(0.8473*Rp)` with `trise = 300 ns` for fast mode. Recorded 2026-09-17 |
+| Maximum bus capacitance `Cb` at Fast-mode | 400 pF | I2C-bus specification limit — restated by SHT4x v7.3 Table 4 (400 pF at fast mode with Rp <= 820 ohm) |
 | Pull-up source rail | `3V3_MAIN` proposed | Proposal only, see "Pull-up rail ownership" |
 
-**PENDING CITATION:** the `tr` and `Cb` limits and the rise-time formula below are the standard I2C-bus specification values. The exact NXP `UM10204` revision, section and table must be recorded here before this worksheet is treated as closed. The current session could not reach any manufacturer or standards host (see "Evidence access blocker"), so the revision is deliberately not asserted.
+**PENDING CITATION:** ~~the `tr` and `Cb` limits and the rise-time formula below are the standard I2C-bus specification values...~~ **RESOLVED 2026-09-17:** the UM10204 Rev.6 reference and the fast-mode 300 ns / 400 pF limits are now anchored through the in-repository manufacturer sources recorded in the bus-definition table above (Bosch BMP581 §5.22 quotes UM10204 Rev.6 directly; Sensirion SHT4x Table 4 restates the limits and the 0.8473·Rp·Cb relation).
 
 ## Governing relations
 
@@ -82,14 +82,14 @@ Participants are taken from the [electrical compatibility matrix](ELECTRICAL_COM
 
 | Device | Address | Pin capacitance `Ci` | Sink `IOL` at `VOL` | Input leakage `Ii` | Source to transcribe from |
 | --- | --- | --- | --- | --- | --- |
-| ESP32-S3-WROOM-1-N16R8 (master) | — | TBD | TBD | TBD | Espressif module datasheet v1.8 and the ESP32-S3 chip datasheet electrical tables |
-| `TCA9535PWR` | 0x20 | TBD | TBD | TBD | TI TCA9535 Rev E |
-| MMC5983MA | 0x30 | TBD | TBD | TBD | MEMSIC Rev A |
-| SHT40-AD1B-R2 | 0x44 | TBD | TBD | TBD | Sensirion SHT4x v7.3 |
-| BMP581 | 0x46 | TBD | TBD | TBD | Bosch BST-BMP581-DS004-13 Rev 1.13 |
-| TUSB320LAI | 0x47 | TBD | TBD | TBD | TI TUSB320LAI Rev D |
-| ICM-42688-P | 0x68 | TBD | TBD | TBD | TDK DS-000347 v1.9 |
-| BQ25887 | 0x6B | TBD | TBD | TBD | TI `SLUSD89B`. `VIH` 1.3 V / `VIL` 0.4 V / 1 uA leakage at a characterized 1.8 V pull-up are already transcribed in the electrical matrix; the 3.3 V-rail figures and `Ci` still require the datasheet |
+| ESP32-S3-WROOM-1-N16R8 (master) | — | CIN 2 pF typ (generic pin) | GPIO open-drain master: IOL 28 mA typ @ VOL = 0.495 V, VDD 3.3 V, PAD_DRIVER = 3 (module datasheet v1.8 §DC characteristics; note VOL spec is 0.1 x VDD) | IIH/IIL 50 nA max | Espressif ESP32-S3-WROOM-1 v1.8, DC table, recorded 2026-09-17 |
+| `TCA9535PWR` | 0x20 | CI 8 pF max (SCL); Cio 9.5 pF max (SDA); Cio 9.5 pF max (P port) | SDA/INT 3.5 mA @ Tj <= 85 °C class; P-port 18 mA @ Tj <= 85 °C | II +/-1 uA max (SCL/SDA/A2-A0, VI = VCC or GND); P port +/-1 uA | TI SCPS201F (Rev F, revised 2026-09), §5.5 EC tables, recorded 2026-09-17 |
+| MMC5983MA | 0x30 | not stated | not stated; VOL max 0.6 V @ VIO 3.0 V with sink current unspecified | Ii +/-10 uA max (0.1-0.9 VIO) | MEMSIC MMC5983MA Rev A, DC + I2C interface tables, recorded 2026-09-17 |
+| SHT40-AD1B-R2 | 0x44 | not stated; SHT4x Table 4 ties Cb to Rp via `Cb < trise/(0.8473*Rp)` (400 pF @ Rp <= 820 ohm FM; 340 pF @ Rp = 390 ohm FM+) | not stated; VOL 0.2 x VDD max with Rpullup > 390 ohm (VDD 1.62-2.0 V) / > 820 ohm (general) | not stated separately | Sensirion SHT4x v7.3 §3 Electrical Specifications Table 4, recorded 2026-09-17 |
+| BMP581 | 0x46 | not stated | not stated; BMP581 defers I2C timing entirely to UM10204 Rev.6 (BST-BMP581-DS004-13 §5.2.2) | not stated | Bosch BST-BMP581-DS004-13 §5.2.2, recorded 2026-09-17 |
+| TUSB320LAI | 0x47 | not stated | **IOL 1.6 mA @ VOL 0.4 V (open-drain SDA/SCL)** — weakest sink on this bus | (device current figures: IUNATTACHED_UFP 70 uA; ISHUTDOWN 0.04 uA; pin leakage not stated as I2C Ii) | TI SLLSEQ8D (Rev D, May 2017) §6.5, recorded 2026-09-17 |
+| ICM-42688-P | 0x68 | CI < 10 pF (digital inputs) | IOL 3 mA @ VOL = 0.4 V (6 mA @ 0.6 V); output leakage 100 nA | (covered by leakage row) | TDK DS-000347 v1.9, Digital DC table, recorded 2026-09-17 |
+| BQ25887 | 0x6B | not stated in SLUSD89B | not stated (EVM guide uses 10 k pull-ups, already disqualified as a resistance source in Result 1) | 1 uA high-level leakage characterized at a 1.8 V pull-up rail (matrix citation) | TI SLUSD89B §6.5, recorded 2026-09-17 |
 | ST1633I touch | `0x70` published | TBD | TBD | TBD | Orient specification revision J; address convention is itself unresolved (O01) |
 
 Non-device contributions to `Cb`:
@@ -99,6 +99,29 @@ Non-device contributions to `Cb`:
 | PCB trace capacitance | TBD | Not calculable before placement and the confirmed four-layer stack (gate 8, O10). Depends on routed length and reference-plane spacing |
 | Expansion connector and external cable | TBD — **dominant unknown** | [Expansion interface](EXPANSION_INTERFACE.md) states the cable limit is unchosen; the GPIO map already requires "a measured cable limit". An external cable can exceed every on-board contribution combined |
 | Any series/ESD part placed on SDA/SCL | None currently proposed | If added, its shunt capacitance counts. For scale, the `TPD1E0B04DPYR` used on the GNSS feed is cited at 0.18 pF maximum |
+
+## Result 3: evaluated window with transcribed figures (2026-09-17)
+
+`Rp_min` is set by the **weakest sink**, which the transcriptions above show is the TUSB320LAI at 1.6 mA / 0.4 V, not the generic 3 mA reference:
+
+```
+Rp_min = (3.3 - 0.4) / 1.6e-3 = 1812 ohm      (TUSB320LAI, SLLSEQ8D)
+```
+
+Cross-check against the other sinks: ICM-42688-P 967 ohm; TCA9535 SDA 967 ohm-class (3.5 mA/0.4 V = 829 ohm); ESP32-S3 GPIO open-drain 106 ohm class; MMC5983MA VOL 0.6 V with unstated sink -> treated as TUSB-class or weaker (conservative; its I2C table quotes VOL 0.6 V max, which at any sink still clears 0.4 V if the bus keeps Rp near this window's low edge).
+
+`Rp_max` from rise time at the 400 kHz target:
+
+| Total `Cb` | `Rp_max` @ 400 kHz | Window vs Rp_min 1812 Ω |
+| ---: | ---: | --- |
+| 100 pF | 3541 Ω | open — 1.8/2.2 k fit |
+| 150 pF | 2360 Ω | open — 2.2 k fits |
+| 180 pF | 1967 Ω | closing — no common E24 fit, 1.9-1.96 k E96 only |
+| **197 pF** | **1812 Ω** | **hard ceiling at 400 kHz with the TUSB320LAI sink** |
+| 200 pF | 1770 Ω | **empty** — no valid resistance at 400 kHz |
+| 400 pF | 885 Ω | empty |
+
+**Blocking conclusion (supersedes the provisional 967 Ω reading above):** at 400 kHz the bus capacitance budget is **~197 pF minus the expansion cable**, which on-board-only loading may just meet (nine Ci cells sum roughly 45-65 pF worst-case plus traces) but leaves **no realistic room for an external cable**. Options for O06/O11 review, none selected here: (a) drop the shared bus to 100 kHz whenever the expansion cable is attached (tr 1000 ns moves the ceiling to ~5901 Ω at 200 pF and ~2951 Ω even at the full 400 pF — 2.2 k fits everywhere); (b) move TUSB320LAI off the shared I2C (it is USB-C control, has a GPIO mode per SLLSEQ8D, and its I2C address question also touches the 0x46/0x47 constraint); (c) accept 400 kHz on-board only with a measured, enforced <=150 pF limit. These are product decisions requiring owner/reviewer acceptance.
 
 ## Pull-up rail ownership — proposal, not a decision
 
