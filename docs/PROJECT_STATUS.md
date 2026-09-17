@@ -33,7 +33,7 @@ The immediate objective is to finish exact component selection, electrical compa
 | 6 | LoRa RF | Ordering code SX1262IMLTRT confirmed with TX/RX current tables and stock snapshot; select the exact 915 MHz reference revision (SX1262MB1LDCS/MB2CAS) with matching-network values, TCXO/DC-DC topology and antenna switch decision | Reference revision, independent CAD, simulation/stackup inputs and conducted-test plan |
 | 7 | ADS-B RF | BLB01/TA2003A/ADL5513/MCP6566 bias and loss figures transcribed (ADSB_VALIDATION.md); close MCP6566 suffix choice and the RF coupon/stackup verification | RF review plus testable schematic and conducted acceptance limits |
 | 8 | PCB/mechanical inputs | Confirm four-layer order stack, impedance geometry, exact outline, connectors, antenna keepouts and printed fit dummy | Manufacturer stack confirmation and signed mechanical fit review |
-| 9 | System-level electrical review | Close the remaining OPEN rows in `ELECTRICAL_COMPATIBILITY_MATRIX.md` (complete peak loads, shared-bus pull-up value, sequencing and back-power); then independently review the complete net matrix | Independently reviewed net/interface matrix with no unresolved collision |
+| 9 | System-level electrical review | Close the remaining OPEN rows in `ELECTRICAL_COMPATIBILITY_MATRIX.md` (complete peak loads, shared-bus pull-up value, sequencing and back-power); then independently review the complete net matrix. The pull-up method, admissible window and capacitance constraint are worked in `I2C_BUS_BUDGET.md`; per-device Ci/IOL/Ii transcription is the blocking input | Independently reviewed net/interface matrix with no unresolved collision |
 
 ## Work reserved for Astra
 

@@ -27,6 +27,35 @@ flowchart LR
 | Switchable 3.3 V domains | TI `TPS22918DBVR` | Active, 1-5.5 V, 2 A, 52/53 mohms typical at 5/3.3 V, adjustable rise time and output discharge, SOT-23-6 | One device per rail only where isolation saves measured energy; size rise-time capacitor and discharge path; ensure every attached signal is high impedance before switch-off |
 | LCD backlight | TI `TPS61169DCKR` | Active 2.7-5.5 V input boost WLED driver, 38 V output capability, PWM control, soft start and open-LED/thermal protection, SC70-5 | Feed only from `3V3_MAIN`; start near 92 mA with 2.21 ohm >=0.1 W, `LPS4018-103MRC`, >=1 uF input and 1-4.7 uF effective/50 V output; select exact 60 V-class Schottky and test samples/faults/EMI |
 
+## Rail load inventory
+
+Opened 2026-09-17 to make the gate 9 / O11 "complete every rail load" item auditable. Each entry carries its **evidence class**, because the current `3V3_MAIN` planning subtotal mixes classes and therefore cannot be used as a peak:
+
+- **DS-max** — maximum from the exact datasheet, with revision and table.
+- **DS-typ** — typical from the exact datasheet. Not a sizing figure on its own.
+- **ALLOW** — engineering allowance chosen by this project. Not a component figure.
+- **TBD** — not yet transcribed.
+
+| Rail | Load | Current | Class | Source / what is missing |
+| --- | --- | ---: | --- | --- |
+| `3V3_MAIN` | ESP32-S3 Wi-Fi TX | 340 mA | DS-typ | Espressif v2.2 Table 5-9 figure already cited in the electrical matrix; peak/duty envelope and max-vs-typ correction missing |
+| `3V3_MAIN` | RP2040 IOVDD | 35.5 mA | DS-typ | Raspberry Pi datasheet Table 637 as cited; core and flash currents are **not** included |
+| `3V3_MAIN` | microSD write | 200 mA | ALLOW | Card-dependent; DM3AT card envelope does not bound card current. Write peaks are larger |
+| `3V3_MAIN` | SX1262 TX | 118 mA | DS-typ | Rev 1.2 Table 3-6 at +22 dBm, 915 MHz, as cited for D05 |
+| `3V3_MAIN` | Backlight conversion reserve | 250 mA | ALLOW | Input-side reserve for TPS61169 pending measured efficiency/transient; not an average-power row |
+| `3V3_MAIN` | Sensors, touch, miscellaneous | 30 mA | ALLOW | Not derived from the four sensor datasheets; replace with summed DS-max |
+| `3V3_MAIN` | **Recorded planning subtotal** | **974 mA** | mixed | Explicitly **not** a simultaneous peak |
+| `3V3_MAIN` | GNSS branch startup | 100 mA | DS-max | u-blox UBX-20035208 R08 Section 4 startup response, as cited for `3V3_GNSS` |
+| `3V3_MAIN` | RP2040 core + flash | TBD | TBD | Raspberry Pi datasheet and W25Q128JV Rev M |
+| `3V3_MAIN` | Complete display logic | TBD | TBD | Gated by the Orient controlled TFT-power clarification (O01) |
+| `3V3_MAIN` | ADS-B digital demand | TBD | TBD | Separate from the 3V0 analog chain |
+| `3V3_MAIN` | Expansion rail allocation | TBD | TBD | `EXPANSION_INTERFACE.md` lists the current limit as unchosen |
+| `3V0_RF_QUIET` | ADS-B LNA/analog chain | about 85 mA | ALLOW | Used for the TPS7A20 dropout check; exact BLB01/TA2003A/ADL5513/MCP6566 sum still to be totalled from the figures in `ADSB_VALIDATION.md` |
+| `1V8_LOGIC` | Support-device static | about 400 uA | DS-max | Summed SN74AXC4T245, SN74LVC1G07, TXU0202 and MMICT5838-00-012 maxima. TFT VDDIO, translator dynamic current and off-state leakage are **omitted**, so the rail is not closed |
+| `3V3_SWITCHED_*` | TPS22918 shutdown leakage | 9.2 uA typ / 16 uA max | DS-max | Rev C at 5.5 V |
+
+**Blocking conclusion:** no rail is closed. `3V3_MAIN` cannot be sized until every TBD row is transcribed and the DS-typ rows are replaced by maxima with an accepted concurrency model — the 3 A buck rating is not evidence that the rail is adequate. Transcription requires the exact datasheets; agent sessions without outbound access to the manufacturer hosts cannot supply them (see the access note in [the I2C bus budget](I2C_BUS_BUDGET.md)).
+
 The 3 A main-buck rating is headroom, not a claimed system peak. The final current envelope must include ESP32 radio bursts, RP2040, microSD writes, SX1262 TX, display/touch and every enabled peripheral at the same time. Reserve at least 250 mA of `3V3_MAIN` for the display backlight conversion pending measured efficiency and transients. Do not size the inductor or copper from the average power budget.
 
 ## Backlight application remains a separate gate

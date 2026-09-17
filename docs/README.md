@@ -21,6 +21,7 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | [Block diagram](BLOCK_DIAGRAM.md) | Visual functional interconnect |
 | [GPIO and interface map](INTERFACE_GPIO_MAP.md) | ESP32 allocation, I2C addresses and shared-SPI contract |
 | [Electrical compatibility matrix](ELECTRICAL_COMPATIBILITY_MATRIX.md) | Rail, voltage, address, boot-state and back-power closure map |
+| [I2C bus budget](I2C_BUS_BUDGET.md) | Shared-bus capacitance, pull-up window and per-device transcription worksheet |
 | [Expansion interface](EXPANSION_INTERFACE.md) | External I2C/SPI/UART/GPIO requirements |
 
 ## Hardware subsystems
