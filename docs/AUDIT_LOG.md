@@ -2,7 +2,7 @@
 
 Purpose: carry the read-only readiness-audit loop across agent sessions. A session that picks up the audit starts from the **current baseline** below, compares `git log <baseline>..HEAD`, and appends a new row. This file records audit state only — it never closes an engineering gate and is not evidence for one.
 
-**Current baseline: `d5ce71d`** (2026-09-19) — the merge commit on `main` that carried PR #8 (round 9's own log-only entry and baseline advance).
+**Current baseline: `3e824c5`** (2026-09-19) — the merge commit on `main` that carried PR #9 (round 10's own log-only entry and baseline advance).
 
 Set the baseline to the commit on `main` that carries the round you just appended. When a round lands through a pull request that hash does not exist yet as you write the round, so update this line **after** the merge, in the next commit. Round 5 was appended in `8426c09` while this line still read `4c94263`; a vigil run in that window would have re-reported rounds 4 and 5 as a fresh delta.
 
@@ -20,10 +20,11 @@ Set the baseline to the commit on `main` that carries the round you just appende
 | 8 (vigil) | `7136c48..8302843` | Delta is PR #5 merging: round 7's own log-only entry and baseline-pointer advance, self-verified in that PR's description and independently re-checked here (BOM drift `7 6`, `MAIN_PCB` unchanged, no other file touched). No new engineering finding; no blocker row changed | Converged — no action beyond merging PR #5 (already-draft, clean, self-verified) and advancing the baseline below per the two-step rule |
 | 9 (vigil) | `8302843..d3f5c83` | Delta is PR #6 merging: round 8's own log-only entry and baseline-pointer advance (`docs/AUDIT_LOG.md` only, 3/-2 lines, matching PR #6's stated change). BOM drift check re-run against current `main`: matches expected `7 6`, `MAIN_PCB` still `JLC04161H-3313`. All five blocker rows unchanged. No new blind spot found against the minimum categories | Converged — no action beyond advancing the baseline below per the two-step rule |
 | 10 (vigil) | `d3f5c83..d5ce71d` | Delta is PR #8 merging: round 9's own log-only entry and baseline-pointer advance (`docs/AUDIT_LOG.md` only, 3/-2 lines, matching PR #8's stated change). BOM drift check re-run against current `main`: matches expected `7 6`, `MAIN_PCB` still `JLC04161H-3313`. `OPEN_QUESTIONS.md`/`DECISIONS.md` untouched in the audited delta — all five blocker rows unchanged. No new blind spot found against the minimum categories | Converged — no action beyond advancing the baseline below per the two-step rule |
+| 11 (vigil) | `d5ce71d..3e824c5` | Delta has two parts. (a) PR #9 merging round 10's own log-only entry and baseline-pointer advance — self-referential, already described in round 10's row above. (b) A commit landed **directly on `main`** outside the vigil PR chain (`c9a5a1b`, owner-authored): records figure-read values from AN1200.40 Figure 10 (E449V01A) in `docs/RF_ARCHITECTURE.md` — TCXO 32 MHz, supply decoupling net, PE4259 bias network, band-select resistor network — explicitly evidence-classed as single-source figure OCR pending verification against the native Semtech drawing before schematic commitment (AGENTS.md rule 5 honored: no value transferred to StratosCore's stackup), with the TX/RX matching-network values explicitly left illegible/blocked. This is incremental evidence inside the already-tracked gate 6 (LoRa RF, `PROJECT_STATUS.md`), which still lists the same remaining items (exact E449 regional BOM values, RF CAD); no gate closed, no locked decision touched. BOM drift check re-run against current `main`: matches expected `7 6`, `MAIN_PCB` still `JLC04161H-3313`. `OPEN_QUESTIONS.md`/`DECISIONS.md` untouched — all five blocker rows unchanged. No new blind spot found against the minimum categories | Converged — no engineering action beyond advancing the baseline below per the two-step rule |
 
 ## Active blockers
 
-None of these can be closed by an agent working from documents. Verified unchanged as of `d5ce71d`.
+None of these can be closed by an agent working from documents. Verified unchanged as of `3e824c5`.
 
 | ID | Waiting on | Where |
 | --- | --- | --- |
