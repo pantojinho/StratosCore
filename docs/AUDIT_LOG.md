@@ -2,7 +2,7 @@
 
 Purpose: carry the read-only readiness-audit loop across agent sessions. A session that picks up the audit starts from the **current baseline** below, compares `git log <baseline>..HEAD`, and appends a new row. This file records audit state only — it never closes an engineering gate and is not evidence for one.
 
-**Current baseline: `7136c48`** (2026-09-19) — the commit on `main` that recorded round 6 and last advanced this line. Already-merged, so no two-step needed this time.
+**Current baseline: `8302843`** (2026-09-19) — the commit on `main` that carries round 7 (PR #5 merge). Already-merged, so no two-step needed this time.
 
 Set the baseline to the commit on `main` that carries the round you just appended. When a round lands through a pull request that hash does not exist yet as you write the round, so update this line **after** the merge, in the next commit. Round 5 was appended in `8426c09` while this line still read `4c94263`; a vigil run in that window would have re-reported rounds 4 and 5 as a fresh delta.
 
@@ -17,10 +17,11 @@ Set the baseline to the commit on `main` that carries the round you just appende
 | 5 | full sweep at `4c94263`, Astra entry gates | Swept all 12 Astra entry gates rather than the commit delta. **3 findings:** (a) `I2C_BUS_BUDGET.md` closure criterion 2 was unsatisfiable as written — it demanded a transcribed figure in every cell, but six devices genuinely publish no `Ci`, which is a datasheet property, not pending work; (b) the orderable-BOM requirement (entry gate 11) had no O/P — the CSV has no quantity column and `PASSIVES_DEBUG` is flagged "Not quantity-complete"; (c) the test-point requirement (entry gate 8) had no O/P — `manufacturing/test/README.md` defers it to "after schematic review", which is after placement needs it | Fixed in this round: criterion 2 rewritten to separate "not stated" from untranscribed and to require a declared substitute in criterion 3; O27 (orderable BOM) and O28 (test access) created and wired into the entry gates and `PROJECT_STATUS.md` at creation, avoiding the orphaning seen in round 2 |
 | 6 (vigil) | `b3d0506..0045b29` | Delta is PR #4 merging: the baseline-correction fix itself (round 5's own miss) plus the rewritten two-step baseline rule. No new engineering finding; no blocker row changed | Converged — no action beyond merging PR #4 (already-draft, CI-green, self-verified) and advancing the baseline below per the corrected rule |
 | 7 (vigil) | `0045b29..7136c48` | Delta is round 6's own log-only commit (baseline-pointer advance text); no engineering content. BOM drift check matches expected (7 TBD, 6 PROPOSED; `MAIN_PCB` still `JLC04161H-3313`). All five blocker rows unchanged. No new blind spot found against the minimum categories | Converged — no action |
+| 8 (vigil) | `7136c48..8302843` | Delta is round 7's own log-only commit (`2e19f35`, baseline-pointer advance text) plus its PR #5 merge commit; no engineering content. BOM drift check matches expected (7 TBD, 6 PROPOSED; `MAIN_PCB` still `JLC04161H-3313`). All five blocker rows (O05, O10, P26, O01, O21-O26) verified unchanged. No new blind spot found against the minimum categories | Converged — no action |
 
 ## Active blockers
 
-None of these can be closed by an agent working from documents. Verified unchanged as of `7136c48`.
+None of these can be closed by an agent working from documents. Verified unchanged as of `8302843`.
 
 | ID | Waiting on | Where |
 | --- | --- | --- |
