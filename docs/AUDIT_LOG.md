@@ -2,7 +2,7 @@
 
 Purpose: carry the read-only readiness-audit loop across agent sessions. A session that picks up the audit starts from the **current baseline** below, compares `git log <baseline>..HEAD`, and appends a new row. This file records audit state only — it never closes an engineering gate and is not evidence for one.
 
-**Current baseline: `28c75fe`** (2026-09-20) — the commit on `main` that carried PR #16 (round 14's own log-only entry and baseline advance).
+**Current baseline: `7fc0eac`** (2026-09-20) — the commit on `main` that carried PR #17 (round 15's own log-only entry and baseline advance).
 
 Set the baseline to the commit on `main` that carries the round you just appended. When a round lands through a pull request that hash does not exist yet as you write the round, so update this line **after** the merge, in the next commit. Round 5 was appended in `8426c09` while this line still read `4c94263`; a vigil run in that window would have re-reported rounds 4 and 5 as a fresh delta.
 
@@ -25,10 +25,11 @@ Set the baseline to the commit on `main` that carries the round you just appende
 | 13 (vigil) | `5fc3eda..c8dcd76` | Delta is PR #12 merging (squash, no separate merge commit): round 12's own log-only entry and baseline-pointer advance (`docs/AUDIT_LOG.md` only, 3/-2 lines, matching PR #12's stated change). BOM drift check re-run against current `main`: matches expected `7 6`, `MAIN_PCB` still `JLC04161H-3313`. `OPEN_QUESTIONS.md`/`DECISIONS.md` untouched in the audited delta — all five blocker rows unchanged (O05, O10, P26, O01, O21-O26). No new blind spot found against the minimum categories | Converged — no action beyond advancing the baseline below per the two-step rule |
 | 14 (vigil) | `c8dcd76..5ef4a0c` | Delta is PR #13 merging (squash, no separate merge commit): round 13's own log-only entry and baseline-pointer advance (`docs/AUDIT_LOG.md` only, 3/-2 lines, matching PR #13's stated change). BOM drift check re-run against current `main`: matches expected `7 6`, `MAIN_PCB` still `JLC04161H-3313`. `OPEN_QUESTIONS.md`/`DECISIONS.md` untouched in the audited delta — all five blocker rows unchanged (O05, O10, P26, O01, O21-O26). No new blind spot found against the minimum categories | Converged — no action beyond advancing the baseline below per the two-step rule |
 | 15 (vigil) | `5ef4a0c..28c75fe` | Delta is PR #16 merging (squash, no separate merge commit): round 14's own log-only entry and baseline-pointer advance (`docs/AUDIT_LOG.md` only, 3/-2 lines, matching PR #16's stated change). BOM drift check re-run against current `main`: matches expected `7 6`, `MAIN_PCB` still `JLC04161H-3313`. `OPEN_QUESTIONS.md`/`DECISIONS.md` untouched in the audited delta — all five blocker rows unchanged (O05, O10, P26, O01, O21-O26). No new blind spot found against the minimum categories | Converged — no action beyond advancing the baseline below per the two-step rule |
+| 16 (vigil) | `28c75fe..7fc0eac` | Delta is PR #17 merging (squash, no separate merge commit): round 15's own log-only entry and baseline-pointer advance (`docs/AUDIT_LOG.md` only, 3/-2 lines, matching PR #17's stated change). A duplicate PR (#19) opened by a concurrent round-15 session on the same stale baseline was closed without merging to avoid a duplicate round-15 row. BOM drift check re-run against current `main`: matches expected `7 6`, `MAIN_PCB` still `JLC04161H-3313`. `OPEN_QUESTIONS.md`/`DECISIONS.md` untouched in the audited delta — all five blocker rows unchanged (O05, O10, P26, O01, O21-O26). No new blind spot found against the minimum categories | Converged — no action beyond advancing the baseline below per the two-step rule |
 
 ## Active blockers
 
-None of these can be closed by an agent working from documents. Verified unchanged as of `28c75fe`.
+None of these can be closed by an agent working from documents. Verified unchanged as of `7fc0eac`.
 
 | ID | Waiting on | Where |
 | --- | --- | --- |
