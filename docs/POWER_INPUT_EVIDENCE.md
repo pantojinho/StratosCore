@@ -2,6 +2,35 @@
 
 Status: desk evidence recorded 2026-09-17 from the exact manufacturer datasheets. This document feeds the O06 calculations and the mandatory O05 qualified battery review. **Nothing here closes O05.** Provenance: TI TPS25947 family data sheet **SLVSFC9C (October 2020, revised May 2026)** and TI BQ25887 data sheet **SLUSD89B (February 2019, revised November 2019)**, both retrieved and text-reviewed 2026-09-17.
 
+**2026-09-22 (PWR-02): the USB input application is closed at the design level below** — exact resistor network proposed from the SLVSFC9C equations, default-current policy fixed to the reviewed CC output states, TUSB320LAI integration set to the D22 GPIO-mode wiring, and unsupported ESD claims corrected. The qualified battery review (O05) remains the gate for anything that touches charger enable/fault behavior.
+
+## PWR-02 design closure: USB input application (2026-09-22)
+
+### Current policy (fixed sink, no PD — implements D12/P17)
+
+- **The device is a fixed-UFP 5 V sink.** No USB PD negotiation exists (no PD controller on the board; D12). The advertised/accepted current class comes only from the TUSB320LAI fixed-UFP detection: **default (500/900 mA class per Table 2 of SLLSEQ8D) in GPIO mode** — GPIO-mode devices advertise/accept default current only (SLLSEQ8D §7.2.1.1). 1.5 A and 3.0 A classes are never advertised and cannot be accepted in GPIO mode.
+- **Charge input budget:** the charger input setpoint (BQ25887 IINDPM/ILIM) must be configured at or below the **default current class (500 mA conservative floor; 900 mA USB3-class sources only when OUT1/OUT2 report an attached source at that class — which GPIO mode cannot distinguish, so the firmware policy floor is 500 mA until PWR-03 proves a higher hardware-gated value)**. This figure is a PWR-03/O06 calculation input, not a charger setting selected here.
+- **System load on VBUS (charge-under-load, D21):** the eFuse budget below protects the path; whether the 2 A circuit-breaker ceiling is appropriate with the system running is an O05/O06 qualified-review item (the 2 A threshold protects wiring and the connector; it does not authorize 2 A of charger draw).
+
+### TPS259474L application network (exact values, from the SLVSFC9C equations recorded above)
+
+| Element | Value | Derivation |
+| --- | --- | --- |
+| RILM (circuit-breaker threshold) | **1.69 kohm, 1%** -> IILM = 3334/1690 = **1.97 A typ** (~2.2 A worst at +10%) | §7.3.5.2 Eq. 5; sits below the 3 A Type-C source ceiling with margin; 2 A was the provisional figure, 1.97 A is the nearest E96 |
+| UVLO divider | **R1 = 232 kohm / R2 = 100 kohm, 1%** -> VIN_UV = 1.20 x (232+100)/100 = **3.98 V rising** | §7.3.2 Eq. 1, VUVLO(R) 1.183-1.223 V; rides through a 5 V -5% source (4.75 V) with margin, drops out on a sagging/bad cable before the charger sees brown-out |
+| OVLO divider | **R1 = 442 kohm / R2 = 100 kohm, 1%** -> VOVLO = 1.20 x (442+100)/100 = **6.50 V rising** | §7.3.3 Eq. 2; above the 5.5 V USB worst case, far below the 23 V operating max; internal OVLO response of the charger stage remains the secondary guard |
+| dVdt | **Leave open (fastest slew)** for Rev A | §7.3.5.1 Eq. 3-4; the BQ25887 input stage and the 10 uF-class VBUS bulk (UFP connector capacitance 1-10 uF per the matrix) set the inrush; revisit only if attach testing shows source droop |
+| ITIMER | **TBD at O06** — sized against the charger's worst inrush/input-capacitance charge transient, not invented here | §7.3.5.2 |
+| EN/UVLO tie | EN tied to the UVLO divider node (single-divider enable+UVLO arrangement of the typical application) | §7.3.2 |
+| Fault behavior | Latch-off (L suffix): a breaker trip stays off until VBUS or EN re-cycles | §4 device table; combined with the autonomous-start gating below this is an O05 reviewer item, unchanged |
+
+### TUSB320LAI integration (points at the D22 wiring; CONNECTOR_ARCHITECTURE CC row superseded)
+
+- CC1/CC2 through the TPD4E05U06 channels to the TUSB320LAI; **PORT = GND (fixed UFP), ADDR = NC (GPIO mode, I2C physically disabled), EN_N = GND, VDD = `3V3_MAIN`, VBUS_DET via the 900 kohm datasheet resistor, OUT1/OUT2/OUT3 via 100 kohm pulls to the TCA9535** — the complete disposition recorded in [the GPIO map](INTERFACE_GPIO_MAP.md) on 2026-09-22 supersedes any I2C-mode reading of the CC row.
+- **Out-of-the-box behavior this produces:** the board enumerates/charges at default current from any compliant Type-C source, in both plug orientations, with no firmware dependency for the CC function; the expander reports attachment/current class for the UI and for future charger gating (PWR-03).
+- **ESD claims corrected:** the +/-12 kV IEC 61000-4-2 contact figure in the TPD4E05U06 data sheet is a **device-level** qualification in TI's test fixture; it does not assert a system-level rating for this board (layout, connector, enclosure and ground path determine the realized level). No system-level ESD number may be quoted for Rev A until an attachment/surge test says so. The same correction applies to any reuse of that figure elsewhere.
+
+
 ## TPS259474L eFuse (USB VBUS input protection)
 
 The `TPS259474L` variant (device comparison table, SLVSFC9C §4): adjustable OVLO + **circuit-breaker** overcurrent response + **latch-off** fault behavior (vs the `A` suffix auto-retry). Package VQFN-HR (RPW) 10-pin 2 x 2 mm; orderable `TPS259474LRPWR` (production, 3000/reel).
