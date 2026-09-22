@@ -1,6 +1,6 @@
 # Shared I2C bus capacitance and pull-up budget
 
-Status: calculation worksheet opened and substantially filled 2026-09-17. The method, bounds, device inventory and evaluated pull-up window are recorded below; the remaining open element is the **owner/reviewer decision** among the bus options in Result 3 (plus the touch device figures and the expansion-cable limit), not the transcription work.
+Status: calculation worksheet opened and substantially filled 2026-09-17. **2026-09-22 (SYS-01): the owner's D22/P26 decision is applied in this worksheet — the shared peripheral I2C bus runs at 100 kHz Standard-mode and the TUSB320LAI is removed from the bus in favor of its GPIO mode.** The remaining open element is the block-by-block off-state review (touch and power devices), not the bus arithmetic; see the Result 3 disposition and the closure-criteria notes.
 
 **No number in this document is a measurement, and no per-device figure has been invented.** Every quantity is either (a) arithmetic derived in-document from the stated inputs, (b) a figure already cited elsewhere in this repository with its source, or (c) an explicit TBD naming the document and section that must supply it.
 
@@ -8,10 +8,10 @@ Status: calculation worksheet opened and substantially filled 2026-09-17. The me
 
 | Parameter | Value | Source |
 | --- | --- | --- |
-| Bus speed target | 400 kHz (I2C Fast-mode) | "The bus starts at 400 kHz" — [GPIO and interface map](INTERFACE_GPIO_MAP.md) |
+| Bus speed target | **100 kHz (I2C Standard-mode)** per accepted decision D22/P26 (owner, 2026-09-21) | Previously 400 kHz; see Result 3 for why the device-level evidence selected 100 kHz |
 | Bus logic level | 3.3 V | [Electrical compatibility matrix](ELECTRICAL_COMPATIBILITY_MATRIX.md) I2C address and voltage check |
-| Maximum rise time `tr` at Fast-mode | 300 ns | **Primary source retrieved 2026-09-17: NXP UM10204 Rev. 7.0 (1 October 2021)** — Table 10 Fast-mode `tr` 300 ns (note [5] explains the 300 ns bus-line figure vs the 250 ns output-stage figure); rise-time relation `T = t2 - t1 = 0.8473 x Rp x Cb` derived in §7.2 (Eq. 1 / Figure 41). Corroborated in-repo by Bosch BMP581 §5.2.2 (quotes UM10204 Rev.6) and Sensirion SHT4x Table 4 (300 ns / 400 pF with the same 0.8473 formula) |
-| Maximum bus capacitance `Cb` at Fast-mode | 400 pF | UM10204 Rev. 7.0 Table 10 Fast-mode column (400 pF max; Standard-mode also 400 pF). Note: NXP's own worked example (§7.2, Rp_min = 1.7 k at 5 V/3 mA) limits Cb to about 200 pF for the 300 ns rise time — the same regime this budget derives independently below |
+| Maximum rise time `tr` at Standard-mode | 1000 ns | **Primary source retrieved 2026-09-17: NXP UM10204 Rev. 7.0 (1 October 2021)** — Table 10 Standard-mode `tr` 1000 ns; rise-time relation `T = t2 - t1 = 0.8473 x Rp x Cb` derived in §7.2 (Eq. 1 / Figure 41). Corroborated in-repo by Bosch BMP581 §5.2.2 (quotes UM10204 Rev.6) and Sensirion SHT4x Table 4 (same 0.8473 formula) |
+| Maximum bus capacitance `Cb` at Standard-mode | 400 pF | UM10204 Rev. 7.0 Table 10 (400 pF max; identical to Fast-mode) |
 | Pull-up source rail | `3V3_MAIN` proposed | Proposal only, see "Pull-up rail ownership" |
 
 **PENDING CITATION:** ~~the `tr` and `Cb` limits and the rise-time formula below are the standard I2C-bus specification values...~~ **RESOLVED 2026-09-17, primary source:** UM10204 **Rev. 7.0** (1 October 2021) was retrieved directly from NXP and its Fast-mode values confirmed: `tr` 300 ns (Table 10), `Cb` 400 pF (Table 10), rise-time relation `T = 0.8473 x Rp x Cb` (§7.2 Eq. 1). Note the BMP581/SHT4x in-repo citations reference **Rev. 6 (2014)**; Rev. 7.0 changed terminology (master/slave to controller/target) and Table 5 only — the electrical values used here are unchanged between the revisions, so the second-hand citations remain valid corroboration.
@@ -87,7 +87,7 @@ Participants are taken from the [electrical compatibility matrix](ELECTRICAL_COM
 | MMC5983MA | 0x30 | not stated | not stated; VOL max 0.6 V @ VIO 3.0 V with sink current unspecified | Ii +/-10 uA max (0.1-0.9 VIO) | MEMSIC MMC5983MA Rev A, DC + I2C interface tables, recorded 2026-09-17 |
 | SHT40-AD1B-R2 | 0x44 | not stated; SHT4x Table 4 ties Cb to Rp via `Cb < trise/(0.8473*Rp)` (400 pF @ Rp <= 820 ohm FM; 340 pF @ Rp = 390 ohm FM+) | not stated; VOL 0.2 x VDD max with Rpullup > 390 ohm (VDD 1.62-2.0 V) / > 820 ohm (general) | not stated separately | Sensirion SHT4x v7.3 §3 Electrical Specifications Table 4, recorded 2026-09-17 |
 | BMP581 | 0x46 | not stated | not stated; BMP581 defers I2C timing entirely to UM10204 Rev.6 (BST-BMP581-DS004-13 §5.2.2); IOL drive-strength tables (§5.3 Tables 20/21) are image-only in extraction — values not transcribed | I_IL/I_IH 1 uA max (§5.2 Table 17 general interface parameters) | Bosch BST-BMP581-DS004-13 rev 1.13, recorded 2026-09-17 |
-| TUSB320LAI | 0x47 | not stated; **device bus-load limit CBUS = 400 pF @ <=100 kHz but only 100 pF @ 400 kHz** (SLLSEQ8D §6.6) — the binding device-level constraint | **IOL 1.6 mA @ VOL 0.4 V (open-drain SDA/SCL)** — weakest sink on this bus | (device current figures: IUNATTACHED_UFP 70 uA; ISHUTDOWN 0.04 uA; pin leakage not stated as I2C Ii) | TI SLLSEQ8D (Rev D, May 2017) §6.5 + §6.6, recorded 2026-09-17 |
+| TUSB320LAI | **REMOVED FROM BUS per D22/P26** (2026-09-22) — GPIO mode, ADDR pin NC | Was: 0x47 | Was: not stated; **device bus-load limit CBUS = 400 pF @ <=100 kHz but only 100 pF @ 400 kHz** (SLLSEQ8D §6.6) — the constraint that originally selected the 100 kHz option | Was: **IOL 1.6 mA @ VOL 0.4 V (open-drain SDA/SCL)** — was the weakest sink on the bus | TI SLLSEQ8D (Rev D, May 2017) §6.5 + §6.6 + §7.2.4, recorded 2026-09-17; GPIO-mode removal recorded 2026-09-22. Figures retained for the record; the device no longer loads SDA/SCL |
 | ICM-42688-P | 0x68 | CI < 10 pF (digital inputs) | IOL 3 mA @ VOL = 0.4 V (6 mA @ 0.6 V); output leakage 100 nA | (covered by leakage row) | TDK DS-000347 v1.9, Digital DC table, recorded 2026-09-17 |
 | BQ25887 | 0x6B | not stated in SLUSD89B | **VOL <= 0.4 V @ 5 mA sink** (I2C INTERFACE SCL/SDA sub-table) | 1 uA high-level leakage characterized at a 1.8 V pull-up rail (SDA/SCL IBIAS row; CD 2.5 uA, PSEL 1 uA) | TI SLUSD89B §7.5, recorded 2026-09-17 |
 | ST1633I touch | `0x70` published | TBD | TBD | TBD | Orient specification revision J; address convention is itself unresolved (O01) |
@@ -100,9 +100,34 @@ Non-device contributions to `Cb`:
 | Expansion connector and external cable | TBD — **dominant unknown** | [Expansion interface](EXPANSION_INTERFACE.md) states the cable limit is unchosen; the GPIO map already requires "a measured cable limit". An external cable can exceed every on-board contribution combined |
 | Any series/ESD part placed on SDA/SCL | None currently proposed | If added, its shunt capacitance counts. For scale, the `TPD1E0B04DPYR` used on the GNSS feed is cited at 0.18 pF maximum |
 
-## Result 3: evaluated window with transcribed figures (2026-09-17)
+## Result 3: evaluated window with transcribed figures — UPDATED 2026-09-22 for D22 (100 kHz, TUSB320LAI off-bus)
 
-`Rp_min` is set by the **weakest sink**, which the transcriptions above show is the TUSB320LAI at 1.6 mA / 0.4 V, not the generic 3 mA reference:
+The original 2026-09-17 evaluation (recorded below for the evidence trail) showed the TUSB320LAI binding the 400 kHz option twice over: its 1.6 mA sink caps `Rp_min` at 1812 ohm and its own CBUS limit caps total capacitance at 100 pF at 400 kHz. **The owner accepted option (a) plus (b) as decision D22 on 2026-09-21 (proposal P26): run the shared peripheral I2C bus at 100 kHz and remove the TUSB320LAI from it in favor of its GPIO mode.** Both constraints therefore leave the shared-bus arithmetic:
+
+- **Weakest remaining sink:** the I2C-specification 3 mA reference class, implemented by ICM-42688-P (3 mA @ 0.4 V, DS-000347 v1.9) and approximated by BQ25887 (5 mA @ 0.4 V, stronger) and TCA9535 SDA/INT (3.5 mA @ Tj <= 85 C class, stronger). MMC5983MA's VOL 0.6 V with unspecified sink remains the conservative outlier; at 100 kHz with 2.2 k ohm the pull-up sink demand is 1.32 mA, and a 0.6 V VOL at any sink >= 1.32 mA still holds the line at or below the 0.4 V threshold every other receiver specifies, so the 3 mA-class bound stands:
+  ```
+  Rp_min = (3.3 - 0.4) / 3e-3 = 967 ohm
+  ```
+- **Rise-time bound at 100 kHz** (UM10204 Rev. 7.0 Table 10 Standard-mode `tr` = 1000 ns):
+
+| Total `Cb` | `Rp_max` at 100 kHz | Window vs Rp_min 967 ohm |
+| ---: | ---: | --- |
+| 150 pF | 7868 ohm | open |
+| 200 pF | 5901 ohm | open — 2.2 k, 3.3 k, 4.7 k all fit |
+| 250 pF | 4721 ohm | open — 2.2 k/3.3 k fit |
+| 300 pF | 3934 ohm | open — 2.2 k/3.3 k fit |
+| 400 pF | 2951 ohm | open — 2.2 k/2.7 k fit; spec ceiling |
+
+- **Leakage bound:** participant input leakages transcribed above total about 16 uA (ESP32 10 uA + MMC 10 uA are the dominant terms; both are conservative maxima). Idle drop at the preferred resistance: 2.2 k x 16 uA = 35 mV — negligible against the ~2.31 V VIH (0.7 x VDD) class requirement. Non-binding by more than an order of magnitude (Rp_leak_max ~61 k).
+- **Preferred pull-up: 2.2 k ohm +/- 1%, 1/16 W or larger, one pair on `3V3_MAIN` at the ESP32 connector side of the bus.** It holds `tr <= 1000 ns` up to the full 400 pF specification ceiling (2.2 k valid to Cb = 538 pF), survives any single-device hot-attach without violating `Rp_min`, and dissipates 5 mW worst case per line. A 4.7 k pair would also clear the 400 pF ceiling but is kept as the alternate, not the default, because cable/certificate margin favors the stiffer bus.
+- **On-board capacitance estimate (unrouted, for the cable limit):** transcribed pin capacitances (ESP32 2 pF/pin, TCA9535 8+9.5 pF, ICM 10 pF/pin, six devices at the 10 pF I2C-spec allowance where the datasheet is silent) sum to about 82 pF; allowing 30-60 pF for unrouted traces gives an on-board window of roughly **110-140 pF**. Post-placement this must be recomputed from real lengths (O28/gate 8 inputs), but the residual to the 400 pF ceiling is >= 260 pF.
+- **Expansion-cable limit (now closed at the analysis level):** reserve at most **150 pF** for the external expansion cable plus its connector pair (0.5-0.8 pF/cm unshielded ribbon class, 10 pF connector pair), which keeps the worst case at about 290 pF — below the 400 pF specification ceiling with margin even if post-placement traces land at the high end. The [expansion interface](EXPANSION_INTERFACE.md) 30 cm guidance stays within this; **harnesses longer than about 20-25 cm of unshielded ribbon must be measured or re-evaluated before use.** This is the declared cable rule O11 requires; the measured validation remains post-PCBA per the gate 9 boundary.
+
+**Conclusion (supersedes the 2026-09-17 400 kHz analysis, which is retained below for the record):** at the accepted 100 kHz the shared bus has a **non-empty admissible window for every Cb from the on-board estimate to the 400 pF specification ceiling** with standard E24 values (2.2 k ohm preferred). The pull-up item of O11 is closed at the engineering-analysis level; what remains for gate 9 is the block-by-block off-state review (touch, BQ25887, switched domains), the post-placement `Cb` recount and the post-PCBA rise-time/VOL measurement already declared in the closure criteria.
+
+### Historical record: 2026-09-17 evaluation at the 400 kHz target (superseded by D22)
+
+`Rp_min` was set by the **weakest sink**, which the transcriptions above showed was the TUSB320LAI at 1.6 mA / 0.4 V:
 
 ```
 Rp_min = (3.3 - 0.4) / 1.6e-3 = 1812 ohm      (TUSB320LAI, SLLSEQ8D)
@@ -117,11 +142,11 @@ Cross-check against the other sinks: ICM-42688-P 967 ohm; TCA9535 SDA 967 ohm-cl
 | 100 pF | 3541 Ω | open — 1.8/2.2 k fit |
 | 150 pF | 2360 Ω | open — 2.2 k fits |
 | 180 pF | 1967 Ω | closing — no common E24 fit, 1.9-1.96 k E96 only |
-| **197 pF** | **1812 Ω** | **hard ceiling at 400 kHz with the TUSB320LAI sink** |
+| 197 pF | 1812 Ω | **hard ceiling at 400 kHz with the TUSB320LAI sink** |
 | 200 pF | 1770 Ω | **empty** — no valid resistance at 400 kHz |
 | 400 pF | 885 Ω | empty |
 
-**Blocking conclusion (supersedes the provisional 967 Ω reading above):** at 400 kHz the bus capacitance budget is bound by **two** constraints: the rise-time window (Rp_min 1812 Ω caps Cb at ~197 pF) and — tighter — the **TUSB320LAI's own device limit of CBUS = 100 pF at 400 kHz** (SLLSEQ8D §6.6). The effective 400 kHz ceiling is therefore **100 pF total**; a sum cannot be computed yet because six of nine devices do not publish Ci (their rows say "not stated" above), so even the on-board-only case is unproven and trace/cable capacitance adds on top. At 100 kHz the same device allows 400 pF and the rise-time window opens to Rp_max ~5901 Ω at 200 pF / ~2951 Ω at 400 pF — 2.2 k fits everywhere. Options for O06/O11 review, none selected here: (a) run the shared bus at 100 kHz (or drop to 100 kHz whenever the expansion cable is attached); (b) move TUSB320LAI off the shared I2C — it is USB-C control with a GPIO mode per SLLSEQ8D, its CC-line function does not need the bus during flight, and removing it also clears the 0x46/0x47 address constraint; (c) accept 400 kHz on-board only with a measured, enforced <=100 pF limit (unrealistic with the touch controller and expander attached). These are product decisions requiring owner/reviewer acceptance.
+**Historical 400 kHz conclusion (this is the analysis that motivated D22; D22 has since been accepted and the Result 3 update above supersedes it):** at 400 kHz the bus capacitance budget was bound by **two** constraints: the rise-time window (Rp_min 1812 Ω caps Cb at ~197 pF) and — tighter — the **TUSB320LAI's own device limit of CBUS = 100 pF at 400 kHz** (SLLSEQ8D §6.6). The effective 400 kHz ceiling was therefore **100 pF total**. Three options were offered to the owner: (a) run the shared bus at 100 kHz (or drop to 100 kHz whenever the expansion cable is attached); (b) move TUSB320LAI off the shared I2C — it is USB-C control with a GPIO mode per SLLSEQ8D §7.2.4, its CC-line function does not need the bus during flight, and removing it also clears the 0x46/0x47 address constraint; (c) accept 400 kHz on-board only with a measured, enforced <=100 pF limit (unrealistic with the touch controller and expander attached). **The owner accepted (a) and (b) together as decision D22 on 2026-09-21** (see DECISIONS.md), and the Result 3 update of 2026-09-22 applies that decision in this worksheet.
 
 ## Pull-up rail ownership — proposal, not a decision
 

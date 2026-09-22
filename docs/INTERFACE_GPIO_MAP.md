@@ -34,16 +34,29 @@ GPIO3, GPIO45 and GPIO46 remain unused because they are strapping pins; GPIO46 i
 
 | Address | Device | Notes |
 | --- | --- | --- |
-| 0x20 | TCA9535 candidate | Slow resets/enables/status only |
+| 0x20 | TCA9535 candidate | Slow resets/enables/status only; now also reads the TUSB320LAI GPIO-mode outputs (see below) |
 | 0x30 | MMC5983MA | Locked magnetometer |
 | 0x6B | BQ25887 2S charger candidate | Seven-bit default address verified in TI SLUSD89B section 8.3.11.5/Table 6; any separate state-of-charge gauge remains open |
 | 0x44 | SHT40 | Locked humidity/temperature sensor |
-| 0x46 | BMP581 | SDO-low candidate; 0x47 remains alternate |
-| 0x47 | TUSB320LAI candidate | ADDR-low, fixed-UFP USB-C current detection; review VBUS-powered unpowered-bus behavior |
+| 0x46 | BMP581 | SDO-low candidate; the 0x47 alternate is available again now that TUSB320LAI is off the bus (D22), and stays secondary |
 | Published `0x70` | ST1633I touch | Orient C1 revision J does not identify seven-bit versus eight-bit-write convention; confirm controller source and both labeled samples before declaring the address map collision-free |
 | 0x68 | ICM-42688-P | AD0-low candidate; 0x69 remains alternate |
 
-The bus starts at 400 kHz. Interrupt/polling policy: direct touch and IMU interrupts; poll BMP581/MMC5983MA at scheduled rates. The BQ25887 and TUSB320LAI interrupt/status allocation and any separate gauge alert remain open until the exact power application is reviewed. If TUSB320LAI is VBUS-powered, prevent the always-on 3.3 V pullups from back-powering it while VBUS is absent. Expansion bus capacitance and stuck-bus recovery require a measured cable limit.
+~~The bus starts at 400 kHz.~~ **The bus runs at 100 kHz Standard-mode per accepted decision D22 (owner, 2026-09-21); the pull-up window, cable limit and arithmetic are maintained in [the I2C bus budget](I2C_BUS_BUDGET.md) Result 3 (2026-09-22 update): 2.2 k ohm +/- 1% preferred pair on `3V3_MAIN`, expansion cable reserve <= 150 pF.** Interrupt/polling policy: direct touch and IMU interrupts; poll BMP581/MMC5983MA at scheduled rates. The BQ25887 interrupt/status allocation and any separate gauge alert remain open until the exact power application is reviewed. Stuck-bus recovery: GPIO1/GPIO2 are ordinary GPIO-capable pins, so firmware implements the standard recovery — detect a stuck SDA, reconfigure the pins as GPIO, toggle SCL up to nine times until SDA releases, issue STOP, then re-enable the peripheral; no dedicated hardware line is required.
+
+### TUSB320LAI in GPIO mode (D22/P26, SLLSEQ8D Rev D)
+
+The TUSB320LAI is removed from the shared I2C bus. Applied wiring intent, all from TI SLLSEQ8D Rev D (May 2017):
+
+- **ADDR (pin 5): no connect** — §7.2.4: ADDR floating selects GPIO output mode and physically disables the I2C interface; the device never drives or loads SDA/SCL (former pins 7/8 become open-drain outputs OUT1/OUT2).
+- **PORT (pin 3): tied to GND** — §7.2.1.2: fixed UFP (sink), presenting Rd on both CC lines; matches the P17 fixed-UFP policy. In GPIO mode the device advertises/accepts default USB Type-C current only (§7.2.1.1/Table 2) — consistent with the no-PD, 5 V-only baseline (D12/P17).
+- **EN_N (pin 11): tied to GND** — pin description (SLLSEQ8D page 4): EN_N is the enable input; the part is disabled when the pin sits at its internal pull-up-to-VDD default, so floating it would leave the USB-C controller off. A hard tie to GND selects the always-enabled state required by a fixed-UFP charging port (P17) and needs no dynamic control; the "held low at least 50 ms after VDD valid" external-control note is satisfied statically by the tie.
+- **VBUS_DET (pin 4): divider from VBUS through the datasheet 900 k ohm** (unchanged from the existing electrical-matrix disposition).
+- **VDD (pin 12): `3V3_MAIN`** — keeps the device out of the back-power scenario: all TUSB input/output pins are pulled from `3V3_MAIN`-domain nets, and an always-on VDD prevents any pin from feeding an unpowered die.
+- **OUT1 (pin 7), OUT2 (pin 8), OUT3 (pin 6): open-drain outputs, each pulled to `3V3_MAIN` through 100 k ohm (weak; slow status only), read as inputs on TCA9535PWR expander port pins** — allocation at the expander pin-map freeze (DIG-03). Table 3 defines the decoding: H/H = default current unattached, H/L = default attached, L/H = 1.5 A attached, L/L = 3.0 A attached. OUT3 is the audio-accessory flag in GPIO mode and must never assert on this product; it is read-only status, not a control.
+- **No ESP32-S3 GPIO pins are consumed.** Direct allocation was evaluated and rejected: the only free pins (GPIO3, GPIO45, GPIO46) are strapping pins — GPIO45 selects VDD_SPI voltage at boot and must not hang on an externally pulled open-drain net; GPIO46 is input-only and also a strap.
+- **Interaction with charger gating:** P17 requires the charger `CD` to stay disabled until cells are valid and an accepted USB current state exists. Whether that gating reads OUT1/OUT2 in hardware or firmware-via-expander is a PWR-02/PWR-03 design decision; this map only reserves the signals and the expander inputs.
+- **Static load for PWR-04:** SLLSEQ8D §6.5 lists IUNATTACHED_UFP = 70 uA typical for the unattached-UFP state; with the always-enabled, always-powered disposition above this is a permanent `3V3_MAIN` load whenever the unit is on. Switching TUSB VDD is only acceptable together with removing or reviewing the expander-side 100 k pulls (back-power path); the default disposition accepts the 70 uA and lets PWR-04 trade it in the rail inventory.
 
 ## Shared SPI service contract
 
