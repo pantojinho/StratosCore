@@ -15,6 +15,28 @@ Status: independent Rev A candidate; no ADSBee circuit or source code copied. Re
 
 MCP6566 ordering-code closure (DS20002143G Rev G, March 2020, Product Identification System page 47; reviewed 2026-09-17): `LT` = 5-lead SC70 (Microchip package drawing C04-2061-LT Rev E), `OT` = 5-lead SOT-23 (drawing C04-2091-OT Rev F), `E` = -40 to +125 °C; there is no "DBV" suffix (that is TI nomenclature). Preferred candidate **`MCP6566T-E/OT`** (SOT-23-5) for Rev A inspectability/rework, consistent with the flash-package philosophy; **`MCP6566T-E/LT`** (SC70-5) is the smaller alternative, and `MCP6566RT-E/OT` / `MCP6566UT-E/OT` are pin-map routing conveniences (same die, SOT-23 only). Final base-vs-R-vs-U choice is a layout routing input; distributor stock recheck at purchase. The open-drain output may be pulled above VDD (abs max VSS + 10.5 V, section 1.1 note 4), so the comparator can run from the 3.0 V ADS-B quiet rail with its output pulled directly to the RP2040 3.3 V bank — no level translator in the pulse path. Hysteresis is 1.0-5.0 mV internal; the pull-up value (starting point 1-10 kΩ) remains a bench measurement gate.
 
+### Comparator pin-map variant and application network (ADSB-01, closed 2026-09-22)
+
+**Pin-map variant resolution (verified fact, DS20002143G Rev G Table 3-1 page 13 + Product ID page 47; re-extracted from the PDF 2026-09-22):** the three SOT-23-5 variants are **not interchangeable pin maps**:
+
+| Pin function | `MCP6566` base (SC70 and SOT-23 share numbering) | `MCP6566R` (SOT-23 only) | `MCP6566U` (SOT-23 only) |
+| --- | --- | --- | --- |
+| OUT | 1 | 1 | 4 |
+| VIN- | 4 | 4 | 3 |
+| VIN+ | 3 | 3 | 1 |
+| VDD | 5 | 2 | 5 |
+| VSS | 2 | 5 | 2 |
+
+`R` mirrors the power pins relative to base; `U` rotates the analog/output pins as well. Marking codes (section 6.1): base `JYNN`, R `JZNN`, U `WLNN` on 5-lead SOT-23. **Rev A schematic pin assignment is frozen to the base `MCP6566T-E/OT` map: OUT=1, VIN-=4, VIN+=3, VDD=5, VSS=2.** R and U remain documented alternates; switching to one is a layout-time decision that must return through review with the footprint re-derived — it is not a drop-in socket equivalent.
+
+**Application network (proposal, values labeled; ADSB-01 scope, threshold value excluded):**
+
+- **Supply:** VDD (pin 5) on `3V0_RF_QUIET`; 100 nF local decoupling plus the rail's existing bulk (proposal). Rail load contribution: IQ 60/100/130 uA typ/max (DS section 1.0) — flagged to PWR-04.
+- **Signal inputs:** VIN+ (pin 3) = ADL5513 VOUT video output; VIN- (pin 4) = threshold node from a resistor divider on `3V0_RF_QUIET` (log video is positive-going; the divider value is **TBD, blocked by OWN-09** — VTH = 3.0 x R2/(R1+R2), with the divider impedance kept <= ~10 kOhm class so the <=5 mV internal hysteresis is not swamped by divider noise; final R1/R2 freeze together with the OWN-09 target and the bench threshold sweep).
+- **Output pull-up (calculation + proposal):** OUT (pin 1) pulled to the RP2040 3.3 V bank through **2.2 kOhm +/-1% preferred** (bench sweep window 1-10 kOhm retained). Basis: output node capacitance COUT 8 pF typical (DS section 1.0) + RP2040 GPIO capacitance TBD + ~5 pF trace allowance ~= 13-18 pF; rise to the ~2.31 V (0.7 x VDDIO) threshold is `t = -ln(1-0.7) x Rp x C ~= 1.204 x Rp x C`, giving ~48 ns at 2.2 k/18 pF — well inside a 500 ns half-symbol. Sink at VOL: 3.3 V / 2.2 k = 1.5 mA, within the 3 mA-tested VOL point (DS section 1.0: VOL <= 0.6 V at 3 mA/8 mA). Asserted dissipation 4.95 mW.
+- **Delay budget (verified facts + boundary):** tPHL 56/80 ns typ/max at 1.8 V, 100 mV overdrive (DS section 1.0 AC table; a 3.0 V maximum is **not published** — bench-gated), plus ~48 ns rise, plus RP2040 input delay TBD: combined ~130 ns worst-recorded against the 500 ns half-symbol (~26%), before jitter. This is why the pulse-path delay distribution stays in the conducted-test plan below.
+- **External hysteresis:** none proposed for Rev A until the bench shows internal 1.0-5.0 mV is insufficient; positive feedback on an open-drain output needs the pull-up node as the sense point and is recorded as an optional design note, not a committed part.
+
 The two-stage arithmetic suggests the detector can see roughly -96 dBm at the antenna after a conservative 26 dB net gain. This is a screening estimate, not a receiver sensitivity claim. The 1090 MHz S-parameter check on the selected production stack remains a design and prototype RF review item, including the BLB01 bias network, decoupling, launches and interstage paths.
 
 Primary sources: [BeRex BLB01 data sheet V6.6](https://documents.berex.com/BLB01-V6.6.pdf), [TAI-SAW TA2003A data sheet Rev 1.0](https://www.taisaw.com/assets/PDF/TA2003A%20_Rev.1.0_.pdf), [ADI ADL5513](https://www.analog.com/en/products/adl5513.html), and [Microchip MCP6566 data sheet DS20002143G](https://ww1.microchip.com/downloads/aemDocuments/documents/MSLD/ProductDocuments/DataSheets/MCP6566-6R-6U-7-9-1.8V-Low-Power-Open-Drain-Output-Comparator-DS20002143G.pdf).
