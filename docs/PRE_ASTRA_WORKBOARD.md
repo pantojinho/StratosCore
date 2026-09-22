@@ -4,7 +4,7 @@ Status: **ACTIVE**. This is the operational queue for taking StratosCore from th
 
 The workboard separates work an agent can complete from owner decisions, qualified reviews, procurement, factory confirmation, and physical tests. Writing a document is not completion by itself: each task closes only when its evidence column is satisfied.
 
-Coordination snapshot: `origin/main` at `d3b84f5` reconciled on 2026-09-22 (GOV-02 vigil retired; SYS-01 accepted via PR #140). The next coordinator must replace this snapshot with the current baseline before assigning work.
+Coordination snapshot: `origin/main` at `e501e85` (DIG-01 merged 2026-09-22 via PR #144; ADSB-01 merged 2026-09-22 via PR #142 pending its own central-file reconciliation in PR #143). The next coordinator must replace this snapshot with the current baseline before assigning work.
 
 [PR #137](https://github.com/pantojinho/StratosCore/pull/137) was merged automatically while this decision update was in progress. It changed only `AUDIT_LOG.md` and explicitly reported no engineering action. **GOV-02 closed 2026-09-22:** the vigil was retired (see GOV-02 and `AUDIT_LOG.md`) and future equivalent no-change PRs must not be opened or merged.
 
@@ -86,7 +86,7 @@ Workers in this wave must use exact manufacturer sources and stay inside their s
 | GNSS-01 | READY | 3 | Finalize MAX-M10S supply/UART/PPS/no-connect/backup and passive RF application | PWR-04 | `GNSS_ARCHITECTURE.md` | Complete net/application table and PDN calculation |
 | GNSS-02 | BLOCKED_EXTERNAL | 3 | Close antenna/U.FL/ESD/keepout/cable and factory process | EXT-04/05/06 | `GNSS_ARCHITECTURE.md`, `RF_CONNECTOR_SELECTION.md` | Approved RF layout constraints and mechanical fit |
 | GNSS-03 | BLOCKED_EXTERNAL | 3 | Define cold-start/PPS/AIR4/coexistence tests and any pre-layout sample/fixture checks | GNSS-01/02 | test plan/report | Executable quantified plan plus available pre-layout evidence; final board results remain post-PCBA |
-| DIG-01 | READY | 4 | Freeze RP2040 reset, BOOTSEL, SWD, flash and oscillator circuit | none | `DIGITAL_SUPPORT_REVIEW.md` | Pin-complete circuit specification and corner-test plan |
+| DIG-01 | ACCEPTED | 4 | Freeze RP2040 reset, BOOTSEL, SWD, flash and oscillator circuit | none | `DIGITAL_SUPPORT_REVIEW.md` | Delivered 2026-09-22 via PR #144: pin-complete power/reset/BOOTSEL/SWD/oscillator specification from the RP2040 datasheet (sections 1.4, 2.9) and hardware-design-with-rp2040 (sections 2.1-2.2, 2.4.1, 3.3.2); RUN/BOOTSEL/SWD dispositions and a post-PCBA corner test plan recorded. RP2040 current figures remain a PWR-04 input; the RP2040-domain switched-vs-always-on question is routed to SYS-02 |
 | DIG-02 | READY | 4 | Close microSD power, ESD, card detect, power-fail and enclosure access | MECH-02 for final fit | `DIGITAL_SUPPORT_REVIEW.md`, connector docs | Exact circuit, footprint/process and mechanical access |
 | DIG-03 | READY | 4 | Close USB, expansion, buttons, GPIO expander and all reset/off-state defaults | OWN-02, PWR-02 | connector/control docs, matrix | Collision-free pins and safe hardware defaults |
 | DIG-04 | READY | 4 | Create/review remaining support footprints from exact drawings | DIG-01/02/03 | `hardware/footprints/`, footprint reviews | Parse/export, automated geometry check and independent review |
