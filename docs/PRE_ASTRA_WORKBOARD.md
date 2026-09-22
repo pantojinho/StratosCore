@@ -4,7 +4,7 @@ Status: **ACTIVE**. This is the operational queue for taking StratosCore from th
 
 The workboard separates work an agent can complete from owner decisions, qualified reviews, procurement, factory confirmation, and physical tests. Writing a document is not completion by itself: each task closes only when its evidence column is satisfied.
 
-Coordination snapshot: `origin/main` at `d3b84f5` reconciled on 2026-09-22 (GOV-02 vigil retired; SYS-01 accepted via PR #140). The next coordinator must replace this snapshot with the current baseline before assigning work.
+Coordination snapshot: `origin/main` at `b0f4ebb` reconciled on 2026-09-22 (GOV-02 vigil retired; SYS-01 #140, ADSB-01 #142, DIG-01 #144 and PWR-02 #147 accepted). The next coordinator must replace this snapshot with the current baseline before assigning work.
 
 [PR #137](https://github.com/pantojinho/StratosCore/pull/137) was merged automatically while this decision update was in progress. It changed only `AUDIT_LOG.md` and explicitly reported no engineering action. **GOV-02 closed 2026-09-22:** the vigil was retired (see GOV-02 and `AUDIT_LOG.md`) and future equivalent no-change PRs must not be opened or merged.
 
@@ -79,7 +79,7 @@ Workers in this wave must use exact manufacturer sources and stay inside their s
 | DSP-03 | BLOCKED_EXTERNAL | 1 | Create and independently review exact display/touch connector footprints | EXT-01 | `hardware/footprints/`, footprint review document | KiCad export plus independent dimensional review and sample-fit result |
 | DSP-04 | BLOCKED_EXTERNAL | 1 | Run two-sample display/touch/backlight bench qualification | DSP-01/02/03, EXT-01 | test report only | SPI/readability/touch/address/current/fault/EMI results |
 | PWR-01 | BLOCKED_EXTERNAL | 2 | Freeze exact cells, holder, service-pair rules, fuse and temperature-sensing requirements | OWN-01, EXT-02 | `POWER_ARCHITECTURE_REVIEW.md` | Exact MPNs and accepted electrical/mechanical limits |
-| PWR-02 | READY | 2 | Close USB4105, TPD4E05U06, TUSB320LAI and TPS259474L application; remove unsupported ESD claims | OWN-02 for final bus choice | `CONNECTOR_ARCHITECTURE.md`, `POWER_INPUT_EVIDENCE.md` | Exact pins/passives/default states and USB current policy reviewed |
+| PWR-02 | ACCEPTED | 2 | Close USB4105, TPD4E05U06, TUSB320LAI and TPS259474L application; remove unsupported ESD claims | OWN-02 for final bus choice | `CONNECTOR_ARCHITECTURE.md`, `POWER_INPUT_EVIDENCE.md` | Delivered 2026-09-22 (PR #147): eFuse network exact (RILM 1.69 k -> 1.97 A, UVLO 3.98 V, OVLO 6.50 V, dVdt open, ITIMER at O06), default-current-only sink policy from GPIO-mode CC, TUSB320LAI wired per D22, device-level-only ESD claim corrected; O05 untouched |
 | PWR-03 | BLOCKED_EXTERNAL | 2 | Produce the complete BQ25887 plus common-protection topology and fault matrix | PWR-01/02, OWN-01 | `POWER_ARCHITECTURE_REVIEW.md`, `POWER_RAIL_PLAN.md` | Exact circuit proposal ready for qualified review; no unresolved ground/cutoff conflict |
 | PWR-04 | READY | 2/9 | Complete rail peak inventory, regulator passives, sequencing, back-power, thermal and transient calculations | subsystem current data | `POWER_BUDGET.md`, `POWER_RAIL_PLAN.md`, matrix | Every load has sourced max/allowance; simultaneous peak and margins shown |
 | PWR-05 | BLOCKED_EXTERNAL | 2 | Obtain qualified approval of PWR-03/04 and the fault-test limits | EXT-03, PWR-03/04 | reviewer record | Signed acceptance before committed schematic capture or energizing |
