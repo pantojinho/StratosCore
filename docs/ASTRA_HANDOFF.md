@@ -31,6 +31,10 @@ Do not invoke Astra for StratosCore CAD yet. [Project status](PROJECT_STATUS.md)
 | [Display](DISPLAY_REQUIREMENTS.md), [GNSS](GNSS_ARCHITECTURE.md), [audio](AUDIO_ARCHITECTURE.md) and [connector package](CONNECTOR_ARCHITECTURE.md) | Exact accepted subsystem circuits, parts and implementation constraints |
 | [RF architecture](RF_ARCHITECTURE.md) and [RF connector selection](RF_CONNECTOR_SELECTION.md) | RF references, stackup, interconnect and placement constraints |
 | [Mechanical/RF floorplan](MECHANICAL_RF_FLOORPLAN.md) | Board outline, keepouts and enclosure interfaces |
+| [BMP581 validation plan](BMP581_VALIDATION_PLAN.md) | Indicative backup data/validity contract and realistic pressure test plan; no 30,000 ft performance claim |
+| [Audio domain review](AUDIO_DOMAIN_REVIEW.md) | Proposed separate 1.8 V audio switch branch and the unresolved exact application review |
+| [Concurrency contract](CONCURRENCY_CONTRACT.md) | Shared-bus/UART/PDM resource limits and remaining numerical timing gates |
+| [BOM gap audit](BOM_BASELINE_GAP_AUDIT.md) | Exact-part, quantity, footprint, sourcing and fit/DNP gaps to close before manifest freeze |
 | [Manufacturing strategy](MANUFACTURING_STRATEGY.md) | Factory rules and release outputs |
 | [CAD tooling review](CAD_TOOLING_REVIEW.md) | Optional KiCad automation, verification limits and reproducibility rules |
 

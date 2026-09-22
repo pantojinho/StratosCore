@@ -42,11 +42,11 @@ The final pin map must count every signal and preserve at least one recovery rou
 | P03 | TUSB_OUT3 | In | 100 kohm pull-up to `3V3_MAIN` (TUSB side) | Audio-accessory flag; expected never asserted on Rev A |
 | P04 | CHG_INT | In | charger-side open-drain; expander reads via `3V3_MAIN` domain | BQ25887 interrupt/status (non-latency-critical routing; direct-ESP32 alternative stays with PWR-03) |
 | P05 | EXP_PRESENT | In | 100 kohm pull-up to `3V3_MAIN` | Expansion cable/hood detect if the harness provides it; otherwise spare |
-| P06 | LCD_RST_N | Out | 100 kohm pull-down to GND on the **3.3 V expander-side control net** (see DSP-02 reset topology) | Display reset **control**: drives the SN74LVC1G07 input; the 1.8 V pull-up sits on the LVC1G07 open-drain **output** at the display connector per DSP-02 - no rail-crossing pull |
+| P06 | LCD_RST_N | Out | 100 kohm pull-down to GND on the **3.3 V expander-side control net** (see DSP-02 reset topology) | Display reset **control**: low asserts reset through SN74LVC1G07; configure P06 push-pull high to release. The 1.8 V pull-up sits on the LVC1G07 open-drain **output** at the display connector — no rail-crossing pull |
 | P07 | — | In | — | Spare input (bring-up/test) |
 | P10 | SX_NSS_HOLD | Out | 100 kohm pull-up to `3V3_MAIN` | Reserved radio service hold/aux (non-safety; final use with LORA-02) |
 | P11 | SD_SW_EN_N | Out | 100 kohm pull-**down** to GND (see polarity correction below) | microSD domain load-switch enable; default OFF |
-| P12 | AUD_SW_EN_N | Out | 100 kohm pull-**down** to GND | Audio/1.8 V domain load-switch enable; default OFF |
+| P12 | AUD_SW_EN_N (historical name; `AUD_SW_EN` at capture) | Out | 100 kohm pull-**down** to GND | Proposed separate `1V8_AUDIO_SW` branch from always-on `1V8_LOGIC` through active-high TPS22918; default OFF. Exact CT/QOD/ramp review open; do not switch the TFT rail |
 | P13 | ADSB_SW_EN_N | Out | 100 kohm pull-**down** to GND | ADS-B digital domain load-switch enable; default OFF (runtime profile may power down ADS-B; O13) |
 | P14 | — | In | — | Spare input |
 | P15 | — | In | — | Spare input |
@@ -63,7 +63,7 @@ The final pin map must count every signal and preserve at least one recovery rou
 
 ### Off-state boundaries recorded for the gate-9 review
 
-- SD_SW_EN_N / AUD_SW_EN_N / ADSB_SW_EN_N: the switched rails feed SD, T5838/TXU0202 audio, and RP2040 ADS-B digital respectively; each switched rail's inputs that face always-on logic need the per-pin off-state check already listed in the electrical matrix (host pins high-Z before rail removal; external pulls never feed an off device). The TCA9535 itself is on `3V3_MAIN` and never switched.
+- SD_SW_EN_N / AUD_SW_EN_N / ADSB_SW_EN_N (historical names; use active-high `*_EN` at capture): the switched rails feed SD, the proposed `1V8_AUDIO_SW` T5838/TXU0202 branch, and RP2040 ADS-B digital respectively. The TFT remains on upstream `1V8_LOGIC`. Each switched rail's inputs facing always-on logic need the per-pin off-state check in the electrical matrix (host pins high-Z before rail removal; external pulls never feed an off device). The TCA9535 itself is on `3V3_MAIN` and never switched.
 - LCD_RST_N pulls from `1V8_LOGIC`: acceptable only because the display reset is a display-side rail with a defined 1.8 V domain (DSP-02 sequence); if DSP-02 moves display logic rails, this pull moves with it.
 
 

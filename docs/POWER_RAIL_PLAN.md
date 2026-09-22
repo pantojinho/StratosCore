@@ -13,7 +13,9 @@ flowchart LR
   MAIN --> LDO3[TPS7A2030PDBVR]
   LDO3 --> RF[3V0_RF_QUIET\nADS-B LNA chain]
   MAIN --> LDO18[TPS7A2018PDBVR]
-  LDO18 --> LOGIC[1V8_LOGIC\nTFT logic / optional microphone domain]
+  LDO18 --> LOGIC[1V8_LOGIC\nTFT logic]
+  LOGIC --> AUDSW[TPS22918 candidate\nactive-high AUD_SW_EN]
+  AUDSW --> AUD[1V8_AUDIO_SW\nT5838 / TXU0202 B-side]
   MAIN --> BL[TPS61169DCKR candidate\nabout 92 mA constant-current]
 ```
 

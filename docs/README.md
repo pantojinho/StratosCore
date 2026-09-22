@@ -12,6 +12,8 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | [Decision register](DECISIONS.md) | Locked requirements, accepted/rejected proposals and owner decisions |
 | [Open questions](OPEN_QUESTIONS.md) | Closure evidence for every unresolved engineering item |
 | [Historical 30,000 ft barometer comparison](BAROMETER_30K_PROPOSAL.md) | Rejected P27 replacement and dated alternative comparison; BMP581 remains locked |
+| [BMP581 validation plan](BMP581_VALIDATION_PLAN.md) | Indicative pressure/vario data contract and pre-/post-PCBA test boundary |
+| [BOM baseline gap audit](BOM_BASELINE_GAP_AUDIT.md) | Exact MPN, quantity, footprint, fit/DNP and sourcing gaps before Astra |
 | [Product requirements](PRODUCT_REQUIREMENTS.md) | Verifiable Rev A behavior and operating profiles |
 | [Astra final handoff](ASTRA_HANDOFF.md) | Final KiCad execution checklist; currently gated |
 | [Astra execution prompt](ASTRA_EXECUTION_PROMPT.md) | Frozen-manifest template and final KiCad execution prompt; currently NOT READY |
@@ -28,6 +30,8 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | [GPIO and interface map](INTERFACE_GPIO_MAP.md) | ESP32 allocation, I2C addresses and shared-SPI contract |
 | [Electrical compatibility matrix](ELECTRICAL_COMPATIBILITY_MATRIX.md) | Rail, voltage, address, boot-state and back-power closure map |
 | [I2C bus budget](I2C_BUS_BUDGET.md) | Shared-bus capacitance, pull-up window and per-device transcription worksheet |
+| [Concurrency contract](CONCURRENCY_CONTRACT.md) | Shared SPI, UART, PDM and interrupt resource arithmetic and remaining timing gates |
+| [Audio-domain review](AUDIO_DOMAIN_REVIEW.md) | Preferred separate switched-audio rail and exact application work still needed |
 | [Power input evidence](POWER_INPUT_EVIDENCE.md) | USB eFuse and 2S charger datasheet facts feeding O05/O06 |
 | [Expansion interface](EXPANSION_INTERFACE.md) | External I2C/SPI/UART/GPIO requirements |
 

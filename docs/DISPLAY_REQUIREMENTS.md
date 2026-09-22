@@ -91,7 +91,7 @@ Do not create or assign either connector footprint until the exact manufacturer 
 Use a display-only branch; the shared 3.3 V SPI trunk to microSD and SX1262 remains unshifted.
 
 - Preferred bus translator: TI `SN74AXC4T245PWR`, TSSOP-16. Connect pin 1 VCCA to `3V3_MAIN`, pin 16 VCCB to `1V8_LOGIC`, and hold both direction inputs (pins 2 and 3) high for A-to-B. Use channels pins 4-to-13, 5-to-12 and 6-to-11 for SCLK, SDA and CS. Give unused A4 pin 7 a defined level if B4 pin 10 is unused.
-- Pull each active-low OE to VCCA so outputs remain high impedance during power-up/down, as TI requires. A host-controlled pull-down may enable the translator only after `1V8_LOGIC` and TFT VCC are valid. Place one local bypass capacitor at each supply pin pair and keep translated traces short.
+- The approved DSP-02 application below uses **10 kohm pull-downs on both OE inputs** (OE high tri-states this exact AXC device). The earlier pull-up proposal was superseded. Place one local bypass capacitor at each supply pin pair and keep translated traces short; validate startup and shutdown with the exact display samples.
 - Preferred reset translator: TI `SN74LVC1G07DBVR`: pin 2 input from the 3.3 V reset control, pin 3 ground, pin 4 open-drain TFT reset, pin 5 `1V8_LOGIC`, pin 1 NC. An input pull-down holds reset asserted at boot and an output pull-up to `1V8_LOGIC` prevents a 3.3 V high level at the TFT reset pin.
 - The AXC device supports either rail from 0.65 to 3.6 V, Ioff partial-power-down protection, VCC isolation and supply sequencing in either order. The LVC buffer supports 1.65-5.5 V operation, overvoltage-tolerant input and Ioff. These properties reduce back-power risk but do not replace a measured rail/reset sequence.
 
@@ -142,17 +142,17 @@ Facts re-verified in the retrieved TI documents this session: `SN74AXC4T245` SCE
 ### SN74LVC1G07DBVR (SOT-23-5) — open-drain display reset
 
 - **Pin-level assignment (DBV):** pin 2 = input from the 3.3 V reset control (TCA9535 `LCD_RST_N` through the expander-side network); pin 3 = GND; pin 4 = open-drain output to TFT RESET with **10 kohm pull-up to `1V8_LOGIC`** (not `3V3_MAIN` — the reset pin is a 1.8 V-domain input); pin 5 = VCC = `1V8_LOGIC`; pin 1 = NC.
-- **Polarity fact:** LVC1G07 output is active-sinking only — driving the input high asserts RESET low; input low releases reset high through the pull-up. The asserted-at-boot requirement is met by a **100 kohm pull-down on the input side (3.3 V domain)** so an unconfigured expander output holds the display in reset, matching the DIG-03 expander default rule.
-- **Cross-reference to DIG-03 (coordinator finding):** the expander map's P06 row describes the pull as sitting on the display-side rail. The dimensionally correct arrangement is: expander P06 output is an open-drain-style control in the `3V3_MAIN` domain pulling the LVC1G07 **input** net (with its own 3.3 V-domain pull-down), and the `1V8_LOGIC` pull-up lives on the LVC1G07 **output** at the display connector. No rail-crossing pull exists in the final disposition; the two documents are consistent once read this way. DIG-03's P06 row wording is corrected by the integrator in the same merge that lands this PR.
+- **Polarity fact (TI SCES296AG Rev AG, section 7.4 function table):** input **low** makes the open-drain output **low** and asserts active-low TFT RESET; input **high** leaves the output high impedance and its 10 kohm display-side pull-up releases RESET. A **100 kohm input pull-down (3.3 V control domain)** therefore holds the display in reset while the expander is unconfigured. The expander must drive its control output high to release reset; verify its push-pull configuration and the TFT timing on samples.
+- **Cross-reference to DIG-03:** expander P06 drives the LVC1G07 **input** in the `3V3_MAIN` domain, with a 100 kohm input pull-down; firmware must configure it push-pull high to release reset. The `1V8_LOGIC` pull-up is on the LVC1G07 **output** at the display connector. No rail-crossing pull exists. TI SCES296AG Rev AG section 7.4 confirms low input = low output, high input = open-drain high impedance.
 - **IOL margin:** the LVC1G07 sinks 8 mA at 0.3 V class (section 6) against a 10 kohm/1.8 V pull-up demand of 0.18 mA — non-binding.
 - **TFT RESET pin rule retained:** never add a capacitor from TFT RESET to ground (module rule); the reset waveform belongs to the display sample validation.
 
 ### Startup/shutdown sequence (values from the standing plan, now resistor-backed)
 
 1. Rails rise: `3V3_MAIN` (buck soft-start) -> `1V8_LOGIC` tracks up. AXC OEs held low by pull-downs = branch **enabled** but the ESP32 has not clocked anything; LVC1G07 input pull-down asserts TFT RESET low through the sink path.
-2. ESP32 boots, configures TCA9535; firmware releases P06 -> LVC1G07 input rises -> TFT RESET releases high after the module's reset-low requirement is satisfied (>= 1 ms low per the module record; the expander-controlled timing covers it).
+2. ESP32 boots and configures TCA9535 P06 as a push-pull high output; LVC1G07 input rises, its output becomes high impedance and the TFT-side pull-up releases RESET after the module's reset-low requirement is satisfied (>= 1 ms low per the module record; sample validation remains required).
 3. SPI traffic begins at <= 15 MHz panel-clock bound; IM straps `101` selected on the FPC (hardware straps, not firmware).
-4. Shutdown: stop SPI traffic -> assert P06 (reset low) -> rails fall with OE already low-true (branch passive) and RESET held by the input pull-down as VCCA collapses. Touch reset timing (5 ms post-rails, 100 us pre-power-off) stays with the touch branch and its expander row.
+4. Shutdown: stop SPI traffic -> drive P06 low to assert TFT RESET -> rails fall with the input pull-down maintaining RESET while the translator output is enabled. Touch reset timing (5 ms post-rails, 100 us pre-power-off) stays with the touch branch and its expander row.
 
 ### DSP-02 closure boundary
 
