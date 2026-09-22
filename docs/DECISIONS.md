@@ -1,6 +1,6 @@
 # Decision register
 
-Baseline established from the owner's foundation brief; register last updated 2026-09-17. Dated evidence and sourcing snapshots retain their individual review dates. LOCKED means a product constraint, not a validated design. OPEN means selection incomplete. PROPOSED means an engineering starting point requiring validation.
+Baseline established from the owner's foundation brief; register last updated 2026-09-21. Dated evidence and sourcing snapshots retain their individual review dates. LOCKED means a product constraint, not a validated design. OPEN means selection incomplete. PROPOSED means an engineering starting point requiring validation.
 
 ## Locked baseline
 
@@ -26,6 +26,13 @@ Baseline established from the owner's foundation brief; register last updated 20
 | D18 | CERN-OHL-P-2.0 hardware; MIT original firmware | Official texts; third-party terms remain intact |
 | D19 | ADS-B receiver baseline remains RP2040 | Better architectures may be proposed with evidence; no replacement accepted |
 | D20 | Current execution priority is hardware and PCBA readiness | Sol closes evidence, selections, interfaces and review gates; Astra is reserved for efficient KiCad schematic/PCB execution after the handoff is decision-complete |
+| D21 | The unit must operate while USB charging is active | Does not require batteryless operation; the power design must prove safe charge-under-load behavior and valid termination |
+| D22 | Run the shared peripheral I2C bus at 100 kHz and remove TUSB320LAI from that bus | Use the TUSB320LAI GPIO-mode interface; exact GPIO allocation, pull-ups, cable limit and off-state review remain engineering work |
+| D23 | Rev A is a personal, non-commercial, open-community hobby prototype | This classification does not waive applicable radio or flight rules during operation |
+| D24 | Target an average cost no higher than BRL 200 per unit for the initial five-unit batch | The accounting boundary for display, enclosure, shipping and locally purchased cells remains to be confirmed |
+| D25 | Support both terrestrial and balloon missions; altitude, temperature and duration are required mission inputs | Exact ranges and duration remain open. No product target is required for mass or rain/ingress resistance |
+| D26 | The owner will purchase the two removable 21700 cells locally | Shipping the assembled unit with cells and its UN38.3 logistics path are outside the current prototype scope; exact cell and holder still require engineering evidence |
+| D27 | Rev A has no conformal-coating, rain/ingress or special environmental-protection requirement | Preserve required pressure, humidity and acoustic openings; the owner accepts that the hobby prototype is not environmentally qualified |
 
 ## Open selections
 
@@ -60,7 +67,7 @@ The display's revision-J serial straps are verified and Rev A provisionally pref
 | P23 | Use TDK `MMICT5838-00-012` PDM microphone with TI `TXU0202DCUR` translator | Preferred candidates only; independently review CAD, 1.8 V sequencing, acoustic port/gasket, timing and audio/RF tests |
 | P24 | Use GCT `USB4105-GF-A`, TI `TPD4E05U06DQARG4`, JST `BM12B-GHS-TBT`/`GHR-12V-S`, Alps `SKSCLCE010` buttons and TI `TCA9535PWR` slow I/O | Preferred support candidates only; VBUS protection remains open and every footprint, cable, current limit, reset default, hot-plug/back-power and enclosure fit must be independently reviewed |
 | P25 | Standardize PCB RF receptacles on Hirose `U.FL-R-SMT-1(60)` and use Taoglas `CAB.721` for the ADS-B and optional LoRa SMA bulkheads | PREFERRED INTERCONNECT; RF/CAD review required. U.FL is an internal 30-cycle interface. Confirm complete RF loss/match, exact footprints, factory stackup, panel/cable fit, port labels and coexistence before layout release |
-| P26 | PROPOSED, owner decision required — shared I2C bus policy: (a) run the shared bus at 100 kHz, (b) remove TUSB320LAI from the shared bus (GPIO mode per SLLSEQ8D; also clears the 0x46/0x47 address constraint), or (c) 400 kHz with a measured <=100 pF on-board limit | Basis: `I2C_BUS_BUDGET.md` Result 3 — TUSB320LAI sink 1.6 mA (Rp_min 1812 ohm) and its 100 pF CBUS limit at 400 kHz make 400 kHz unworkable with the current participant set; none of the three options is accepted yet |
+| P26 | ACCEPTED by owner 2026-09-21 — run the shared peripheral I2C bus at 100 kHz and remove TUSB320LAI from the bus, using its GPIO mode per SLLSEQ8D | Basis: `I2C_BUS_BUDGET.md` Result 3. This removes the TUSB320LAI 100 pF/1.6 mA constraint and address concern. SYS-01 must still calculate the remaining bus, allocate GPIOs, choose pull-ups and close cable/off-state behavior |
 
 ## Conflicts requiring explicit resolution
 
@@ -85,6 +92,18 @@ See [legacy comparison](../references/LEGACY_PROJECTS.md). Legacy AMOLED, QMI865
 - **Firmware impact:** configure and monitor the 2S charger over I2C, report both cell voltages and request inhibition for missing, reversed, out-of-range or badly mismatched cells. Firmware cannot guarantee a pre-charge inspection because BQ25887 starts autonomously after POR; fail-safe hardware gating is now an explicit qualified-review requirement.
 - **PCB/mechanical impact:** one 4 x 4 mm VQFN charger candidate replaces two WSON chargers plus the OR stage; holder wiring/midpoint, clearance, heat, cell-removal access and approximately 37 mm enclosure depth require validation.
 - **Outcome:** 2S architecture direction accepted by the owner. This is not a circuit or safety freeze; a qualified electrical/battery reviewer and the documented fault tests remain mandatory before prototype energizing.
+
+### 2026-09-21: owner operating and prototype constraints
+
+- **Owner:** project owner, accepted in the Codex session.
+- **Operating policy:** operation while charging is required; batteryless operation remains outside scope.
+- **Bus policy:** P26 option set accepted as D22: 100 kHz shared I2C, with TUSB320LAI moved to GPIO mode.
+- **Product scope:** personal, non-commercial, open-community hobby prototype supporting terrestrial and balloon missions.
+- **Cost and quantity:** average target no higher than BRL 200 per unit for an initial batch of five; exact inclusions still need confirmation.
+- **Mission boundary:** altitude, temperature and duration must be quantified; no target mass or rain/ingress qualification is required.
+- **Battery/logistics:** cells are locally purchased and removable; the project does not ship the prototype with cells in the current scope.
+- **Environmental process:** no conformal coating or special environmental protection is required for Rev A.
+- **Impact:** these decisions unblock the charge-under-load design, I2C rework, regulatory classification, local-cell logistics and no-coating process path. They do not approve the 2S circuit, exact cell/holder, radio operation, flight plan or unqualified environmental reliability.
 
 ## Change record template
 

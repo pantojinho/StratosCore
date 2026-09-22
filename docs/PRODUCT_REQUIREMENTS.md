@@ -22,6 +22,10 @@ StratosCore Rev A is a compact experimental field computer. This document expres
 | PR16 | Printed enclosure for display and two 21700 cells, approximately 37 mm starting thickness | Exact holder/panel/cable tolerances, printed dummy and sample fit |
 | PR17 | Thermal and RF isolation | Temperature bias tests and receiver degradation during each aggressor state |
 | PR18 | Open-source provenance and manufacturing readiness | License register; BOM/footprint audits; later ERC/DRC and assembly review |
+| PR19 | Personal, non-commercial, open-community hobby prototype | Repository/license review and applicable operating-rule plan; no product-certification claim |
+| PR20 | Initial five-unit batch targets an average cost no higher than BRL 200 per unit | Dated BOM/PCBA estimate after the owner confirms the accounting boundary |
+| PR21 | Support terrestrial and balloon missions with specified altitude, temperature and duration | Quantified mission table and component-range review; exact numbers remain open |
+| PR22 | No mass target, rain/ingress qualification, conformal coating or special environmental protection for Rev A | Mechanical/process documents record the exclusion while preserving sensor, pressure, humidity and acoustic openings |
 
 ## Use profiles
 
@@ -31,7 +35,7 @@ StratosCore Rev A is a compact experimental field computer. This document expres
 | FLIGHT | Display active; Wi-Fi normally off; BLE/LoRa optional | GNSS, pressure/vario and motion active | ADS-B active; continuous event/telemetry logs; audio optional |
 | DESKTOP | USB powered; display and Wi-Fi active | All sensors available | ADS-B optional; all logging services available |
 
-Operating altitude, minimum pressure, temperature range, ingress resistance, sunlight brightness, mass, ADS-B sensitivity/range and acceptable log loss are not specified yet. In particular, a balloon use case does not guarantee the BMP581 remains within its specified pressure range throughout ascent. Define the mission envelope and flag out-of-range measurements.
+Both terrestrial and balloon profiles are required. Exact operating altitude, minimum pressure, temperature range and duration remain unspecified; these values must be frozen before component/environment review can close. Mass and rain/ingress resistance are not design targets for Rev A. Sunlight brightness, ADS-B sensitivity/range and acceptable log loss also remain open. A balloon use case does not guarantee the BMP581 remains within its specified pressure range throughout ascent, so out-of-range measurements must be flagged.
 
 ## Data and behavior
 

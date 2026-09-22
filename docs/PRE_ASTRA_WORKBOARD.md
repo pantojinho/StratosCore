@@ -4,9 +4,9 @@ Status: **ACTIVE**. This is the operational queue for taking StratosCore from th
 
 The workboard separates work an agent can complete from owner decisions, qualified reviews, procurement, factory confirmation, and physical tests. Writing a document is not completion by itself: each task closes only when its evidence column is satisfied.
 
-Coordination snapshot: `origin/main` at `4498307224700837c0f1b0195be333ef9944dcf5` was reviewed on 2026-09-21 before this workboard was created. The next coordinator must replace this snapshot with the current baseline before assigning work.
+Coordination snapshot: `origin/main` at `3d45c37` was reconciled on 2026-09-21. The next coordinator must replace this snapshot with the current baseline before assigning work.
 
-Open-PR disposition at that snapshot: [PR #137](https://github.com/pantojinho/StratosCore/pull/137) is a draft vigil-round update to `AUDIT_LOG.md` that explicitly reports no engineering action. Do not merge it. Close it when GOV-02 stops or repairs the recurring no-change audit.
+[PR #137](https://github.com/pantojinho/StratosCore/pull/137) was merged automatically while this decision update was in progress. It changed only `AUDIT_LOG.md` and explicitly reported no engineering action. GOV-02 remains open: stop or repair the recurring audit and do not merge future equivalent no-change PRs.
 
 ## Roles and state model
 
@@ -41,7 +41,7 @@ flowchart TD
 
 | ID | State | Owner | Task | Depends on | Allowed files | Closure evidence |
 | --- | --- | --- | --- | --- | --- | --- |
-| GOV-01 | ACCEPTED | Coordinator | Reconcile the current `origin/main` baseline and review substantive changes separately from audit-only commits | none | read-only | Baseline `4498307224700837c0f1b0195be333ef9944dcf5`, changed-file inventory and review findings recorded on 2026-09-21 |
+| GOV-01 | ACCEPTED | Coordinator | Reconcile the current `origin/main` baseline and review substantive changes separately from audit-only commits | none | read-only | Baseline `3d45c37` reconciled 2026-09-21; its latest delta was the audit-only PR #137, separated from substantive engineering changes |
 | GOV-02 | READY | Automation owner | Stop any recurring job that creates audit-only `AUDIT_LOG.md` commits when no engineering delta exists | none | automation configuration only | Automation is paused or changed to trigger only on a technical delta or explicit request |
 | GOV-03 | ACCEPTED | Integrator | Enforce [swarm protocol](SWARM_PROTOCOL.md), branch ownership and central-file integration rules | GOV-01 | `AGENTS.md`, `SWARM_PROTOCOL.md` | Workers use isolated branches/PRs; no concurrent central-file edits |
 | GOV-04 | ACCEPTED | Integrator | Resolve the BOM circularity: pre-Astra engineering BOM versus post-capture annotated/orderable BOM | GOV-03 | `ASTRA_HANDOFF.md`, `MANUFACTURING_STRATEGY.md` | Handoff distinguishes exact pre-Astra MPN/planned-quantity input from post-Astra reference-designator BOM |
@@ -52,14 +52,14 @@ These tasks can run in parallel. Agents prepare decision packets; only the named
 
 | ID | State | Owner | Task | Maps to | Closure evidence |
 | --- | --- | --- | --- | --- | --- |
-| OWN-01 | BLOCKED_OWNER | Owner | Decide whether charging while operating is required | O06, Gate 2 | Accepted operating policy and permitted USB/charge states |
-| OWN-02 | BLOCKED_OWNER | Owner + electrical reviewer | Choose shared-I2C policy: 100 kHz, remove TUSB320LAI from I2C, or measured <=100 pF 400 kHz bus | P26, O11, Gate 9 | Accepted option with pull-up rail/value policy and expansion-cable rule |
-| OWN-03 | BLOCKED_OWNER | Owner | Define P&D versus commercial product, target market and intended use | O21, Gate 10 | Written product/regulatory classification |
-| OWN-04 | BLOCKED_OWNER | Owner | Set prototype and eventual production PCBA/BOM cost targets and initial quantity | O23, Gate 10 | Cost ceiling, currency, quantity and exclusions |
-| OWN-05 | BLOCKED_OWNER | Owner | Define balloon/terrestrial mission, altitude, duration, mass, temperature, ingress, drop and vibration envelope | O16, O22, Gate 10 | Quantified mission/environment table |
-| OWN-06 | BLOCKED_OWNER | Owner + logistics reviewer | Decide whether cells ship installed, separately, or are locally sourced | O24, Gate 10 | UN38.3/logistics disposition and cell-provenance plan |
-| OWN-07 | BLOCKED_OWNER | Owner | Define factory firmware, serial-number and provisioning policy | O25, Gate 10 | Factory image/provisioning requirements |
-| OWN-08 | BLOCKED_OWNER | Owner + mechanical/process reviewer | Decide conformal-coating and condensation/venting policy | O26, Gates 8/10 | Accepted process and enclosure policy |
+| OWN-01 | ACCEPTED | Owner | Require operation while charging; batteryless operation remains out of scope | D21, O06, Gate 2 | Owner acceptance recorded 2026-09-21; engineering must prove charge-under-load behavior |
+| OWN-02 | ACCEPTED | Owner + electrical reviewer | Use 100 kHz shared I2C and move TUSB320LAI to GPIO mode | D22/P26, O11, Gate 9 | Owner acceptance recorded 2026-09-21; SYS-01 closes pull-ups, GPIOs, cable and off-state review |
+| OWN-03 | ACCEPTED | Owner | Classify Rev A as a personal, non-commercial, open-community hobby prototype | D23, O21, Gate 10 | Owner classification recorded 2026-09-21; applicable operating rules remain REG-01 work |
+| OWN-04 | BLOCKED_OWNER | Owner | BRL 200 average/unit target for five units accepted; define which costs are included | D24, O23, Gate 10 | Confirm display, enclosure, shipping/tax and locally purchased cell treatment |
+| OWN-05 | BLOCKED_OWNER | Owner | Terrestrial and balloon use accepted; quantify altitude, duration and temperature plus any dynamics/drop/vibration expectations | D25, O16/O22, Gate 10 | Quantified mission/environment table; mass and rain/ingress are not targets |
+| OWN-06 | ACCEPTED | Owner + logistics reviewer | Source removable cells locally and do not ship the current prototype with cells | D26, O24, Gate 10 | Owner disposition recorded 2026-09-21; exact cell provenance remains EXT-02 engineering input |
+| OWN-07 | BLOCKED_OWNER | Owner | Decide whether the assembler flashes firmware, serial numbers or keys. Recommendation for five prototypes: PCBA assembly only; flash and test locally through USB/SWD, with no factory secrets | O25, Gate 10 | Accepted factory-versus-local programming and labeling policy |
+| OWN-08 | ACCEPTED | Owner + mechanical/process reviewer | Use no conformal coating, ingress qualification or special environmental protection in Rev A | D27, O26, Gates 8/10 | Owner disposition recorded 2026-09-21; preserve required sensor and acoustic openings |
 | OWN-09 | BLOCKED_OWNER | Owner + RF reviewer | Define ADS-B sensitivity, range, contact and stale-time targets | O18, Gate 7 | Quantified conducted and field acceptance targets |
 | EXT-01 | BLOCKED_EXTERNAL | Procurement | Obtain the controlled Orient C1 power/FPC drawing and two traceable display samples | O01, Gate 1 | Controlled drawing revision plus sample labels/photos/measurements |
 | EXT-02 | BLOCKED_EXTERNAL | Procurement | Obtain an exact documented 2S 21700 holder exposing B-/MID/B+ and authentic cell samples | O05/O06, Gate 2 | Manufacturer MPN/drawing, ratings, continuity and physical samples |
@@ -78,7 +78,7 @@ Workers in this wave must use exact manufacturer sources and stay inside their s
 | DSP-02 | READY | 1 | Complete the three-line SPI translator/reset/backlight application and all startup/off-state calculations | DSP-01 for final acceptance | `DISPLAY_REQUIREMENTS.md`, `ELECTRICAL_COMPATIBILITY_MATRIX.md` | Exact values, tolerances, power, faults and sequence reviewed |
 | DSP-03 | BLOCKED_EXTERNAL | 1 | Create and independently review exact display/touch connector footprints | EXT-01 | `hardware/footprints/`, footprint review document | KiCad export plus independent dimensional review and sample-fit result |
 | DSP-04 | BLOCKED_EXTERNAL | 1 | Run two-sample display/touch/backlight bench qualification | DSP-01/02/03, EXT-01 | test report only | SPI/readability/touch/address/current/fault/EMI results |
-| PWR-01 | BLOCKED_OWNER | 2 | Freeze exact cells, holder, service-pair rules, fuse and temperature-sensing requirements | OWN-01, EXT-02 | `POWER_ARCHITECTURE_REVIEW.md` | Exact MPNs and accepted electrical/mechanical limits |
+| PWR-01 | BLOCKED_EXTERNAL | 2 | Freeze exact cells, holder, service-pair rules, fuse and temperature-sensing requirements | OWN-01, EXT-02 | `POWER_ARCHITECTURE_REVIEW.md` | Exact MPNs and accepted electrical/mechanical limits |
 | PWR-02 | READY | 2 | Close USB4105, TPD4E05U06, TUSB320LAI and TPS259474L application; remove unsupported ESD claims | OWN-02 for final bus choice | `CONNECTOR_ARCHITECTURE.md`, `POWER_INPUT_EVIDENCE.md` | Exact pins/passives/default states and USB current policy reviewed |
 | PWR-03 | BLOCKED_EXTERNAL | 2 | Produce the complete BQ25887 plus common-protection topology and fault matrix | PWR-01/02, OWN-01 | `POWER_ARCHITECTURE_REVIEW.md`, `POWER_RAIL_PLAN.md` | Exact circuit proposal ready for qualified review; no unresolved ground/cutoff conflict |
 | PWR-04 | READY | 2/9 | Complete rail peak inventory, regulator passives, sequencing, back-power, thermal and transient calculations | subsystem current data | `POWER_BUDGET.md`, `POWER_RAIL_PLAN.md`, matrix | Every load has sourced max/allowance; simultaneous peak and margins shown |
@@ -104,7 +104,7 @@ Workers in this wave must use exact manufacturer sources and stay inside their s
 
 | ID | State | Gate | Task | Depends on | Closure evidence |
 | --- | --- | ---: | --- | --- | --- |
-| SYS-01 | BLOCKED_OWNER | 9 | Apply accepted I2C option, compute pull-ups/capacitance/cable limit and stuck-bus recovery | OWN-02 | Non-empty electrical window and measured/declared cable rule |
+| SYS-01 | READY | 9 | Apply D22/P26: remove TUSB320LAI from I2C, allocate its GPIO mode, and compute the 100 kHz pull-ups/capacitance/cable limit and stuck-bus recovery | OWN-02 | Non-empty electrical window and declared cable/off-state rule |
 | SYS-02 | BACKLOG | 9 | Complete rail/net/boot/off-state/interface matrix | Wave 2 circuits, SYS-01 | No OPEN electrical row affecting schematic connectivity |
 | SYS-03 | BACKLOG | 9 | Define shared-SPI/UART/PDM/interrupt concurrency and bench stress cases | subsystem specs | Timing/resource contract with measurable limits |
 | SYS-04 | BACKLOG | 9 | Perform independent full net-matrix review | SYS-02/03 | Reviewer finds no voltage/address/boot/back-power collision |
@@ -112,7 +112,7 @@ Workers in this wave must use exact manufacturer sources and stay inside their s
 | MECH-02 | BACKLOG | 8 | Freeze board outline, holes, display/FPC, cell removal, connectors and antenna/sensor keepouts | MECH-01, SNS-02 | Dimensioned floorplan suitable for KiCad board setup |
 | MECH-03 | BLOCKED_EXTERNAL | 8 | Print and inspect a full fit dummy | MECH-02 | Signed fit review: access, retention, cables, FPC, wrapper safety and drop orientations |
 | MFG-01 | BLOCKED_EXTERNAL | 8 | Freeze the supported stackup and official impedance geometries used for routing | EXT-04 | Factory-confirmed stack/solver output and tolerances; final order ticket is a post-layout control |
-| MFG-02 | BACKLOG | 5/8 | Freeze DFM rules, coating/cleaning exclusions, stencil and panel assumptions | OWN-08, EXT-05 | Factory/assembler checklist accepted |
+| MFG-02 | BLOCKED_EXTERNAL | 5/8 | Apply D27 no-coating policy and freeze DFM rules, cleaning exclusions, stencil and panel assumptions | OWN-08, EXT-05 | Factory/assembler checklist accepted |
 | DFT-01 | READY | 9 | Define test access for SWD, BOOTSEL, UART, USB, every rail, B-/MID/B+, charger and RF conducted ports | subsystem circuits | Named nets, pad class, access side, fixture clearance and purpose |
 | REG-01 | BLOCKED_OWNER | 10 | Convert OWN-03/05/06 into a regulatory evidence plan | owner inputs | Applicable ANATEL/ANAC/DECEA/UN38.3 actions and exclusions recorded |
 | BOM-01 | BACKLOG | 1-9 | Replace all seven `MPN=TBD` rows or explicitly remove/DNP them | subsystem closure | Every fitted line has exact orderable MPN |
