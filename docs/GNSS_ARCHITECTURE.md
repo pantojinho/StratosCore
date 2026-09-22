@@ -99,6 +99,29 @@ Use the passive Taoglas `FXP611.07.0092C` antenna, terminated in its factory 92 
 
 This is a **PROPOSED** package pending owner and RF review. It is viable because it avoids the antenna-bias and short-circuit supervisor, covers the complete 1559-1610 MHz L1 span used by GPS, Galileo, GLONASS and BeiDou, and lets the 0.9 g flex attach to the inside of the 3D-printed enclosure. The antenna is 38 x 37 x 0.15 mm, requires a 40 x 40 x 0.2 mm allocation and at least 10 mm clearance from metal or the main device ground plane. Taoglas measured the published 80% efficiency and radiation behavior on a 30 x 30 cm ABS fixture, so those numbers are not claimed for the StratosCore enclosure.
 
+## Power distribution network (GNSS-01 closure, 2026-09-22)
+
+**Facts (re-verified in the retrieved documents this session):** inrush up to 100 mA at startup (data sheet R08, supply characteristics: "The inrush current can go up to 100 mA at startup"); series resistance limit — "Do not add series resistance greater than 0.2 ohm on the supply line to avoid voltage ripple due to dynamic current" (integration manual R05 section 3.2); hardware-backup current 28 uA at V_BCKP = 3.3 V (data sheet Table 17) — retained for the record even though Rev A leaves V_BCKP open; u-blox prescribes no specific bypass-capacitor value (see the note above), so the capacitance is a board-PDN choice.
+
+### GNSS branch PDN budget (PWR-04 reconciled)
+
+The 100 mA startup demand is already counted in the closed `3V3_MAIN` inventory (GNSS branch row, DS-max, u-blox R08 section 4). This section computes the branch's own series impedance budget against the 0.2 ohm module limit:
+
+| Element | Resistance (calculation) | Budget impact |
+| --- | ---: | --- |
+| Branch trace, 1.0 mm wide, 1 oz, <= 40 mm route | 0.020 ohm | 10% of the limit |
+| Filter bead DCR (600-ohm-class @ 100 MHz GNSS-branch bead) | 0.10-0.15 ohm typical DCR class | dominant term; select a bead with **DCR <= 0.15 ohm** |
+| Connector/via/contact misc | ~0.02-0.05 ohm | margin term |
+| **Total series** | **~0.14-0.22 ohm worst** | **within/at the 0.2 ohm limit — therefore the starting design omits the bead and uses a pi filter layout option instead (see below)** |
+
+- **Filtering disposition:** u-blox's own 3.3 V application has no series bead; the quiet-rail property of `3V3_GNSS` comes from a dedicated branch off the TPS62130A output with its 22 uF bulk nearby, plus **>= 1 uF + 100 nF local to the module VCC/V_IO pads**. If post-layout noise analysis (or the O04/O18 conducted work) shows the LoRa/Wi-Fi burst coupling into the GNSS branch, the fallback is a **ferrite bead with DCR <= 0.15 ohm** in the branch — the budget shows 1.0 mm/40 mm trace + such a bead stays at ~0.14-0.17 ohm, still inside the limit; a 0.3 ohm-DCR bead would violate it and must not be fitted. This is a calculation-bounded choice, not an invented component value.
+- **Capacitance disposition:** module-local 1 uF (X7R) + 100 nF, plus branch bulk shared with the buck output 22 uF. Startup inrush 100 mA into this network: dV = I x t / C is negligible over the u-blox-stated startup window; the ramp is governed by the TPS62130A soft-start, satisfying the u-blox ramp-rate caution by construction (no dedicated GNSS switch = no independent ramp to bound).
+- **PWR-04 reconciliation:** no change to the rail totals; the 100 mA branch row already carries this demand. The 0.2 ohm series limit and the DCR-bounded bead fallback are the two new hard constraints this PDN adds to the Astra routing constraints.
+
+### GNSS-01 net/application table disposition
+
+The 18-pin table above is complete (every pin has a disposition, the three ground pins are mandatory bonds, and the open pins carry their no-connect rationale). With the PDN above, the **"Complete net/application table and PDN calculation" closure evidence of GNSS-01 is delivered at the engineering level**, subject to the two review gates that remain deliberately open: the independent RF/PDN review (SYS-04-class) and the owner/RF acceptance of the PROPOSED supply/backup/reset choices (items 1-2 of the release-gate list above). Items 3-7 of that list remain their recorded post-sample/post-layout/post-PCBA gates and are not claimed here.
+
 The exact board receptacle is the reel-pack `U.FL-R-SMT-1(60)`, HRS `CL0331-0472-2-60`, 50 ohms, rated beyond the 1.61 GHz GNSS band and for 30 mating cycles. The mechanical team must provide cable bend radius, strain relief, connector tool access and a nonmetallic 40 x 40 mm antenna window. This connector is an internal assembly interconnect, not a user-serviceable external port.
 
 The proposed TI `TPD1E0B04DPYR` uses the 1.0 x 0.6 mm DPY package. TI specifies 3.6 V working voltage, 0.18 pF maximum I/O capacitance, ±8 kV IEC 61000-4-2 contact protection and antenna use. Its corrected solder-mask-defined footprint passed independent dimensional review and KiCad export on 2026-09-17; assembler mask-web approval remains. Place it adjacent to the U.FL signal pad with the shortest possible ground return and multiple nearby ground vias. Its S-parameter model and the complete connector/trace/ESD path must be simulated or VNA-checked at 1559-1610 MHz; the data-sheet bandwidth does not prove negligible loss in this layout.
