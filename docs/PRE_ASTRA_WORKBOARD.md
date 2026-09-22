@@ -4,7 +4,7 @@ Status: **ACTIVE**. This is the operational queue for taking StratosCore from th
 
 The workboard separates work an agent can complete from owner decisions, qualified reviews, procurement, factory confirmation, and physical tests. Writing a document is not completion by itself: each task closes only when its evidence column is satisfied.
 
-Coordination snapshot: `origin/main` at `4fbfa8c` reconciled on 2026-09-22 (GOV-02 retired; SYS-01 #140, ADSB-01 #142, DIG-01 #144, PWR-02 #147, DIG-03 #149 + fix #152, DIG-02 #154, PWR-04 #157, GNSS-01 #158 accepted). The next coordinator must replace this snapshot with the current baseline before assigning work.
+Coordination snapshot: `origin/main` at `1949977` reconciled on 2026-09-22 (GOV-02 retired; SYS-01 #140, ADSB-01 #142, DIG-01 #144, PWR-02 #147, DIG-03 #149 + fix #152, DIG-02 #154, PWR-04 #157, GNSS-01 #158, AUD-01 #159 accepted). The next coordinator must replace this snapshot with the current baseline before assigning work.
 
 [PR #137](https://github.com/pantojinho/StratosCore/pull/137) was merged automatically while this decision update was in progress. It changed only `AUDIT_LOG.md` and explicitly reported no engineering action. **GOV-02 closed 2026-09-22:** the vigil was retired (see GOV-02 and `AUDIT_LOG.md`) and future equivalent no-change PRs must not be opened or merged.
 
@@ -98,7 +98,7 @@ Workers in this wave must use exact manufacturer sources and stay inside their s
 | ADSB-01 | ACCEPTED | 7 | Resolve MCP6566 base/R/U pin-map variant and pull-up/threshold network | OWN-09 for final threshold target | `ADSB_VALIDATION.md` | Delivered 2026-09-22 (PR #142): base `MCP6566T-E/OT` pin map frozen (Table 3-1, DS20002143G Rev G; R/U documented as non-drop-in alternates), pull-up 2.2 kohm with RC/sink/dissipation math, threshold divider formula recorded with the value explicitly blocked on OWN-09 |
 | ADSB-02 | BLOCKED_EXTERNAL | 7 | Simulate BLB01/TA2003A/ADL5513 chain, bias, gain, noise, blockers and pulse response | EXT-04/06, OWN-09 | ADS-B architecture/validation | Reviewable RF files/results and testable circuit specification |
 | ADSB-03 | BLOCKED_EXTERNAL | 7 | Define conducted injection/coupon and field acceptance procedure | ADSB-02 | ADS-B validation/test docs | Quantified fixtures, stimuli, limits and coexistence tests |
-| AUD-01 | READY | 4/9 | Close T5838/TXU0202 pins, OE sequence, 1.8 V load, footprint and acoustic requirements | PWR-04, OWN-05/08 | `AUDIO_ARCHITECTURE.md` | Exact application and dimensioned port/gasket rules |
+| AUD-01 | ACCEPTED | 4/9 | Close T5838/TXU0202 pins, OE sequence, 1.8 V load, footprint and acoustic requirements | PWR-04, OWN-05/08 | `AUDIO_ARCHITECTURE.md` | Delivered 2026-09-22 (PR #159): TXU0202 pin-complete application (fixed A->B clock / B->A data channel directions, OE pulled to `1V8_LOGIC` through 100 kohm using the device's own Ioff isolation so an off mic rail leaves both sides floating); T5838 high-quality clock window 2.0-3.7 MHz and 1V8_LOGIC current input 310/340 uA typical/max recorded (feeds PWR-04); DS section 9 acoustic land/hole/paste rules hand off verbatim to DIG-04; routing constraints and an off-state/recovery test row added. DIG-04 footprints, MECH-02/03 acoustic path and post-PCBA audio/RF tests remain deliberately open |
 
 ## Wave 3: convergence, mechanics and manufacturing
 
