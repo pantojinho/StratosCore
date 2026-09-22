@@ -4,7 +4,7 @@ Status: **ACTIVE**. This is the operational queue for taking StratosCore from th
 
 The workboard separates work an agent can complete from owner decisions, qualified reviews, procurement, factory confirmation, and physical tests. Writing a document is not completion by itself: each task closes only when its evidence column is satisfied.
 
-Coordination snapshot: `origin/main` at `a96fd53` reconciled on 2026-09-22 (GOV-02 retired; SYS-01 #140, ADSB-01 #142, DIG-01 #144, PWR-02 #147, DIG-03 #149 + fix #152, DIG-02 #154, PWR-04 #157, GNSS-01 #158, AUD-01 #159, DFT-01 #161, DIG-04 #164, SNS-02 #167 accepted). The next coordinator must replace this snapshot with the current baseline before assigning work.
+Coordination snapshot: `origin/main` at `c6cabc0` reconciled on 2026-09-22 (GOV-02 retired; SYS-01 #140, ADSB-01 #142, DIG-01 #144, PWR-02 #147, DIG-03 #149 + fix #152, DIG-02 #154, PWR-04 #157, GNSS-01 #158, AUD-01 #159, DFT-01 #161, DIG-04 #164, SNS-02 #167, BOM-02 #168 accepted). The next coordinator must replace this snapshot with the current baseline before assigning work.
 
 [PR #137](https://github.com/pantojinho/StratosCore/pull/137) was merged automatically while this decision update was in progress. It changed only `AUDIT_LOG.md` and explicitly reported no engineering action. **GOV-02 closed 2026-09-22:** the vigil was retired (see GOV-02 and `AUDIT_LOG.md`) and future equivalent no-change PRs must not be opened or merged.
 
@@ -116,7 +116,7 @@ Workers in this wave must use exact manufacturer sources and stay inside their s
 | DFT-01 | ACCEPTED | 9 | Define test access for SWD, BOOTSEL, UART, USB, every rail, B-/MID/B+, charger and RF conducted ports | subsystem circuits | Named nets, pad class, access side, fixture clearance and purpose | Delivered 2026-09-22 (PR #161): 17-row DFT coverage matrix frozen in `manufacturing/test/README.md` (O28), every row traced to an accepted deliverable; pad family/top-face/fixture pitch/probing current limits declared; protection-FET access left to O05/PWR-03; Astra assigns references and coordinates |
 | REG-01 | BLOCKED_OWNER | 10 | Convert OWN-03/05/06 into a regulatory evidence plan | owner inputs | Applicable ANATEL/ANAC/DECEA/UN38.3 actions and exclusions recorded |
 | BOM-01 | BACKLOG | 1-9 | Replace all seven `MPN=TBD` rows or explicitly remove/DNP them | subsystem closure | Every fitted line has exact orderable MPN |
-| BOM-02 | READY | 1-9 | Collect authorized suppliers, dated availability and assembly status | exact MPNs | Sourcing evidence without fabricated IDs/stock |
+| BOM-02 | ACCEPTED | 1-9 | Collect authorized suppliers, dated availability and assembly status | exact MPNs | Sourcing evidence without fabricated IDs/stock | Delivered 2026-09-22 (PR #168): `bom/SOURCING_EVIDENCE.md` consolidates per-MPN evidence (6 dated SNAPSHOT rows, 19 CHANNEL-ONLY groups with named channels, cells LOCAL per D26); live-check limitations recorded; purchase-time recheck stays authoritative; no fabricated figures |
 | BOM-03 | BACKLOG | all | Produce the pre-Astra engineering BOM with planned quantity per block | BOM-01/02 | Exact fitted MPN/package/planned quantity/source status; no unresolved substitution |
 
 ## Wave 4: freeze and handoff
