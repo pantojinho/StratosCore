@@ -2,6 +2,43 @@
 
 Status: exact engineering candidates reviewed through 2026-09-17. These selections reduce the pre-KiCad queue but remain subject to the recorded footprint/process gates, factory availability and board-level bring-up.
 
+**2026-09-22 (DIG-01): the RP2040 power/reset/BOOTSEL/SWD/oscillator circuit is now specified pin-complete below.** "Pin-complete" means every RP2040 supply, control and support pin has a defined net and value; the schematic capture itself remains Astra work (this document is not a schematic). Sources retrieved and re-extracted 2026-09-22: [RP2040 datasheet](https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf) (section 1.4 pinout reference, section 2.9 power) and the [hardware design with RP2040](https://datasheets.raspberrypi.com/rp2040/hardware-design-with-rp2040.pdf) (sections 2.1-2.2, 2.4.1, 3.3.2).
+
+## RP2040 power, reset, BOOTSEL, SWD and clock circuit specification (DIG-01)
+
+### Power (pin-complete, values from the Raspberry Pi reference)
+
+| Pin / net group | Count | Net | Decoupling (reference value) |
+| --- | --- | --- | --- |
+| IOVDD | all IOVDD pins of the QFN-56 | `3V3_MAIN` | 100 nF per power pin, one shared pair allowed on the crowded side exactly as the reference deviates (its C9) — final placement decides |
+| USB_VDD | 1 | `3V3_MAIN` (RP2040 USB PHY is on-chip; Rev A routes no RP2040 USB connector — USB service is via ESP32 native USB) | 100 nF |
+| ADC_AVDD | 1 | `3V3_MAIN` (Rev A uses no RP2040 ADC function; if a future use appears it must be re-reviewed against ADS-B quiet-rail noise) | 100 nF + 1 nF reference-class filter (reference arrangement) |
+| DVDD | all DVDD pins | direct to VREG_VOUT | per reference |
+| VREG_VIN | 1 | `3V3_MAIN` | 1 uF ceramic (0402 class) close to the pin |
+| VREG_VOUT | 1 | DVDD only | 1 uF ceramic (0402 class) close to the pin; ESR satisfied by small ceramics per reference |
+
+- **Rationale (reference, HWDG sections 2.1.2-2.1.3):** 100 nF per power pin with the two documented deviations; 1 uF at both regulator pins; internal LDO produces the 1.1 V core, so no external 1.1 V rail. RP2040 core/IOVDD current is a PWR-04 inventory input (datasheet section 2.9 figures to be transcribed there — not silently assumed zero).
+- **Load-switch interaction (TBD retained):** whether the RP2040 domain switches with the ADS-B digital domain (TPS22918 class) or stays always-on is a SYS-02/off-state-review decision; this specification is rail-source-agnostic, but if switched, the flash-write quiesce ordering recorded above becomes binding.
+
+### Reset and BOOTSEL
+
+- **RUN (active-low global reset): 10 kOhm pull-up to `3V3_MAIN` + 100 nF to GND + wired to a SWD-adjacent test point and to the TCA9535 expander for host-controlled reset.** Datasheet: reset when low, run when high, may be tied to IOVDD if unused — the RC and host control are deliberate Rev A provisions for watchdog-less recovery and DFT access (O28). The expander path is non-safety (GPIO map rule: no safety function on the expander).
+- **BOOTSEL recovery (reference arrangement, HWDG section 2.2): QSPI_SS carries the boot strap; 1 kOhm (reference R1) from QSPI_SS to a `USB_BOOT` test point; grounding `USB_BOOT` while toggling RUN enters USB mass-storage boot.** R1 must be populated so the RP2040 can over-drive the applied pull-down when booting normally; the 10 kOhm QSPI_SS pull-up (reference R2) stays DNF per the reference finding with this flash family. `USB_BOOT` and RUN test points are the documented recovery contract for the O28 DFT matrix.
+- **No RP2040-side USB connector:** the RP2040 boots as a USB device for programming, but Rev A does not wire a second USB receptacle. Firmware update path: program over SWD from the ESP32 side or a tag-connect-class SWD cable at the test points; the physical access definition belongs to O28/DFT-01. This is an interface disposition, not a new product decision — the GPIO map already reserves no RP2040 USB pins.
+
+### SWD (reference section 3.3.2 + datasheet debug recommendation)
+
+- **SWCLK and SWDIO routed to a 2 x 1 test-point pair (or a 5-pin 1.27 mm Tag-Connect footprint: SWCLK, SWDIO, GND, `3V3_MAIN` sense, RUN) at the board edge.** Datasheet recommends a maximum 24 MHz SWD clock; the pad family and fixture pitch constraints are O28 inputs. No pull resistors required on SWD per the reference minimal design.
+
+### Oscillator (crystal circuit unchanged from the 2026-09-15 review)
+
+- ABM8-272-T3 12 MHz with two 15 pF load capacitors and 1 kOhm series damping at XOUT, per the Raspberry Pi recommendation already recorded; XIN/XOUT short and symmetric; requalification rule on any IOVDD change stands.
+
+### Corner test plan (DIG-01 closure evidence)
+
+Bring-up level (post-PCBA, declared as such): (1) cold boot at 3.3 V +/-5% across the accepted temperature corners; (2) repeated RUN reset with flash-write quiesce verified (reset-reason register readback); (3) full-image programming over SWD and checksum verify; (4) BOOTSEL entry via the `USB_BOOT` point from a powered-off and a running state; (5) oscillator startup time and timebase comparison against GNSS PPS. Pre-Astra deliverable remains the testable specification above; measurements are board-stage evidence per the workboard boundary.
+
+
 ## RP2040 boot flash
 
 `W25Q128JVSIQ` is the preferred RP2040 boot-flash candidate. Raspberry Pi's current *Hardware design with RP2040* uses the Winbond `W25Q128JVS` family in its minimal design, and RP2040 supports up to 16 MB of external QSPI flash. The exact `W25Q128JVSIQ` provides 128 Mbit/16 MB, 2.7-3.6 V operation, industrial -40 to 85 °C rating and an 8-SOIC package. The larger package is deliberate for Rev A inspectability and rework; a smaller suffix would require a separate footprint and availability review.
