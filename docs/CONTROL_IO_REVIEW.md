@@ -26,6 +26,47 @@ The expander may own card detect and low-speed status/reset/enable signals. It m
 
 The final pin map must count every signal and preserve at least one recovery route for ESP32 and RP2040 without the expander.
 
+## TCA9535 port map (DIG-03, 2026-09-22)
+
+**VDD and signal-domain rule:** TCA9535PWR VDD sits on `3V3_MAIN` (always-on, gate-9 review input). Rationale: the expander reads TUSB320LAI OUT1/OUT2/OUT3 pulled to `3V3_MAIN` (D22 disposition) and card-detect/status lines owned by always-on domains; powering the expander from a switched rail would put switched-rail voltage on `3V3_MAIN`-pulled inputs through the TCA9535 input clamp structure whenever the rail falls — a back-power path the off-state review would have to re-open. Address A2:A0 = GND (0x20), as recorded.
+
+**Every output net carries the external resistor that creates its safe state before and independent of firmware** (TI: all I/O are inputs at power-on/reset; outputs float until configured). No safe state depends on the expander output stage.
+
+### Port allocation (16 ports; 12 used, 4 spare inputs)
+
+| Port | Net | Dir | External default (no firmware) | Purpose |
+| --- | --- | --- | --- | --- |
+| P00 | SD_CD | In | 100 kohm pull-up to `3V3_MAIN` (on-board; card switch to GND) | microSD card detect (slow, no safety function) |
+| P01 | TUSB_OUT1 | In | 100 kohm pull-up to `3V3_MAIN` (TUSB side; D22 wiring) | USB-C current class bit 1 (Table 3 decode) |
+| P02 | TUSB_OUT2 | In | 100 kohm pull-up to `3V3_MAIN` (TUSB side) | USB-C current class bit 2 |
+| P03 | TUSB_OUT3 | In | 100 kohm pull-up to `3V3_MAIN` (TUSB side) | Audio-accessory flag; expected never asserted on Rev A |
+| P04 | CHG_INT | In | charger-side open-drain; expander reads via `3V3_MAIN` domain | BQ25887 interrupt/status (non-latency-critical routing; direct-ESP32 alternative stays with PWR-03) |
+| P05 | EXP_PRESENT | In | 100 kohm pull-up to `3V3_MAIN` | Expansion cable/hood detect if the harness provides it; otherwise spare |
+| P06 | LCD_RST_N | Out | 100 kohm pull-up to `1V8_LOGIC` (display side rail) | Display reset, active-low; expander output open-drain-configured drive low only; safe state = released |
+| P07 | — | In | — | Spare input (bring-up/test) |
+| P10 | SX_NSS_HOLD | Out | 100 kohm pull-up to `3V3_MAIN` | Reserved radio service hold/aux (non-safety; final use with LORA-02) |
+| P11 | SD_SW_EN_N | Out | 100 kohm pull-up to `3V3_MAIN` (switched-domain enable, active-low release = OFF) | microSD domain load-switch enable, default OFF; TPS22918-class ON requires expander drive — power-fail drops back to OFF safely |
+| P12 | AUD_SW_EN_N | Out | 100 kohm pull-up to `1V8_LOGIC` (release = OFF) | Audio/1.8 V domain load-switch enable, default OFF |
+| P13 | ADSB_SW_EN_N | Out | 100 kohm pull-up to `3V3_MAIN` (release = OFF) | ADS-B digital domain load-switch enable, default OFF (runtime profile may power down ADS-B; O13) |
+| P14 | — | In | — | Spare input |
+| P15 | — | In | — | Spare input |
+| P16 | EXP_PERIPH_RST | Out | 100 kohm pull-up to `3V3_MAIN` (released) | Optional expansion-peripheral reset line (active-low, released by default) |
+| P17 | — | In | — | Spare input |
+
+**Active-low enable convention:** all switched-domain enables are wired so the released/unpowered expander output leaves the enable de-asserted (domain OFF) through the external pull; firmware must drive the output low (or configure push-pull high where the pull is the release) to turn a domain ON. A dead expander therefore always means "domains off", never "domains on".
+
+### Recovery routes without the expander (counted, as required)
+
+- **ESP32:** ROM recovery via BUTTON_1/GPIO0 (direct), console via native USB (direct), charger inhibit is NOT expander-dependent (BQ25887 CD/default-mode chain remains PWR-03's hardware-gated design — the expander never owns charger/protector safety).
+- **RP2040:** RUN reset via its direct 10 k/100 n RC + test point (DIG-01), BOOTSEL via the direct `USB_BOOT` point (DIG-01), SWD via the direct tag-connect access (DIG-01). The expander is not in any RP2040 recovery path.
+- **Domains:** every load-switch enable releases to OFF by its own resistor when the expander is unpowered, hung or mid-boot (active-low convention above).
+
+### Off-state boundaries recorded for the gate-9 review
+
+- SD_SW_EN_N / AUD_SW_EN_N / ADSB_SW_EN_N: the switched rails feed SD, T5838/TXU0202 audio, and RP2040 ADS-B digital respectively; each switched rail's inputs that face always-on logic need the per-pin off-state check already listed in the electrical matrix (host pins high-Z before rail removal; external pulls never feed an off device). The TCA9535 itself is on `3V3_MAIN` and never switched.
+- LCD_RST_N pulls from `1V8_LOGIC`: acceptable only because the display reset is a display-side rail with a defined 1.8 V domain (DSP-02 sequence); if DSP-02 moves display logic rails, this pull moves with it.
+
+
 ## Validation gates
 
 - obtain current manufacturer drawings and independently compare both project footprints;
