@@ -67,6 +67,33 @@ The project footprint now uses the exact Abracon 1.30 x 0.70 mm lands at X = +/-
 
 Use the already budgeted shared SPI interface for Rev A. Route card detect to a slow I2C-expander input; no safety function depends on it. Add separately selected ESD protection, required SD pullups and a reviewed load switch if power cycling is retained. The exact drawing `0000947170 / EDC-325165-00-00` Rev 4 was compared on 2026-09-15. Electrical contacts, card detect and shell-land placement match. The drawing's C0.15 +/-0.05 terminal feature lies inside the correct rectangular PCB land. The footprint now marks the 11.0 mm operational card envelope, 0.8 mm inward overstroke edge at Y = 8.925, locked edge at Y = 9.725 and ejected edge at Y = 13.725 on `Cmts.User`. The socket must sit at the enclosure edge; assembler paste approval and final enclosure access/clearance remain before KiCad release.
 
+### microSD circuit specification (DIG-02, 2026-09-22)
+
+Worker-level circuit closure feeding DIG-04's remaining-footprint pass and the O28/DFT-01 access list. Sources: Raspberry Pi hardware design guide section 3.3 (SD interface; retrieved 2026-09-22), the DM3 exact drawing/catalog already cited above, and the shared-SPI contract in [the GPIO map](INTERFACE_GPIO_MAP.md).
+
+**Power:**
+
+- **VDD:** switched `3V3_SD` domain behind the P11 `SD_SW_EN_N` enable (DIG-03 corrected polarity: OFF at power-up and expander fault; firmware raises the enable). Rationale: write-integrity power-fail ordering with the W25Q flash-write quiesce rule (flash section above) and runtime power profiles; SD is not needed in every profile.
+- **Bulk/output capacitance:** 10 uF + 100 nF on `3V3_SD` at the socket (reference-class value for SD card insertion surge; final value re-checked in PWR-04 against the TPS22918 current limit and insertion inrush).
+- **Power-fail behavior (design rule, board-stage proof retained):** TPS22918-class QOD discharge dumps `3V3_SD` when the enable drops or the rail upstream fails; ESP32 firmware must treat an SD absent-ACK after re-enable as a fresh card init, never a resumed session. The flash-write quiesce ordering (RP2040) is unaffected: RP2040 flash is not on `3V3_SD`.
+- **Card current inventory input:** insertion/operation peak is a PWR-04 row (datasheet-class 100-200 mA write allowance already flagged in the matrix's 3V3_MAIN subtotal as 200 mA planning) — not re-invented here.
+
+**Signals (all `3V3_SD` domain; the card is the only load):**
+
+- CLK, CMD, DAT0-3: shared-SPI mapping per the GPIO map contract. **SPI-mode pin mapping:** ESP32 CLK -> card CLK, MOSI -> CMD, MISO -> DAT0, and `SD_CS` (GPIO14, dedicated) -> **DAT3, which is the SPI-mode chip select**; DAT2 is unused by the card in SPI mode (card-internal pull only).
+- **Push-pull vs open-drain:** ESP32-S3 SPI controller drives push-pull; no open-drain bus emulation is used, so the SD-specification 10-90 kohm card-internal pull-ups on CMD/DAT are relied on for card-side lines, and **no host-side pull-ups are fitted on CLK** (reference: pull-ups on CLK are discouraged — they can clock the card while the host is powered down or the rail is off).
+- **Host-side 10 kohm pull-ups:** CMD and DAT0 only, **pulled to `3V3_SD`, not `3V3_MAIN`** — pulling to the always-on rail would feed the unpowered card/socket through the card's internal diodes when the domain is off (back-power path). DAT3/CS carries a 10 kohm pull-up to `3V3_SD` as well (keeps the card deselected while the host boots or the rail rises); DAT1-2 keep only the card-internal pulls since they are inactive in SPI mode.
+- **Card detect:** DM3 switch to GND, 100 kohm on-board pull-up on the expander input side per the DIG-03 map (P00, `3V3_MAIN` domain — the switch contacts are rated for it and the pin is read-only).
+- **ESD:** the socket is user-accessible (enclosure edge), so the card signal lines get protection at the socket — one 4-channel `TPD4E05U06DQARG4`-family array (0.5 pF class, USON-10) covering CLK/CMD/DAT0/DAT3, and CD covered by its 100 kohm pull with an optional 100 ohm series resistor (slow, read-only line); placement at the connector with short strike paths (DIG-04 footprint and the system-level-ESD-only caveat from PWR-02 apply verbatim: no system-level kV rating is claimed).
+
+**Enclosure access (mechanical interface, MECH-02 boundary):** the socket sits at the PCB/enclosure edge with the 11.0 mm operational card envelope and the ejection stroke already marked on `Cmts.User`; the printed dummy must prove card insertion/removal clearance with the enclosure wall and confirm the push-push overstroke does not foul the wall (MECH-03 test, not closable here).
+
+**DFT hooks handed to O28/DFT-01:** `3V3_SD` rail measure point (current, for PWR-04/O13), CD test point, and the shared-SPI lines are covered by the existing bus test provisions.
+
+**Remaining TBD (explicit):** final ESD array MPN confirmation against its current data sheet at purchase; insertion-surge value into PWR-04; assembler paste disposition (SNS-01/EXT-05 class gate).
+
+
+
 ## Availability snapshots
 
 Checked 2026-09-14 for prototype planning only:
