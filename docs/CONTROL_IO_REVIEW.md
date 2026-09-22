@@ -42,7 +42,7 @@ The final pin map must count every signal and preserve at least one recovery rou
 | P03 | TUSB_OUT3 | In | 100 kohm pull-up to `3V3_MAIN` (TUSB side) | Audio-accessory flag; expected never asserted on Rev A |
 | P04 | CHG_INT | In | charger-side open-drain; expander reads via `3V3_MAIN` domain | BQ25887 interrupt/status (non-latency-critical routing; direct-ESP32 alternative stays with PWR-03) |
 | P05 | EXP_PRESENT | In | 100 kohm pull-up to `3V3_MAIN` | Expansion cable/hood detect if the harness provides it; otherwise spare |
-| P06 | LCD_RST_N | Out | 100 kohm pull-up to `1V8_LOGIC` (display side rail) | Display reset, active-low; expander output open-drain-configured drive low only; safe state = released |
+| P06 | LCD_RST_N | Out | 100 kohm pull-down to GND on the **3.3 V expander-side control net** (see DSP-02 reset topology) | Display reset **control**: drives the SN74LVC1G07 input; the 1.8 V pull-up sits on the LVC1G07 open-drain **output** at the display connector per DSP-02 - no rail-crossing pull |
 | P07 | — | In | — | Spare input (bring-up/test) |
 | P10 | SX_NSS_HOLD | Out | 100 kohm pull-up to `3V3_MAIN` | Reserved radio service hold/aux (non-safety; final use with LORA-02) |
 | P11 | SD_SW_EN_N | Out | 100 kohm pull-**down** to GND (see polarity correction below) | microSD domain load-switch enable; default OFF |

@@ -4,7 +4,7 @@ Status: **ACTIVE**. This is the operational queue for taking StratosCore from th
 
 The workboard separates work an agent can complete from owner decisions, qualified reviews, procurement, factory confirmation, and physical tests. Writing a document is not completion by itself: each task closes only when its evidence column is satisfied.
 
-Coordination snapshot: `origin/main` at `c6cabc0` reconciled on 2026-09-22 (GOV-02 retired; SYS-01 #140, ADSB-01 #142, DIG-01 #144, PWR-02 #147, DIG-03 #149 + fix #152, DIG-02 #154, PWR-04 #157, GNSS-01 #158, AUD-01 #159, DFT-01 #161, DIG-04 #164, SNS-02 #167, BOM-02 #168 accepted). The next coordinator must replace this snapshot with the current baseline before assigning work.
+Coordination snapshot: `origin/main` at `7ce01d2` reconciled on 2026-09-22 (GOV-02 retired; SYS-01 #140, ADSB-01 #142, DIG-01 #144, PWR-02 #147, DIG-03 #149 + fix #152, DIG-02 #154, PWR-04 #157, GNSS-01 #158, AUD-01 #159, DFT-01 #161, DIG-04 #164, SNS-02 #167, BOM-02 #168, DSP-02 #171 accepted). The next coordinator must replace this snapshot with the current baseline before assigning work.
 
 [PR #137](https://github.com/pantojinho/StratosCore/pull/137) was merged automatically while this decision update was in progress. It changed only `AUDIT_LOG.md` and explicitly reported no engineering action. **GOV-02 closed 2026-09-22:** the vigil was retired (see GOV-02 and `AUDIT_LOG.md`) and future equivalent no-change PRs must not be opened or merged.
 
@@ -75,7 +75,7 @@ Workers in this wave must use exact manufacturer sources and stay inside their s
 | ID | State | Gate | Task | Depends on | Primary files | Closure evidence |
 | --- | --- | ---: | --- | --- | --- | --- |
 | DSP-01 | BLOCKED_EXTERNAL | 1 | Resolve TFT VCC/VDDI/VDD, both FPC pinouts, unused pins and ST1633I address convention | EXT-01 | `DISPLAY_REQUIREMENTS.md` | Controlled-drawing transcription with no ambiguous supply or pin |
-| DSP-02 | READY | 1 | Complete the three-line SPI translator/reset/backlight application and all startup/off-state calculations | DSP-01 for final acceptance | `DISPLAY_REQUIREMENTS.md`, `ELECTRICAL_COMPATIBILITY_MATRIX.md` | Exact values, tolerances, power, faults and sequence reviewed |
+| DSP-02 | ACCEPTED | 1 | Complete the three-line SPI translator/reset/backlight application and all startup/off-state calculations | DSP-01 for final acceptance | `DISPLAY_REQUIREMENTS.md`, `ELECTRICAL_COMPATIBILITY_MATRIX.md` | Delivered 2026-09-22 (PR #171): pin-complete AXC4T245 (DIR high = A->B, unused input to GND, OE HIGH = tri-state fact with 10 kohm OE pull-downs) and LVC1G07 reset path (1.8 V-domain output pull-up, expander-side 3.3 V control with pull-down); sequence resistor-backed; final acceptance remains with DSP-01/EXT-01 controlled drawing + two samples |
 | DSP-03 | BLOCKED_EXTERNAL | 1 | Create and independently review exact display/touch connector footprints | EXT-01 | `hardware/footprints/`, footprint review document | KiCad export plus independent dimensional review and sample-fit result |
 | DSP-04 | BLOCKED_EXTERNAL | 1 | Run two-sample display/touch/backlight bench qualification | DSP-01/02/03, EXT-01 | test report only | SPI/readability/touch/address/current/fault/EMI results |
 | PWR-01 | BLOCKED_EXTERNAL | 2 | Freeze exact cells, holder, service-pair rules, fuse and temperature-sensing requirements | OWN-01, EXT-02 | `POWER_ARCHITECTURE_REVIEW.md` | Exact MPNs and accepted electrical/mechanical limits |
