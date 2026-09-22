@@ -45,21 +45,21 @@ The final pin map must count every signal and preserve at least one recovery rou
 | P06 | LCD_RST_N | Out | 100 kohm pull-up to `1V8_LOGIC` (display side rail) | Display reset, active-low; expander output open-drain-configured drive low only; safe state = released |
 | P07 | — | In | — | Spare input (bring-up/test) |
 | P10 | SX_NSS_HOLD | Out | 100 kohm pull-up to `3V3_MAIN` | Reserved radio service hold/aux (non-safety; final use with LORA-02) |
-| P11 | SD_SW_EN_N | Out | 100 kohm pull-up to `3V3_MAIN` (switched-domain enable, active-low release = OFF) | microSD domain load-switch enable, default OFF; TPS22918-class ON requires expander drive — power-fail drops back to OFF safely |
-| P12 | AUD_SW_EN_N | Out | 100 kohm pull-up to `1V8_LOGIC` (release = OFF) | Audio/1.8 V domain load-switch enable, default OFF |
-| P13 | ADSB_SW_EN_N | Out | 100 kohm pull-up to `3V3_MAIN` (release = OFF) | ADS-B digital domain load-switch enable, default OFF (runtime profile may power down ADS-B; O13) |
+| P11 | SD_SW_EN_N | Out | 100 kohm pull-**down** to GND (see polarity correction below) | microSD domain load-switch enable; default OFF |
+| P12 | AUD_SW_EN_N | Out | 100 kohm pull-**down** to GND | Audio/1.8 V domain load-switch enable; default OFF |
+| P13 | ADSB_SW_EN_N | Out | 100 kohm pull-**down** to GND | ADS-B digital domain load-switch enable; default OFF (runtime profile may power down ADS-B; O13) |
 | P14 | — | In | — | Spare input |
 | P15 | — | In | — | Spare input |
 | P16 | EXP_PERIPH_RST | Out | 100 kohm pull-up to `3V3_MAIN` (released) | Optional expansion-peripheral reset line (active-low, released by default) |
 | P17 | — | In | — | Spare input |
 
-**Active-low enable convention:** all switched-domain enables are wired so the released/unpowered expander output leaves the enable de-asserted (domain OFF) through the external pull; firmware must drive the output low (or configure push-pull high where the pull is the release) to turn a domain ON. A dead expander therefore always means "domains off", never "domains on".
+**Enable polarity correction (2026-09-22, follow-up to PR #149):** the P11/P12/P13 rows above originally specified pull-ups to an active-low-release convention. That was wrong for the selected regulator family: the `TPS22918DBVR` (P22 candidate) has an **active-high EN pin**, so a pull-up would force every switched domain ON through the expander's power-on input default or any expander fault — the exact inverse of the intended safe state. Corrected disposition: **pull-downs to GND on P11/P12/P13; domains power up OFF and stay OFF through expander reset, hang or power loss; firmware enables a domain by driving the port high (or configuring it push-pull high)**. The "dead expander means domains off" rule is preserved with the physically correct resistor. Naming stays `*_EN_N` only as the historical net label; the schematic net rename to `*_EN` is recorded for Astra capture.
 
 ### Recovery routes without the expander (counted, as required)
 
 - **ESP32:** ROM recovery via BUTTON_1/GPIO0 (direct), console via native USB (direct), charger inhibit is NOT expander-dependent (BQ25887 CD/default-mode chain remains PWR-03's hardware-gated design — the expander never owns charger/protector safety).
 - **RP2040:** RUN reset via its direct 10 k/100 n RC + test point (DIG-01), BOOTSEL via the direct `USB_BOOT` point (DIG-01), SWD via the direct tag-connect access (DIG-01). The expander is not in any RP2040 recovery path.
-- **Domains:** every load-switch enable releases to OFF by its own resistor when the expander is unpowered, hung or mid-boot (active-low convention above).
+- **Domains:** every load-switch enable defaults to OFF by its own pull-down when the expander is unpowered, hung or mid-boot (corrected convention above); firmware turns a domain ON only by deliberately driving its port high.
 
 ### Off-state boundaries recorded for the gate-9 review
 
