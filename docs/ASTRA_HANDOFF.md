@@ -11,7 +11,7 @@ Do not invoke Astra for StratosCore CAD yet. [Project status](PROJECT_STATUS.md)
 - [ ] The display has the reviewed C1 controlled drawing, independently verified connector footprints, accepted 1.8 V translation/backlight circuit and sample evidence.
 - [ ] MAX-M10S-00B supply, backup, UART/timepulse, antenna and layout decisions are complete.
 - [ ] The complete two-cell 2S charger, common protection, power path and regulator plan has written qualified electrical/battery approval.
-- [ ] Sensor pin maps, physical footprints, orientation, vent, thermal and magnetic placement rules are independently checked.
+- [ ] Sensor pin maps, physical footprints, orientation, vent, thermal and magnetic placement rules are independently checked. D29's 30,000 ft barometric requirement versus locked BMP581 is resolved by an accepted, fully reviewed part/application; P27 remains a proposal until then.
 - [ ] SX1262 and ADS-B RF chains have exact suffixes, reference revisions, stackup inputs, placement constraints and conducted-test provisions.
 - [ ] ESP32/RP2040/display/SD/radio/GNSS/audio/expansion interfaces have a collision-free net and GPIO map, including boot states and the pre-placement DFT coverage, pad and access constraints in O28. Astra will assign references and coordinates; access is reviewed again after placement.
 - [ ] Exact USB-C, microSD, microphone, expansion and RF connector MPNs and footprints are reviewed.
