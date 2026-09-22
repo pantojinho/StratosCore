@@ -127,6 +127,37 @@ At RGB565, a full 320 x 240 frame is 153,600 bytes. Thirty full frames/s require
 
 Firmware must separate panel driver, touch driver, orientation transform, backlight policy and UI. Test all four corners in both orientations, sleep/wake, display-off logging and brightness profiles.
 
+## Display support circuit — exact values (DSP-02, 2026-09-22)
+
+Facts re-verified in the retrieved TI documents this session: `SN74AXC4T245` SCES877B (April 2024) and `SN74LVC1G07` SCES296AG (October 2025). This section completes the DSP-02 engineering deliverable; **final acceptance remains gated by the controlled-drawing clarification (DSP-01/EXT-01) and two-sample validation as recorded in the release-gate list.**
+
+### SN74AXC4T245PWR (TSSOP-16) — 3.3 V-to-1.8 V SPI branch
+
+- **Pin-level assignment (SCES877B pin table):** VCCA pin 1 = `3V3_MAIN`; VCCB pin 16 = `1V8_LOGIC`; 1DIR pin 2 = high (tie to `3V3_MAIN`); 2DIR pin 3 = high (tie to `3V3_MAIN`); 1OE pin 15 = host-controlled enable net (see policy below); 2OE pin 14 = host-controlled enable net; ports: 1A1 pin 4 -> 1B1 pin 13 (SCLK), 1A2 pin 5 -> 1B2 pin 12 (SDA), 2A1 pin 6 -> 2B1 pin 11 (CS); 2A2 pin 7 is the unused A-side input and **must be tied to GND** per the TI rule that all unused inputs sit at VCC or GND (section 5.4 note) — its partner 2B2 pin 10 then idles and stays unconnected.
+- **DIR polarity correction:** the previous proposal text said "hold both direction inputs high for A-to-B"; this is confirmed correct (DIR high = A->B, section 7.1) and is now pinned to the datasheet section.
+- **OE polarity fact:** **OE high = outputs in tri-state** for this family (section 7.1: "When OE is set to high, both Ax and Bx pins are in the high-impedance state"). The safe power-up policy therefore is **10 kohm pull-downs from both OE pins to GND** — the branch wakes enabled, which is safe here because the display is write-only and reset-held; a host-enable option may raise OE later for a controlled bus release. This supersedes the earlier "pull each active-low OE to VCCA" phrasing in the proposal above (that phrasing belonged to a different device family convention and would have left the branch permanently disabled).
+- **Static load:** ICCA <= 12 uA, ICCB <= 16 uA max at 3.6 V, IO = 0 (section 5) — inside the PWR-04 `1V8_LOGIC`/`3V3_MAIN` allowances; no inventory change.
+- **Bypass:** 100 nF at VCCA pin 1 and at VCCB pin 16 (device class; already the recorded proposal).
+
+### SN74LVC1G07DBVR (SOT-23-5) — open-drain display reset
+
+- **Pin-level assignment (DBV):** pin 2 = input from the 3.3 V reset control (TCA9535 `LCD_RST_N` through the expander-side network); pin 3 = GND; pin 4 = open-drain output to TFT RESET with **10 kohm pull-up to `1V8_LOGIC`** (not `3V3_MAIN` — the reset pin is a 1.8 V-domain input); pin 5 = VCC = `1V8_LOGIC`; pin 1 = NC.
+- **Polarity fact:** LVC1G07 output is active-sinking only — driving the input high asserts RESET low; input low releases reset high through the pull-up. The asserted-at-boot requirement is met by a **100 kohm pull-down on the input side (3.3 V domain)** so an unconfigured expander output holds the display in reset, matching the DIG-03 expander default rule.
+- **Cross-reference to DIG-03 (coordinator finding):** the expander map's P06 row describes the pull as sitting on the display-side rail. The dimensionally correct arrangement is: expander P06 output is an open-drain-style control in the `3V3_MAIN` domain pulling the LVC1G07 **input** net (with its own 3.3 V-domain pull-down), and the `1V8_LOGIC` pull-up lives on the LVC1G07 **output** at the display connector. No rail-crossing pull exists in the final disposition; the two documents are consistent once read this way. DIG-03's P06 row wording is corrected by the integrator in the same merge that lands this PR.
+- **IOL margin:** the LVC1G07 sinks 8 mA at 0.3 V class (section 6) against a 10 kohm/1.8 V pull-up demand of 0.18 mA — non-binding.
+- **TFT RESET pin rule retained:** never add a capacitor from TFT RESET to ground (module rule); the reset waveform belongs to the display sample validation.
+
+### Startup/shutdown sequence (values from the standing plan, now resistor-backed)
+
+1. Rails rise: `3V3_MAIN` (buck soft-start) -> `1V8_LOGIC` tracks up. AXC OEs held low by pull-downs = branch **enabled** but the ESP32 has not clocked anything; LVC1G07 input pull-down asserts TFT RESET low through the sink path.
+2. ESP32 boots, configures TCA9535; firmware releases P06 -> LVC1G07 input rises -> TFT RESET releases high after the module's reset-low requirement is satisfied (>= 1 ms low per the module record; the expander-controlled timing covers it).
+3. SPI traffic begins at <= 15 MHz panel-clock bound; IM straps `101` selected on the FPC (hardware straps, not firmware).
+4. Shutdown: stop SPI traffic -> assert P06 (reset low) -> rails fall with OE already low-true (branch passive) and RESET held by the input pull-down as VCCA collapses. Touch reset timing (5 ms post-rails, 100 us pre-power-off) stays with the touch branch and its expander row.
+
+### DSP-02 closure boundary
+
+Delivered: pin-complete translator and reset applications with datasheet-pinned polarities and resistor values, static-load confirmation against PWR-04, corrected OE/DIR conventions, and the integrated startup/shutdown sequence. **Deliberately open (final acceptance):** controlled-drawing clarification and sample validation (DSP-01/EXT-01/release gates 1-2), unused-pin ties for the wider FPC (gate 3), backlight sample measurements (gate 4), and footprints (gate 6/DIG-04 deferral list).
+
 ## Sourcing snapshot and remaining gates
 
 Checked 2026-09-14: the exact Orient store page listed 50 units at USD 35.36 each, USD 31.39 at 25-49 and USD 27.42 at 50+. DigiKey listed zero immediately available, one expected 2026-10-19, USD 31.55 at quantity one and an eight-week manufacturer lead time. DigiKey also listed 9,902 `XF3M-4015-1B` at USD 2.93 each, 975 `XF3M-0615-1B` at USD 1.23 cut-tape, 16,834 `SN74AXC4T245PWR` at USD 1.17, 165,134 `SN74LVC1G07DBVR` at USD 0.14 and 2,019 `TPS61169DCKR` at USD 1.18. These are dated prototype snapshots from an authorized distributor; recheck before purchase and confirm PCBA-factory availability separately.
