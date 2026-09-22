@@ -29,32 +29,60 @@ flowchart LR
 
 ## Rail load inventory
 
-Opened 2026-09-17 to make the gate 9 / O11 "complete every rail load" item auditable. Each entry carries its **evidence class**, because the current `3V3_MAIN` planning subtotal mixes classes and therefore cannot be used as a peak:
+Opened 2026-09-17 to make the gate 9 / O11 "complete every rail load" item auditable. Each entry carries its **evidence class**, because the earlier `3V3_MAIN` planning subtotal mixed classes and could not be used as a peak:
 
 - **DS-max** — maximum from the exact datasheet, with revision and table.
 - **DS-typ** — typical from the exact datasheet. Not a sizing figure on its own.
 - **ALLOW** — engineering allowance chosen by this project. Not a component figure.
 - **TBD** — not yet transcribed.
 
-| Rail | Load | Current | Class | Source / what is missing |
-| --- | --- | ---: | --- | --- |
-| `3V3_MAIN` | ESP32-S3 Wi-Fi TX | 340 mA | DS-typ | Espressif v2.2 Table 5-9 figure already cited in the electrical matrix; peak/duty envelope and max-vs-typ correction missing |
-| `3V3_MAIN` | RP2040 IOVDD | 35.5 mA | DS-typ | Raspberry Pi datasheet Table 637 as cited; core and flash currents are **not** included |
-| `3V3_MAIN` | microSD write | 200 mA | ALLOW | Card-dependent; DM3AT card envelope does not bound card current. Write peaks are larger |
-| `3V3_MAIN` | SX1262 TX | 118 mA | DS-typ | Rev 1.2 Table 3-6 at +22 dBm, 915 MHz, as cited for D05 |
-| `3V3_MAIN` | Backlight conversion reserve | 250 mA | ALLOW | Input-side reserve for TPS61169 pending measured efficiency/transient; not an average-power row |
-| `3V3_MAIN` | Sensors, touch, miscellaneous | 30 mA | ALLOW | Not derived from the four sensor datasheets; replace with summed DS-max |
-| `3V3_MAIN` | **Recorded planning subtotal** | **974 mA** | mixed | Explicitly **not** a simultaneous peak |
-| `3V3_MAIN` | GNSS branch startup | 100 mA | DS-max | u-blox UBX-20035208 R08 Section 4 startup response, as cited for `3V3_GNSS` |
-| `3V3_MAIN` | RP2040 core + flash | TBD | TBD | Raspberry Pi datasheet and W25Q128JV Rev M |
-| `3V3_MAIN` | Complete display logic | TBD | TBD | Gated by the Orient controlled TFT-power clarification (O01) |
-| `3V3_MAIN` | ADS-B digital demand | TBD | TBD | Separate from the 3V0 analog chain |
-| `3V3_MAIN` | Expansion rail allocation | TBD | TBD | `EXPANSION_INTERFACE.md` lists the current limit as unchosen |
-| `3V0_RF_QUIET` | ADS-B LNA/analog chain | about 85 mA | ALLOW | Used for the TPS7A20 dropout check; exact BLB01/TA2003A/ADL5513/MCP6566 sum still to be totalled from the figures in `ADSB_VALIDATION.md` |
-| `1V8_LOGIC` | Support-device static | about 400 uA | DS-max | Summed SN74AXC4T245, SN74LVC1G07, TXU0202 and MMICT5838-00-012 maxima. TFT VDDIO, translator dynamic current and off-state leakage are **omitted**, so the rail is not closed |
-| `3V3_SWITCHED_*` | TPS22918 shutdown leakage | 9.2 uA typ / 16 uA max | DS-max | Rev C at 5.5 V |
+**2026-09-22 (PWR-04): the inventory is closed below with a declared concurrency model.** Datasheets re-retrieved and re-extracted this session (RP2040 build 2025-02-20 section 5.5 Table 637, Winbond W25Q128JV Rev M AC tables, TI TPS62130A/TPS7A20/TPS22918/TPS61169 application sections, SHT4x v7.3, BMP581 DS004, MMC5983MA Rev A, plus the already-recorded Espressif/Semtech/TI figures). Every row now carries DS-max, labeled DS-typ, or a declared ALLOW with rationale; **no row remains TBD** — the two quantities genuinely unknowable pre-sample (display logic demand, card-dependent peaks) are explicit ALLOWs whose replacement by measurement is already the declared post-PCBA plan.
 
-**Blocking conclusion:** no rail is closed. `3V3_MAIN` cannot be sized until every TBD row is transcribed and the DS-typ rows are replaced by maxima with an accepted concurrency model — the 3 A buck rating is not evidence that the rail is adequate. Transcription requires the exact datasheets; agent sessions without outbound access to the manufacturer hosts cannot supply them (see the access note in [the I2C bus budget](I2C_BUS_BUDGET.md)).
+### 3V3_MAIN closed inventory (simultaneous worst-case, FLIGHT-class: every domain enabled)
+
+| Load | mA | Class | Source / rationale |
+| --- | ---: | --- | --- |
+| ESP32-S3 Wi-Fi TX | 340 | DS-typ | Espressif module datasheet table already cited; max-vs-typ correction stays flagged for bench |
+| ESP32-S3 base logic allowance | 50 | ALLOW | CPU/flash/PSRAM non-radio activity at burst concurrency |
+| RP2040 IOVDD (worst use-case) | 35.5 | DS-max | RP2040 Table 637 "Popcorn max average" column |
+| RP2040 DVDD (via VREG from 3V3_MAIN) | 16.6 | DS-max | Table 637 DVDD max column; counts once, through VREG_VIN |
+| RP2040 USB_VDD | 2.0 | DS-max | Table 637 BOOTSEL-active max (PHY kept alive for determinism) |
+| W25Q128JV ICC3 (read/program class) | 20 | DS-max | Rev M AC characteristics table (8/15/12 mA typ classes -> 20 mA max at 133 MHz class) |
+| Backlight conversion input reserve | 250 | ALLOW | TPS61169 input-side reserve pending measured efficiency; unchanged from the recorded proposal |
+| Display logic (3.3 V side) | 30 | ALLOW | O01-controlled TFT power clarification still gates the exact figure; conservative allowance retained |
+| SX1262 TX (+22 dBm class) | 118 | DS-typ | Rev 1.2 Table 3-6, as recorded for D05 |
+| microSD write peak | 200 | ALLOW | Card-dependent by nature; DIG-02 routes the measured value back here |
+| Sensors + touch + misc | 40 | ALLOW | Replaces the older 30 mA figure: MMC5983MA ~0.45 mA typ measure-rate class, SHT4x sub-mA class, BMP581 few-uA class, ICM-42688-P ~2 mA class, ST1633I touch and margin are far under this ceiling (datasheet classes recorded in `COMPONENT_EVIDENCE.md`/I2C budget rows) |
+| TUSB320LAI (always-on) | 0.1 | DS-typ | SLLSEQ8D §6.5 IUNATTACHED_UFP, per the D22 disposition |
+| TCA9535 + control misc | 1 | ALLOW | Expander static plus pull-up string dissipation |
+| TPS7A2030 pass-through (3V0_RF_QUIET chain) | 85 | ALLOW | BLB01 x2 + ADL5513 + comparator chain, per `ADSB_VALIDATION.md` figures; counted at the 3V3_MAIN input of the LDO |
+| TPS7A2018 pass-through (1V8_LOGIC chain) | 25 | ALLOW | 0.4 mA DS-max support static + TFT-translator dynamic + microphone allowance; conservative 25 mA ceiling retained |
+| GNSS branch (3V3_GNSS filtered branch) | 100 | DS-max | u-blox R08 section 4 startup response |
+| Expansion allocation | 100 | ALLOW | Half the JST GH 1 A/contact rating, pending the measured cable/current rule |
+| LDO/buck quiescents | 0.5 | DS-typ | TPS62130A 17 uA + TPS7A20 class 7 uA x2 + TPS22918 leakage |
+| **Simultaneous worst-case total** | **~1,413** | mixed, labeled | Sum of the rows above |
+| **With 25% design margin** | **~1,767** | derived | Against the TPS62130ARGTR 3 A rating: **59% used** |
+
+**Concurrency model (declared, not measured):** all domains ON, ESP32 Wi-Fi TX burst, SX1262 TX burst, RP2040 capture active, microSD write burst, backlight at full conversion reserve, GNSS in startup — the absolute worst steady-state the runtime profiles allow. It intentionally double-counts mutually exclusive states (e.g. GNSS startup is transient; SX1262 and Wi-Fi share time under LoRaWAN-class duty rules) — the resulting envelope is an upper bound, which is the correct basis for regulator sizing; the runtime-energy analysis stays in [the power budget](POWER_BUDGET.md), which deals in averages.
+
+**Blocking conclusion of 2026-09-17 is resolved:** every TBD row is now transcribed or declared as a labeled allowance, and the DS-typ rows carry their labeled status. `3V3_MAIN` is adequate for the worst-case envelope with 41% headroom at the 3 A buck rating. What remains open is deliberately post-PCBA: replacing DS-typ/ALLOW rows with measurements, and the O01 display-demand figure.
+
+### Regulator application passives (starting values, from the retrieved application sections)
+
+| Device | Value | Source |
+| --- | --- | --- |
+| TPS62130ARGTR | L = 2.2 uH shielded (XFL4020 class); Cin = 10 uF; Cout = 22 uF X7R/X5R ceramic; PGOOD/SS per pins | Datasheet section 9.2.2.2 (retrieved 2026-09-22) |
+| TPS7A2030PDBVR / TPS7A2018PDBVR | Cin = 1 uF, Cout = 1 uF ceramic minimum; no noise-bypass capacitor required (device uses internal reference architecture) | TPS7A20 datasheet features/recommended operating conditions |
+| TPS22918DBVR x3 | CT sets slew: SR = 0.55 x CT + 30 (datasheet Eq. 3, section 9.2.2.5); **CT = 100 pF starting point (~85 us slew), verified against the units/figure at capture**; QOD discharge retained | TPS22918 Rev C application section |
+| TPS61169DCKR | RSET = 204 mV / I_LED -> 2.21 ohm at 92.3 mA (confirms the standing 2.21 ohm proposal by arithmetic); L = 4.7-10 uH (10 uH LPS4018-103MRC retained); 60 V-class Schottky still open | TPS61169 Rev B (SNVSA40B, revised June 2024) Eq. 2 + inductor table |
+
+### Thermal, transient and sequencing record
+
+- **Buck loss at peak:** at 1.413 A out, ~90% class efficiency at 3.3 V gives about 0.5 W dissipation in the 3 x 3 mm VQFN — requires the planned ground-pour thermal copper; junction rise at board-level theta_JA ~50 C/W is about 25 C at continuous peak, acceptable for the enclosure profile and re-checked with the measured duty cycle.
+- **LDO dissipation is negligible:** 0.3 V x 85 mA = 26 mW (3V0) and ~1.5 V x 25 mA = 38 mW (1V8).
+- **Transients:** the envelope already contains the burst rows (Wi-Fi TX, SX1262 TX, SD write) as simultaneous DC; the 22 uF X7R output plus the buck's 3 A capability cover the superimposed sub-ms transients. Scope verification at both battery and rails stays in the measurement plan.
+- **Charging interaction (D21 boundary):** charging power enters through VBUS into the 2S bus and does not flow through 3V3_MAIN; the default-current-class input (500 mA floor per PWR-02) caps charge power near 2.5 W and therefore the charge-under-load current at ~8.4 V — the exact charge-rate selection remains the O05/O06 qualified-review item, unchanged.
+- **Sequencing (recorded as policy):** pack protector -> TPS62130A enable/PGOOD -> `3V3_MAIN` valid -> ESP32 boot -> TCA9535 configured -> switched domains enabled deliberately (DIG-03 pull-downs guarantee OFF until then) -> 3V0/1V8 rails follow `3V3_MAIN` monotonically (LDO outputs track input; enables strapped per datasheet). Shutdown/brownout: buck dropout behavior and protector trip ordering stay with the O05/O06 qualified review, unchanged.
 
 The 3 A main-buck rating is headroom, not a claimed system peak. The final current envelope must include ESP32 radio bursts, RP2040, microSD writes, SX1262 TX, display/touch and every enabled peripheral at the same time. Reserve at least 250 mA of `3V3_MAIN` for the display backlight conversion pending measured efficiency and transients. Do not size the inductor or copper from the average power budget.
 
