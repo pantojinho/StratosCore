@@ -13,7 +13,7 @@ The manufacturer drawing defines the pad geometry, contact numbering, board edge
 | Connector signals | Destination | Gate before schematic commitment |
 | --- | --- | --- |
 | A6/B6 D+ and A7/B7 D- | ESP32-S3 native USB, with duplicated receptacle contacts joined as required by USB Type-C | Verify routing topology, series elements if required by the Espressif reference, ESD placement and 90-ohm differential geometry on the selected stackup |
-| A5 CC1 and B5 CC2 | `TUSB320LAIRWBR` fixed-UFP candidate | Verify TI fixed-UFP application, orientation/current reporting, unattached behavior and every unpowered/back-power state |
+| A5 CC1 and B5 CC2 | `TUSB320LAIRWBR` fixed-UFP candidate — **GPIO mode per D22 (2026-09-22, PWR-02)**: PORT=GND, ADDR=NC, EN_N=GND, VDD=`3V3_MAIN`, OUT1/OUT2/OUT3 via TCA9535; full disposition in [the GPIO map](INTERFACE_GPIO_MAP.md) and [power input evidence](POWER_INPUT_EVIDENCE.md) | Remaining: unattached/back-power review in the gate-9 off-state pass; the I2C-mode questions this row originally carried are resolved by the GPIO-mode wiring |
 | A4/A9/B4/B9 VBUS | 5 V input protection and `BQ25887RGER` charger path | Close fuse/current limiting, surge/ESD, inrush, discharge, reverse current, connector temperature and charge-while-operating behavior |
 | A1/A12/B1/B12 GND | System ground at the connector entry | Review return-current and protection-current paths |
 | Shell stakes | Chassis/ground treatment TBD | Select direct, RC or other treatment only after enclosure/ESD review |
