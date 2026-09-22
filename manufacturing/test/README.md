@@ -1,6 +1,6 @@
 # Verification and production-test planning
 
-No electrical tests have been executed. Define test points, fixture, current limits, instrumentation and acceptance values after schematic review.
+No electrical tests have been executed. Before Astra placement, freeze the DFT coverage matrix: required nets, pad family and minimum dimensions, permitted face, fixture pitch, current limits, programming access, RF injection points, instrumentation and planned acceptance values. Astra assigns test-point references and coordinates during CAD execution. After placement/routing, review physical probe access and fixture feasibility; after PCBA, execute and record the electrical tests.
 
 | Area | Planned evidence |
 | --- | --- |

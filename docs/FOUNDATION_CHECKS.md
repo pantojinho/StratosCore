@@ -1,6 +1,6 @@
 # Architecture validation record
 
-Phase: Rev A pre-KiCad engineering closure, last reviewed 2026-09-17. These are documentation, file-format and host-model checks, not hardware qualification results.
+Phase: Rev A pre-KiCad engineering closure, last reviewed 2026-09-21. These are documentation, file-format and host-model checks, not hardware qualification results.
 
 | Check | Result |
 | --- | --- |
@@ -8,7 +8,7 @@ Phase: Rev A pre-KiCad engineering closure, last reviewed 2026-09-17. These are 
 | Preliminary BOM | Exact 13-column schema, 57 unique functional rows and no duplicate references; display, GNSS, USB-C/2S power, rail, audio, expansion, control, RF interconnect, RP2040 and microSD candidates synchronized |
 | Locked part coverage | All nine baseline MPNs checked by the validation script are present; no BME688 component row |
 | Supplier identifiers | Verified C3037611, C1850418 and C1975594 recorded; other unknown supplier IDs remain TBD |
-| Relative Markdown links and code fences | 57 Markdown files checked; all relative links resolved and fences balanced |
+| Relative Markdown links and code fences | 65 Markdown files checked; all relative links resolved and fences balanced |
 | License provenance | Included SHA-256 values match retrieved official texts; MIT substitutions limited to holder/year |
 | Power calculation | 2S energy, totals, margin and runtime independently recomputed; FLIGHT example remains 10.72 h |
 | ADS-B host models | 24 tests pass: four sampled-capture tests plus 20 UART-record framing, validation and resynchronization tests; no UART/PIO/DMA throughput claim |

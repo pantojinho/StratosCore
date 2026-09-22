@@ -13,18 +13,18 @@ Do not invoke Astra for StratosCore CAD yet. [Project status](PROJECT_STATUS.md)
 - [ ] The complete two-cell 2S charger, common protection, power path and regulator plan has written qualified electrical/battery approval.
 - [ ] Sensor pin maps, physical footprints, orientation, vent, thermal and magnetic placement rules are independently checked.
 - [ ] SX1262 and ADS-B RF chains have exact suffixes, reference revisions, stackup inputs, placement constraints and conducted-test provisions.
-- [ ] ESP32/RP2040/display/SD/radio/GNSS/audio/expansion interfaces have a collision-free net and GPIO map, including boot states and the test-point/test-access strategy O28.
+- [ ] ESP32/RP2040/display/SD/radio/GNSS/audio/expansion interfaces have a collision-free net and GPIO map, including boot states and the pre-placement DFT coverage, pad and access constraints in O28. Astra will assign references and coordinates; access is reviewed again after placement.
 - [ ] Exact USB-C, microSD, microphone, expansion and RF connector MPNs and footprints are reviewed.
-- [ ] PCB outline, mounting, enclosure (including O26 condensation/venting), battery holder, display/FPC, access, antenna keepouts and four-layer production stack are confirmed.
-- [ ] Preliminary BOM has been converted to an orderable schematic BOM with quantities and approved sourcing status (O27).
-- [ ] `PROJECT_STATUS.md` and `OPEN_QUESTIONS.md` contain no unresolved item that affects schematic connectivity, footprint choice, placement or routing — including the owner-input entries O21-O26 (regulatory regime ANATEL/ANAC, cost target, UN38.3 transport, factory firmware/provisioning), the conformal-coating/condensation decision O26, which gates PCBA process and enclosure venting, and the orderable-BOM and test-access items O27/O28.
+- [ ] PCB outline, mounting, enclosure (including O26 condensation/venting), battery holder, display/FPC, access, antenna keepouts and four-layer production stack are confirmed, including manufacturer-solver geometry for controlled impedances. The final order ticket, coupon and TDR remain post-layout controls.
+- [ ] The preliminary BOM has been converted to an engineering parts baseline with exact fitted/DNP parts, passives, packages, approved footprints, planned quantities and sourcing status (O27). Astra will create the annotated BOM and final captured quantities.
+- [ ] `PROJECT_STATUS.md` and `OPEN_QUESTIONS.md` contain no unresolved item that affects schematic connectivity, footprint choice, placement or routing — including the owner-input entries O21-O26 (regulatory regime ANATEL/ANAC, cost target, UN38.3 transport, factory firmware/provisioning), the conformal-coating/condensation decision O26, which gates PCBA process and enclosure venting, and the engineering-baseline and pre-placement DFT items O27/O28.
 
 ## Authoritative inputs when READY
 
 | Input | Purpose |
 | --- | --- |
 | [Decision register](DECISIONS.md) | Locked baseline and accepted proposals |
-| [Orderable BOM](../bom/preliminary_bom.csv) | Replace this preliminary path with the final orderable BOM before READY |
+| [Engineering parts baseline](../bom/preliminary_bom.csv) | Replace the planning content with the frozen pre-Astra baseline before READY; annotated references and final quantities follow capture |
 | [Interface/GPIO map](INTERFACE_GPIO_MAP.md) and [electrical matrix](ELECTRICAL_COMPATIBILITY_MATRIX.md) | Nets, buses, voltage domains, boot/off states and ownership |
 | [Datasheet index](../hardware/datasheets/README.md) | Exact primary-source revisions |
 | [Power review](POWER_ARCHITECTURE_REVIEW.md) and [rail plan](POWER_RAIL_PLAN.md) | Reviewed 2S application, fault limits, rails and sequencing |
@@ -39,7 +39,7 @@ Do not invoke Astra for StratosCore CAD yet. [Project status](PROJECT_STATUS.md)
 2. Create or import only the reviewed project symbols and footprints. Compare every custom pad, courtyard, pin number and orientation with its exact package drawing.
 3. Capture the approved schematic sheet by sheet. Do not select substitute parts, infer missing connections or resolve product decisions inside KiCad.
 4. Run ERC after every sheet, restore temporary one-endpoint diagnostics as nets become complete, and record every reviewed exception.
-5. Annotate, assign verified footprints, generate the orderable BOM and reconcile every reference with the source package.
+5. Annotate, assign verified footprints, generate the annotated BOM and reconcile every reference and captured quantity with the frozen engineering parts baseline.
 6. Create the approved board outline and production stack; configure net classes, differential pairs, impedance targets, clearances and via rules from current manufacturer data.
 7. Place mechanical interfaces and keepouts first, then RF receive chains, antennas, power conversion, compute, sensors and remaining digital circuits under the approved floorplan constraints.
 8. Route power/current loops, USB, clocks/high-speed signals and RF paths according to their reviewed references; maintain return paths and isolation constraints.
@@ -56,4 +56,4 @@ Return any missing or conflicting pinout, footprint, supply limit, boot state, p
 
 ## Exit package
 
-The Astra task is complete only with an editable KiCad project, zero-unreviewed ERC/DRC findings, exact-footprint audit, orderable BOM, placement/routing review notes, stackup/net-class record, assembly/test-point review and a concise list of residual risks. Gerbers, drill, CPL and assembly packages remain unreleased until the independent review and owner release acceptance in [manufacturing strategy](MANUFACTURING_STRATEGY.md).
+The Astra task is complete only with an editable KiCad project, zero-unreviewed ERC/DRC findings, exact-footprint audit, annotated BOM reconciled to the engineering baseline, placement/routing review notes, stackup/net-class record, assembly/test-point review and a concise list of residual risks. The final orderable BOM, Gerbers, drill, CPL and assembly packages remain unreleased until the independent review and owner release acceptance in [manufacturing strategy](MANUFACTURING_STRATEGY.md).

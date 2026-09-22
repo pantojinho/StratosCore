@@ -39,9 +39,11 @@ Potential uses include flight/vario instruments, traffic visualization, balloon 
 ## Start here
 
 1. [Project status: completed work and remaining gates](docs/PROJECT_STATUS.md)
-2. [Engineering documentation index](docs/README.md)
-3. [Locked decisions and accepted proposals](docs/DECISIONS.md)
-4. [Open engineering questions](docs/OPEN_QUESTIONS.md)
+2. [Pre-Astra task workboard](docs/PRE_ASTRA_WORKBOARD.md)
+3. [Multi-agent swarm protocol and master prompt](docs/SWARM_PROTOCOL.md)
+4. [Engineering documentation index](docs/README.md)
+5. [Locked decisions and accepted proposals](docs/DECISIONS.md)
+6. [Open engineering questions](docs/OPEN_QUESTIONS.md)
 
 [Astra final KiCad handoff](docs/ASTRA_HANDOFF.md) is intentionally marked **NOT READY**. It is not the current work queue.
 

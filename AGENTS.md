@@ -21,6 +21,7 @@ Read `docs/DECISIONS.md` and `docs/PROJECT_STATUS.md` before modifying hardware.
 15. Keep hardware under CERN-OHL-P-2.0 and original firmware under MIT as described in `LICENSES/README.md`. Do not copy GPL code into MIT firmware or assume a processor boundary resolves licensing.
 16. Avoid unrelated changes, credentials, personal logs, generated caches, and local `.codex/` settings in commits. The owner has granted standing authorization to work and publish directly to `main` without pull requests for this project. Continue to honor all engineering review and safety gates above.
 17. The current priority is hardware and PCBA readiness. Use Sol-class work to close exact parts, evidence, interfaces, application circuits, footprints, review gates and the Astra handoff. Reserve Astra for efficient KiCad schematic/PCB execution after decisions are prepared. Limit firmware work to evidence or interface fixtures required to validate the hardware until the hardware baseline is ready.
+18. During multi-agent swarm work, follow `docs/SWARM_PROTOCOL.md`. Workers use isolated `codex/<task-id>-...` branches, own only their assigned files, open reviewable PRs and never merge their own work. Only the integrator updates shared status/decision/open-question/handoff/workboard files or publishes the reviewed integration to `main`. No-change audits do not create commits.
 
 ## Verification for the current phase
 

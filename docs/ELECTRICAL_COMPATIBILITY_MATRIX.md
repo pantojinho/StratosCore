@@ -56,6 +56,6 @@ MAX-M10S uses UART in Rev A, so its default I2C address 0x42 is not placed on th
 
 ## Closure criteria
 
-Gate 9 in `PROJECT_STATUS.md` can close only when every OPEN item above has an accepted circuit or explicit no-connect disposition, every peak and pullup is calculated from exact parts, and an independent review finds no voltage, address, boot-state, interrupt or back-power collision. Board tests must then exercise simultaneous Wi-Fi/BLE, LoRa TX, display refresh, SD writes, GNSS, ADS-B, USB insertion/removal and domain power cycling.
+Gate 9 in `PROJECT_STATUS.md` can close before Astra only when every OPEN item above has an accepted circuit or explicit no-connect disposition, every peak and pullup is calculated from exact parts, every off-state and sequence has a defined expected result, and an independent review finds no voltage, address, boot-state, interrupt or back-power collision. The corresponding simultaneous Wi-Fi/BLE, LoRa TX, display refresh, SD write, GNSS, ADS-B, USB insertion/removal and domain power-cycling measurements are post-PCBA DVT work and do not block schematic capture when the pre-Astra analysis and test access are complete.
 
 Subsystem evidence remains controlled by [the GPIO map](INTERFACE_GPIO_MAP.md), [power rail plan](POWER_RAIL_PLAN.md), [connector architecture](CONNECTOR_ARCHITECTURE.md), [audio architecture](AUDIO_ARCHITECTURE.md), [GNSS architecture](GNSS_ARCHITECTURE.md) and [component source index](../hardware/datasheets/README.md).
