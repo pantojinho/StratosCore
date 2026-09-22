@@ -4,9 +4,9 @@ Status: **ACTIVE**. This is the operational queue for taking StratosCore from th
 
 The workboard separates work an agent can complete from owner decisions, qualified reviews, procurement, factory confirmation, and physical tests. Writing a document is not completion by itself: each task closes only when its evidence column is satisfied.
 
-Coordination snapshot: `origin/main` at `3d45c37` was reconciled on 2026-09-21. The next coordinator must replace this snapshot with the current baseline before assigning work.
+Coordination snapshot: `origin/main` at `d3b84f5` reconciled on 2026-09-22 (GOV-02 vigil retired; SYS-01 accepted via PR #140). The next coordinator must replace this snapshot with the current baseline before assigning work.
 
-[PR #137](https://github.com/pantojinho/StratosCore/pull/137) was merged automatically while this decision update was in progress. It changed only `AUDIT_LOG.md` and explicitly reported no engineering action. GOV-02 remains open: stop or repair the recurring audit and do not merge future equivalent no-change PRs.
+[PR #137](https://github.com/pantojinho/StratosCore/pull/137) was merged automatically while this decision update was in progress. It changed only `AUDIT_LOG.md` and explicitly reported no engineering action. **GOV-02 closed 2026-09-22:** the vigil was retired (see GOV-02 and `AUDIT_LOG.md`) and future equivalent no-change PRs must not be opened or merged.
 
 ## Roles and state model
 
@@ -42,7 +42,7 @@ flowchart TD
 | ID | State | Owner | Task | Depends on | Allowed files | Closure evidence |
 | --- | --- | --- | --- | --- | --- | --- |
 | GOV-01 | ACCEPTED | Coordinator | Reconcile the current `origin/main` baseline and review substantive changes separately from audit-only commits | none | read-only | Baseline `3d45c37` reconciled 2026-09-21; its latest delta was the audit-only PR #137, separated from substantive engineering changes |
-| GOV-02 | READY | Automation owner | Stop any recurring job that creates audit-only `AUDIT_LOG.md` commits when no engineering delta exists | none | automation configuration only | Automation is paused or changed to trigger only on a technical delta or explicit request |
+| GOV-02 | ACCEPTED | Automation owner | Stop any recurring job that creates audit-only `AUDIT_LOG.md` commits when no engineering delta exists | none | automation configuration only | 2026-09-22: no external automation existed (no Actions/webhooks/cron); the loop was session-driven by the frozen procedure itself. `AUDIT_LOG.md` carries the GOV-02 retirement banner; duplicate audit-only PRs #138/#139 closed unmerged; the procedure is frozen as history |
 | GOV-03 | ACCEPTED | Integrator | Enforce [swarm protocol](SWARM_PROTOCOL.md), branch ownership and central-file integration rules | GOV-01 | `AGENTS.md`, `SWARM_PROTOCOL.md` | Workers use isolated branches/PRs; no concurrent central-file edits |
 | GOV-04 | ACCEPTED | Integrator | Resolve the BOM circularity: pre-Astra engineering BOM versus post-capture annotated/orderable BOM | GOV-03 | `ASTRA_HANDOFF.md`, `MANUFACTURING_STRATEGY.md` | Handoff distinguishes exact pre-Astra MPN/planned-quantity input from post-Astra reference-designator BOM |
 
@@ -104,7 +104,7 @@ Workers in this wave must use exact manufacturer sources and stay inside their s
 
 | ID | State | Gate | Task | Depends on | Closure evidence |
 | --- | --- | ---: | --- | --- | --- |
-| SYS-01 | READY | 9 | Apply D22/P26: remove TUSB320LAI from I2C, allocate its GPIO mode, and compute the 100 kHz pull-ups/capacitance/cable limit and stuck-bus recovery | OWN-02 | Non-empty electrical window and declared cable/off-state rule |
+| SYS-01 | ACCEPTED | 9 | Apply D22/P26: remove TUSB320LAI from I2C, allocate its GPIO mode, and compute the 100 kHz pull-ups/capacitance/cable limit and stuck-bus recovery | OWN-02 | Required: non-empty electrical window and declared cable/off-state rule. Delivered 2026-09-22 via PR #140: 100 kHz window non-empty to the 400 pF ceiling (Rp_min 967 ohm, preferred 2.2 k +/-1%), expansion-cable reserve <=150 pF declared, stuck-bus recovery assigned, TUSB320LAI GPIO-mode wiring pinned to SLLSEQ8D Rev D; per-device off-state review explicitly retained as remaining gate-9/board work |
 | SYS-02 | BACKLOG | 9 | Complete rail/net/boot/off-state/interface matrix | Wave 2 circuits, SYS-01 | No OPEN electrical row affecting schematic connectivity |
 | SYS-03 | BACKLOG | 9 | Define shared-SPI/UART/PDM/interrupt concurrency and bench stress cases | subsystem specs | Timing/resource contract with measurable limits |
 | SYS-04 | BACKLOG | 9 | Perform independent full net-matrix review | SYS-02/03 | Reviewer finds no voltage/address/boot/back-power collision |
