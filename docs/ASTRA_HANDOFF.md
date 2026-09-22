@@ -32,6 +32,7 @@ Do not invoke Astra for StratosCore CAD yet. [Project status](PROJECT_STATUS.md)
 | [RF architecture](RF_ARCHITECTURE.md) and [RF connector selection](RF_CONNECTOR_SELECTION.md) | RF references, stackup, interconnect and placement constraints |
 | [Mechanical/RF floorplan](MECHANICAL_RF_FLOORPLAN.md) | Board outline, keepouts and enclosure interfaces |
 | [Manufacturing strategy](MANUFACTURING_STRATEGY.md) | Factory rules and release outputs |
+| [CAD tooling review](CAD_TOOLING_REVIEW.md) | Optional KiCad automation, verification limits and reproducibility rules |
 
 ## Astra execution checklist
 

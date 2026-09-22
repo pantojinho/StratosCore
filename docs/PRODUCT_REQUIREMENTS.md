@@ -16,16 +16,17 @@ StratosCore Rev A is a compact experimental field computer. This document expres
 | PR10 | Digital MEMS microphone provision, optional synchronized logging | Audio timestamp mapping, throughput, clock drift, dropped-block flags |
 | PR11 | USB-C charging, operation while charging, native data target | Source-current limits, role/orientation, brownout, thermal and fault tests |
 | PR12 | Two removable matched 21700 cells in 2S with one balanced charger and common protection | Qualified battery review including mismatch, missing/reversed cell, removal, short, thermal and charge/discharge faults |
-| PR13 | Approximately 12 h normal portable runtime | Profile, brightness, battery, temperature and radios documented in discharge test |
+| PR13 | At least 8 h on the required two-cell 21700 pair in the primary portable operating profile | Profile, brightness, battery, temperature and radios documented in discharge test; engineering allowance is not measured runtime |
 | PR14 | 3V3/GND + I2C + SPI/CS + UART + GPIO/IRQ expansion | Pin budget, voltage/current limits, connector and recovery tests |
 | PR15 | Four-layer PCB, approximately 80 x 60 mm target footprint | Manufacturer stackup and mechanical fit review; final dimensions open |
 | PR16 | Printed enclosure for display and two 21700 cells, approximately 37 mm starting thickness | Exact holder/panel/cable tolerances, printed dummy and sample fit |
 | PR17 | Thermal and RF isolation | Temperature bias tests and receiver degradation during each aggressor state |
 | PR18 | Open-source provenance and manufacturing readiness | License register; BOM/footprint audits; later ERC/DRC and assembly review |
 | PR19 | Personal, non-commercial, open-community hobby prototype | Repository/license review and applicable operating-rule plan; no product-certification claim |
-| PR20 | Initial five-unit batch targets an average cost no higher than BRL 200 per unit | Dated BOM/PCBA estimate after the owner confirms the accounting boundary |
-| PR21 | Support terrestrial and balloon missions with specified altitude, temperature and duration | Quantified mission table and component-range review; exact numbers remain open |
+| PR20 | Initial five-unit batch targets an average cost no higher than BRL 200 per Chinese PCBA including display/touch; local cells/enclosure, freight and taxes excluded | Dated five-unit assembly and display quotes plus BOM reconciliation; do not delete locked features to meet the target without owner acceptance |
+| PR21 | Primary aircraft/car/desk use to a 30,000 ft (~9,144 m) altitude reference; balloon use is secondary | Component pressure/temperature/dynamics review and applicable flight plan; temperature and balloon envelope remain open, and no GNSS accuracy target above 30,000 ft is specified |
 | PR22 | No mass target, rain/ingress qualification, conformal coating or special environmental protection for Rev A | Mechanical/process documents record the exclusion while preserving sensor, pressure, humidity and acoustic openings |
+| PR23 | Program and test the initial five PCBAs locally through USB-C, with SWD recovery access | USB-C flash/recovery and local test procedure; factory does not inject firmware or credentials |
 
 ## Use profiles
 
@@ -35,7 +36,7 @@ StratosCore Rev A is a compact experimental field computer. This document expres
 | FLIGHT | Display active; Wi-Fi normally off; BLE/LoRa optional | GNSS, pressure/vario and motion active | ADS-B active; continuous event/telemetry logs; audio optional |
 | DESKTOP | USB powered; display and Wi-Fi active | All sensors available | ADS-B optional; all logging services available |
 
-Both terrestrial and balloon profiles are required. Exact operating altitude, minimum pressure, temperature range and duration remain unspecified; these values must be frozen before component/environment review can close. Mass and rain/ingress resistance are not design targets for Rev A. Sunlight brightness, ADS-B sensitivity/range and acceptable log loss also remain open. A balloon use case does not guarantee the BMP581 remains within its specified pressure range throughout ascent, so out-of-range measurements must be flagged.
+Aircraft/car/desk use is primary and the 30,000 ft reference and 8 h minimum runtime apply to it; balloon use is secondary and may require additional protection. Operating pressure, temperature range, dynamics and a separate balloon acceptance envelope remain unspecified and must be addressed before their corresponding component/environment review closes. Mass and rain/ingress resistance are not design targets for Rev A. Sunlight brightness, ADS-B sensitivity/range and acceptable log loss also remain open. A balloon use case does not guarantee the BMP581 remains within its specified pressure range throughout ascent, so out-of-range measurements must be flagged.
 
 ## Data and behavior
 

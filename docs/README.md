@@ -14,6 +14,7 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | [Product requirements](PRODUCT_REQUIREMENTS.md) | Verifiable Rev A behavior and operating profiles |
 | [Astra final handoff](ASTRA_HANDOFF.md) | Final KiCad execution checklist; currently gated |
 | [Astra execution prompt](ASTRA_EXECUTION_PROMPT.md) | Frozen-manifest template and final KiCad execution prompt; currently NOT READY |
+| [CAD tooling review](CAD_TOOLING_REVIEW.md) | Optional Hermes/KiCad automation, verification limits and reproducibility |
 | [Validation record](FOUNDATION_CHECKS.md) | Checks already run and their limited meaning |
 | [Readiness audit log](AUDIT_LOG.md) | Audit-loop baseline, rounds, active blockers and the vigil procedure |
 

@@ -10,7 +10,7 @@ StratosCore is an open-source portable field, aviation, meteorological, navigati
 | --- | --- | --- |
 | Product baseline and licensing | Validate prepared three-line display support and GNSS passive RF proposals | Display controlled power/FPC drawing, C1 samples and connector confirmation |
 | MAX-M10S decision and independently reviewed footprint geometry | Close complete 2S charger/protection/VBUS application | Qualified electrical/battery review and fault tests |
-| Two removable 21700 cells in 2S decision | Accept exact cells/holder and state estimation; finish rail calculations | RF performance and runtime measurements need prototypes |
+| Two removable 21700 cells in 2S decision | Accept exact cells/holder and state estimation; prove the 8 h primary-use target | RF performance and runtime measurements need prototypes |
 | ESP32 compute sheet and GPIO allocation | Sensor CAD, LoRa/ADS-B RF, stackup and mechanical dummy | Final factory stack confirmation |
 | Exact candidates for RP2040 support, microSD, audio, USB-C, expansion, buttons, rails and RF interconnects | Assembler approvals, mechanical fit, off-state review and application tests | Independent final schematic/layout and bring-up review |
 | Manufacturer-derived dimensions for W25Q, TPD, ICM/MMC/BMP, ABM8, U.FL and DM3 electrical/mechanical envelope | RF return paths, enclosure access and prototype qualification | PCBA assembler stencil/mask confirmation |
@@ -18,6 +18,8 @@ StratosCore is an open-source portable field, aviation, meteorological, navigati
 | ADS-B host models: 24 tests passing | UART/PIO/DMA implementation and sustained-link bench proof | |
 
 There is no finished schematic, PCB layout, prototype or manufacturing package yet. Do not order boards from the current repository. See [project status](docs/PROJECT_STATUS.md) for the complete gate list.
+
+The owner set a five-unit target of at most BRL 200 per assembled PCB **including display/touch**, excluding locally bought cells and enclosure, freight and taxes. Aircraft/car/desk use is primary (30,000 ft reference, 8 h minimum on two 21700 cells); balloon use is secondary. The five boards will be programmed and tested locally through USB-C. These are targets and policies, not verified cost, runtime or flight performance.
 
 ## Rev A baseline
 

@@ -29,10 +29,11 @@ Baseline established from the owner's foundation brief; register last updated 20
 | D21 | The unit must operate while USB charging is active | Does not require batteryless operation; the power design must prove safe charge-under-load behavior and valid termination |
 | D22 | Run the shared peripheral I2C bus at 100 kHz and remove TUSB320LAI from that bus | Use the TUSB320LAI GPIO-mode interface. SYS-01 (PR #140, merged 2026-09-22) closed the GPIO allocation, pull-up value and cable limit; per-device off-state review and the independent net-matrix review remain engineering work |
 | D23 | Rev A is a personal, non-commercial, open-community hobby prototype | This classification does not waive applicable radio or flight rules during operation |
-| D24 | Target an average cost no higher than BRL 200 per unit for the initial five-unit batch | The accounting boundary for display, enclosure, shipping and locally purchased cells remains to be confirmed |
-| D25 | Support both terrestrial and balloon missions; altitude, temperature and duration are required mission inputs | Exact ranges and duration remain open. No product target is required for mass or rain/ingress resistance |
+| D24 | Target an average cost no higher than BRL 200 per unit for the initial five-unit batch | Owner clarified 2026-09-22: includes Chinese assembled PCB and display/touch; excludes locally bought cells, locally made 3D enclosure, freight and taxes. Actual five-unit quotes and allocation remain to be verified |
+| D25 | Primary use is in an aircraft, car or on a desk; balloon use is secondary | Owner gave 30,000 ft (about 9,144 m) as the primary altitude reference and 8 hours minimum runtime on two 21700 cells on 2026-09-22; above that, GNSS operation is desirable but no accuracy target was specified. Temperature range remains open. Balloon operation may need additional protection; no mass or rain/ingress target is imposed on Rev A |
 | D26 | The owner will purchase the two removable 21700 cells locally | Shipping the assembled unit with cells and its UN38.3 logistics path are outside the current prototype scope; exact cell and holder still require engineering evidence |
 | D27 | Rev A has no conformal-coating, rain/ingress or special environmental-protection requirement | Preserve required pressure, humidity and acoustic openings; the owner accepts that the hobby prototype is not environmentally qualified |
+| D28 | Initial five PCBA units are programmed and tested locally via USB-C | Owner confirmed 2026-09-22: no factory firmware flashing or credential injection. Preserve USB-C recovery/programming access and local SWD test access; board identification/labels may be applied locally |
 
 ## Open selections
 
@@ -98,9 +99,10 @@ See [legacy comparison](../references/LEGACY_PROJECTS.md). Legacy AMOLED, QMI865
 - **Owner:** project owner, accepted in the Codex session.
 - **Operating policy:** operation while charging is required; batteryless operation remains outside scope.
 - **Bus policy:** P26 option set accepted as D22: 100 kHz shared I2C, with TUSB320LAI moved to GPIO mode.
-- **Product scope:** personal, non-commercial, open-community hobby prototype supporting terrestrial and balloon missions.
-- **Cost and quantity:** average target no higher than BRL 200 per unit for an initial batch of five; exact inclusions still need confirmation.
-- **Mission boundary:** altitude, temperature and duration must be quantified; no target mass or rain/ingress qualification is required.
+- **Product scope:** personal, non-commercial, open-community hobby prototype; aircraft/car/desk use is primary and balloon use is secondary.
+- **Cost and quantity:** average target no higher than BRL 200 per unit for five Chinese PCBAs including display/touch; local cells/enclosure, freight and taxes are excluded.
+- **Mission boundary:** 30,000 ft is the primary altitude reference, not a GNSS accuracy guarantee; minimum runtime is 8 hours on two 21700 cells; temperature range remains open. No mass or rain/ingress target is required.
+- **Factory provisioning:** local USB-C flashing and testing; no factory firmware or credential injection.
 - **Battery/logistics:** cells are locally purchased and removable; the project does not ship the prototype with cells in the current scope.
 - **Environmental process:** no conformal coating or special environmental protection is required for Rev A.
 - **Impact:** these decisions unblock the charge-under-load design, I2C rework, regulatory classification, local-cell logistics and no-coating process path. They do not approve the 2S circuit, exact cell/holder, radio operation, flight plan or unqualified environmental reliability.

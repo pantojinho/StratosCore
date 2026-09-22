@@ -22,17 +22,17 @@ Example only: one 5.0 Ah cell at 3.6 V nominal gives 18 Wh nameplate energy. Mol
 
 `runtime_h = cell_count x nominal_V x capacity_Ah x usable_fraction x efficiency / margin_adjusted_load_W`
 
-| Scenario | One example cell | Two example cells | 12 h implication |
+| Scenario | One example cell (comparison only; not Rev A topology) | Two example cells | 8 h implication |
 | --- | ---: | ---: | --- |
 | BALLOON | 33.45 h | 66.89 h | Arithmetic suggests margin; actual duty and cold operation remain untested |
-| FLIGHT | 5.36 h | 10.72 h | Neither example reaches 12 h with chosen allowances |
-| DESKTOP, battery equivalent | 4.72 h | 9.45 h | Intended use is USB powered; charging power is additional |
+| FLIGHT | 5.36 h | 10.72 h | Arithmetic clears the 8 h target with the assumed matched pair; no discharge result yet |
+| DESKTOP, battery equivalent | 4.72 h | 9.45 h | Arithmetic clears 8 h; USB use and charging behavior remain separate tests |
 
 Two-cell energy uses the accepted 2S direction: 7.2 V nominal at 5 Ah has the same 36 Wh nameplate energy as two 3.6 V, 5 Ah cells counted separately. It assumes a matched, qualified pair and does not include unmeasured 2S charger, protection or buck losses beyond the general efficiency allowance.
 
-For 12 h, maximum margin-adjusted delivered load is **1.08 W** with one example cell, or **2.16 W** with two. Under the separate 25% load margin, raw design budgets become **0.864 W** and **1.728 W** respectively. FLIGHT's 1.935 W allowance exceeds the two-cell raw budget by **0.207 W**. Required nameplate energy at the margin-adjusted FLIGHT load is 2.41875 x 12 / (0.80 x 0.90) = **40.31 Wh**, versus 36 Wh for two example cells.
+For the accepted 8 h target, maximum margin-adjusted delivered load is **1.62 W** with one example cell (comparison only), or **3.24 W** with the required two. Under the separate 25% load margin, raw design budgets are **1.296 W** and **2.592 W** respectively. FLIGHT's 1.935 W and DESKTOP's 2.195 W allowances are below the two-cell raw budget by **0.657 W** and **0.397 W**. Required nameplate energy at the margin-adjusted FLIGHT load is 2.41875 x 8 / (0.80 x 0.90) = **26.88 Wh**, versus 36 Wh for two example cells. These margins depend entirely on the unverified load, cell, reserve and conversion assumptions.
 
-This is a sensitivity analysis, not evidence that a larger cell alone solves runtime. Measure display brightness, ADS-B power, actual conversion efficiency and cold-cell capacity first. Every additional continuous 0.1 W costs 1.2 Wh over 12 h at the loads.
+This is a sensitivity analysis, not proof of the 8 h target. Measure display brightness, ADS-B power, actual conversion efficiency and cold-cell capacity first. Every additional continuous 0.1 W costs 0.8 Wh over 8 h at the loads.
 
 ## Peaks, thermal load and measurement plan
 
@@ -40,4 +40,4 @@ Regulators must support concurrent RF bursts, SD writes, backlight startup and C
 
 Charging a 2S pack to 8.4 V from nominal 5 V USB requires a boost charger. Input current, inductor current, switch loss, cell-balancing heat and system load while charging must be calculated from the selected circuit and then measured. The BQ25887 candidate supports up to 2 A charge current, but no charge rate is selected. See [power options](POWER_ARCHITECTURE_OPTIONS.md).
 
-Measure each domain individually, then concurrent FLIGHT load; repeat with USB charging, low battery and expected ambient limits. Run a full 12 h profile with logged brightness/radio settings, capacity, cutoff and resets. Measure converter efficiency over the 2S discharge range; update this table with measured min/typ/max and uncertainty. The 90 mW GNSS row remains a conservative allowance until MAX-M10S-00B with the proposed passive no-bias antenna path is measured.
+Measure each domain individually, then concurrent FLIGHT load; repeat with USB charging, low battery and expected ambient limits. Run a full 8 h primary-use profile with logged brightness/radio settings, capacity, cutoff and resets. Measure converter efficiency over the 2S discharge range; update this table with measured min/typ/max and uncertainty. The 90 mW GNSS row remains a conservative allowance until MAX-M10S-00B with the proposed passive no-bias antenna path is measured.

@@ -40,11 +40,11 @@ Read in this order:
 4. docs/DECISIONS.md
 5. docs/ASTRA_EXECUTION_PROMPT.md and its frozen manifest
 6. the authoritative subsystem documents listed in ASTRA_HANDOFF.md
-7. the exact BOM, datasheet index, footprint reviews, mechanical floorplan, stackup and DFT package
+7. the exact BOM, datasheet index, footprint reviews, mechanical floorplan, stackup, DFT package and docs/CAD_TOOLING_REVIEW.md
 
 Preflight:
 - Confirm every frozen manifest revision/hash exists in the checkout.
-- Confirm the recorded KiCad version and project/library paths.
+- Confirm the recorded KiCad version and project/library paths; if optional Hermes tooling is used, record its exact commit and verify its disposable demo before applying it to this project.
 - Confirm every fitted BOM item has an exact MPN, symbol source and reviewed footprint.
 - Confirm the board outline, holes, stackup, impedance inputs and placement keepouts are final.
 - Run the existing hierarchy ERC and preserve its report as the before-state.

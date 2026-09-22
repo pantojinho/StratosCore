@@ -19,7 +19,7 @@
 - A single charger must measure both cells and actively balance them, either internally or through a separately reviewed balancing function. TI `BQ25887` remains the preferred first candidate because it integrates both; it does not integrate a system power path.
 - A common 2S discharge-protection path must cover pack overvoltage, per-cell undervoltage, overcurrent/short and temperature. The charger alone is not assumed to provide all discharge protection.
 - Missing-cell, reversed-cell, mixed-state, hot insertion/removal and USB transitions require hardware-safe behavior. Firmware is monitoring and policy, not the only safety layer.
-- The system must regulate from the approximately 6.0-8.4 V 2S pack range. Exact buck rails, charging-while-operating behavior and shutdown thresholds remain open.
+- The system must regulate from the approximately 6.0-8.4 V 2S pack range. Operation while charging is required by D21; safe charge-under-load termination, exact rails and shutdown thresholds remain engineering gates.
 
 ## Candidate references
 
@@ -29,7 +29,7 @@
 | NVDC charger alternative | [TI BQ25792](https://www.ti.com/product/BQ25792), Rev C data sheet | Adds batteryless/system power path but has no per-cell balancing; retain only if that product requirement is added |
 | Common protection candidate | [TI BQ77307](https://www.ti.com/product/BQ77307), production data | Full 2S protection feature set, but low-volume host configuration and safe startup defaults require review |
 | Autonomous protection family | [ABLIC S-8252](https://www.ablic.com/en/semicon/datasheets/power-management-ic/lithium-ion-battery-protection-ic/s-8252/) | Firmware-independent protection candidate, but its typical low-side cutoff conflicts with BQ25887 ground-referenced sensing/balancing; topology and exact suffix require qualified review |
-| USB Type-C CC candidate | [TI TUSB320LAI](https://www.ti.com/product/TUSB320LAI), Rev D data sheet | Fixed UFP/sink current-class detection at I2C address 0x47; no USB PD; keep charging disabled until cell checks and an accepted USB attach/enumeration/current state permit it |
+| USB Type-C CC candidate | [TI TUSB320LAI](https://www.ti.com/product/TUSB320LAI), Rev D data sheet | Fixed UFP/sink current-class detection in GPIO mode per D22; no USB PD. The accepted default-current-only policy and remaining charge-enable gates are in [power input evidence](POWER_INPUT_EVIDENCE.md) |
 | Previous independent 1S charger | [TI BQ25185](https://www.ti.com/product/BQ25185) | Historical P08 comparison only; no longer the Rev A direction |
 | Previous source OR | [ADI LTC4415](https://www.analog.com/en/products/ltc4415.html) | Historical P08 comparison only; removed by the accepted 2S direction |
 
