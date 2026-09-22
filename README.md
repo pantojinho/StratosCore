@@ -19,7 +19,7 @@ StratosCore is an open-source portable field, aviation, meteorological, navigati
 
 There is no finished schematic, PCB layout, prototype or manufacturing package yet. Do not order boards from the current repository. See [project status](docs/PROJECT_STATUS.md) for the complete gate list.
 
-The owner set a five-unit target of at most BRL 200 per assembled PCB **including display/touch**, excluding locally bought cells and enclosure, freight and taxes. Unpressurized but protected aircraft-cabin/car/desk use is primary (valid barometric altitude/vario through 30,000 ft, 8 h minimum on two 21700 cells); balloon use is secondary. This altitude requirement conflicts with the locked BMP581; a [reviewed replacement proposal](docs/BAROMETER_30K_PROPOSAL.md) is pending owner acceptance. The five boards will be programmed and tested locally through USB-C. These are targets and policies, not verified cost, runtime or flight performance.
+The owner set a five-unit target of at most BRL 200 per assembled PCB **including display/touch**, excluding locally bought cells and enclosure, freight and taxes. This is a hobby prototype for desk, car and protected but unpressurized aircraft-cabin use, with experimental drone, model-aircraft, balloon, ultralight, hang-glider and paramotor applications to assess separately. About 10,000 ft is the realistic altitude case; 30,000 ft is exploratory, not a guaranteed barometric limit. The BMP581 remains an indicative backup sensor, and the 8 h minimum target on two 21700 cells remains. The five boards will be programmed and tested locally through USB-C. Cost, runtime and flight performance are not yet verified.
 
 ## Rev A baseline
 
