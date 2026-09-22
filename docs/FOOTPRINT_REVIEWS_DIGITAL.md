@@ -34,3 +34,22 @@ Status: reviewed through 2026-09-17. Project-owned footprints for the RP2040 sup
 ## Process note
 
 Manufacturer drawings control every project-owned footprint. The W25Q128 and ABM8 geometries have replaced earlier generic library lands, and the DM3 comparison has identified its remaining shell/mechanical work. The sensors/GNSS/RF footprints are covered by [FOOTPRINT_REVIEWS_SENSORS_GNSS.md](FOOTPRINT_REVIEWS_SENSORS_GNSS.md).
+
+## Support-part footprint candidates (DIG-04, added 2026-09-22)
+
+Eight additional support-part footprints were added from the **official KiCad 10.0.6 standard library** (files copied unmodified from the installed `kicad-footprints` package, Ubuntu `kicad` 7.0.11/10.0.6 library set, whose geometries are derived from JEDEC/IPC-7351B and the named TI package drawings). Provenance class for all eight: **standard-package geometry, not an exact-MPN manufacturer-drawing derivation** — they cover the package/pad/pitch envelope correctly for pre-schematic review and Astra placement, but each still requires the same independent pad-by-pad comparison against the exact-MPN manufacturer drawing before prototype release, plus the standing assembler mask/paste gate. The library file name of the copied source is recorded per footprint so the derivation is auditable:
+
+| Project file | Copied from KiCad 10 library | Covers (package / TI drawing class) | Delivering circuit |
+| --- | --- | --- | --- |
+| `TI_DBV0005A_SOT-23-5_TPS7A20.kicad_mod` | `Package_TO_SOT_SMD.pretty/SOT-23-5.kicad_mod` | SOT-23-5 (DBV0005A) — TPS7A2030/TPS7A2018 | PWR-04 rail rows |
+| `TI_DBV0006A_SOT-23-6_TPS22918.kicad_mod` | `Package_TO_SOT_SMD.pretty/SOT-23-6.kicad_mod` | SOT-23-6 (DBV0006A) — TPS22918DBVR x3 | DIG-03/PWR-04 switched domains |
+| `TI_DCK0005A_SC-70-5_TPS61169.kicad_mod` | `Package_TO_SOT_SMD.pretty/SOT-353_SC-70-5.kicad_mod` | SC-70-5 (DCK0005A) — TPS61169DCKR | Backlight |
+| `TI_DGS0010A_VSSOP-8_3x3mm_P0.65mm_TXU0202.kicad_mod` | `Package_SO.pretty/VSSOP-8_3x3mm_P0.65mm.kicad_mod` | VSSOP-8 3x3 (DGS0010A) — TXU0202DCUR | AUD-01 |
+| `TI_PW0024A_TSSOP-24_4.4x7.8mm_P0.65mm_TCA9535.kicad_mod` | `Package_SO.pretty/TSSOP-24_4.4x7.8mm_P0.65mm.kicad_mod` | TSSOP-24 (PW0024A) — TCA9535PWR | DIG-03 |
+| `TI_RWB0012B_X2QFN-12_1.6x1.6mm_TUSB320LAI.kicad_mod` | `Package_DFN_QFN.pretty/Texas_X2QFN-12_1.6x1.6mm_P0.4mm.kicad_mod` | X2QFN-12 1.6x1.6 (RWB0012B) — TUSB320LAIRWBR | D22 GPIO-mode wiring |
+| `TI_RPU0010A_VQFN-HR-10_2x2mm_TPS259474L.kicad_mod` | `Package_DFN_QFN.pretty/Texas_RPU0010A_VQFN-HR-10_2x2mm_P0.5mm.kicad_mod` | VQFN-HR-10 2x2 (RPU0010A) — TPS259474LRPWR | PWR-02 eFuse |
+| `TI_RGT0016A_VQFN-16_3x3mm_EP1.75x1.75_TPS62130A.kicad_mod` | `Package_DFN_QFN.pretty/QFN-16-1EP_3x3mm_P0.5mm_EP1.75x1.75mm.kicad_mod` | VQFN-16 3x3 EP1.75 (RGT0016A) — TPS62130ARGTR | PWR-04 main buck |
+
+**Validation performed:** all 17 project footprints (these 8 plus the 9 existing manufacturer-derived candidates) parse and export in KiCad 10.0.6 (`kicad-cli fp export svg` against a `.pretty` library directory; 17/17 exported successfully). This is the automated geometry-check row of the DIG-04 acceptance; the **independent second pass against exact-MPN drawings for these 8 remains open** and is deliberately not claimed.
+
+**Deliberately deferred (no fabricated geometry):** GCT USB4105 USB-C receptacle (custom connector; requires drawing-rev B4 comparison, footprint deferred to the EXT-01-class controlled-drawing work), JST BM12B-GHS-TBT expansion header (custom connector; JST drawing comparison required), Alps SKSCLCE010 button (SKSC drawing + enclosure plunger comparison required), ST1633I touch connector (O01-gated), and the T5838 microphone acoustic land (custom 1:1 land + port rules from AUD-01; requires the DS Figure 32/33 CAD comparison). These five remain footprint-open items with their controlling documents already recorded in the subsystem docs.
