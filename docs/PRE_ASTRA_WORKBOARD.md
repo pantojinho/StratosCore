@@ -4,7 +4,7 @@ Status: **ACTIVE**. This is the operational queue for taking StratosCore from th
 
 The workboard separates work an agent can complete from owner decisions, qualified reviews, procurement, factory confirmation, and physical tests. Writing a document is not completion by itself: each task closes only when its evidence column is satisfied.
 
-Coordination snapshot: `origin/main` at `e501e85` reconciled on 2026-09-22 (GOV-02 vigil retired; SYS-01 accepted via PR #140; ADSB-01 accepted via PR #142; DIG-01 accepted via PR #144). The next coordinator must replace this snapshot with the current baseline before assigning work.
+Coordination snapshot: `origin/main` at `942cd94` reconciled on 2026-09-22 (GOV-02 vigil retired; SYS-01 accepted via PR #140; DIG-01 accepted via PR #144; LORA-01 carries a blocked-evidence note; ADSB-01, from PR #142, stays `BLOCKED_OWNER` — its own "OWN-09 for final threshold target" dependency blocks `ACCEPTED` until OWN-09 clears). The next coordinator must replace this snapshot with the current baseline before assigning work.
 
 [PR #137](https://github.com/pantojinho/StratosCore/pull/137) was merged automatically while this decision update was in progress. It changed only `AUDIT_LOG.md` and explicitly reported no engineering action. **GOV-02 closed 2026-09-22:** the vigil was retired (see GOV-02 and `AUDIT_LOG.md`) and future equivalent no-change PRs must not be opened or merged.
 
