@@ -4,6 +4,8 @@
 
 Do not invoke Astra for StratosCore CAD yet. [Project status](PROJECT_STATUS.md) owns the current Sol/external work queue. This file is reserved for the final KiCad execution package and changes to **READY** only after every entry gate below has objective closure evidence.
 
+The owner may separately invoke Astra **now for independent review only** of the Claude comparison candidate using the [review prompt](CLAUDE_CANDIDATE_INDEPENDENT_REVIEW.md#review-only-prompt-for-astra). That review does not grant implementation or manufacturing readiness.
+
 ## Entry gates
 
 - [ ] Every fitted component has an exact orderable MPN, current manufacturer datasheet and package drawing.
