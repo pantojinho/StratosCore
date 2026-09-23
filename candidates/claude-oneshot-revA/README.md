@@ -2,6 +2,8 @@
 
 > **Status: CANDIDATE FOR COMPARISON — NOT FOR MANUFACTURE, NOT A BASELINE.**
 > Produced 2026-09-23 at the owner's explicit request ("1 shot" schematic, PCB and 3D with the display) to be compared with the GPT Astra pass. `docs/ASTRA_HANDOFF.md` is still **NOT READY**; nothing here closes a gate in `docs/PROJECT_STATUS.md`. Battery safety (O05) needs a qualified human reviewer — **do not energize this design with cells.** The repository baseline in `hardware/` is untouched.
+>
+> **2026-09-23 refinement:** evidence-backed corrections were applied inside this folder (TXU0202 exact DCU land, TPS259474L RPW stencil/fab, ICM-42688-P pin 9 to GND, U1/J5 courtyard, duplicate vias, BMP581 under-body SCL route, SHT40 SDA, 3V3 fragments, three GND islands, silkscreen). See [docs/REFINEMENT_2026_09_23.md](docs/REFINEMENT_2026_09_23.md) for evidence, before/after reports and the blockers that remain.
 
 | Front (display) | Back (2S 21700 cells) | PCB top | Enclosure concept |
 | --- | --- | --- | --- |
@@ -22,9 +24,10 @@ All 12 schematic sheets are in [`images/`](images/) as PNG (`schematic_00_root.p
 | --- | --- |
 | `kicad/StratosCore_Claude.kicad_pro/.kicad_sch/.kicad_pcb` | KiCad 10.0.6 project: root + 11 hierarchical sheets, 4-layer 60 x 84 mm board |
 | `kicad/libs/SC.kicad_sym`, `SC.pretty`, `SC.3dshapes` | Project symbols (datasheet pin tables), footprints (repo candidates + generated/corrected ones), STEP envelopes |
-| `kicad/reports/` | ERC/DRC JSON, netlist, unassigned-pin report |
+| `kicad/reports/` | Current ERC/DRC JSON and netlist, dated `before_2026-09-23/` and `after_2026-09-23/` sets with net/pad reconciliation, unassigned-pin report (pre-refinement) |
 | `docs/schematic.pdf` | Schematic, 12 pages |
 | `docs/ISSUES.md` | **Findings against the repo baseline (incl. 2 footprint blockers), open gates, layout limitations** |
+| `docs/REFINEMENT_2026_09_23.md` | Refinement record: preflight, evidence per correction, before/after checks, dispositions, blockers |
 | `outputs/` | Renders (top/bottom/iso), `StratosCore_Claude_3D_STEP.zip` (board STEP with display + 2S cells, full assembly STEP with the enclosure, enclosure parts), assembly SVG views, layer PDF, BOM, review-only positions, DRC summary |
 | `mech/` | Printed enclosure concept (front bezel with display window, back shell) |
 | `images/` | README images: 3D renders, enclosure views, copper layers, all schematic sheets |
@@ -41,20 +44,24 @@ All 12 schematic sheets are in [`images/`](images/) as PNG (`schematic_00_root.p
 
 Every value that is not closed by a cited source is literally `TBD` in the schematic (value or `Status` field); see the BOM `Status` column.
 
-## Verification status (measured by KiCad 10.0.6 on 2026-09-23, not claimed)
+## Verification status (measured by KiCad 10.0.6 on 2026-09-23 after the refinement, not claimed)
+
+Full before/after comparison, commands and dispositions: [docs/REFINEMENT_2026_09_23.md](docs/REFINEMENT_2026_09_23.md). KiCad reports at most 199 items per violation type, so 199 is a lower bound.
 
 | Check | Result |
 | --- | --- |
-| ERC (12 sheets) | 1 error (reviewed: BMP581 `INT` output tied to GND per the repo sensor sheet, A12) + 4 warnings (translator spare input and address straps tied to a flagged rail, flattened `2N7002` library copy) |
-| Schematic <-> PCB parity | **0** |
-| Board | 60 x 84 mm, 4 layers (JLC04161H-3313 candidate stack), 277 footprints, 262 nets, 3 465 track segments, 654 vias |
-| DRC errors | **1** — reviewed exception: the ESP32-S3-WROOM-1 library courtyard includes Espressif's 48 x 21 mm antenna-clearance region, which the GNSS U.FL (J5) overlaps; copper keepout inside the board is respected |
-| DRC warnings | 579: silkscreen text size/overlap/over-copper (cosmetic reference text), 2 `lib_footprint_mismatch` (U30/U32 carry the reviewed "allow solder-mask bridge" attribute for the vendor open-mask strategy), 2 via hole-to-hole, 3 dangling RF stubs (below) |
-| Unconnected | **11 items — manual finish required**: SX1262 `LORA_RFO` (pin 23) and `LORA_RFI_P` (pin 21) stubs — the matching network placement is too tight for automatic routing and its values are TBD anyway (hand layout per the E449 reference); `I2C_SDA` to the SHT40 on the vent tab; two `3V3_MAIN` links (C57 touch decoupling, SHT40 feed near the tab slot); 6 GND pour fragments needing a stitching via or short trace |
+| ERC (12 sheets) | 1 error (intended: BMP581 `INT` strapped to GND with `INT_CONFIG.int_en` kept disabled, Bosch DS004-13 Table 28/§6.2) + 5 warnings (intended GND straps on ICM AD0/pin 9, BMP581 SDO, a spare translator input; flattened `2N7002` symbol) |
+| Schematic <-> PCB parity / net-pad reconciliation | **0** / 970 pins, 0 mismatches (correspondence only) |
+| Board | 60 x 84 mm, 4 layers (JLC04161H-3313 candidate stack), 277 footprints |
+| DRC errors | **199+ `solder_mask_bridge`**, only on U30 ICM-42688-P and U32 BMP581: their common no-mask openings expose lands and other-net tracks/vias/pour. Previously hidden by an unreviewed footprint flag; now visible pending the assembler mask decision |
+| DRC warnings | 118 silkscreen (cosmetic; 202 passive references moved to the Fab/assembly layer, 75 kept at 0.8 mm) + 1 dangling LoRa RF stub |
+| Unconnected | **5**: GND at U2 (USB ESD), U3 pad 8 (eFuse) and U24 pad 2 (TXU0202) need local re-layout (these grounds are floating today); SX1262 `LORA_RFO`/`LORA_RFI_P` are the intended RF blocker (values/layout TBD) |
 
 Routing: Freerouting 2.4.1 (40 passes) on an engineering-anchored placement (`tools/build_pcb.py`), then this package's A* clean-up router (`tools/gridroute.py`), automated GND via stitching (`tools/finalize.py`) and polish (`tools/polish.py`); `tools/route_all.py` chains the stages. **A low DRC count proves CAD consistency only — not RF, power, battery-safety, thermal, EMI or manufacturability.** RF paths and USB were not given controlled-impedance geometry.
 
 ## How to regenerate
+
+> The generators below produced the original one-shot. They do **not** include the 2026-09-23 refinement; re-running them would revert it. The KiCad files are now the source of truth; the refinement scripts are `tools/refine_2026_09_23_*.py` and `tools/fp_rpw_dcu_2026_09_23.py`. `outputs/StratosCore_Claude_3D_STEP.zip` and `outputs/positions_REVIEW_ONLY.csv` predate the refinement (J5 +0.4 mm, C57 moved).
 
 ```bash
 "C:/Program Files/KiCad/10.0/bin/python.exe" tools/build_sch.py

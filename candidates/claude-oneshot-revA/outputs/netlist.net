@@ -1,8 +1,8 @@
 (export
 	(version "E")
 	(design
-		(source "D:\\git\\StratosCore\\.claude\\worktrees\\pcb-3d-models-display-c941dd\\candidates\\claude-oneshot-revA\\kicad\\StratosCore_Claude.kicad_sch")
-		(date "2026-09-23T09:36:22")
+		(source "D:\\git\\StratosCore\\candidates\\claude-oneshot-revA\\kicad\\StratosCore_Claude.kicad_sch")
+		(date "2026-09-23T19:07:09")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -17388,14 +17388,14 @@
 		(comp
 			(ref "U24")
 			(value "TXU0202DCUR")
-			(footprint "Package_SO:VSSOP-8_2.3x2mm_P0.5mm")
+			(footprint "SC:TI_DCU0008A_VSSOP-8_2.3x2mm_P0.5mm_TXU0202")
 			(fields
 				(field
 					(name "MPN") "TXU0202DCUR")
 				(field
 					(name "Source") "TI SCES942A (DCU = VSSOP-8 2.3x2.0 mm)")
 				(field
-					(name "Footprint") "Package_SO:VSSOP-8_2.3x2mm_P0.5mm")
+					(name "Footprint") "SC:TI_DCU0008A_VSSOP-8_2.3x2mm_P0.5mm_TXU0202")
 				(field
 					(name "Datasheet")
 				)
@@ -21299,7 +21299,7 @@
 				(field
 					(name "Value") "TXU0202DCU")
 				(field
-					(name "Footprint") "Package_SO:VSSOP-8_2.3x2mm_P0.5mm")
+					(name "Footprint") "SC:TI_DCU0008A_VSSOP-8_2.3x2mm_P0.5mm_TXU0202")
 				(field
 					(name "Datasheet") "https://www.ti.com/lit/ds/symlink/txu0202.pdf (SCES942A pin table; A1->B1Y, B2->A2Y)")
 				(field
@@ -25011,6 +25011,12 @@
 				(pintype "passive")
 			)
 			(node
+				(ref "U30")
+				(pin "9")
+				(pinfunction "INT2/FSYNC_9")
+				(pintype "bidirectional")
+			)
+			(node
 				(ref "U31")
 				(pin "11")
 				(pinfunction "GND_11")
@@ -28011,17 +28017,6 @@
 		)
 		(net
 			(code "235")
-			(name "unconnected-(U30-INT2{slash}FSYNC-Pad9)")
-			(class "Default")
-			(node
-				(ref "U30")
-				(pin "9")
-				(pinfunction "INT2/FSYNC_9")
-				(pintype "bidirectional+no_connect")
-			)
-		)
-		(net
-			(code "236")
 			(name "unconnected-(U31-INT-Pad15)")
 			(class "Default")
 			(node
@@ -28032,7 +28027,7 @@
 			)
 		)
 		(net
-			(code "237")
+			(code "236")
 			(name "unconnected-(U31-NC-Pad3)")
 			(class "Default")
 			(node
@@ -28043,7 +28038,7 @@
 			)
 		)
 		(net
-			(code "238")
+			(code "237")
 			(name "unconnected-(U31-NC-Pad6)")
 			(class "Default")
 			(node
@@ -28054,7 +28049,7 @@
 			)
 		)
 		(net
-			(code "239")
+			(code "238")
 			(name "unconnected-(U31-NC-Pad7)")
 			(class "Default")
 			(node
@@ -28065,7 +28060,7 @@
 			)
 		)
 		(net
-			(code "240")
+			(code "239")
 			(name "unconnected-(U31-NC-Pad8)")
 			(class "Default")
 			(node
@@ -28076,7 +28071,7 @@
 			)
 		)
 		(net
-			(code "241")
+			(code "240")
 			(name "unconnected-(U31-NC-Pad12)")
 			(class "Default")
 			(node
@@ -28087,7 +28082,7 @@
 			)
 		)
 		(net
-			(code "242")
+			(code "241")
 			(name "unconnected-(U31-NC-Pad14)")
 			(class "Default")
 			(node
@@ -28098,7 +28093,7 @@
 			)
 		)
 		(net
-			(code "243")
+			(code "242")
 			(name "unconnected-(U31-SPI_SDO-Pad5)")
 			(class "Default")
 			(node
@@ -28109,7 +28104,7 @@
 			)
 		)
 		(net
-			(code "244")
+			(code "243")
 			(name "unconnected-(U40-DIO3-Pad6)")
 			(class "Default")
 			(node
@@ -28120,7 +28115,7 @@
 			)
 		)
 		(net
-			(code "245")
+			(code "244")
 			(name "unconnected-(U50-NC-Pad3)")
 			(class "Default")
 			(node
@@ -28131,7 +28126,7 @@
 			)
 		)
 		(net
-			(code "246")
+			(code "245")
 			(name "unconnected-(U50-NC-Pad4)")
 			(class "Default")
 			(node
@@ -28142,7 +28137,7 @@
 			)
 		)
 		(net
-			(code "247")
+			(code "246")
 			(name "unconnected-(U50-NC-Pad5)")
 			(class "Default")
 			(node
@@ -28153,7 +28148,7 @@
 			)
 		)
 		(net
-			(code "248")
+			(code "247")
 			(name "unconnected-(U50-NC-Pad6)")
 			(class "Default")
 			(node
@@ -28164,7 +28159,7 @@
 			)
 		)
 		(net
-			(code "249")
+			(code "248")
 			(name "unconnected-(U50-NC-Pad8)")
 			(class "Default")
 			(node
@@ -28175,7 +28170,7 @@
 			)
 		)
 		(net
-			(code "250")
+			(code "249")
 			(name "unconnected-(U52-NC-Pad3)")
 			(class "Default")
 			(node
@@ -28186,7 +28181,7 @@
 			)
 		)
 		(net
-			(code "251")
+			(code "250")
 			(name "unconnected-(U52-NC-Pad4)")
 			(class "Default")
 			(node
@@ -28197,7 +28192,7 @@
 			)
 		)
 		(net
-			(code "252")
+			(code "251")
 			(name "unconnected-(U52-NC-Pad5)")
 			(class "Default")
 			(node
@@ -28208,7 +28203,7 @@
 			)
 		)
 		(net
-			(code "253")
+			(code "252")
 			(name "unconnected-(U52-NC-Pad6)")
 			(class "Default")
 			(node
@@ -28219,7 +28214,7 @@
 			)
 		)
 		(net
-			(code "254")
+			(code "253")
 			(name "unconnected-(U52-NC-Pad8)")
 			(class "Default")
 			(node
@@ -28230,7 +28225,7 @@
 			)
 		)
 		(net
-			(code "255")
+			(code "254")
 			(name "unconnected-(U54-NC-Pad5)")
 			(class "Default")
 			(node
@@ -28241,7 +28236,7 @@
 			)
 		)
 		(net
-			(code "256")
+			(code "255")
 			(name "unconnected-(U54-NC-Pad6)")
 			(class "Default")
 			(node
@@ -28252,7 +28247,7 @@
 			)
 		)
 		(net
-			(code "257")
+			(code "256")
 			(name "unconnected-(U54-NC-Pad7)")
 			(class "Default")
 			(node
@@ -28263,7 +28258,7 @@
 			)
 		)
 		(net
-			(code "258")
+			(code "257")
 			(name "unconnected-(U54-NC-Pad8)")
 			(class "Default")
 			(node
@@ -28274,7 +28269,7 @@
 			)
 		)
 		(net
-			(code "259")
+			(code "258")
 			(name "unconnected-(U54-NC-Pad13)")
 			(class "Default")
 			(node
@@ -28285,7 +28280,7 @@
 			)
 		)
 		(net
-			(code "260")
+			(code "259")
 			(name "unconnected-(U54-NC-Pad15)")
 			(class "Default")
 			(node
@@ -28296,7 +28291,7 @@
 			)
 		)
 		(net
-			(code "261")
+			(code "260")
 			(name "unconnected-(U54-NC-Pad16)")
 			(class "Default")
 			(node

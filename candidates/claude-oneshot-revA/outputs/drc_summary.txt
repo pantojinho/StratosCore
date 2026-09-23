@@ -1,11 +1,11 @@
-KiCad 10.0.6 DRC of StratosCore_Claude.kicad_pcb
-violations: 580 (errors 1), unconnected: 11, schematic parity: 0
-  error    courtyards_overlap               1
-  warning  hole_to_hole                     2
-  warning  lib_footprint_mismatch           2
-  warning  silk_edge_clearance              11
-  warning  silk_over_copper                 199
-  warning  silk_overlap                     163
-  warning  text_height                      199
-  warning  track_dangling                   3
-unconnected nets (item count): GND:12, 3V3_MAIN:4, LORA_RFO:2, I2C_SDA:2, LORA_RFI_P:2
+KiCad 10.0.6 DRC of StratosCore_Claude.kicad_pcb after the 2026-09-23 refinement (docs/REFINEMENT_2026_09_23.md)
+command: kicad-cli pcb drc --format json --severity-all --schematic-parity --all-track-errors
+violations reported: 318 (errors 199), unconnected: 5, schematic parity: 0
+note: KiCad caps each violation type at 199 reported items; a count of exactly 199 is a lower bound
+  error    solder_mask_bridge               199 (capped; only U30 ICM-42688-P and U32 BMP581 common no-mask openings)
+  warning  silk_edge_clearance              6
+  warning  silk_over_copper                 76
+  warning  silk_overlap                     36
+  warning  track_dangling                   1   (LORA_RFI_P stub, RF blocker)
+unconnected (5): GND U2 pads 3/8 (USB ESD), GND U3 pad 8 (eFuse), GND U24 pad 2 (TXU0202), LORA_RFO (U40.23), LORA_RFI_P (U40.21)
+before (same command, commit e1f75a3): 580 violations (1 error), 11 unconnected, parity 0 -- see kicad/reports/before_2026-09-23/

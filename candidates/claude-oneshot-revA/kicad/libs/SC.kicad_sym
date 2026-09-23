@@ -66,7 +66,7 @@
 (symbol "TXU0202DCU" (pin_names (offset 1.016)) (exclude_from_sim no) (in_bom yes) (on_board yes)
   (property "Reference" "U" (at -7.62 11.43 0) (effects (font (size 1.27 1.27)) (justify left bottom)))
   (property "Value" "TXU0202DCU" (at -7.62 -11.43 0) (effects (font (size 1.27 1.27)) (justify left top)))
-  (property "Footprint" "Package_SO:VSSOP-8_2.3x2mm_P0.5mm" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes)))
+  (property "Footprint" "SC:TI_DCU0008A_VSSOP-8_2.3x2mm_P0.5mm_TXU0202" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (property "Datasheet" "https://www.ti.com/lit/ds/symlink/txu0202.pdf (SCES942A pin table; A1->B1Y, B2->A2Y)" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (property "Description" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (symbol "TXU0202DCU_0_1" (rectangle (start -7.62 10.16) (end 7.62 -10.16) (stroke (width 0.254) (type default)) (fill (type background))))
