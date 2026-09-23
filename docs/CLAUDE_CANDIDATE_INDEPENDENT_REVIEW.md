@@ -4,7 +4,7 @@ Review date: 2026-09-23. Reviewed commit: `e0efd1071a47e68cb20cd15a8e71ae4ae0c7c
 
 ## Disposition
 
-The candidate is substantial and useful as an editable review target: a 12-page KiCad schematic, four-layer routed board, 3D assembly concept, BOM and generated reports. Keep it separate from the authoritative `hardware/` baseline. **Astra may start a review-only task now** to inspect it in KiCad and return a prioritized engineering issue list. The final implementation handoff in [ASTRA_HANDOFF.md](ASTRA_HANDOFF.md) remains **NOT READY**. No manufacturing output or battery-powered prototype is approved.
+The candidate is substantial and useful as an editable review target: a 12-page KiCad schematic, four-layer routed board, 3D assembly concept, BOM and generated reports. Keep it separate from the authoritative `hardware/` baseline. Astra may now inspect and correct issues that are directly supported by approved requirements and manufacturer evidence, following the bounded [candidate refinement prompt](ASTRA_CANDIDATE_REFINEMENT_PROMPT.md). The final implementation handoff in [ASTRA_HANDOFF.md](ASTRA_HANDOFF.md) remains **NOT READY**. No manufacturing output or battery-powered prototype is approved.
 
 ## Independent checks
 
@@ -17,13 +17,13 @@ KiCad 10.0.6 was run afresh against `candidates/claude-oneshot-revA/kicad/Strato
 | Unconnected items | 11 | Includes RF stubs and power/I2C/GND links; the board is not fully routed. |
 | Schematic/PCB parity | 0 reported issues | This checks correspondence, not electrical correctness or manufacturability. |
 
-The [MEMSIC MMC5983MA Rev A land pattern, p.20](https://www.memsic.com/Public/Uploads/uploadfile/files/20220119/MMC5983MADatasheetRevA.pdf) gives 2.550 mm centre-to-centre across opposite outer pads. The baseline footprint in `hardware/footprints/` places those centres at ±1.05 mm, causing adjacent corner pads to overlap by 0.075 mm. This is a **baseline blocker**; the candidate's ±1.275 mm correction is a plausible starting point, still requiring independent pin-1/orientation, mask/paste and assembler review.
+The [MEMSIC MMC5983MA Rev A land pattern, p.20](https://www.memsic.com/Public/Uploads/uploadfile/files/20220119/MMC5983MADatasheetRevA.pdf) gives 2.550 mm centre-to-centre across opposite outer pads. The former baseline footprint placed those centres at ±1.05 mm, causing adjacent corner pads to overlap by 0.075 mm. The baseline is corrected in commit `9e909f3`; the candidate's embedded footprint must still be checked against it and reviewed for pin-1/orientation, mask/paste and assembler process.
 
-The [Bosch BMP581 DS004-13, §8.2 Fig.32](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp581-ds004.pdf) gives 1.525 mm centre-to-centre and at least 0.2 mm between pads. The baseline footprint uses ±0.6 mm and leaves about 0.0375 mm at corner neighbours. This is another **baseline blocker**; the candidate's ±0.7625 mm correction must be checked against the drawing's bottom-view orientation and then reviewed for assembly. Earlier status saying these two baseline footprints passed an independent dimensional review was incorrect and must not be treated as release evidence.
+The [Bosch BMP581 DS004-13, §8.2 Fig.32](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp581-ds004.pdf) gives 1.525 mm centre-to-centre and at least 0.2 mm between pads. The former baseline used ±0.6 mm and left about 0.0375 mm at corner neighbours. The baseline is corrected in commit `9e909f3`; compare the candidate's embedded pattern against the drawing's bottom-view orientation and retain assembler mask/paste review as open.
 
 ## Follow-up baseline correction (2026-09-23)
 
-The [correction record](FOOTPRINT_CORRECTIONS_2026_09_23.md) documents repaired sensor land centers in `hardware/footprints/`, a new exact-DCU candidate, and rejected unpublished support drafts. This does not alter or revalidate the embedded footprints in the Claude snapshot. The findings above describe reviewed commit `e0efd10`; use the follow-up for the current baseline candidate status.
+The [correction record](FOOTPRINT_CORRECTIONS_2026_09_23.md) documents repaired sensor land centers in `hardware/footprints/`, a new exact-DCU candidate, and rejected unpublished support drafts. This does not alter or revalidate the embedded footprints in the Claude snapshot. The findings above describe reviewed commit `e0efd10`; compare each embedded candidate footprint with the current corrected baseline and primary drawings before accepting it.
 
 ## Priority engineering returns before final Astra execution
 
@@ -33,7 +33,7 @@ The [correction record](FOOTPRINT_CORRECTIONS_2026_09_23.md) documents repaired 
 4. **RF and stackup:** Complete exact SX1262 matching/filter/balun values and crystal; ADS-B detector/comparator thresholds and exposed-pad geometry; GNSS/LoRa/ADS-B antenna and return-path layouts; manufacturer-solver 50-ohm RF and 90-ohm USB geometry on a confirmed four-layer stack. The current autorouted paths are not controlled impedance or reviewed RF layouts.
 5. **CAD and orderability:** Resolve every ERC/DRC/unconnected finding; independently inspect charger/buck/backlight loops, decoupling, thermals and test-point access; reconcile exact fitted BOM/quantities, five-unit PCBA plus display cost, assembly rules and the production package. A fresh error count alone cannot close these items.
 
-## Review-only prompt for Astra
+## Original review prompt
 
 ```text
 Review StratosCore origin/main at the named commit or a newer explicitly identified commit. Read AGENTS.md, docs/DECISIONS.md, docs/PROJECT_STATUS.md, docs/CLAUDE_CANDIDATE_INDEPENDENT_REVIEW.md and candidates/claude-oneshot-revA/docs/ISSUES.md. Open candidates/claude-oneshot-revA/kicad/StratosCore_Claude.kicad_pro in KiCad 10. This candidate is for comparison, not the approved hardware baseline.

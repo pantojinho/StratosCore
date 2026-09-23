@@ -7,7 +7,8 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | Document | Purpose |
 | --- | --- |
 | [Footprint corrections](FOOTPRINT_CORRECTIONS_2026_09_23.md) | Corrected sensor/DCU geometry, rejected local drafts and reproducible clearance checks |
-| [Claude candidate independent review](CLAUDE_CANDIDATE_INDEPENDENT_REVIEW.md) | Fresh KiCad triage and review-only Astra prompt |
+| [Claude candidate independent review](CLAUDE_CANDIDATE_INDEPENDENT_REVIEW.md) | Fresh KiCad triage, original findings and correction context |
+| [Astra candidate refinement prompt](ASTRA_CANDIDATE_REFINEMENT_PROMPT.md) | Start Astra on the Claude PCB candidate now; fix evidenced issues and return unresolved engineering gates |
 | [Project status](PROJECT_STATUS.md) | Current phase, completed work, remaining gates and ordered next work |
 | [Pre-Astra workboard](PRE_ASTRA_WORKBOARD.md) | Task IDs, dependencies, owners, parallel waves and objective closure evidence |
 | [Swarm protocol](SWARM_PROTOCOL.md) | Multi-agent branches, file ownership, status, review, integration and master prompt |
