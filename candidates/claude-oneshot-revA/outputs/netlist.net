@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "D:\\git\\StratosCore\\.claude\\worktrees\\pcb-3d-models-display-c941dd\\candidates\\claude-oneshot-revA\\kicad\\StratosCore_Claude.kicad_sch")
-		(date "2026-09-23T05:39:34")
+		(date "2026-09-23T09:36:22")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -4725,12 +4725,12 @@
 		(comp
 			(ref "L2")
 			(value "2.2uH XFL4020-222MEB")
-			(footprint "Inductor_SMD:L_Coilcraft_XxL4020")
+			(footprint "SC:L_Coilcraft_XxL4020")
 			(fields
 				(field
 					(name "MPN") "XFL4020-222MEB")
 				(field
-					(name "Footprint") "Inductor_SMD:L_Coilcraft_XxL4020")
+					(name "Footprint") "SC:L_Coilcraft_XxL4020")
 				(field
 					(name "Datasheet")
 				)
@@ -7870,12 +7870,12 @@
 		(comp
 			(ref "L3")
 			(value "10uH LPS4018-103MRC")
-			(footprint "Inductor_SMD:L_Coilcraft_LPS4018")
+			(footprint "SC:L_Coilcraft_LPS4018")
 			(fields
 				(field
 					(name "MPN") "LPS4018-103MRC")
 				(field
-					(name "Footprint") "Inductor_SMD:L_Coilcraft_LPS4018")
+					(name "Footprint") "SC:L_Coilcraft_LPS4018")
 				(field
 					(name "Datasheet")
 				)
@@ -9474,7 +9474,7 @@
 		(comp
 			(ref "U33")
 			(value "SHT40-AD1B-R2")
-			(footprint "Sensor_Humidity:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad")
+			(footprint "SC:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad")
 			(fields
 				(field
 					(name "MPN") "SHT40-AD1B-R2")
@@ -9483,7 +9483,7 @@
 				(field
 					(name "Source") "Sensirion SHT4x v7.3")
 				(field
-					(name "Footprint") "Sensor_Humidity:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad")
+					(name "Footprint") "SC:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad")
 				(field
 					(name "Datasheet")
 				)

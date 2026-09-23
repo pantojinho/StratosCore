@@ -2027,7 +2027,7 @@
   (uuid "f2670d8f-3658-5c45-857e-4f493cc6e890")
   (property "Reference" "L2" (at 74.93 45.72 0) (effects (font (size 1.27 1.27)) (justify left)))
   (property "Value" "2.2uH XFL4020-222MEB" (at 74.93 48.26 0) (effects (font (size 1.27 1.27)) (justify left)))
-  (property "Footprint" "Inductor_SMD:L_Coilcraft_XxL4020" (at 73.66 46.99 0) (effects (font (size 1.27 1.27)) (hide yes)))
+  (property "Footprint" "SC:L_Coilcraft_XxL4020" (at 73.66 46.99 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (property "MPN" "XFL4020-222MEB" (at 73.66 46.99 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (pin "1" (uuid "07d03efe-d760-5dfa-8dd3-45043f4c5aef"))(pin "2" (uuid "5c7ace0c-358a-5c4f-85f2-4598ee921ef2"))
   (instances (project "StratosCore_Claude" (path "/228046b9-97ff-5406-9bfc-6ccddcf60c75/f2466496-680a-529a-af82-cabb9e56ad5d" (reference "L2") (unit 1)))))

@@ -273,6 +273,47 @@ def display_outline(d: Path, standoff: float):
     return name
 
 
+KFP_DIR = Path("C:/Program Files/KiCad/10.0/share/kicad/footprints")
+# footprint -> 3D model for footprints whose model is missing from the KiCad 10.0.6 install
+MODEL_FIX = {
+    "Bosch_BMP581_LGA-10_2x2mm_CORRECTED": f"{M3D}/Bosch_BMP581_LGA-10_2x2mm_CORRECTED.step",
+    "MEMSIC_MMC5983MA_LGA-16_3x3mm_P0.5mm_CORRECTED": f"{M3D}/MEMSIC_MMC5983MA_LGA-16_3x3mm_P0.5mm_CORRECTED.step",
+    "TDK_ICM-42688-P_LGA-14_3x2.5mm_P0.5mm": f"{M3D}/TDK_ICM-42688-P_LGA-14_3x2.5mm_P0.5mm.step",
+    "TI_TPD1E0B04DPYR_X1SON-2_DPY0002A": f"{M3D}/TI_TPD1E0B04DPYR_X1SON-2_DPY0002A.step",
+    "u-blox_MAX-M10S-00B_LCC-18_10.1x9.7mm": f"{M3D}/u-blox_MAX-M10S-00B_LCC-18_10.1x9.7mm.step",
+    "TI_RPW0010A_VQFN-HR-10_2x2mm_P0.45mm": f"{M3D}/TI_RPW0010A_VQFN-HR-10_2x2mm_P0.45mm.step",
+    "TI_RWB0012B_X2QFN-12_1.6x1.6mm_TUSB320LAI": f"{M3D}/TI_RWB0012B_X2QFN-12_1.6x1.6mm_TUSB320LAI.step",
+    "TI_RGT0016A_VQFN-16_3x3mm_EP1.75x1.75_TPS62130A":
+        "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/UQFN-16-1EP_3x3mm_P0.5mm_EP1.75x1.75mm.step",
+}
+# KiCad library footprints copied into the project library only to attach an existing 3D model
+KICAD_COPIES = {
+    ("Inductor_SMD", "L_Coilcraft_LPS4018"): f"{M3D}/L_Coilcraft_LPS4018_SC.step",
+    ("Inductor_SMD", "L_Coilcraft_XxL4020"): f"{M3D}/L_Coilcraft_XxL4020_SC.step",
+    ("Sensor_Humidity", "Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad"):
+        f"{M3D}/Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad_SC.step",
+}
+
+
+def _set_model(text: str, model: str) -> str:
+    import re as _re
+    t = _re.sub(r'\s*\(model\s+"[^"]*"(?:[^()]|\([^()]*(?:\([^()]*\))*[^()]*\))*\)', "", text)
+    t = t.rstrip()
+    assert t.endswith(")")
+    return t[:-1] + (f'  (model "{model}" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))\n)\n')
+
+
+def fix_models(d: Path):
+    """Attach existing 3D models (KiCad library or project envelopes) to project footprints."""
+    for name, model in MODEL_FIX.items():
+        f = d / f"{name}.kicad_mod"
+        if f.exists():
+            f.write_text(_set_model(f.read_text(encoding="utf-8"), model), encoding="utf-8")
+    for (lib, name), model in KICAD_COPIES.items():
+        src = (KFP_DIR / f"{lib}.pretty" / f"{name}.kicad_mod").read_text(encoding="utf-8")
+        (d / f"{name}.kicad_mod").write_text(_set_model(src, model), encoding="utf-8")
+
+
 def corrected_from_repo(d: Path, repo_fp: Path, new_name: str, mapping: dict, note: str):
     """Copy a repository footprint and move pad centres whose |coordinate| equals a key of
     `mapping` to the mapped magnitude (sign kept). Used for the MMC5983MA and BMP581 land

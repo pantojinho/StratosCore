@@ -3293,7 +3293,7 @@
   (uuid "03f46178-4493-5266-b935-ad52dacc738f")
   (property "Reference" "L3" (at 71.12 168.91 0) (effects (font (size 1.27 1.27)) (justify left)))
   (property "Value" "10uH LPS4018-103MRC" (at 71.12 171.45 0) (effects (font (size 1.27 1.27)) (justify left)))
-  (property "Footprint" "Inductor_SMD:L_Coilcraft_LPS4018" (at 69.85 170.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
+  (property "Footprint" "SC:L_Coilcraft_LPS4018" (at 69.85 170.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (property "MPN" "LPS4018-103MRC" (at 69.85 170.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (pin "1" (uuid "222674d5-7462-5a19-b3be-e487e5fd99bf"))(pin "2" (uuid "714b555f-2750-52ff-8793-bdff7bcbb419"))
   (instances (project "StratosCore_Claude" (path "/228046b9-97ff-5406-9bfc-6ccddcf60c75/2dd3b7c1-6d8f-5db6-8547-d9ea89d5cabc" (reference "L3") (unit 1)))))

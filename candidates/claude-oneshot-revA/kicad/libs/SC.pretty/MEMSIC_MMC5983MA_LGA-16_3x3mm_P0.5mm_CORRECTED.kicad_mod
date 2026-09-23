@@ -47,4 +47,5 @@
 	(pad "14" smd rect (at 1.275 0.25) (size 0.45 0.3) (layers "F.Cu" "F.Mask" "F.Paste"))
 	(pad "15" smd rect (at 1.275 -0.25) (size 0.45 0.3) (layers "F.Cu" "F.Mask" "F.Paste"))
 	(pad "16" smd rect (at 1.275 -0.75) (size 0.45 0.3) (layers "F.Cu" "F.Mask" "F.Paste"))
+  (model "${KIPRJMOD}/libs/SC.3dshapes/MEMSIC_MMC5983MA_LGA-16_3x3mm_P0.5mm_CORRECTED.step" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
 )

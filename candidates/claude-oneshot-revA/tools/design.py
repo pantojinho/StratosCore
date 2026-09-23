@@ -320,7 +320,7 @@ def build() -> Design:
            "3": "BUCK_SW", "14": "3V3_MAIN", "5": "BUCK_FB", "4": "BUCK_PG", "7": "GND", "8": "GND",
            "9": "BUCK_SS", "6": "GND", "15": "GND", "16": "GND", "17": "GND"},
           mpn="TPS62130ARGTR", source="TI SLVSAG7F")
-    d.add("L2", "Device:L", "2.2uH XFL4020-222MEB", "Inductor_SMD:L_Coilcraft_XxL4020",
+    d.add("L2", "Device:L", "2.2uH XFL4020-222MEB", f"{PLIB}:L_Coilcraft_XxL4020",
           {"1": "BUCK_SW", "2": "3V3_MAIN"}, mpn="XFL4020-222MEB")
     d.R("R27", "100k", "PACK_P", "BUCK_EN")
     d.C("C20", "10uF 25V X7R", "PACK_P", fp="C0805")
@@ -456,7 +456,7 @@ def build() -> Design:
     d.add("U16", f"{PLIB}:TPS61169", "TPS61169DCKR", CUSTOM["TPS61169"]["fp"],
           {"5": "3V3_MAIN", "4": "LCD_BL_PWM", "1": "BL_SW", "3": "LED_K", "2": "GND"}, mpn="TPS61169DCKR",
           source="TI SNVSA40B")
-    d.add("L3", "Device:L", "10uH LPS4018-103MRC", "Inductor_SMD:L_Coilcraft_LPS4018",
+    d.add("L3", "Device:L", "10uH LPS4018-103MRC", f"{PLIB}:L_Coilcraft_LPS4018",
           {"1": "3V3_MAIN", "2": "BL_SW"}, mpn="LPS4018-103MRC")
     d.add("D1", "Device:D_Schottky", "60V Schottky TBD", "Diode_SMD:D_SOD-123F", {"1": "LED_A", "2": "BL_SW"},
           status="exact 60 V-class part TBD (open)")
@@ -521,7 +521,7 @@ def build() -> Design:
     d.C("C35", "100nF", "3V3_MAIN")
     d.C("C36", "100nF", "3V3_MAIN")
     d.g("rh")
-    d.add("U33", "Sensor_Humidity:SHT4x", "SHT40-AD1B-R2", "Sensor_Humidity:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad",
+    d.add("U33", "Sensor_Humidity:SHT4x", "SHT40-AD1B-R2", f"{PLIB}:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad",
           {"1": "I2C_SDA", "2": "I2C_SCL", "3": "3V3_MAIN", "4": "GND"}, mpn="SHT40-AD1B-R2", status="LOCKED",
           source="Sensirion SHT4x v7.3")
     d.C("C37", "100nF", "3V3_MAIN")

@@ -932,7 +932,7 @@
   (uuid "9a3a0623-9607-501b-a0cb-eba623d71314")
   (property "Reference" "U33" (at 264.16 45.72 0) (effects (font (size 1.27 1.27)) (justify left)))
   (property "Value" "SHT40-AD1B-R2" (at 264.16 48.26 0) (effects (font (size 1.27 1.27)) (justify left)))
-  (property "Footprint" "Sensor_Humidity:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad" (at 271.78 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
+  (property "Footprint" "SC:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad" (at 271.78 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (property "MPN" "SHT40-AD1B-R2" (at 271.78 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (property "Status" "LOCKED" (at 271.78 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (property "Source" "Sensirion SHT4x v7.3" (at 271.78 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))

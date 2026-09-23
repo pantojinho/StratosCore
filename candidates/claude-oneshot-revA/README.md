@@ -3,6 +3,19 @@
 > **Status: CANDIDATE FOR COMPARISON — NOT FOR MANUFACTURE, NOT A BASELINE.**
 > Produced 2026-09-23 at the owner's explicit request ("1 shot" schematic, PCB and 3D with the display) to be compared with the GPT Astra pass. `docs/ASTRA_HANDOFF.md` is still **NOT READY**; nothing here closes a gate in `docs/PROJECT_STATUS.md`. Battery safety (O05) needs a qualified human reviewer — **do not energize this design with cells.** The repository baseline in `hardware/` is untouched.
 
+| Front (display) | Back (2S 21700 cells) | PCB top | Enclosure concept |
+| --- | --- | --- | --- |
+| ![3D front](images/render_iso.png) | ![3D back](images/render_iso_back.png) | ![Top](images/render_top.png) | ![Enclosure](images/enclosure_iso.png) |
+
+All 12 schematic sheets are in [`images/`](images/) as PNG (`schematic_00_root.png` ... `schematic_11_mechanical.png`) and in [`docs/schematic.pdf`](docs/schematic.pdf).
+
+## Open it in KiCad
+
+1. Install **KiCad 10** and download/clone the repository.
+2. Open `kicad/StratosCore_Claude.kicad_pro`. Symbols, footprints and 3D models used by the project live in `kicad/libs/` (`SC.kicad_sym`, `SC.pretty`, `SC.3dshapes`) and are referenced through `${KIPRJMOD}`; standard KiCad parts come from the KiCad 10 install.
+3. Schematic: root sheet -> double-click a sheet box. PCB: open the board, **Alt+3** for the 3D view (display envelope 5 mm above the board, 2S cells below).
+4. Other CAD tools: unzip `outputs/StratosCore_Claude_3D_STEP.zip` (board + display + cells, full assembly with enclosure, enclosure parts).
+
 ## What is in this folder
 
 | Path | Content |
@@ -14,6 +27,7 @@
 | `docs/ISSUES.md` | **Findings against the repo baseline (incl. 2 footprint blockers), open gates, layout limitations** |
 | `outputs/` | Renders (top/bottom/iso), `StratosCore_Claude_3D_STEP.zip` (board STEP with display + 2S cells, full assembly STEP with the enclosure, enclosure parts), assembly SVG views, layer PDF, BOM, review-only positions, DRC summary |
 | `mech/` | Printed enclosure concept (front bezel with display window, back shell) |
+| `images/` | README images: 3D renders, enclosure views, copper layers, all schematic sheets |
 | `tools/` | Reproducible generators: `design.py` (circuit), `build_sch.py`, `build_pcb.py`, `models3d.py`, `assemble.py`, `export.py` |
 
 ## Design summary

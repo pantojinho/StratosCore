@@ -77,4 +77,5 @@
 	(pad "10" smd rect (at 4.400 -4.750) (size 0.700 1.800) (layers "F.Cu" "F.Mask"))
 	(pad "" smd rect (at 4.400 -5.550) (size 0.700 1.400) (layers "F.Paste"))
 	(pad "" smd rect (at 4.400 -4.400) (size 0.500 0.900) (layers "F.Paste"))
+  (model "${KIPRJMOD}/libs/SC.3dshapes/u-blox_MAX-M10S-00B_LCC-18_10.1x9.7mm.step" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
 )

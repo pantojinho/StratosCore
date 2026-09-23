@@ -60,6 +60,7 @@ def build_libs(extra_fp_builders=()):
     fpgen.corrected_from_repo(pretty, hw / "Bosch_BMP581_LGA-10_2x2mm.kicad_mod",
                               "Bosch_BMP581_LGA-10_2x2mm_CORRECTED", {0.6: 0.7625},
                               "CORRECTED (one-shot A14): pad centres +/-0.7625 = Bosch DS004-13 Fig.32 1.525 centre-to-centre; repo used +/-0.6 (0.04 mm corner gap). Pin-1 orientation to re-verify.")
+    fpgen.fix_models(pretty)
     for b in extra_fp_builders:
         b(libdir / f"{D.PLIB}.pretty")
     return (libdir / f"{D.PLIB}.kicad_sym").read_text(encoding="utf-8")

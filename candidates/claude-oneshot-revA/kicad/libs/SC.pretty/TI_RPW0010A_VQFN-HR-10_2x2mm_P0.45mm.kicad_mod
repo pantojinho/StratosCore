@@ -19,5 +19,5 @@
   (fp_rect (start -1.4500 -1.4500) (end 1.4500 1.4500) (stroke (width 0.05) (type default)) (fill no) (layer "F.CrtYd") (uuid "a9b6eafb-bc32-5f53-900e-6154d503609a"))
   (fp_rect (start -1.3500 -1.3500) (end 1.3500 1.3500) (stroke (width 0.1) (type default)) (fill no) (layer "F.Fab") (uuid "5d9cfb7a-921e-509a-9b9c-275de03646de"))
   (fp_circle (center -1.3500 -1.3500) (end -1.2700 -1.3500) (stroke (width 0.16) (type default)) (fill yes) (layer "F.SilkS") (uuid "20e50652-93f5-5071-aa04-753d378d5509"))
-  (model "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/Texas_RPU0010A_VQFN-HR-10_2x2mm_P0.5mm.step" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
+  (model "${KIPRJMOD}/libs/SC.3dshapes/TI_RPW0010A_VQFN-HR-10_2x2mm_P0.45mm.step" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
 )

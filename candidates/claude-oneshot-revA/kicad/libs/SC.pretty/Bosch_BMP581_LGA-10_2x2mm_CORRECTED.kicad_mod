@@ -78,4 +78,5 @@
 	(pad "" smd rect (at 0 -0.7625) (size 0.3 0.325) (layers "F.Paste"))
 	(pad "10" smd rect (at -0.5 -0.7625) (size 0.3 0.325) (layers "F.Cu"))
 	(pad "" smd rect (at -0.5 -0.7625) (size 0.3 0.325) (layers "F.Paste"))
+  (model "${KIPRJMOD}/libs/SC.3dshapes/Bosch_BMP581_LGA-10_2x2mm_CORRECTED.step" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))
 )

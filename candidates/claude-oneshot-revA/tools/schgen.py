@@ -24,9 +24,7 @@ from pathlib import Path
 
 
 def _strip_ws(text: str) -> str:
-    return re.sub(r"[ 	]+
-", "
-", text)
+    return "\n".join(line.rstrip(" \t") for line in text.split("\n"))
 
 GRID = 1.27
 DIRS = {0: (1, 0), 90: (0, -1), 180: (-1, 0), 270: (0, 1)}
