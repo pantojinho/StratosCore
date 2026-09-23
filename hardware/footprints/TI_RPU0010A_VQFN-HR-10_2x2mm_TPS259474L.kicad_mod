@@ -3,7 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "10.0")
 	(layer "F.Cu")
-	(descr "VQFN-HR, 10 Pin (https://www.ti.com/lit/ds/symlink/tps62912.pdf#page=39)")
+	(descr "REJECTED FOR TPS259474LRPWR: wrong RPU package; exact RPW polygon/stencil review required. VQFN-HR, 10 Pin (https://www.ti.com/lit/ds/symlink/tps62912.pdf#page=39)")
 	(tags "VQFN-HR NO LEAD")
 	(property "Reference" "REF**"
 		(at 0 -2 0)

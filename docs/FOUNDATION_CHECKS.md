@@ -1,6 +1,6 @@
 # Architecture validation record
 
-Phase: Rev A pre-KiCad engineering closure, last reviewed 2026-09-21. These are documentation, file-format and host-model checks, not hardware qualification results.
+Historical foundation snapshot: 2026-09-21. Later [footprint corrections](FOOTPRINT_CORRECTIONS_2026_09_23.md) invalidate the MMC5983MA/BMP581 dimensional-pass claims below; current candidate readiness is in PROJECT_STATUS.md. The separate Claude PCB is now present under candidates/, outside this historical scope. These are documentation, file-format and host-model checks, not hardware qualification results.
 
 | Check | Result |
 | --- | --- |
@@ -20,6 +20,6 @@ Phase: Rev A pre-KiCad engineering closure, last reviewed 2026-09-21. These are 
 | Whitespace / patch integrity | `git diff --check` clean at review |
 | Scope | Gated `.kicad_sch` hierarchy only; no completed circuit, `.kicad_pcb`, Gerber, drill or legacy code/circuit import |
 
-The tracked ERC report is [hardware/kicad/reports/erc-architecture.rpt](../hardware/kicad/reports/erc-architecture.rpt). It covers the root hierarchy, ESP32 compute entry and reviewed sensor subset. The only project-stage changes from the standard ERC profile are temporary ignores for `isolated_pin_label` and `single_global_label` while several architecture nets still have one endpoint. Restore these two severities to `warning` as peer sheets are populated; the report also enumerates KiCad's unchanged standard ignores. MMC5983MA and BMP581 still use logical pin carriers with no assigned footprint; their physical candidates passed dimensional reviews but remain gated until assembler/process review. DRC is not applicable because no PCB exists. RP2040 target firmware is not implemented; the current ADS-B test is a host timing model.
+The tracked ERC report is [hardware/kicad/reports/erc-architecture.rpt](../hardware/kicad/reports/erc-architecture.rpt). It covers the root hierarchy, ESP32 compute entry and reviewed sensor subset. The only project-stage changes from the standard ERC profile are temporary ignores for `isolated_pin_label` and `single_global_label` while several architecture nets still have one endpoint. Restore these two severities to `warning` as peer sheets are populated; the report also enumerates KiCad's unchanged standard ignores. MMC5983MA and BMP581 still use logical pin carriers with no assigned footprint; their historical dimensional-review claims were superseded by the 2026-09-23 corrections and the revised candidates still require independent/process review. DRC was not applicable to that historical baseline; the separate Claude candidate now has its own DRC report. RP2040 target firmware is not implemented; the current ADS-B test is a host timing model.
 
 Battery safety, RF performance, GNSS high-altitude operation, display connectors/samples, enclosure fit and the owner's 8-hour primary-use runtime target remain unvalidated and are tracked in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md). Downloaded reference inspection files remain outside the repository; only independently authored validation code and cited test fixtures are tracked.

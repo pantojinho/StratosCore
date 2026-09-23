@@ -2,7 +2,7 @@
 	(version 20260206)
 	(generator "kicad-footprint-generator")
 	(layer "F.Cu")
-	(descr "VSSOP, 8 Pin (https://www.jedec.org/standards-documents/docs/mo-187-f)")
+	(descr "REJECTED FOR TXU0202DCUR: wrong package and pitch; use reviewed DCU candidate. VSSOP, 8 Pin (https://www.jedec.org/standards-documents/docs/mo-187-f)")
 	(tags "VSSOP SO JEDEC-MO-187-AA Texas_DGK0008A")
 	(property "Reference" "REF**"
 		(at 0 -2.45 0)
