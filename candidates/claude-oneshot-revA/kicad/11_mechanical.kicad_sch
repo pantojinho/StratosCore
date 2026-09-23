@@ -1,0 +1,253 @@
+(kicad_sch (version 20250114) (generator "stratos_claude_oneshot") (generator_version "10.0")
+  (uuid "017ddfb9-581a-5cb2-aa91-3c6c362f5121")
+  (paper "A3")
+  (title_block (title "11 Mounting holes, fiducials") (rev "A-claude-oneshot-1") (company "StratosCore (CERN-OHL-P-2.0) - Claude one-shot candidate") (comment 1 "CANDIDATE - NOT FOR MANUFACTURE - see README gates"))
+  (lib_symbols
+    (symbol "Mechanical:MountingHole"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "H"
+			(at 0 5.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "MountingHole"
+			(at 0 3.175 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Mounting Hole without connection"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "mounting hole"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "MountingHole*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "MountingHole_0_1"
+			(circle
+				(center 0 0)
+				(radius 1.27)
+				(stroke
+					(width 1.27)
+					(type default)
+				)
+				(fill
+					(type none)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+    (symbol "Mechanical:Fiducial"
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(duplicate_pin_numbers_are_jumpers no)
+		(property "Reference" "FID"
+			(at 0 5.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Fiducial"
+			(at 0 3.175 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Fiducial Marker"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_keywords" "fiducial marker"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_fp_filters" "Fiducial*"
+			(at 0 0 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(symbol "Fiducial_0_1"
+			(circle
+				(center 0 0)
+				(radius 1.27)
+				(stroke
+					(width 0.508)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(embedded_fonts no)
+	)
+  )
+  (symbol (lib_id "Mechanical:MountingHole") (at 21.59 34.29 0) (unit 1)
+  (exclude_from_sim no) (in_bom no) (on_board yes) (dnp no)
+  (uuid "6995f75f-cd5b-51e5-810b-d8b2134ae8f1")
+  (property "Reference" "H1" (at 22.86 33.02 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Value" "M2.5" (at 22.86 35.56 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5" (at 21.59 34.29 0) (effects (font (size 1.27 1.27)) (hide yes)))
+
+  (instances (project "StratosCore_Claude" (path "/228046b9-97ff-5406-9bfc-6ccddcf60c75/017ddfb9-581a-5cb2-aa91-3c6c362f5121" (reference "H1") (unit 1)))))
+  (symbol (lib_id "Mechanical:MountingHole") (at 33.02 34.29 0) (unit 1)
+  (exclude_from_sim no) (in_bom no) (on_board yes) (dnp no)
+  (uuid "bb3ddf7a-0cf0-5b66-baa9-e79fd51dcde9")
+  (property "Reference" "H2" (at 34.29 33.02 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Value" "M2.5" (at 34.29 35.56 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5" (at 33.02 34.29 0) (effects (font (size 1.27 1.27)) (hide yes)))
+
+  (instances (project "StratosCore_Claude" (path "/228046b9-97ff-5406-9bfc-6ccddcf60c75/017ddfb9-581a-5cb2-aa91-3c6c362f5121" (reference "H2") (unit 1)))))
+  (symbol (lib_id "Mechanical:MountingHole") (at 33.02 41.91 0) (unit 1)
+  (exclude_from_sim no) (in_bom no) (on_board yes) (dnp no)
+  (uuid "71855de2-039a-5759-b6c2-77ead5473c2e")
+  (property "Reference" "H3" (at 34.29 40.64 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Value" "M2.5" (at 34.29 43.18 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Footprint" "MountingHole:MountingHole_2.7mm_M2.5" (at 33.02 41.91 0) (effects (font (size 1.27 1.27)) (hide yes)))
+
+  (instances (project "StratosCore_Claude" (path "/228046b9-97ff-5406-9bfc-6ccddcf60c75/017ddfb9-581a-5cb2-aa91-3c6c362f5121" (reference "H3") (unit 1)))))
+  (symbol (lib_id "Mechanical:Fiducial") (at 33.02 48.26 0) (unit 1)
+  (exclude_from_sim no) (in_bom no) (on_board yes) (dnp no)
+  (uuid "390fccee-2b75-554c-b8f3-0d22045719eb")
+  (property "Reference" "FID1" (at 34.29 46.99 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Value" "Fiducial" (at 34.29 49.53 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 33.02 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
+
+  (instances (project "StratosCore_Claude" (path "/228046b9-97ff-5406-9bfc-6ccddcf60c75/017ddfb9-581a-5cb2-aa91-3c6c362f5121" (reference "FID1") (unit 1)))))
+  (symbol (lib_id "Mechanical:Fiducial") (at 33.02 55.88 0) (unit 1)
+  (exclude_from_sim no) (in_bom no) (on_board yes) (dnp no)
+  (uuid "ba1c785e-159f-5680-af9d-5c371ab285e3")
+  (property "Reference" "FID2" (at 34.29 54.61 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Value" "Fiducial" (at 34.29 57.15 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 33.02 55.88 0) (effects (font (size 1.27 1.27)) (hide yes)))
+
+  (instances (project "StratosCore_Claude" (path "/228046b9-97ff-5406-9bfc-6ccddcf60c75/017ddfb9-581a-5cb2-aa91-3c6c362f5121" (reference "FID2") (unit 1)))))
+  (symbol (lib_id "Mechanical:Fiducial") (at 33.02 62.23 0) (unit 1)
+  (exclude_from_sim no) (in_bom no) (on_board yes) (dnp no)
+  (uuid "a4a3b3b0-9733-5967-8d96-0f55d26e58ee")
+  (property "Reference" "FID3" (at 34.29 60.96 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Value" "Fiducial" (at 34.29 63.5 0) (effects (font (size 1.27 1.27)) (justify left)))
+  (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 33.02 62.23 0) (effects (font (size 1.27 1.27)) (hide yes)))
+
+  (instances (project "StratosCore_Claude" (path "/228046b9-97ff-5406-9bfc-6ccddcf60c75/017ddfb9-581a-5cb2-aa91-3c6c362f5121" (reference "FID3") (unit 1)))))
+  (text "11 Mounting holes, fiducials" (exclude_from_sim no) (at 20.32 7.62 0) (effects (font (size 2.5 2.5) (bold yes)) (justify left top)) (uuid "0fe59b07-edaa-5385-b0f3-3aa6d5fcf0ef"))
+  (text "Three M2.5 mounting holes in the left strip (the 2S holder covers the back for x > 14.7 mm; holder is fixed to the rear shell); three fiducials." (exclude_from_sim no) (at 20.32 13.97 0) (effects (font (size 1.27 1.27)) (justify left top)) (uuid "f77c25fe-abad-5514-b58f-df42b3723d7d"))
+  (embedded_fonts no)
+)

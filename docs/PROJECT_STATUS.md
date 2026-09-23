@@ -24,6 +24,10 @@ Execution is coordinated through the [pre-Astra workboard](PRE_ASTRA_WORKBOARD.m
 | Mechanical planning | 84 x 60 mm PCB and about 88 x 64 x 37 mm two-cell enclosure are starting envelopes | Printed dummy, exact holder and display connector/sample fit remain |
 | Manufacturing plan | Four-layer Chinese PCBA workflow and release gates documented. BOM-02 (PR #168) consolidated the per-MPN sourcing evidence register 2026-09-22 (`bom/SOURCING_EVIDENCE.md`): 6 dated SNAPSHOT rows plus 19 authorized-channel CHANNEL-ONLY groups, no fabricated stock/price. The [BOM gap audit](BOM_BASELINE_GAP_AUDIT.md) counted 58 planning rows, 7 literal MPN TBDs, family-only protection, 37 supplier-ID TBDs and no planned quantities | No Gerbers, CPL or engineering parts baseline exist yet; pre-Astra baseline work is O27/BOM-01/03. DFT-01 froze 17-row pre-placement coverage; Astra still assigns references/coordinates. Purchase-time recheck remains authoritative; annotated/final orderable BOMs follow capture/review |
 
+## Out-of-baseline comparison candidate (2026-09-23)
+
+At the owner's explicit request, a complete one-shot KiCad candidate (12-sheet schematic, routed 4-layer 60 x 84 mm PCB, display/2S-cell/enclosure 3D) was generated in [`candidates/claude-oneshot-revA/`](../candidates/claude-oneshot-revA/README.md) for comparison with the Astra pass. It is **not** a baseline, does not close any gate below and keeps every unverified value `TBD`. Its [issue list](../candidates/claude-oneshot-revA/docs/ISSUES.md) records baseline defects that need independent review in `hardware/footprints/`: MMC5983MA pad centres (+/-1.05 mm vs MEMSIC 2.550 mm centre-to-centre, corner pads overlap), BMP581 pad centres (+/-0.6 mm vs Bosch 1.525 mm, 0.04 mm corner gap), TXU0202 footprint uses the DGS 3 x 3 mm package instead of DCU, TPS259474L footprint uses RPU instead of RPW, and BM12B-GHS-TBT is a vertical header, plus GPIO/expander allocation gaps (EXP_CS, SX1262 NRESET, RP2040 RUN, touch reset).
+
 ## Remaining gates before Astra
 
 | Priority | Gate | Sol/external work needed | Closure evidence |

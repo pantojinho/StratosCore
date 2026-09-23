@@ -1,0 +1,11 @@
+KiCad 10.0.6 DRC of StratosCore_Claude.kicad_pcb
+violations: 580 (errors 1), unconnected: 11, schematic parity: 0
+  error    courtyards_overlap               1
+  warning  hole_to_hole                     2
+  warning  lib_footprint_mismatch           2
+  warning  silk_edge_clearance              11
+  warning  silk_over_copper                 199
+  warning  silk_overlap                     163
+  warning  text_height                      199
+  warning  track_dangling                   3
+unconnected nets (item count): GND:12, 3V3_MAIN:4, LORA_RFO:2, I2C_SDA:2, LORA_RFI_P:2
