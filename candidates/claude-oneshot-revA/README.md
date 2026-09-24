@@ -4,6 +4,8 @@
 > Produced 2026-09-23 at the owner's explicit request ("1 shot" schematic, PCB and 3D with the display) to be compared with the GPT Astra pass. `docs/ASTRA_HANDOFF.md` is still **NOT READY**; nothing here closes a gate in `docs/PROJECT_STATUS.md`. Battery safety (O05) needs a qualified human reviewer — **do not energize this design with cells.** The repository baseline in `hardware/` is untouched.
 >
 > **2026-09-23 refinement:** evidence-backed corrections were applied inside this folder (TXU0202 exact DCU land, TPS259474L RPW stencil/fab, ICM-42688-P pin 9 to GND, U1/J5 courtyard, duplicate vias, BMP581 under-body SCL route, SHT40 SDA, 3V3 fragments, three GND islands, silkscreen). See [docs/REFINEMENT_2026_09_23.md](docs/REFINEMENT_2026_09_23.md) for evidence, before/after reports and the blockers that remain.
+>
+> **2026-09-23 GND stitch (Hermes, evening):** all three floating GND pads (U2 USB-ESD, U3.8 eFuse, U24.2 TXU0202) are now connected to the In1 plane — `unconnected` is down to 2 (the intended LoRa TBD stubs only). U7 land updated to RGT0016C. Full evidence, API pitfalls and the queued cosmetic fix for 10 U3 clearance items: [docs/GND_STITCH_2026_09_23.md](docs/GND_STITCH_2026_09_23.md).
 
 | Front (display) | Back (2S 21700 cells) | PCB top | Enclosure concept |
 | --- | --- | --- | --- |
