@@ -4,7 +4,7 @@ StratosCore is an open-source portable field, aviation, meteorological, navigati
 
 ## Current status
 
-**Rev A is in pre-KiCad hardware engineering closure.** Sol-class work is closing exact parts, electrical compatibility, application circuits, footprints, mechanical constraints and review evidence. The final Astra task is deliberately held until it can concentrate on KiCad schematic capture and PCB implementation.
+**Astra has assumed full technical leadership of Rev A (2026-09-24).** Astra owns engineering closure, candidate refinement, review and integration; Claude, Hermes, Sol and other AI agents execute bounded delegated tasks. See [Astra project control and agent handover](docs/ASTRA_PROJECT_CONTROL.md) for current responsibilities, received evidence and next actions. Final baseline implementation and manufacturing remain gated.
 
 | Complete | In progress | Externally blocked |
 | --- | --- | --- |
@@ -87,7 +87,7 @@ Potential uses include flight/vario instruments, traffic visualization, balloon 
 ## Start here
 
 1. [Project status: completed work and remaining gates](docs/PROJECT_STATUS.md)
-2. [Pre-Astra task workboard](docs/PRE_ASTRA_WORKBOARD.md)
+2. [Astra-led engineering workboard](docs/PRE_ASTRA_WORKBOARD.md)
 3. [Multi-agent swarm protocol and master prompt](docs/SWARM_PROTOCOL.md)
 4. [Engineering documentation index](docs/README.md)
 5. [Locked decisions and accepted proposals](docs/DECISIONS.md)

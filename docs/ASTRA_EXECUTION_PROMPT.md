@@ -2,7 +2,7 @@
 
 ## Status: NOT READY
 
-This is the final execution prompt template. Do not send it to Astra until [the handoff](ASTRA_HANDOFF.md) and [the workboard](PRE_ASTRA_WORKBOARD.md) both declare readiness and the frozen manifest below contains no placeholder or unresolved layout-affecting item.
+Astra already leads the project under [project control](ASTRA_PROJECT_CONTROL.md). This is the final frozen-baseline execution template; its NOT READY status does not block current engineering or candidate refinement. Do not execute this template until [the handoff](ASTRA_HANDOFF.md) and [the workboard](PRE_ASTRA_WORKBOARD.md) both declare readiness and the frozen manifest below contains no placeholder or unresolved layout-affecting item.
 
 ## Frozen input manifest
 
@@ -137,6 +137,6 @@ Final deliverables:
 Do not generate or release Gerbers, drills, CPL or a factory order package. Stop after the editable design and review package. Manufacturing release requires a separate independent review and explicit owner acceptance.
 ```
 
-## Post-Astra boundary
+## Post-implementation review boundary
 
-After Astra returns, independent electrical, battery, RF, mechanical and DFM reviews must inspect the actual implementation. Only then may the project create the final orderable BOM/CPL, fabrication/assembly outputs and owner release record.
+Astra retains project leadership after CAD implementation. Independent electrical, battery, RF, mechanical and DFM reviews must inspect the actual implementation. Only then may the project create the final orderable BOM/CPL, fabrication/assembly outputs and owner release record.

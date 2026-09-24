@@ -1,6 +1,8 @@
 # Engineering documentation index
 
-Start with [project status](PROJECT_STATUS.md). It is the concise source for what is complete, what remains and who owns each next action. [Decisions](DECISIONS.md) is the change-controlled baseline. [Astra handoff](ASTRA_HANDOFF.md) is reserved for final KiCad execution and must not be used while it says **NOT READY**.
+Start with [project status](PROJECT_STATUS.md). It is the concise source for what is complete, what remains and who owns each next action. [Astra project control](ASTRA_PROJECT_CONTROL.md) records Astra's active leadership, delegated agent roles and the received handover. [Decisions](DECISIONS.md) is the change-controlled baseline. [Astra handoff](ASTRA_HANDOFF.md) is reserved for final frozen-baseline KiCad execution and must not be executed while it says **NOT READY**.
+
+Latest independent evidence: [Astra's September 24 agent review](ASTRA_AGENT_REVIEW_2026_09_24.md), including fresh ERC/DRC and corrections to unsupported handover claims.
 
 ## Control and current status
 
@@ -8,9 +10,9 @@ Start with [project status](PROJECT_STATUS.md). It is the concise source for wha
 | --- | --- |
 | [Footprint corrections](FOOTPRINT_CORRECTIONS_2026_09_23.md) | Corrected sensor/DCU geometry, rejected local drafts and reproducible clearance checks |
 | [Claude candidate independent review](CLAUDE_CANDIDATE_INDEPENDENT_REVIEW.md) | Fresh KiCad triage, original findings and correction context |
-| [Astra candidate refinement prompt](ASTRA_CANDIDATE_REFINEMENT_PROMPT.md) | Start Astra on the Claude PCB candidate now; fix evidenced issues and return unresolved engineering gates |
+| [Astra candidate refinement prompt](ASTRA_CANDIDATE_REFINEMENT_PROMPT.md) | Guide Astra's ongoing Claude PCB candidate refinement; fix evidenced issues and return unresolved engineering gates |
 | [Project status](PROJECT_STATUS.md) | Current phase, completed work, remaining gates and ordered next work |
-| [Pre-Astra workboard](PRE_ASTRA_WORKBOARD.md) | Task IDs, dependencies, owners, parallel waves and objective closure evidence |
+| [Astra-led engineering workboard](PRE_ASTRA_WORKBOARD.md) | Task IDs, dependencies, owners, parallel waves and objective closure evidence |
 | [Swarm protocol](SWARM_PROTOCOL.md) | Multi-agent branches, file ownership, status, review, integration and master prompt |
 | [Decision register](DECISIONS.md) | Locked requirements, accepted/rejected proposals and owner decisions |
 | [Open questions](OPEN_QUESTIONS.md) | Closure evidence for every unresolved engineering item |

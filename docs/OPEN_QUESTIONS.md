@@ -2,6 +2,8 @@
 
 This file lists unresolved work only. [Project status](PROJECT_STATUS.md) sets priority; [decisions](DECISIONS.md) records accepted and rejected choices. An accepted direction remains open here when exact engineering or test evidence is still required.
 
+2026-09-24 coordination: Astra now owns engineering closure and delegates bounded tasks to other agents. [The independent handover review](ASTRA_AGENT_REVIEW_2026_09_24.md) confirms that candidate clearance/mask defects and digital implementation gaps remain open; reported proxy decisions do not close O05, display/process, RF, interface or D24 cost evidence gates. [Project control](ASTRA_PROJECT_CONTROL.md) tracks the T1–T8 follow-up queue.
+
 | ID | Status | Type / owner | Question or required closure evidence |
 | --- | --- | --- | --- |
 | O01 | THREE-LINE MODE PREPARED + SAMPLE GATE | Display / procurement + CAD | Revision-J verifies write-only three-line `101`; obtain controlled TFT-power/FPC clarification, verify XF3M fit/mode on two labeled samples, independently review connector/translator CAD and prototype TPS61169 current, brightness, faults, EMI, touch and shared-bus behavior |

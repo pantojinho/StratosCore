@@ -1,6 +1,6 @@
 # Decision register
 
-Baseline established from the owner's foundation brief; register last updated 2026-09-21. Dated evidence and sourcing snapshots retain their individual review dates. LOCKED means a product constraint, not a validated design. OPEN means selection incomplete. PROPOSED means an engineering starting point requiring validation.
+Baseline established from the owner's foundation brief; register last updated 2026-09-24. Dated evidence and sourcing snapshots retain their individual review dates. LOCKED means a product constraint, not a validated design. OPEN means selection incomplete. PROPOSED means an engineering starting point requiring validation.
 
 ## Locked baseline
 
@@ -25,7 +25,7 @@ Baseline established from the owner's foundation brief; register last updated 20
 | D17 | 3D-printed enclosure for display plus two 21700 cells | Approximately 37 mm starting thickness from the current stack study; verify with a printed dummy |
 | D18 | CERN-OHL-P-2.0 hardware; MIT original firmware | Official texts; third-party terms remain intact |
 | D19 | ADS-B receiver baseline remains RP2040 | Better architectures may be proposed with evidence; no replacement accepted |
-| D20 | Current execution priority is hardware and PCBA readiness | Sol closes evidence, selections, interfaces and review gates; Astra is reserved for efficient KiCad schematic/PCB execution after the handoff is decision-complete |
+| D20 | Current execution priority is hardware and PCBA readiness | Owner revised 2026-09-24: Astra leads the complete project, coordinates engineering and CAD, reviews and integrates results; Claude, Hermes, Sol and other AI agents execute bounded delegated tasks. Existing baseline and release gates remain mandatory |
 | D21 | The unit must operate while USB charging is active | Does not require batteryless operation; the power design must prove safe charge-under-load behavior and valid termination |
 | D22 | Run the shared peripheral I2C bus at 100 kHz and remove TUSB320LAI from that bus | Use the TUSB320LAI GPIO-mode interface. SYS-01 (PR #140, merged 2026-09-22) closed the GPIO allocation, pull-up value and cable limit; per-device off-state review and the independent net-matrix review remain engineering work |
 | D23 | Rev A is a personal, non-commercial, open-community hobby prototype | This classification does not waive applicable radio or flight rules during operation |
@@ -77,6 +77,13 @@ The display's revision-J serial straps are verified and Rev A provisionally pref
 See [legacy comparison](../references/LEGACY_PROJECTS.md). Legacy AMOLED, QMI8658, BME688, BMM350, AT6558R and UART LoRa assumptions do not apply. P07 resolves the GNSS altitude conflict with MAX-M10S-00B. P14 replaces the rejected independent-bay proposal, but remains gated by qualified battery review. ADSBee GPL reuse and MeshCore dependency licensing require review against the MIT objective.
 
 ## Accepted change records
+
+### 2026-09-24: D20 revised — Astra assumes full project leadership
+
+- **Owner acceptance:** the project owner explicitly requested that the documentation record Astra as already in control of the complete project, with Claude and Hermes acting as delegated workers.
+- **Outcome:** Astra is the technical lead, coordinator, reviewer of contributions and integrator throughout engineering closure, candidate refinement and release preparation. Sol and other AI agents also operate as bounded workers when delegated; the former Astra-only-final-CAD allocation is superseded.
+- **Scope:** governance only. No component, circuit, footprint, BOM, cost target or safety acceptance changes. D24 and qualified battery review O05 remain in force. Workers cannot accept their own results or publish to `main`.
+- **Handover:** [Astra project control](ASTRA_PROJECT_CONTROL.md) records the received agent evidence at `912894b`, unresolved discrepancies and the inherited T1–T8 queue. Candidate decision records do not silently amend the root product baseline.
 
 ### 2026-09-22: D25/D29 altitude scope revised; P27 rejected
 

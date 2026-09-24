@@ -1,5 +1,7 @@
 # Assembler mask strategy and five-unit cost snapshot (evidence package)
 
+**Astra review annotation, 2026-09-24:** [independent review](../../../../docs/ASTRA_AGENT_REVIEW_2026_09_24.md) reproduced the price arithmetic, not current prices/stock. The "absolute lower bound" and infeasibility wording below apply only to the listed channel-price scenarios, not every available supplier. PCB/assembly tariffs here are service charges, not import taxes. Mask and stencil acceptance remain open; later proxy decisions do not prove factory feasibility.
+
 Status: **research evidence for human decisions only.** The assembler (JLCPCB or another house) and the project owner decide. This note does not change any footprint, KiCad file, root document, BOM or locked decision, and it authorizes no order.
 Retrieval date for every web figure below: **2026-09-23** (web retrieval about 22:20 UTC unless stated). Prices, stock and fees change. Treat anything older than 30 days as context only (`bom/SOURCING_EVIDENCE.md` rule 2).
 Scope: the Claude one-shot candidate (`candidates/claude-oneshot-revA`), 4 layers, 60 x 84 mm, 1.6 mm, candidate stack `JLC04161H-3313` (`docs/PCB_STACKUP.md`).

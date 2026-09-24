@@ -1,0 +1,220 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-24T16:16:08",
+    "ignored_checks": [
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75",
+            "violations": [
+                {
+                    "description": "O símbolo '2N7002' não bate com a cópia existente na biblioteca 'Transistor_FET'",
+                    "items": [
+                        {
+                            "description": "Símbolo Q2 [2N7002]",
+                            "pos": {
+                                "x": 3.048,
+                                "y": 1.2065
+                            },
+                            "uuid": "03da297e-5010-5d9d-a997-5b7e20558a92"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_mismatch"
+                }
+            ]
+        },
+        {
+            "path": "/01 USB-C input/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/ddd7fc3d-5663-58e6-81c9-0891efe1ff63",
+            "violations": []
+        },
+        {
+            "path": "/02 2S battery, protection, charger/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/3ead6208-4e59-5a5e-9b5b-d711ae5c4606",
+            "violations": []
+        },
+        {
+            "path": "/03 Rails/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/f2466496-680a-529a-af82-cabb9e56ad5d",
+            "violations": []
+        },
+        {
+            "path": "/04 Compute and control/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/d51e729a-7016-54a2-a8b2-dca306d34679",
+            "violations": []
+        },
+        {
+            "path": "/05 Display and touch/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/2dd3b7c1-6d8f-5db6-8547-d9ea89d5cabc",
+            "violations": [
+                {
+                    "description": "Os pinos do tipo Bidirectional e Power output estão conectados",
+                    "items": [
+                        {
+                            "description": "Symbol U14 Pino 7 [2A2, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.2319,
+                                "y": 0.8255
+                            },
+                            "uuid": "17d11c6d-1e09-52ed-8d7b-a66f2ca17c25"
+                        },
+                        {
+                            "description": "Symbol #FLG02018 Pino 1 [Power output, Line]",
+                            "pos": {
+                                "x": 0.4318,
+                                "y": 2.667
+                            },
+                            "uuid": "a8155571-3845-55b9-995f-47d8a341e1f2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                }
+            ]
+        },
+        {
+            "path": "/06 Sensors/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/4d3a0ddd-2d54-5cce-b2a2-96e35ddb21f0",
+            "violations": [
+                {
+                    "description": "Os pinos do tipo Output e Power output estão conectados",
+                    "items": [
+                        {
+                            "description": "Symbol U32 Pino 7 [INT, Output, Line]",
+                            "pos": {
+                                "x": 2.159,
+                                "y": 0.6477
+                            },
+                            "uuid": "fb854beb-37b7-50bc-b49a-161d9d5dd3a4"
+                        },
+                        {
+                            "description": "Symbol #FLG02018 Pino 1 [Power output, Line]",
+                            "pos": {
+                                "x": 0.4318,
+                                "y": 2.667
+                            },
+                            "uuid": "a8155571-3845-55b9-995f-47d8a341e1f2"
+                        }
+                    ],
+                    "severity": "error",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Os pinos do tipo Bidirectional e Power output estão conectados",
+                    "items": [
+                        {
+                            "description": "Symbol U30 Pino 1 [AP_SDO/AD0, Bidirectional, Line]",
+                            "pos": {
+                                "x": 0.3302,
+                                "y": 0.762
+                            },
+                            "uuid": "5d43cafd-efd6-51e9-a23c-2f28dc979831"
+                        },
+                        {
+                            "description": "Symbol #FLG02018 Pino 1 [Power output, Line]",
+                            "pos": {
+                                "x": 0.4318,
+                                "y": 2.667
+                            },
+                            "uuid": "a8155571-3845-55b9-995f-47d8a341e1f2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Os pinos do tipo Bidirectional e Power output estão conectados",
+                    "items": [
+                        {
+                            "description": "Symbol U30 Pino 9 [INT2/FSYNC, Bidirectional, Line]",
+                            "pos": {
+                                "x": 0.635,
+                                "y": 0.6858
+                            },
+                            "uuid": "b8a7cbac-a22d-5b7f-8c1e-d6c923bd9eab"
+                        },
+                        {
+                            "description": "Symbol #FLG02018 Pino 1 [Power output, Line]",
+                            "pos": {
+                                "x": 0.4318,
+                                "y": 2.667
+                            },
+                            "uuid": "a8155571-3845-55b9-995f-47d8a341e1f2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                },
+                {
+                    "description": "Os pinos do tipo Bidirectional e Power output estão conectados",
+                    "items": [
+                        {
+                            "description": "Symbol U32 Pino 5 [SDO, Bidirectional, Line]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 0.6858
+                            },
+                            "uuid": "2a485efc-0d07-5987-846e-3dd94372fec1"
+                        },
+                        {
+                            "description": "Symbol #FLG02018 Pino 1 [Power output, Line]",
+                            "pos": {
+                                "x": 0.4318,
+                                "y": 2.667
+                            },
+                            "uuid": "a8155571-3845-55b9-995f-47d8a341e1f2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "pin_to_pin"
+                }
+            ]
+        },
+        {
+            "path": "/07 GNSS/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/f67da7c2-bdc5-500e-a619-b65b46898c9e",
+            "violations": []
+        },
+        {
+            "path": "/08 LoRa SX1262/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/db888a08-f384-5968-bf8d-03be2a3a7a7c",
+            "violations": []
+        },
+        {
+            "path": "/09 ADS-B receiver/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/bb629dab-cc06-5847-895e-52530e20edb1",
+            "violations": []
+        },
+        {
+            "path": "/10 Storage and audio/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/59eded1d-2c9f-580c-a8ea-ae89e9877746",
+            "violations": []
+        },
+        {
+            "path": "/11 Mechanical/",
+            "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/017ddfb9-581a-5cb2-aa91-3c6c362f5121",
+            "violations": []
+        }
+    ],
+    "source": "StratosCore_Claude.kicad_sch"
+}

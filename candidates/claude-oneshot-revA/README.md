@@ -1,11 +1,13 @@
 # StratosCore Rev A — Claude one-shot candidate (schematic + PCB + 3D)
 
 > **Status: CANDIDATE FOR COMPARISON — NOT FOR MANUFACTURE, NOT A BASELINE.**
+>
+> **2026-09-24 project control:** Astra has assumed full technical leadership, review and integration. Claude, Hermes, Sol and other agents execute bounded delegated tasks. See [Astra project control and handover](../../docs/ASTRA_PROJECT_CONTROL.md) for received results, discrepancies and T1–T8. Candidate GPIO/mask decisions remain subject to implementation and validation; root safety, budget and release gates remain in force.
 > Produced 2026-09-23 at the owner's explicit request ("1 shot" schematic, PCB and 3D with the display) to be compared with the GPT Astra pass. `docs/ASTRA_HANDOFF.md` is still **NOT READY**; nothing here closes a gate in `docs/PROJECT_STATUS.md`. Battery safety (O05) needs a qualified human reviewer — **do not energize this design with cells.** The repository baseline in `hardware/` is untouched.
 >
 > **2026-09-23 refinement:** evidence-backed corrections were applied inside this folder (TXU0202 exact DCU land, TPS259474L RPW stencil/fab, ICM-42688-P pin 9 to GND, U1/J5 courtyard, duplicate vias, BMP581 under-body SCL route, SHT40 SDA, 3V3 fragments, three GND islands, silkscreen). See [docs/REFINEMENT_2026_09_23.md](docs/REFINEMENT_2026_09_23.md) for evidence, before/after reports and the blockers that remain.
 >
-> **2026-09-23 GND stitch (Hermes, evening):** all three floating GND pads (U2 USB-ESD, U3.8 eFuse, U24.2 TXU0202) are now connected to the In1 plane — `unconnected` is down to 2 (the intended LoRa TBD stubs only). U7 land updated to RGT0016C. Full evidence, API pitfalls and the queued cosmetic fix for 10 U3 clearance items: [docs/GND_STITCH_2026_09_23.md](docs/GND_STITCH_2026_09_23.md).
+> **2026-09-23 GND stitch (Hermes, evening):** three floating GND pads (U2 USB-ESD, U3.8 eFuse, U24.2 TXU0202) were reported connected to the In1 plane — `unconnected` down to 2 (LoRa TBD items). U7 land updated to RGT0016C. See [docs/GND_STITCH_2026_09_23.md](docs/GND_STITCH_2026_09_23.md). The 10 U3 clearance findings remain electrical defects requiring resolution, not cosmetic findings or fabrication acceptance.
 
 | Front (display) | Back (2S 21700 cells) | PCB top | Enclosure concept |
 | --- | --- | --- | --- |
@@ -46,16 +48,18 @@ All 12 schematic sheets are in [`images/`](images/) as PNG (`schematic_00_root.p
 
 Every value that is not closed by a cited source is literally `TBD` in the schematic (value or `Status` field); see the BOM `Status` column.
 
-## Verification status (measured by KiCad 10.0.6 on 2026-09-23 after refinement, GND/buck re-layout and U7 swap — not claimed)
+## Verification status (KiCad 10.0.6; ERC/DRC rechecked 2026-09-24)
 
 Records: [docs/REFINEMENT_2026_09_23.md](docs/REFINEMENT_2026_09_23.md) and the follow-up notes in [docs/review_notes/](docs/review_notes/). KiCad reports at most 199 items per violation type, so 199 is a lower bound.
+
+[Astra's September 24 review](../../docs/ASTRA_AGENT_REVIEW_2026_09_24.md) independently reran ERC/DRC with zone refill. Other dimensional, physical and functional claims below retain their original evidence dates and limits.
 
 | Check | Result |
 | --- | --- |
 | ERC (12 sheets) | 1 error (intended: BMP581 `INT` strapped to GND with `INT_CONFIG.int_en` kept disabled, Bosch DS004-13 Table 28/§6.2) + 5 warnings (intended GND straps; flattened `2N7002` symbol) |
 | Schematic <-> PCB parity / net-pad reconciliation | **0** / 970 pins, 0 mismatches (correspondence only) |
 | GND copper | one connected group (U2 USB ESD, U3 eFuse, U24, U7 buck EP and the sensor islands are now stitched) |
-| DRC errors | **199+ `solder_mask_bridge`**, only on U30 ICM-42688-P and U32 BMP581 common no-mask openings (a copy with those two suppressed shows none elsewhere); pending the assembler mask decision — see [assembler note](docs/review_notes/ASSEMBLER_MASK_AND_COST_SNAPSHOT.md) |
+| DRC errors | **209 reported: 10 clearance + 199 mask bridges**, plus 2 unconnected items listed separately. Mask count is a lower bound; clearance and mask/routing defects remain open. See [Astra's fresh review](../../docs/ASTRA_AGENT_REVIEW_2026_09_24.md) and [assembler note](docs/review_notes/ASSEMBLER_MASK_AND_COST_SNAPSHOT.md) |
 | DRC warnings | 118 silkscreen (cosmetic) + 1 dangling LoRa RF stub |
 | Unconnected | **2**: SX1262 `LORA_RFO`/`LORA_RFI_P`, the intended RF blocker ([E449 reference values](docs/review_notes/SX1262_E449_REFERENCE_VALUES.md) found; the `08_lora` topology must first be redrawn to E449) |
 | ESP32 / USB-C / buttons | All 41 module pads traced to Espressif Table 3-1 and the GPIO map; USB-C on the bottom (PWR) edge and buttons on the right edge, both facing out — see [audit](docs/review_notes/ESP32_USB_BUTTONS_AUDIT.md) for the open antenna/display and enclosure items |

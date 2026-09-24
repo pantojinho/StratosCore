@@ -2,7 +2,7 @@
 
 ## Status: NOT READY
 
-Do not invoke Astra for StratosCore CAD yet. [Project status](PROJECT_STATUS.md) owns the current Sol/external work queue. This file is reserved for the final KiCad execution package and changes to **READY** only after every entry gate below has objective closure evidence.
+Astra already leads StratosCore engineering, candidate refinement, review and integration under [project control](ASTRA_PROJECT_CONTROL.md). **NOT READY applies to final frozen-baseline implementation, not Astra's active leadership.** [Project status](PROJECT_STATUS.md) owns the current engineering gates. This file is reserved for the final KiCad execution package and changes to **READY** only after every entry gate below has objective closure evidence.
 
 The owner may invoke Astra **now to review and refine provable issues in the Claude comparison candidate** using the [candidate refinement prompt](ASTRA_CANDIDATE_REFINEMENT_PROMPT.md). This is candidate work; it does not grant final implementation or manufacturing readiness.
 
@@ -57,9 +57,9 @@ The owner may invoke Astra **now to review and refine provable issues in the Cla
 
 Astra may make ordinary CAD choices within the approved constraints: symbol arrangement, reference placement, via location, tuning of noncritical trace geometry, zone cleanup and routing order. It must record choices that materially affect EMI, thermals, assembly or test access.
 
-## Astra must return to engineering
+## Engineering returns remain under Astra's leadership
 
-Return any missing or conflicting pinout, footprint, supply limit, boot state, protection behavior, RF value, impedance, mechanical dimension or part substitution. Do not guess and do not weaken a review gate to finish the board.
+Astra owns resolution or delegation of every `ENGINEERING_RETURN`; pause dependent edits while continuing independent authorized work. Return any missing or conflicting pinout, footprint, supply limit, boot state, protection behavior, RF value, impedance, mechanical dimension or part substitution. Do not guess and do not weaken a review gate to finish the board.
 
 ## Exit package
 

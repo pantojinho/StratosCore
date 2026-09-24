@@ -7,8 +7,9 @@
 ## Project context (quick orientation)
 
 - Open-source portable field computer (ESP32-S3-WROOM-1-N16R8, RP2040 ADS-B coprocessor, LoRa SX1262, GNSS MAX-M10S, 2S 21700 battery).
-- Current phase: **pre-KiCad hardware engineering closure**. Read `docs/PROJECT_STATUS.md` (ten gates), `docs/OPEN_QUESTIONS.md` and `docs/DECISIONS.md` before changing anything hardware-related.
-- `docs/ASTRA_HANDOFF.md` is **NOT READY**; Astra (final KiCad capture) may not run yet.
+- Current phase: **Astra-led hardware engineering closure and candidate refinement**. Read `docs/PROJECT_STATUS.md` (ten gates), `docs/OPEN_QUESTIONS.md` and `docs/DECISIONS.md` before changing anything hardware-related.
+- Astra already leads the project. Claude executes bounded delegated tasks and returns evidence for review under `docs/ASTRA_PROJECT_CONTROL.md` and `docs/SWARM_PROTOCOL.md`.
+- `docs/ASTRA_HANDOFF.md` is **NOT READY** for final frozen-baseline implementation; this does not block Astra's active leadership or bounded candidate refinement.
 - All repo docs are written in **English**; keep it that way.
 
 ## Hard rules recap (violations are unacceptable)
@@ -23,6 +24,6 @@
 
 ## Workflow
 
-- Owner has authorized direct commits to `main` without PRs, but every engineering/review gate above still applies. Commits: focused, no credentials, no caches, no personal logs.
+- Standing direct-to-`main` authorization applies to Astra as integrator. Claude and other delegated workers use isolated branches and reviewable PRs, never merge their own work, and do not edit shared control files. Every engineering/review gate still applies. Commits: focused, no credentials, no caches, no personal logs.
 - After meaningful changes update the cross-referenced docs together (status, decisions, open questions, BOM) and run the checks listed at the end of `AGENTS.md`.
 - Respond to the operator in Portuguese (PT-BR) unless the task output itself is repo documentation.

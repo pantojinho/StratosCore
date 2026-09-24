@@ -1,6 +1,6 @@
-# Pre-Astra execution workboard
+# Astra-led engineering workboard
 
-Status: **ACTIVE**. This is the operational queue for taking StratosCore from the current pre-KiCad engineering state to an Astra-ready input package. It does not replace [project status](PROJECT_STATUS.md), [decisions](DECISIONS.md), [open questions](OPEN_QUESTIONS.md), or the gated [Astra handoff](ASTRA_HANDOFF.md).
+Status: **ACTIVE under Astra leadership (2026-09-24)**. Astra has assumed full project coordination and integration; Claude, Hermes, Sol and other agents execute its bounded assignments. The historical filename is retained for existing links and task IDs. [Project control and handover](ASTRA_PROJECT_CONTROL.md) records the current candidate T1–T8 queue alongside this subsystem engineering queue. This workboard does not replace [project status](PROJECT_STATUS.md), [decisions](DECISIONS.md), [open questions](OPEN_QUESTIONS.md), or the gated [Astra handoff](ASTRA_HANDOFF.md).
 
 The workboard separates work an agent can complete from owner decisions, qualified reviews, procurement, factory confirmation, and physical tests. Writing a document is not completion by itself: each task closes only when its evidence column is satisfied.
 
@@ -12,9 +12,9 @@ Coordination snapshot: `origin/main` at `b77b036` reviewed on 2026-09-22 (GOV-02
 
 | Role | Authority |
 | --- | --- |
-| Coordinator | Assigns tasks, prevents overlap, reviews status and sequences integration; does not silently decide product or safety questions |
-| Worker agent | Completes one bounded task in its allowed files and opens a reviewable PR; never merges its own work |
-| Integrator | Reconciles accepted worker PRs into the central status/decision/BOM documents and publishes to `main` |
+| Astra — coordinator | Assigns tasks, prevents overlap, reviews status and sequences integration; does not silently decide product or safety questions |
+| Delegated worker (Claude, Hermes, Sol or another AI) | Completes one bounded task in its allowed files and opens a reviewable PR; never merges its own work |
+| Astra — integrator | Reconciles accepted worker PRs into the central status/decision/BOM documents and publishes to `main` |
 | Independent reviewer | Reviews evidence without editing the implementation under review |
 | Owner | Accepts product, cost, operating-policy and regulatory decisions |
 | Qualified electrical/battery reviewer | Is the only role that may approve the complete 2S safety design |
@@ -33,7 +33,7 @@ flowchart TD
   E --> R[Independent system review]
   C --> R
   M --> R
-  R --> F[Pre-Astra freeze and manifest]
+  R --> F[Baseline input freeze and manifest]
   F --> A[Astra KiCad execution]
 ```
 

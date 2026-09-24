@@ -1,17 +1,17 @@
 # Multi-agent swarm protocol
 
-Status: active coordination procedure for pre-Astra work. Engineering authority remains in `AGENTS.md`; this document defines how multiple agents work concurrently without corrupting the baseline or duplicating status-only activity.
+Status: active coordination procedure under Astra's full project leadership (owner accepted 2026-09-24; see [project control](ASTRA_PROJECT_CONTROL.md)). Engineering authority remains in `AGENTS.md`; this document defines how multiple agents work concurrently without corrupting the baseline or duplicating status-only activity.
 
 ## Operating model
 
-Use one coordinator, multiple bounded worker agents, one integrator and independent reviewers. Workers do not merge their own work and do not update the shared status/decision files. The integrator publishes accepted results to `main` after review.
+Astra is the coordinator and integrator throughout the project. Claude, Hermes, Sol and other AI agents are bounded delegated workers; independent reviewers assess evidence without accepting their own implementation. Workers do not merge their own work and do not update shared control files. Astra publishes accepted results to `main` after review.
 
 ### Roles
 
-1. **Coordinator:** selects `READY` tasks from [the workboard](PRE_ASTRA_WORKBOARD.md), assigns non-overlapping file ownership, tracks dependencies and requests owner/external action.
+1. **Astra — coordinator:** selects `READY` tasks from [the workboard](PRE_ASTRA_WORKBOARD.md), assigns non-overlapping file ownership, tracks dependencies and requests owner/external action.
 2. **Worker:** claims exactly one task ID, uses exact sources, edits only allowed files, validates its result and opens a PR.
 3. **Peer reviewer:** reads the worker PR and primary sources; reports findings without editing the same branch.
-4. **Integrator:** merges accepted technical PRs in dependency order, then alone updates `PROJECT_STATUS.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `ASTRA_HANDOFF.md`, central BOM status and this workboard.
+4. **Astra — integrator:** merges accepted technical PRs in dependency order, then alone updates `PROJECT_STATUS.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `ASTRA_HANDOFF.md`, central BOM status and this workboard.
 
 ## Git and file ownership
 
@@ -25,6 +25,7 @@ Use one coordinator, multiple bounded worker agents, one integrator and independ
   - `README.md`
   - `docs/README.md`
   - `docs/PROJECT_STATUS.md`
+  - `docs/ASTRA_PROJECT_CONTROL.md`
   - `docs/DECISIONS.md`
   - `docs/OPEN_QUESTIONS.md`
   - `docs/ASTRA_HANDOFF.md`
@@ -159,12 +160,12 @@ After each integration batch, run the repository's required checks once. Do not 
 
 ## Master swarm prompt
 
-Use the following prompt to launch a coordinator-capable agent or a shared-tree swarm:
+Use the following prompt when Astra coordinates a delegated swarm:
 
 ```text
-You are coordinating the StratosCore pre-Astra engineering swarm.
+You are Astra, coordinating the StratosCore engineering swarm and retaining full project leadership.
 
-Objective: make docs/ASTRA_HANDOFF.md objectively READY without using Astra and without creating a speculative finished schematic, PCB, display footprint or manufacturing release.
+Objective: close engineering evidence and refine the existing candidate within its authorized scope. Delegate bounded tasks to Claude, Hermes, Sol or other workers and review their results. Make docs/ASTRA_HANDOFF.md READY only when its final baseline entry gates are objectively satisfied; do not create a speculative baseline or manufacturing release.
 
 Authoritative order:
 1. Read AGENTS.md in full.
@@ -194,7 +195,7 @@ Coordination loop:
 7. Have the integrator reconcile all central documents and run the full checks.
 8. Repeat only while an executable READY task exists.
 9. When only owner/external blockers remain, produce one decision/action packet and stop.
-10. Mark Astra READY only after a requirement-by-requirement audit proves every entry gate.
+10. Mark the final baseline handoff READY only after a requirement-by-requirement audit proves every entry gate.
 
 Required coordinator output each cycle:
 - baseline SHA;

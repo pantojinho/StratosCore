@@ -1,0 +1,1835 @@
+{
+  "kicad_version": "10.0.6",
+  "board_sha256": "6b77691bea8247bafd36f409d22fdd4d639e2af1f88b8735b518b835c3d2bd30",
+  "footprints": 277,
+  "selected_parts": {
+    "U1": {
+      "value": "ESP32-S3-WROOM-1-N16R8",
+      "footprint": "ESP32-S3-WROOM-1",
+      "pads": [
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.9,
+            0.9
+          ]
+        },
+        {
+          "number": "1",
+          "net": "GND",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "2",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "3",
+          "net": "ESP_EN",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "4",
+          "net": "TOUCH_INT",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "5",
+          "net": "SX_DIO1",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "6",
+          "net": "SX_BUSY",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "7",
+          "net": "LCD_BL_PWM",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "8",
+          "net": "PDM_CLK",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "9",
+          "net": "PDM_DATA",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "10",
+          "net": "GNSS_TX",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "11",
+          "net": "GNSS_RX",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "12",
+          "net": "LCD_AUX",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "13",
+          "net": "USB_DN",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "14",
+          "net": "USB_DP",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "15",
+          "net": "unconnected-(U1-IO3-Pad15)",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "16",
+          "net": "unconnected-(U1-IO46-Pad16)",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "17",
+          "net": "SX_NSS",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "18",
+          "net": "LCD_CS",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "19",
+          "net": "SPI_MOSI",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "20",
+          "net": "SPI_SCLK",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "21",
+          "net": "SPI_MISO",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "22",
+          "net": "SD_CS",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "23",
+          "net": "GNSS_PPS",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "24",
+          "net": "IMU_INT1",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "25",
+          "net": "BUTTON_2",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "26",
+          "net": "unconnected-(U1-IO45-Pad26)",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "27",
+          "net": "BUTTON_1",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "28",
+          "net": "unconnected-(U1-IO35-Pad28)",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "29",
+          "net": "unconnected-(U1-IO36-Pad29)",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "30",
+          "net": "unconnected-(U1-IO37-Pad30)",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "31",
+          "net": "EXP_IRQ",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "32",
+          "net": "EXP_UART_TX",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "33",
+          "net": "EXP_UART_RX",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "34",
+          "net": "RP_UART_RTS",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "35",
+          "net": "RP_UART_CTS",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "36",
+          "net": "RP_UART_RX",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "37",
+          "net": "RP_UART_TX",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "38",
+          "net": "I2C_SCL",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "39",
+          "net": "I2C_SDA",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "40",
+          "net": "GND",
+          "size_mm": [
+            1.5,
+            0.9
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            3.9,
+            3.9
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        },
+        {
+          "number": "41",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.6
+          ]
+        }
+      ]
+    },
+    "U2": {
+      "value": "TPD4E05U06DQAR",
+      "footprint": "USON-10_2.5x1.0mm_P0.5mm",
+      "pads": [
+        {
+          "number": "1",
+          "net": "USB_DP",
+          "size_mm": [
+            0.3,
+            0.55
+          ]
+        },
+        {
+          "number": "2",
+          "net": "USB_DN",
+          "size_mm": [
+            0.3,
+            0.55
+          ]
+        },
+        {
+          "number": "3",
+          "net": "GND",
+          "size_mm": [
+            0.3,
+            0.55
+          ]
+        },
+        {
+          "number": "4",
+          "net": "USB_CC1",
+          "size_mm": [
+            0.3,
+            0.55
+          ]
+        },
+        {
+          "number": "5",
+          "net": "USB_CC2",
+          "size_mm": [
+            0.3,
+            0.55
+          ]
+        },
+        {
+          "number": "6",
+          "net": "unconnected-(U2-NC-Pad6)",
+          "size_mm": [
+            0.3,
+            0.55
+          ]
+        },
+        {
+          "number": "7",
+          "net": "unconnected-(U2-NC-Pad7)",
+          "size_mm": [
+            0.3,
+            0.55
+          ]
+        },
+        {
+          "number": "8",
+          "net": "GND",
+          "size_mm": [
+            0.3,
+            0.55
+          ]
+        },
+        {
+          "number": "9",
+          "net": "unconnected-(U2-NC-Pad9)",
+          "size_mm": [
+            0.3,
+            0.55
+          ]
+        },
+        {
+          "number": "10",
+          "net": "unconnected-(U2-NC-Pad10)",
+          "size_mm": [
+            0.3,
+            0.55
+          ]
+        }
+      ]
+    },
+    "U3": {
+      "value": "TPS259474LRPWR",
+      "footprint": "TI_RPW0010A_VQFN-HR-10_2x2mm_P0.45mm",
+      "pads": [
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.6,
+            0.275
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.6,
+            0.275
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.225,
+            0.65
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.225,
+            0.65
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.28,
+            1.06
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.28,
+            1.06
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.28,
+            1.06
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.28,
+            1.06
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.225,
+            0.65
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.225,
+            0.65
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.6,
+            0.275
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.6,
+            0.275
+          ]
+        },
+        {
+          "number": "1",
+          "net": "EFUSE_UV",
+          "size_mm": [
+            0.6,
+            0.3
+          ]
+        },
+        {
+          "number": "1",
+          "net": "EFUSE_UV",
+          "size_mm": [
+            0.25,
+            0.65
+          ]
+        },
+        {
+          "number": "2",
+          "net": "EFUSE_OV",
+          "size_mm": [
+            0.6,
+            0.25
+          ]
+        },
+        {
+          "number": "3",
+          "net": "EFUSE_PG",
+          "size_mm": [
+            0.6,
+            0.25
+          ]
+        },
+        {
+          "number": "4",
+          "net": "EFUSE_PGTH",
+          "size_mm": [
+            0.6,
+            0.3
+          ]
+        },
+        {
+          "number": "4",
+          "net": "EFUSE_PGTH",
+          "size_mm": [
+            0.25,
+            0.65
+          ]
+        },
+        {
+          "number": "5",
+          "net": "VBUS",
+          "size_mm": [
+            0.3,
+            2.4
+          ]
+        },
+        {
+          "number": "6",
+          "net": "VBUS_PROT",
+          "size_mm": [
+            0.3,
+            2.4
+          ]
+        },
+        {
+          "number": "7",
+          "net": "unconnected-(U3-DVDT-Pad7)",
+          "size_mm": [
+            0.25,
+            0.65
+          ]
+        },
+        {
+          "number": "7",
+          "net": "unconnected-(U3-DVDT-Pad7)",
+          "size_mm": [
+            0.6,
+            0.3
+          ]
+        },
+        {
+          "number": "8",
+          "net": "GND",
+          "size_mm": [
+            0.6,
+            0.25
+          ]
+        },
+        {
+          "number": "9",
+          "net": "EFUSE_ILM",
+          "size_mm": [
+            0.6,
+            0.25
+          ]
+        },
+        {
+          "number": "10",
+          "net": "EFUSE_ITIMER",
+          "size_mm": [
+            0.25,
+            0.65
+          ]
+        },
+        {
+          "number": "10",
+          "net": "EFUSE_ITIMER",
+          "size_mm": [
+            0.6,
+            0.3
+          ]
+        }
+      ]
+    },
+    "U7": {
+      "value": "TPS62130ARGTR",
+      "footprint": "TI_RGT0016C_VQFN-16_3x3mm_EP1.68x1.68_TPS62130A",
+      "pads": [
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            1.55,
+            1.55
+          ]
+        },
+        {
+          "number": "1",
+          "net": "BUCK_SW",
+          "size_mm": [
+            0.6,
+            0.24
+          ]
+        },
+        {
+          "number": "2",
+          "net": "BUCK_SW",
+          "size_mm": [
+            0.6,
+            0.24
+          ]
+        },
+        {
+          "number": "3",
+          "net": "BUCK_SW",
+          "size_mm": [
+            0.6,
+            0.24
+          ]
+        },
+        {
+          "number": "4",
+          "net": "BUCK_PG",
+          "size_mm": [
+            0.6,
+            0.24
+          ]
+        },
+        {
+          "number": "5",
+          "net": "BUCK_FB",
+          "size_mm": [
+            0.24,
+            0.6
+          ]
+        },
+        {
+          "number": "6",
+          "net": "GND",
+          "size_mm": [
+            0.24,
+            0.6
+          ]
+        },
+        {
+          "number": "7",
+          "net": "GND",
+          "size_mm": [
+            0.24,
+            0.6
+          ]
+        },
+        {
+          "number": "8",
+          "net": "GND",
+          "size_mm": [
+            0.24,
+            0.6
+          ]
+        },
+        {
+          "number": "9",
+          "net": "BUCK_SS",
+          "size_mm": [
+            0.6,
+            0.24
+          ]
+        },
+        {
+          "number": "10",
+          "net": "PACK_P",
+          "size_mm": [
+            0.6,
+            0.24
+          ]
+        },
+        {
+          "number": "11",
+          "net": "PACK_P",
+          "size_mm": [
+            0.6,
+            0.24
+          ]
+        },
+        {
+          "number": "12",
+          "net": "PACK_P",
+          "size_mm": [
+            0.6,
+            0.24
+          ]
+        },
+        {
+          "number": "13",
+          "net": "BUCK_EN",
+          "size_mm": [
+            0.24,
+            0.6
+          ]
+        },
+        {
+          "number": "14",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            0.24,
+            0.6
+          ]
+        },
+        {
+          "number": "15",
+          "net": "GND",
+          "size_mm": [
+            0.24,
+            0.6
+          ]
+        },
+        {
+          "number": "16",
+          "net": "GND",
+          "size_mm": [
+            0.24,
+            0.6
+          ]
+        },
+        {
+          "number": "17",
+          "net": "GND",
+          "size_mm": [
+            1.68,
+            1.68
+          ]
+        }
+      ]
+    },
+    "U13": {
+      "value": "TCA9535PWR",
+      "footprint": "TI_PW0024A_TSSOP-24_4.4x7.8mm_TCA9535",
+      "pads": [
+        {
+          "number": "1",
+          "net": "EXPANDER_INT",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "3",
+          "net": "GND",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "4",
+          "net": "SD_CD",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "5",
+          "net": "TUSB_OUT1",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "6",
+          "net": "TUSB_OUT2",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "7",
+          "net": "TUSB_OUT3",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "8",
+          "net": "CHG_INT",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "9",
+          "net": "EXP_PRESENT",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "10",
+          "net": "LCD_RST_CTRL",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "11",
+          "net": "EXP_CS_N",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "12",
+          "net": "GND",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "13",
+          "net": "SX_NRESET",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "14",
+          "net": "SD_SW_EN",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "15",
+          "net": "AUD_SW_EN",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "16",
+          "net": "ADSB_SW_EN",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "17",
+          "net": "RP_RUN",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "18",
+          "net": "BUCK_PG",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "19",
+          "net": "EXP_PERIPH_RST",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "20",
+          "net": "CHG_EN",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "21",
+          "net": "GND",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "22",
+          "net": "I2C_SCL",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "23",
+          "net": "I2C_SDA",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        },
+        {
+          "number": "24",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            1.475,
+            0.4
+          ]
+        }
+      ]
+    },
+    "U24": {
+      "value": "TXU0202DCUR",
+      "footprint": "TI_DCU0008A_VSSOP-8_2.3x2mm_P0.5mm_TXU0202",
+      "pads": [
+        {
+          "number": "1",
+          "net": "PDM_DATA_1V8",
+          "size_mm": [
+            0.85,
+            0.3
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "size_mm": [
+            0.85,
+            0.3
+          ]
+        },
+        {
+          "number": "3",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            0.85,
+            0.3
+          ]
+        },
+        {
+          "number": "4",
+          "net": "PDM_DATA",
+          "size_mm": [
+            0.85,
+            0.3
+          ]
+        },
+        {
+          "number": "5",
+          "net": "PDM_CLK",
+          "size_mm": [
+            0.85,
+            0.3
+          ]
+        },
+        {
+          "number": "6",
+          "net": "PDM_OE",
+          "size_mm": [
+            0.85,
+            0.3
+          ]
+        },
+        {
+          "number": "7",
+          "net": "1V8_AUDIO_SW",
+          "size_mm": [
+            0.85,
+            0.3
+          ]
+        },
+        {
+          "number": "8",
+          "net": "PDM_CLK_1V8",
+          "size_mm": [
+            0.85,
+            0.3
+          ]
+        }
+      ]
+    },
+    "U30": {
+      "value": "ICM-42688-P",
+      "footprint": "TDK_ICM-42688-P_LGA-14_3x2.5mm_P0.5mm",
+      "pads": [
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.450625,
+            0.237171
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.450625,
+            0.237171
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.450625,
+            0.237171
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.450625,
+            0.237171
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.237171,
+            0.450625
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.237171,
+            0.450625
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.237171,
+            0.450625
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.237171,
+            0.450625
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.237171,
+            0.450625
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.237171,
+            0.450625
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.450625,
+            0.237171
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.450625,
+            0.237171
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.450625,
+            0.237171
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.450625,
+            0.237171
+          ]
+        },
+        {
+          "number": "1",
+          "net": "GND",
+          "size_mm": [
+            0.475,
+            0.25
+          ]
+        },
+        {
+          "number": "2",
+          "net": "GND",
+          "size_mm": [
+            0.475,
+            0.25
+          ]
+        },
+        {
+          "number": "3",
+          "net": "GND",
+          "size_mm": [
+            0.475,
+            0.25
+          ]
+        },
+        {
+          "number": "4",
+          "net": "IMU_INT1",
+          "size_mm": [
+            0.475,
+            0.25
+          ]
+        },
+        {
+          "number": "5",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            0.25,
+            0.475
+          ]
+        },
+        {
+          "number": "6",
+          "net": "GND",
+          "size_mm": [
+            0.25,
+            0.475
+          ]
+        },
+        {
+          "number": "7",
+          "net": "GND",
+          "size_mm": [
+            0.25,
+            0.475
+          ]
+        },
+        {
+          "number": "8",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            0.475,
+            0.25
+          ]
+        },
+        {
+          "number": "9",
+          "net": "GND",
+          "size_mm": [
+            0.475,
+            0.25
+          ]
+        },
+        {
+          "number": "10",
+          "net": "GND",
+          "size_mm": [
+            0.475,
+            0.25
+          ]
+        },
+        {
+          "number": "11",
+          "net": "GND",
+          "size_mm": [
+            0.475,
+            0.25
+          ]
+        },
+        {
+          "number": "12",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            0.25,
+            0.475
+          ]
+        },
+        {
+          "number": "13",
+          "net": "I2C_SCL",
+          "size_mm": [
+            0.25,
+            0.475
+          ]
+        },
+        {
+          "number": "14",
+          "net": "I2C_SDA",
+          "size_mm": [
+            0.25,
+            0.475
+          ]
+        }
+      ]
+    },
+    "U32": {
+      "value": "BMP581",
+      "footprint": "Bosch_BMP581_LGA-10_2x2mm_CORRECTED",
+      "pads": [
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.325,
+            0.3
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.325,
+            0.3
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.325,
+            0.3
+          ]
+        },
+        {
+          "number": "",
+          "net": "",
+          "size_mm": [
+            0.325,
+            0.3
+          ]
+        },
+        {
+          "number": "1",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            0.325,
+            0.3
+          ]
+        },
+        {
+          "number": "2",
+          "net": "I2C_SCL",
+          "size_mm": [
+            0.325,
+            0.3
+          ]
+        },
+        {
+          "number": "3",
+          "net": "GND",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "4",
+          "net": "I2C_SDA",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "5",
+          "net": "GND",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "6",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            0.325,
+            0.3
+          ]
+        },
+        {
+          "number": "7",
+          "net": "GND",
+          "size_mm": [
+            0.325,
+            0.3
+          ]
+        },
+        {
+          "number": "8",
+          "net": "GND",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "9",
+          "net": "GND",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        },
+        {
+          "number": "10",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            0.3,
+            0.325
+          ]
+        }
+      ]
+    },
+    "J4": {
+      "value": "XF3M-0615-1B (CTP 6p FPC)",
+      "footprint": "Omron_XF3M-0615-1B_1x06-1MP_P0.5mm_Horizontal",
+      "pads": [
+        {
+          "number": "1",
+          "net": "LCD_RST_CTRL",
+          "size_mm": [
+            0.3,
+            1.3
+          ]
+        },
+        {
+          "number": "2",
+          "net": "3V3_MAIN",
+          "size_mm": [
+            0.3,
+            1.3
+          ]
+        },
+        {
+          "number": "3",
+          "net": "GND",
+          "size_mm": [
+            0.3,
+            1.3
+          ]
+        },
+        {
+          "number": "4",
+          "net": "TOUCH_INT",
+          "size_mm": [
+            0.3,
+            1.3
+          ]
+        },
+        {
+          "number": "5",
+          "net": "I2C_SCL",
+          "size_mm": [
+            0.3,
+            1.3
+          ]
+        },
+        {
+          "number": "6",
+          "net": "I2C_SDA",
+          "size_mm": [
+            0.3,
+            1.3
+          ]
+        },
+        {
+          "number": "MP",
+          "net": "GND",
+          "size_mm": [
+            1.8,
+            2.2
+          ]
+        },
+        {
+          "number": "MP",
+          "net": "GND",
+          "size_mm": [
+            1.8,
+            2.2
+          ]
+        }
+      ]
+    },
+    "R55": {
+      "value": "0R",
+      "footprint": "R_0402_1005Metric",
+      "pads": [
+        {
+          "number": "1",
+          "net": "LCD_AUX",
+          "size_mm": [
+            0.54,
+            0.64
+          ]
+        },
+        {
+          "number": "2",
+          "net": "LCD_XLT_OE",
+          "size_mm": [
+            0.54,
+            0.64
+          ]
+        }
+      ]
+    }
+  },
+  "zones": [
+    {
+      "net": "GND",
+      "rule_area": false,
+      "layers": [
+        "F.Cu"
+      ]
+    },
+    {
+      "net": "",
+      "rule_area": true,
+      "layers": [
+        "F.Cu",
+        "B.Cu",
+        "In1.Cu",
+        "In2.Cu"
+      ]
+    },
+    {
+      "net": "GND",
+      "rule_area": false,
+      "layers": [
+        "B.Cu"
+      ]
+    },
+    {
+      "net": "GND",
+      "rule_area": false,
+      "layers": [
+        "In1.Cu"
+      ]
+    },
+    {
+      "net": "3V3_MAIN",
+      "rule_area": false,
+      "layers": [
+        "In2.Cu"
+      ]
+    },
+    {
+      "net": "GND",
+      "rule_area": false,
+      "layers": [
+        "In2.Cu"
+      ]
+    }
+  ],
+  "reports": {
+    "drc_refilled.json": {
+      "types": {
+        "clearance": 10,
+        "solder_mask_bridge": 199,
+        "track_dangling": 1,
+        "silk_edge_clearance": 6,
+        "silk_overlap": 36,
+        "silk_over_copper": 76
+      },
+      "severities": {
+        "error": 209,
+        "warning": 119
+      },
+      "unconnected": 2,
+      "parity": 0,
+      "ignored_checks": [
+        {
+          "description": "Footprint has no courtyard defined",
+          "key": "missing_courtyard"
+        },
+        {
+          "description": "Track endpoint not centered on via",
+          "key": "track_not_centered_on_via"
+        },
+        {
+          "description": "Tuning profile track geometries",
+          "key": "tuning_profile_track_geometries"
+        },
+        {
+          "description": "Footprint doesn't match symbol's footprint filters",
+          "key": "footprint_filters_mismatch"
+        },
+        {
+          "description": "Footprint component type doesn't match footprint pads",
+          "key": "footprint_type_mismatch"
+        }
+      ]
+    },
+    "erc.json": {
+      "types": {
+        "lib_symbol_mismatch": 1,
+        "pin_to_pin": 5
+      },
+      "severities": {
+        "warning": 5,
+        "error": 1
+      },
+      "unconnected": 0,
+      "parity": 0,
+      "ignored_checks": [
+        {
+          "description": "Four connection points are joined together",
+          "key": "four_way_junction"
+        },
+        {
+          "description": "SPICE model issue",
+          "key": "simulation_model_issue"
+        },
+        {
+          "description": "Assigned footprint doesn't match footprint filters",
+          "key": "footprint_filter"
+        }
+      ]
+    }
+  },
+  "historical_cost_arithmetic_only": {
+    "priced_14_usd": 59.1021,
+    "lb1_usd": 113.0461,
+    "lb2_usd": 97.9981,
+    "lb2_brl_at_recorded_fx": 503.84743133999996,
+    "scope": "Recomputed supplied prices; not current prices, stock or a quote."
+  }
+}

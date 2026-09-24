@@ -1,6 +1,6 @@
 # Astra prompt: review and refine the Claude PCB candidate
 
-**Use now for a bounded candidate review/refinement.** This prompt does not declare the candidate or final Astra handoff ready for manufacture. Work only in `candidates/claude-oneshot-revA/`; keep `hardware/` as the reviewed architecture baseline unless the project owner explicitly accepts a documented decision change. Do not create manufacturing outputs or energize the 2S design.
+**Use now for bounded candidate review/refinement under Astra's active project leadership.** Read [project control and the latest handover](ASTRA_PROJECT_CONTROL.md) for delegated roles, the received `912894b` snapshot and inherited T1–T8 tasks. Historical counts below describe the initial review packet; current reports and later accepted corrections take precedence. This prompt does not declare the candidate or final Astra handoff ready for manufacture. Work only in `candidates/claude-oneshot-revA/`; keep `hardware/` as the reviewed architecture baseline unless the project owner explicitly accepts a documented decision change. Do not create manufacturing outputs or energize the 2S design.
 
 Before opening KiCad, fetch the latest `origin/main`, record the exact commit, and confirm the working tree is clean. The review packet was prepared on 2026-09-23 at commit `9e909f3`; use later current-main corrections as authoritative. Read `AGENTS.md`, `docs/DECISIONS.md`, `docs/PROJECT_STATUS.md`, `docs/FOOTPRINT_CORRECTIONS_2026_09_23.md`, `docs/CLAUDE_CANDIDATE_INDEPENDENT_REVIEW.md`, and `candidates/claude-oneshot-revA/docs/ISSUES.md`.
 
@@ -44,4 +44,4 @@ Return a concise summary with: the commit reviewed; files changed; each verified
 
 ## Current readiness boundary
 
-Astra can begin this candidate refinement now. It should return the unresolved engineering gates rather than inventing answers. The final `docs/ASTRA_HANDOFF.md` and `docs/ASTRA_EXECUTION_PROMPT.md` remain **NOT READY** for final implementation/manufacturing entry until the frozen BOM, exact circuits, qualified battery review, display samples, RF/stackup, mechanical fit and other gates have objective closure evidence.
+Astra already owns candidate refinement and complete project coordination. It should return the unresolved engineering gates rather than inventing answers. The final `docs/ASTRA_HANDOFF.md` and `docs/ASTRA_EXECUTION_PROMPT.md` remain **NOT READY** for final implementation/manufacturing entry until the frozen BOM, exact circuits, qualified battery review, display samples, RF/stackup, mechanical fit and other gates have objective closure evidence.
