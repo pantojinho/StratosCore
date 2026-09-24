@@ -1,0 +1,4 @@
+schematic pins: 970, board pads (numbered, unique): 970
+pins missing on board: 0
+connected board pads missing in schematic: 0
+net mismatches: 0

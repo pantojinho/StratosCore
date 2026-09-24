@@ -107,3 +107,18 @@ A lower count is not a pass: the after board still has visible errors, open RF/g
 - `kicad/reports/` — before/after reports, reconciliation; top-level reports replaced by the after set.
 - `docs/schematic.pdf`, `images/schematic_06_sensors.png`, `images/render_*.png`, `outputs/render_*.png`, `outputs/pcb_layers.pdf`, `outputs/bom_candidate.csv` (only the U24 footprint changed), `outputs/netlist.net`, `outputs/drc_summary.txt` — regenerated.
 - `tools/refine_2026_09_23_board.py`, `tools/refine_2026_09_23_silk.py`, `tools/refine_2026_09_23_refplace.py`, `tools/fp_rpw_dcu_2026_09_23.py`, `tools/reconcile.py`, `tools/check_net_islands.py` — reproducible scripts (MIT tooling). The original `design.py`/`build_*.py` generators predate this record; re-running them would revert R1-R12, so the KiCad files are now the source of truth.
+
+## Follow-up the same day (sub-agent work, integrated and re-verified)
+
+| Topic | Result | Record |
+| --- | --- | --- |
+| Floating grounds U2/U3/U24, U7 exposed pad | Fixed by local re-layout; GND is one copper group; 4 EP vias at U7 (+/-0.29 mm) | [GND_BUCK_RELAYOUT.md](review_notes/GND_BUCK_RELAYOUT.md), `kicad/reports/relayout_gnd_buck_2026-09-23/` |
+| TPS62130A land | U7 swapped to `SC:TI_RGT0016C_VQFN-16_3x3mm_EP1.68x1.68_TPS62130A` (TI SLVSAG7F p.41); `03_rails` footprint field updated | [TPS62130A_RGT_FOOTPRINT.md](review_notes/TPS62130A_RGT_FOOTPRINT.md), `tools/integrate_2026_09_23_u7_j1.py` |
+| ESP32 / USB-C / buttons | All 41 module pads correct; USB-C and buttons on the correct edges and facing out; open: antenna vs display projection, FR-4 under antenna, J1 0.3 mm inboard (move reverted), enclosure wall at USB, button plungers | [ESP32_USB_BUTTONS_AUDIT.md](review_notes/ESP32_USB_BUTTONS_AUDIT.md) |
+| SX1262 E449 | Native Semtech values found; candidate topology differs, redraw first | [SX1262_E449_REFERENCE_VALUES.md](review_notes/SX1262_E449_REFERENCE_VALUES.md) |
+| GPIO A5-A8 | Options + recommendation, owner decision required | [GPIO_GAPS_A5_A8_PROPOSAL.md](review_notes/GPIO_GAPS_A5_A8_PROPOSAL.md) |
+| Assembler mask / cost | Per-pad mask openings recommended pending assembler answer; five-unit cost infeasible vs BRL 200 on the snapshot | [ASSEMBLER_MASK_AND_COST_SNAPSHOT.md](review_notes/ASSEMBLER_MASK_AND_COST_SNAPSHOT.md) |
+
+Final checks (`kicad/reports/final_2026-09-23/`): ERC 1 error/5 warnings (intended straps, unchanged); DRC 199+ `solder_mask_bridge` (U30/U32 only — a temporary copy with those suppressed shows none elsewhere) + 118 silk warnings + 1 RF stub; **unconnected 2** (SX1262 RF blocker only); parity 0; reconciliation 970 pins / 0 mismatches.
+
+Still not resolvable by any agent: O05 qualified battery review, Orient controlled drawing and samples, assembler mask/stencil answers, factory impedance solver, owner decisions (GPIO A5-A8, TCXO, cost target, antenna/outline), and a human review in KiCad before any order or energizing.

@@ -1,0 +1,13 @@
+GND groups 4 largest 1390
+--- isolated group of 5
+    zone island F.Cu bbox (6.69,71.25)-(8.02,71.65) area 0.397 mm2
+    pad U2.3 @(6.965,71.450)
+    pad U2.8 @(7.735,71.450)
+    PCB_TRACK F.Cu @(7.735,71.450)
+    PCB_TRACK F.Cu @(6.965,71.450)
+--- isolated group of 2
+    zone island F.Cu bbox (22.15,75.95)-(23.26,76.42) area 0.314 mm2
+    pad U3.8 @(22.450,76.125)
+--- isolated group of 2
+    zone island F.Cu bbox (5.29,42.20)-(7.27,43.50) area 1.105 mm2
+    pad U24.2 @(6.500,43.200)

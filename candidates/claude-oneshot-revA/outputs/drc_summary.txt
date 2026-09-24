@@ -1,11 +1,13 @@
-KiCad 10.0.6 DRC of StratosCore_Claude.kicad_pcb after the 2026-09-23 refinement (docs/REFINEMENT_2026_09_23.md)
+KiCad 10.0.6 DRC of StratosCore_Claude.kicad_pcb after the 2026-09-23 refinement, GND/buck re-layout and U7 RGT0016C swap
 command: kicad-cli pcb drc --format json --severity-all --schematic-parity --all-track-errors
-violations reported: 318 (errors 199), unconnected: 5, schematic parity: 0
-note: KiCad caps each violation type at 199 reported items; a count of exactly 199 is a lower bound
+reports: kicad/reports/final_2026-09-23/ (also copied to kicad/reports/{erc,drc}.json, netlist.xml)
+violations reported: 318 (errors 199), unconnected: 2, schematic parity: 0, net/pad reconciliation: 970 pins / 0 mismatches, GND copper groups: 1
+note: KiCad caps each violation type at 199 reported items; a count of exactly 199 is a lower bound.
+      A temporary copy with the U30/U32 mask-bridge allowance set reports 0 mask bridges anywhere else.
   error    solder_mask_bridge               199 (capped; only U30 ICM-42688-P and U32 BMP581 common no-mask openings)
   warning  silk_edge_clearance              6
   warning  silk_over_copper                 76
   warning  silk_overlap                     36
   warning  track_dangling                   1   (LORA_RFI_P stub, RF blocker)
-unconnected (5): GND U2 pads 3/8 (USB ESD), GND U3 pad 8 (eFuse), GND U24 pad 2 (TXU0202), LORA_RFO (U40.23), LORA_RFI_P (U40.21)
-before (same command, commit e1f75a3): 580 violations (1 error), 11 unconnected, parity 0 -- see kicad/reports/before_2026-09-23/
+unconnected (2): LORA_RFO (U40.23), LORA_RFI_P (U40.21) -- intentional RF blocker (E449 topology/values/layout)
+history (same command): e1f75a3 580 violations (1 error), 11 unconnected; 6fa29cb 318 (199 errors), 5 unconnected

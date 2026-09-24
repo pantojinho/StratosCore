@@ -44,18 +44,19 @@ All 12 schematic sheets are in [`images/`](images/) as PNG (`schematic_00_root.p
 
 Every value that is not closed by a cited source is literally `TBD` in the schematic (value or `Status` field); see the BOM `Status` column.
 
-## Verification status (measured by KiCad 10.0.6 on 2026-09-23 after the refinement, not claimed)
+## Verification status (measured by KiCad 10.0.6 on 2026-09-23 after refinement, GND/buck re-layout and U7 swap — not claimed)
 
-Full before/after comparison, commands and dispositions: [docs/REFINEMENT_2026_09_23.md](docs/REFINEMENT_2026_09_23.md). KiCad reports at most 199 items per violation type, so 199 is a lower bound.
+Records: [docs/REFINEMENT_2026_09_23.md](docs/REFINEMENT_2026_09_23.md) and the follow-up notes in [docs/review_notes/](docs/review_notes/). KiCad reports at most 199 items per violation type, so 199 is a lower bound.
 
 | Check | Result |
 | --- | --- |
-| ERC (12 sheets) | 1 error (intended: BMP581 `INT` strapped to GND with `INT_CONFIG.int_en` kept disabled, Bosch DS004-13 Table 28/§6.2) + 5 warnings (intended GND straps on ICM AD0/pin 9, BMP581 SDO, a spare translator input; flattened `2N7002` symbol) |
+| ERC (12 sheets) | 1 error (intended: BMP581 `INT` strapped to GND with `INT_CONFIG.int_en` kept disabled, Bosch DS004-13 Table 28/§6.2) + 5 warnings (intended GND straps; flattened `2N7002` symbol) |
 | Schematic <-> PCB parity / net-pad reconciliation | **0** / 970 pins, 0 mismatches (correspondence only) |
-| Board | 60 x 84 mm, 4 layers (JLC04161H-3313 candidate stack), 277 footprints |
-| DRC errors | **199+ `solder_mask_bridge`**, only on U30 ICM-42688-P and U32 BMP581: their common no-mask openings expose lands and other-net tracks/vias/pour. Previously hidden by an unreviewed footprint flag; now visible pending the assembler mask decision |
-| DRC warnings | 118 silkscreen (cosmetic; 202 passive references moved to the Fab/assembly layer, 75 kept at 0.8 mm) + 1 dangling LoRa RF stub |
-| Unconnected | **5**: GND at U2 (USB ESD), U3 pad 8 (eFuse) and U24 pad 2 (TXU0202) need local re-layout (these grounds are floating today); SX1262 `LORA_RFO`/`LORA_RFI_P` are the intended RF blocker (values/layout TBD) |
+| GND copper | one connected group (U2 USB ESD, U3 eFuse, U24, U7 buck EP and the sensor islands are now stitched) |
+| DRC errors | **199+ `solder_mask_bridge`**, only on U30 ICM-42688-P and U32 BMP581 common no-mask openings (a copy with those two suppressed shows none elsewhere); pending the assembler mask decision — see [assembler note](docs/review_notes/ASSEMBLER_MASK_AND_COST_SNAPSHOT.md) |
+| DRC warnings | 118 silkscreen (cosmetic) + 1 dangling LoRa RF stub |
+| Unconnected | **2**: SX1262 `LORA_RFO`/`LORA_RFI_P`, the intended RF blocker ([E449 reference values](docs/review_notes/SX1262_E449_REFERENCE_VALUES.md) found; the `08_lora` topology must first be redrawn to E449) |
+| ESP32 / USB-C / buttons | All 41 module pads traced to Espressif Table 3-1 and the GPIO map; USB-C on the bottom (PWR) edge and buttons on the right edge, both facing out — see [audit](docs/review_notes/ESP32_USB_BUTTONS_AUDIT.md) for the open antenna/display and enclosure items |
 
 Routing: Freerouting 2.4.1 (40 passes) on an engineering-anchored placement (`tools/build_pcb.py`), then this package's A* clean-up router (`tools/gridroute.py`), automated GND via stitching (`tools/finalize.py`) and polish (`tools/polish.py`); `tools/route_all.py` chains the stages. **A low DRC count proves CAD consistency only — not RF, power, battery-safety, thermal, EMI or manufacturability.** RF paths and USB were not given controlled-impedance geometry.
 

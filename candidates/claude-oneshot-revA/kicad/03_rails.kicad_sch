@@ -1997,7 +1997,7 @@
   (uuid "03593c1e-fb54-5a89-95c6-eb3917c0ce4c")
   (property "Reference" "U7" (at 31.75 43.18 0) (effects (font (size 1.27 1.27)) (justify left)))
   (property "Value" "TPS62130ARGTR" (at 31.75 45.72 0) (effects (font (size 1.27 1.27)) (justify left)))
-  (property "Footprint" "SC:TI_RGT0016A_VQFN-16_3x3mm_EP1.75x1.75_TPS62130A" (at 41.91 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
+  (property "Footprint" "SC:TI_RGT0016C_VQFN-16_3x3mm_EP1.68x1.68_TPS62130A" (at 41.91 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (property "MPN" "TPS62130ARGTR" (at 41.91 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (property "Source" "TI SLVSAG7F" (at 41.91 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
   (pin "1" (uuid "25bc17d4-e63b-5c4e-a843-d1f09c1990d9"))(pin "2" (uuid "a9d48810-aeb8-5ca4-968e-b2e65b069762"))(pin "3" (uuid "765f4965-0c1f-5e71-aa05-eb7844638976"))(pin "4" (uuid "7943c833-123b-5de7-bca1-4fe551db9026"))(pin "5" (uuid "eb1a7c29-f26f-5fe4-8492-06253476e25a"))(pin "6" (uuid "690d3376-c75f-5a8b-9d46-4f3e8ca170ee"))(pin "7" (uuid "b42612d4-747c-537a-85e5-607e50e38781"))(pin "8" (uuid "90862d17-865f-5d65-98fd-8cf36d3f7feb"))(pin "9" (uuid "6ee15f8e-eef2-5333-98b6-1e0ea0f3b3c0"))(pin "10" (uuid "660d27ec-cfb1-5cf3-a9a7-2a9da2616a9e"))(pin "11" (uuid "0d98f2bb-9936-5a63-9629-2b2a4668da5a"))(pin "12" (uuid "834c7926-328c-5c43-8541-d3c8a1bb9a9e"))(pin "13" (uuid "f99c2516-2aa4-55b5-86b0-3a272ae9c90c"))(pin "14" (uuid "e7cd58d4-eebf-5a52-9ca3-fd6f3db74cf2"))(pin "15" (uuid "d64950f2-b697-5cfa-b2ca-695c14a2c2eb"))(pin "16" (uuid "e046bfa4-ecc3-594f-a70d-e4e717f9cfc2"))(pin "17" (uuid "0f66885f-ccec-5e8a-afaf-34e63378021c"))

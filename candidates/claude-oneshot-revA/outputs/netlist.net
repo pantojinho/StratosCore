@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "D:\\git\\StratosCore\\candidates\\claude-oneshot-revA\\kicad\\StratosCore_Claude.kicad_sch")
-		(date "2026-09-23T19:07:09")
+		(date "2026-09-23T21:48:21")
 		(tool "Eeschema 10.0.6")
 		(sheet
 			(number "1")
@@ -5337,14 +5337,14 @@
 		(comp
 			(ref "U7")
 			(value "TPS62130ARGTR")
-			(footprint "SC:TI_RGT0016A_VQFN-16_3x3mm_EP1.75x1.75_TPS62130A")
+			(footprint "SC:TI_RGT0016C_VQFN-16_3x3mm_EP1.68x1.68_TPS62130A")
 			(fields
 				(field
 					(name "MPN") "TPS62130ARGTR")
 				(field
 					(name "Source") "TI SLVSAG7F")
 				(field
-					(name "Footprint") "SC:TI_RGT0016A_VQFN-16_3x3mm_EP1.75x1.75_TPS62130A")
+					(name "Footprint") "SC:TI_RGT0016C_VQFN-16_3x3mm_EP1.68x1.68_TPS62130A")
 				(field
 					(name "Datasheet")
 				)
