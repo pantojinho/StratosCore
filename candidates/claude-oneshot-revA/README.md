@@ -64,7 +64,7 @@ Routing: Freerouting 2.4.1 (40 passes) on an engineering-anchored placement (`to
 
 ## How to regenerate
 
-> The generators below produced the original one-shot. They do **not** include the 2026-09-23 refinement; re-running them would revert it. The KiCad files are now the source of truth; the refinement scripts are `tools/refine_2026_09_23_*.py` and `tools/fp_rpw_dcu_2026_09_23.py`. `outputs/StratosCore_Claude_3D_STEP.zip` and `outputs/positions_REVIEW_ONLY.csv` predate the refinement (J5 +0.4 mm, C57 moved).
+> The generators below produced the original one-shot. They do **not** include the 2026-09-23 refinement; re-running them would revert it. The KiCad files are now the source of truth; the refinement scripts are `tools/refine_2026_09_23_*.py` and `tools/fp_rpw_dcu_2026_09_23.py`. `outputs/StratosCore_Claude_3D_STEP.zip` is the ORIGINAL pre-refinement export (kept for history). Current-state models: `outputs/StratosCore_Claude_board_2026-09-23.step(.zip)` (board STEP, post-GND-stitch) and `outputs/positions_REVIEW_ONLY.csv` (re-exported from the current board).
 
 ```bash
 "C:/Program Files/KiCad/10.0/bin/python.exe" tools/build_sch.py
