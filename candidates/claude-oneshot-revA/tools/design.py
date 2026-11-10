@@ -4,6 +4,10 @@ Every part states (reference, library symbol, value, footprint, pin -> net). Val
 not closed by a cited source carry "TBD" in the value or in the `Status` field. Sources are
 the repository documents (docs/*.md) and the manufacturer data sheets named in `Source`.
 
+Rev A2 (2026-11-10): this file is again the single source of the candidate netlist. It first
+reproduces the post-refinement KiCad netlist exactly (U7 RGT0016C, U24 DCU0008A, ICM pin 9 to GND)
+and then applies the reviewed changes recorded in ../docs/REVIEW_A2_2026_11_10.md.
+
 Status of this file: CANDIDATE for comparison with the Astra pass. It does NOT satisfy the
 docs/ASTRA_HANDOFF.md entry gates and is not a manufacturing release.
 """
@@ -116,7 +120,7 @@ CUSTOM = {
         ds="https://www.ti.com/lit/ds/symlink/tps61169.pdf (SNVSA40B Table 4-1)",
         pins=[("5", "VIN", S, "L"), ("4", "CTRL", "input", "L"), ("1", "SW", "passive", "R"),
               ("3", "FB", "input", "R"), ("2", "GND", S, "B")]),
-    "TXU0202DCU": dict(ref="U", fp="Package_SO:VSSOP-8_2.3x2mm_P0.5mm",
+    "TXU0202DCU": dict(ref="U", fp=f"{PLIB}:TI_DCU0008A_VSSOP-8_2.3x2mm_P0.5mm_TXU0202",
         ds="https://www.ti.com/lit/ds/symlink/txu0202.pdf (SCES942A pin table; A1->B1Y, B2->A2Y)",
         pins=[("3", "VCCA", S, "T"), ("7", "VCCB", S, "T"), ("5", "A1", "input", "L"), ("4", "A2Y", "output", "L"),
               ("6", "OE", "input", "L"), ("8", "B1Y", "output", "R"), ("1", "B2", "input", "R"), ("2", "GND", S, "B")]),
@@ -204,8 +208,10 @@ def build() -> Design:
           source="https://gct.co/files/drawings/usb4105.pdf")
     d.R("R1", "0R", "USB_SHIELD", "GND", status="Shield/chassis treatment TBD")
     d.add("U2", "Power_Protection:TPD4E05U06DQA", "TPD4E05U06DQAR", "Package_SON:USON-10_2.5x1.0mm_P0.5mm",
-          {"1": "USB_DP", "2": "USB_DN", "4": "USB_CC1", "5": "USB_CC2", "3": "GND", "8": "GND",
-           "6": "", "7": "", "9": "", "10": ""}, mpn="TPD4E05U06DQARG4", source="TI SLVSBO7O")
+          {"1": "USB_CC1", "10": "USB_CC1", "2": "USB_DN", "9": "USB_DN", "4": "USB_DP", "7": "USB_DP",
+           "5": "USB_CC2", "6": "USB_CC2", "3": "GND", "8": "GND"}, mpn="TPD4E05U06DQARG4",
+          status="A2: channels re-ordered to the connector pad order and the NC pins used for straight-through routing (SLVSBO7 Table 4-2)",
+          source="TI SLVSBO7O")
     d.C("C1", "1uF 25V X7R", "VBUS", fp="C0603")
     d.g("efuse")
     d.add("U3", f"{PLIB}:TPS259474L", "TPS259474LRPWR", CUSTOM["TPS259474L"]["fp"],
@@ -270,6 +276,8 @@ def build() -> Design:
     d.add("Q1", f"{PLIB}:DUAL_NMOS_S1G1D2S2G2D1", "Dual N-MOSFET TBD (O05)", "Package_TO_SOT_SMD:SOT-23-6",
           {"1": "BAT_N", "2": "PROT_DO", "3": "PROT_DRAIN", "4": "GND", "5": "PROT_CO", "6": "PROT_DRAIN"},
           status="PLACEHOLDER - FET selection/SOA/package TBD (O05)")
+    d.R("R63", "0R", "BAT_N", "GND", fp="R1206", dnp=True,
+        status="BENCH BRING-UP ONLY (current-limited supply, no cells) - DNP; never fit with cells installed")
     d.g("charger")
     d.add("U6", "Battery_Management:BQ25887RGE", "BQ25887RGER",
           "Package_DFN_QFN:Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm",
@@ -310,12 +318,12 @@ def build() -> Design:
     # ======================================================================= 03 regulators
     d.sheet("03 Rails", "03_rails.kicad_sch", "03 TPS62130A 3V3_MAIN buck, TPS7A20 LDOs, branch links", [
         "TPS62130A per SLVSAG7F 9.2: 2.2uH XFL4020-222MEB, FSW=GND (2.5 MHz), DEF=GND, 312k/100k -> 3.296 V (docs/POWER_RAIL_PLAN.md).",
-        "SS/TR: repo text lists 0.1uF (50 ms by Eq.10) - this candidate uses 3.3nF (about 1.65 ms, TI typical); feed-forward C24 3.3nF fitted per repo text. Reviewer to confirm.",
+        "SS/TR: repo text lists 0.1uF (50 ms by Eq.10) - this candidate uses 3.3nF (about 1.65 ms, TI typical). A2: external feed-forward C24 is DNP (internal 25 pF, TI typical circuit has none).",
         "No main power switch/button is specified in the product baseline: buck EN is pulled to PACK_P (always on while the protected pack is present). Product decision gap.",
         "3V0_RF_QUIET LDO EN follows the switched 3V3_ADSB domain so the ADS-B analog chain powers down with RP2040 (one-shot proposal).",
     ])
     d.g("buck")
-    d.add("U7", "Regulator_Switching:TPS62130A", "TPS62130ARGTR", f"{PLIB}:TI_RGT0016A_VQFN-16_3x3mm_EP1.75x1.75_TPS62130A",
+    d.add("U7", "Regulator_Switching:TPS62130A", "TPS62130ARGTR", f"{PLIB}:TI_RGT0016C_VQFN-16_3x3mm_EP1.68x1.68_TPS62130A",
           {"10": "PACK_P", "11": "PACK_P", "12": "PACK_P", "13": "BUCK_EN", "1": "BUCK_SW", "2": "BUCK_SW",
            "3": "BUCK_SW", "14": "3V3_MAIN", "5": "BUCK_FB", "4": "BUCK_PG", "7": "GND", "8": "GND",
            "9": "BUCK_SS", "6": "GND", "15": "GND", "16": "GND", "17": "GND"},
@@ -329,7 +337,8 @@ def build() -> Design:
     d.C("C23", "22uF 6.3V X7R", "3V3_MAIN", fp="C0805", status="second output cap; DC-bias review")
     d.R("R28", "312k 1%", "3V3_MAIN", "BUCK_FB")
     d.R("R29", "100k 1%", "BUCK_FB", "GND")
-    d.C("C24", "3.3nF", "3V3_MAIN", "BUCK_FB", status="feed-forward per repo text; review")
+    d.C("C24", "DNP (Cff option)", "3V3_MAIN", "BUCK_FB", dnp=True,
+        status="A2: not fitted - TPS6213x has an internal 25 pF feed-forward (TI SLVSAG7); the TI typical application has no external Cff. 3.3 nF belongs on SS/TR")
     d.C("C25", "3.3nF", "BUCK_SS")
     d.R("R30", "100k", "BUCK_PG", "3V3_MAIN")
     d.TP("TP7", "3V3_MAIN")
@@ -357,14 +366,14 @@ def build() -> Design:
     d.sheet("04 Compute and control", "04_compute.kicad_sch",
             "04 ESP32-S3-WROOM-1-N16R8, buttons, TCA9535 slow control, I2C pull-ups, expansion", [
         "GPIO allocation = docs/INTERFACE_GPIO_MAP.md. GPIO3/45/46 straps and GPIO35-37 (octal PSRAM) are no-connect.",
-        "TCA9535 map = docs/CONTROL_IO_REVIEW.md DIG-03 plus ONE-SHOT PROPOSALS for the spare ports: P07 EXP_CS_N (expansion CS has no ESP32 GPIO in the map),",
+        "TCA9535 map = docs/CONTROL_IO_REVIEW.md DIG-03 plus candidate decisions of 2026-09-24: A5 GPIO8 = EXP_CS_N (hardware SPI CS), A8 P07 = TOUCH_RST_N (10k pull-down),",
         "P10 SX_NRESET (was reserved SX aux), P14 RP_RUN (DIG-01 host reset), P15 BUCK_PG (input), P17 CHG_EN (charger enable, hardware default = disabled).",
         "I2C 100 kHz, 2.2k pull-ups on 3V3_MAIN (D22). JST GH BM12B-GHS-TBT is a VERTICAL (top-entry) header in JST/KiCad naming, not right-angle as the BOM text says.",
     ])
     d.g("esp")
     d.add(ESP_REF, "RF_Module:ESP32-S3-WROOM-1", "ESP32-S3-WROOM-1-N16R8", "RF_Module:ESP32-S3-WROOM-1",
           {"1": "GND", "40": "GND", "41": "GND", "2": "3V3_MAIN", "3": "ESP_EN",
-           "4": "TOUCH_INT", "5": "SX_DIO1", "6": "SX_BUSY", "7": "LCD_BL_PWM", "12": "LCD_AUX",
+           "4": "TOUCH_INT", "5": "SX_DIO1", "6": "SX_BUSY", "7": "LCD_BL_PWM", "12": "EXP_CS_N",
            "17": "SX_NSS", "18": "LCD_CS", "19": "SPI_MOSI", "20": "SPI_SCLK", "21": "SPI_MISO", "22": "SD_CS",
            "8": "PDM_CLK", "9": "PDM_DATA", "10": "GNSS_TX", "11": "GNSS_RX", "13": "USB_DN", "14": "USB_DP",
            "23": "GNSS_PPS", "31": "EXP_IRQ", "32": "EXP_UART_TX", "33": "EXP_UART_RX", "34": "RP_UART_RTS",
@@ -393,14 +402,15 @@ def build() -> Design:
     d.add("U13", "Interface_Expansion:TCA9535PWR", "TCA9535PWR", f"{PLIB}:TI_PW0024A_TSSOP-24_4.4x7.8mm_TCA9535",
           {"24": "3V3_MAIN", "12": "GND", "21": "GND", "2": "GND", "3": "GND", "22": "I2C_SCL", "23": "I2C_SDA",
            "1": "EXPANDER_INT", "4": "SD_CD", "5": "TUSB_OUT1", "6": "TUSB_OUT2", "7": "TUSB_OUT3",
-           "8": "CHG_INT", "9": "EXP_PRESENT", "10": "LCD_RST_CTRL", "11": "EXP_CS_N", "13": "SX_NRESET",
+           "8": "CHG_INT", "9": "EXP_PRESENT", "10": "LCD_RST_CTRL", "11": "TOUCH_RST_N", "13": "SX_NRESET",
            "14": "SD_SW_EN", "15": "AUD_SW_EN", "16": "ADSB_SW_EN", "17": "RP_RUN", "18": "BUCK_PG",
            "19": "EXP_PERIPH_RST", "20": "CHG_EN"},
           mpn="TCA9535PWR", source="TI SCPS201F; port map DIG-03 + one-shot spares")
     d.C("C43", "100nF", "3V3_MAIN")
     d.R("R45", "10k", "EXPANDER_INT", "3V3_MAIN")
     d.R("R46", "100k", "EXP_PRESENT", "3V3_MAIN")
-    d.R("R47", "100k", "EXP_CS_N", "3V3_MAIN")
+    d.R("R47", "100k", "EXP_CS_N", "3V3_EXP", status="A5-2 (owner 2026-09-24): CS deasserted through reset; pull-up on the expansion rail")
+    d.R("R59", "10k", "TOUCH_RST_N", "GND", status="A8-2 (owner 2026-09-24): touch held in reset until firmware releases P07; value to re-check on samples")
     d.R("R48", "100k", "EXP_PERIPH_RST", "3V3_MAIN")
     d.TP("TP14", "EXPANDER_INT")
     d.g("exp")
@@ -415,8 +425,8 @@ def build() -> Design:
     # ======================================================================= 05 display
     d.sheet("05 Display and touch", "05_display.kicad_sch",
             "05 Orient AFY240320A1-2.8INTH-C1: XF3M FPC connectors, 3.3->1.8 V SPI branch, reset, backlight", [
-        "Write-only three-line 9-bit SPI, IM2/IM1/IM0 = 1/0/1 (rev J). SN74AXC4T245: DIR high (A->B), OE pulled low (enabled) and driven by GPIO8 LCD_AUX.",
-        "TFT reset: TCA9535 P06 LCD_RST_CTRL (100k pull-down) -> SN74LVC1G07 open drain -> 10k to 1V8_LOGIC (DSP-02). Touch RESET shares LCD_RST_CTRL (3.3 V, one-shot proposal).",
+        "Write-only three-line 9-bit SPI, IM2/IM1/IM0 = 1/0/1 (rev J). SN74AXC4T245: DIR high (A->B), OE pulled low (always enabled; GPIO8 is now EXP_CS_N, A5-2).",
+        "TFT reset: TCA9535 P06 LCD_RST_CTRL (100k pull-down) -> SN74LVC1G07 open drain -> 10k to 1V8_LOGIC (DSP-02). Touch RESET = TCA9535 P07 TOUCH_RST_N, 10k pull-down (A8-2).",
         "UNUSED-PIN TIES ARE TBD (gate 3): DB17..DB0, DOTCLK/DE/VSYNC/HSYNC tied to GND; RD/WR tied high through R53/R54 0R (swap to GND if the controller spec requires).",
         "TFT VCC fed from 3V3_MAIN (2.4-3.6 V range) - the VDD/VDDI contradiction in the Orient drawing is still open (O01). Backlight TPS61169: RSET 2.21R -> ~92 mA.",
     ])
@@ -442,7 +452,6 @@ def build() -> Design:
            "13": "LCD_SCL_1V8", "12": "LCD_SDA_1V8", "11": "LCD_CS_1V8", "10": "", "8": "GND", "9": "GND"},
           mpn="SN74AXC4T245PWR", source="TI SCES877B; DSP-02")
     d.R("R50", "10k", "LCD_XLT_OE", "GND")
-    d.R("R55", "0R", "LCD_AUX", "LCD_XLT_OE", status="GPIO8 host control of translator OE (optional)")
     d.C("C52", "100nF", "3V3_MAIN")
     d.C("C53", "100nF", "1V8_LOGIC")
     d.g("rst")
@@ -458,8 +467,9 @@ def build() -> Design:
           source="TI SNVSA40B")
     d.add("L3", "Device:L", "10uH LPS4018-103MRC", f"{PLIB}:L_Coilcraft_LPS4018",
           {"1": "3V3_MAIN", "2": "BL_SW"}, mpn="LPS4018-103MRC")
-    d.add("D1", "Device:D_Schottky", "60V Schottky TBD", "Diode_SMD:D_SOD-123F", {"1": "LED_A", "2": "BL_SW"},
-          status="exact 60 V-class part TBD (open)")
+    d.add("D1", "Device:D_Schottky", "NSR0240HT1G", "Diode_SMD:D_SOD-323", {"1": "LED_A", "2": "BL_SW"},
+          mpn="NSR0240HT1G", status="A2: TI-recommended diode family (SNVSA40 7.2.2.2); 40 V rating vs the open-LED clamp and LED string voltage to confirm with the Orient drawing (O01)",
+          source="TI SNVSA40B 7.2.2.2")
     d.C("C55", "4.7uF 10V", "3V3_MAIN", fp="C0603")
     d.C("C56", "1uF 50V X7R", "LED_A", fp="C0805")
     d.R("R56", "2.21R 1% 0.1W", "LED_K", "GND", fp="R0603")
@@ -467,7 +477,7 @@ def build() -> Design:
     d.g("fpc6")
     d.add("J4", "Connector_Generic_MountingPin:Conn_01x06_MountingPin", "XF3M-0615-1B (CTP 6p FPC)",
           f"{PLIB}:Omron_XF3M-0615-1B_1x06-1MP_P0.5mm_Horizontal",
-          {"1": "LCD_RST_CTRL", "2": "3V3_MAIN", "3": "GND", "4": "TOUCH_INT", "5": "I2C_SCL", "6": "I2C_SDA",
+          {"1": "TOUCH_RST_N", "2": "3V3_MAIN", "3": "GND", "4": "TOUCH_INT", "5": "I2C_SCL", "6": "I2C_SDA",
            "MP": "GND"}, mpn="XF3M-0615-1B", status="SAMPLE HOLD; ST1633I address 0x70 convention open")
     d.R("R58", "10k", "TOUCH_INT", "3V3_MAIN")
     d.C("C57", "100nF", "3V3_MAIN")
@@ -496,12 +506,12 @@ def build() -> Design:
     d.sheet("06 Sensors", "06_sensors.kicad_sch", "06 ICM-42688-P, MMC5983MA, BMP581, SHT40 on the shared 100 kHz I2C bus", [
         "Addresses: ICM-42688-P 0x68 (AD0=GND), MMC5983MA 0x30, BMP581 0x46 (SDO=GND, CSB=VDDIO), SHT40-AD1B 0x44. All on 3V3_MAIN.",
         "Placement (SNS-02): IMU near centroid >=3 mm from anchors; MMC >=15 mm from cells/inductors; BMP581+SHT40 at the top vent edge, no copper/vias under BMP581, SHT40 on a slotted thermal tab.",
-        "BMP581 INT tied to GND with interrupts disabled (repo 04_sensors sheet); MMC INT and ICM INT2 unused (polled/NC).",
+        "BMP581 INT tied to GND with INT_CONFIG.int_en kept 0 (Bosch DS004-13 6.2 recommends GND over floating); MMC INT polled/NC; ICM INT2/FSYNC to GND (TDK DS-000347 Table 10).",
     ])
     d.g("imu")
     d.add("U30", f"{PLIB}:ICM-42688-P", "ICM-42688-P", CUSTOM["ICM-42688-P"]["fp"],
           {"8": "3V3_MAIN", "5": "3V3_MAIN", "14": "I2C_SDA", "13": "I2C_SCL", "12": "3V3_MAIN", "1": "GND",
-           "4": "IMU_INT1", "9": "", "2": "GND", "3": "GND", "10": "GND", "11": "GND", "7": "GND", "6": "GND"},
+           "4": "IMU_INT1", "9": "GND", "2": "GND", "3": "GND", "10": "GND", "11": "GND", "7": "GND", "6": "GND"},
           mpn="ICM-42688-P", status="LOCKED - assembler mask/paste gate", source="TDK DS-000347 v1.9")
     d.C("C30", "100nF", "3V3_MAIN")
     d.C("C31", "2.2uF", "3V3_MAIN")
@@ -528,10 +538,12 @@ def build() -> Design:
 
     # ======================================================================= 08 LoRa
     d.sheet("08 LoRa SX1262", "08_lora.kicad_sch", "08 Semtech SX1262 (DC-DC, 32 MHz crystal), PE4259 switch, U.FL", [
-        "Topology per Semtech AN1200.40 Rev 1.1 Fig.5 (E428) / E449: VDD_IN+VBAT+VBAT_IO on 3V3_MAIN, 15uH DCC_SW-VREG (DC-DC), 470nF/100nF/10uF supply, DIO2 -> 100R/1nF -> PE4259 CTRL.",
-        "*** ALL TX match/harmonic filter and RX balun VALUES ARE TBD: AN1200.40 prints designators only. Take exact values from the native E449 regional BOM and re-tune on this stackup (AGENTS rule 5). ***",
-        "32 MHz crystal MPN TBD (CL 10 pF, ESR <=60R per SX1261/2 DS Rev 1.2). DIO3 left open (TCXO fallback). No TX before a regional configuration (AGENTS rule 14).",
+        "A2: RF network redrawn to the Semtech E449V01A / E428V03A reference topology (same RF values in both 902-928 MHz boards) with the reference BOM values as STARTING values.",
+        "*** The values were tuned by Semtech on a 1.0 mm stack (0.15 mm L1-L2). On JLC04161H-3313 they must be re-tuned on a VNA and pass conducted TX power/harmonic/RX tests (AGENTS rule 5). Not validated. ***",
+        "Crystal (E428-type) kept by the lowest-cost criterion: NDK NX2016SA 32 MHz EXS00A-CS06465 (CL 10 pF, +/-10 ppm). TCXO (E449) is the owner option if long-airtime plans are used; DIO3 left open.",
+        "PE4259 single-pin mode: pin 6 = VDD through R72/R74 divider (about 3.09 V; pSemi operating range is 1.8-3.3 V and 3V3_MAIN can exceed 3.3 V with tolerance). DIO2 = 1 in TX selects RF1. No TX before a regional configuration (AGENTS rule 14).",
     ])
+    E449 = "Semtech E449V01A BOM V1a (SX1262MB1PAS); see docs/review_notes/SX1262_E449_REFERENCE_VALUES.md"
     d.g("sx")
     d.add("U40", "RF:SX1262IMLTRT", "SX1262IMLTRT", "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm",
           {"1": "3V3_MAIN", "10": "3V3_MAIN", "11": "3V3_MAIN", "2": "GND", "5": "GND", "8": "GND", "20": "GND", "25": "GND",
@@ -539,41 +551,51 @@ def build() -> Design:
            "14": "SX_BUSY", "15": "SX_NRESET", "16": "SPI_MISO", "17": "SPI_MOSI", "18": "SPI_SCLK", "19": "SX_NSS",
            "21": "LORA_RFI_P", "22": "LORA_RFI_N", "23": "LORA_RFO", "24": "SX_VR_PA"},
           mpn="SX1262IMLTRT", status="LOCKED", source="Semtech SX1261/2 DS Rev 1.2; EP numbered 25 in KiCad (pin 0 in DS)")
-    d.C("C70", "10uF", "3V3_MAIN", fp="C0603")
-    d.C("C71", "470nF", "3V3_MAIN")
-    d.C("C72", "100nF", "3V3_MAIN")
-    d.add("L70", "Device:L", "15uH (DC-DC)", "Inductor_SMD:L_0805_2012Metric", {"1": "SX_DCC_SW", "2": "SX_VREG"},
-          status="AN1200.40 L7 15uH; exact part/ISAT TBD")
-    d.C("C73", "470nF", "SX_VREG", status="VREG decoupling; value per E449 BOM TBD")
-    d.add("Y2", "Device:Crystal_GND24", "32 MHz (CL 10pF) MPN TBD", "Crystal:Crystal_SMD_2016-4Pin_2.0x1.6mm",
-          {"1": "SX_XTA", "3": "SX_XTB", "2": "GND", "4": "GND"}, status="MPN TBD")
+    d.C("C70", "10uF", "3V3_MAIN", fp="C0603", status="local bulk for the radio branch")
+    d.C("C71", "1uF", "3V3_MAIN", status="E449 C16 at VDD_IN (pin 1)", source=E449)
+    d.C("C72", "100nF", "3V3_MAIN", status="E449 C18 at VBAT/VBAT_IO (pins 10/11)", source=E449)
+    d.add("L70", "Device:L", "15uH MLZ2012M150W", "Inductor_SMD:L_0805_2012Metric", {"1": "SX_DCC_SW", "2": "SX_VREG"},
+          mpn="MLZ2012M150WT000", status="E449 L7 (DC-DC)", source=E449)
+    d.C("C73", "470nF", "SX_VREG", status="E449 C17", source=E449)
+    d.add("Y2", "Device:Crystal_GND24", "32MHz NX2016SA CL10pF", "Crystal:Crystal_SMD_2016-4Pin_2.0x1.6mm",
+          {"1": "SX_XTA", "3": "SX_XTB", "2": "GND", "4": "GND"}, mpn="NX2016SA-32MHz-EXS00A-CS06465",
+          status="E428V03A Q1 reference crystal; pad map/footprint second pass and purchase check open", source="Semtech E428V03A BOM V1a")
     d.R("R70", "100k", "SX_NRESET", "3V3_MAIN", status="P10 default released")
     d.g("sxrf")
-    d.add("L71", "Device:L", "TBD (E449)", "Inductor_SMD:L_0402_1005Metric", {"1": "SX_VR_PA", "2": "LORA_RFO"},
-          status="PA supply choke VR_PA->RFO; value TBD")
-    d.C("C74", "TBD (E449)", "SX_VR_PA", status="VR_PA decoupling; value TBD")
-    d.C("C75", "TBD (E449)", "LORA_RFO", status="TX match shunt; value TBD")
-    d.add("L72", "Device:L", "TBD (E449)", "Inductor_SMD:L_0402_1005Metric", {"1": "LORA_RFO", "2": "LORA_TXF1"},
-          status="TX match/notch series; value TBD")
-    d.C("C76", "TBD (E449)", "LORA_TXF1", status="pi-filter shunt; value TBD")
-    d.add("L73", "Device:L", "TBD (E449)", "Inductor_SMD:L_0402_1005Metric", {"1": "LORA_TXF1", "2": "LORA_TXF2"},
-          status="pi-filter series; value TBD")
-    d.C("C77", "TBD (E449)", "LORA_TXF2", status="pi-filter shunt; value TBD")
-    d.C("C78", "TBD (E449)", "LORA_TXF2", "LORA_TX_SW", status="DC block to PE4259 RF1; value TBD")
-    d.C("C79", "TBD (E449)", "LORA_RX_SW", "LORA_RFI_P", status="RX balun series C; value TBD")
-    d.add("L74", "Device:L", "TBD (E449)", "Inductor_SMD:L_0402_1005Metric", {"1": "LORA_RX_SW", "2": "LORA_RFI_N"},
-          status="RX balun series L; value TBD")
-    d.C("C80", "TBD (E449)", "LORA_RFI_N", status="RX balun shunt; value TBD")
+    d.C("C74", "47nF", "SX_VR_PA", status="E449 C1", source=E449)
+    d.C("C84", "47pF C0G", "SX_VR_PA", status="E449 C2", source=E449)
+    d.add("L71", "Device:L", "47nH LQW15AN47NJ00", "Inductor_SMD:L_0402_1005Metric", {"1": "SX_VR_PA", "2": "LORA_PA"},
+          mpn="LQW15AN47NJ00D", status="E449 L1 PA feed choke", source=E449)
+    d.R("R73", "0R", "LORA_RFO", "LORA_PA", status="E449 L2 (0R tuning position)", source=E449)
+    d.C("C75", "DNP (E449 C3)", "LORA_PA", dnp=True, status="E449 C3 shunt position, not populated in the reference")
+    d.add("L72", "Device:L", "2.5nH LQW15AN2N5C00", "Inductor_SMD:L_0402_1005Metric", {"1": "LORA_PA", "2": "LORA_TXF1"},
+          mpn="LQW15AN2N5C00D", status="E449 L3 - start value, tune", source=E449)
+    d.C("C85", "3.0pF C0G", "LORA_PA", "LORA_TXF1", status="E449 C4 in parallel with L3 (2nd-harmonic trap) - start value, tune", source=E449)
+    d.C("C76", "5.6pF C0G", "LORA_TXF1", status="E449 C5 - start value, tune", source=E449)
+    d.C("C78", "39pF C0G", "LORA_TXF1", "LORA_TXF2", status="E449 C6 series DC block", source=E449)
+    d.add("L73", "Device:L", "4.7nH LQW15AN4N7C00", "Inductor_SMD:L_0402_1005Metric", {"1": "LORA_TXF2", "2": "LORA_TX_SW"},
+          mpn="LQW15AN4N7C00D", status="E449 L4 - start value, tune", source=E449)
+    d.C("C77", "1.8pF C0G", "LORA_TX_SW", status="E449 C7 - start value, tune", source=E449)
+    d.C("C86", "DNP (E449 C13)", "LORA_RX_SW", dnp=True, status="E449 C13 optional RX interferer shunt, not populated")
+    d.C("C79", "2.4pF C0G", "LORA_RX_SW", "LORA_RFI_N", status="E449 C11 series RF2 -> RFI_N - start value, tune", source=E449)
+    d.add("L74", "Device:L", "15nH LQW15AN15NH00", "Inductor_SMD:L_0402_1005Metric", {"1": "LORA_RFI_N", "2": "LORA_RFI_P"},
+          mpn="LQW15AN15NH00D", status="E449 L6 across RFI_N/RFI_P - start value, tune", source=E449)
+    d.C("C80", "1.8pF C0G", "LORA_RFI_P", status="E449 C12 RFI_P -> GND - start value, tune", source=E449)
     d.g("sw")
     d.add("U41", f"{PLIB}:PE4259", "PE4259", CUSTOM["PE4259"]["fp"],
           {"5": "LORA_RFC", "4": "LORA_SW_CTRL", "6": "LORA_SW_VDD", "1": "LORA_TX_SW", "3": "LORA_RX_SW", "2": "GND"},
-          mpn="PE4259", status="PROPOSED (AN1200.40 reference switch); RF1/RF2 vs CTRL polarity to confirm in firmware",
-          source="pSemi DOC-03694")
-    d.R("R71", "100R", "SX_DIO2", "LORA_SW_CTRL", status="AN1200.40 R3")
-    d.C("C81", "1nF", "LORA_SW_CTRL", status="AN1200.40 C15")
-    d.R("R72", "100R", "3V3_MAIN", "LORA_SW_VDD", status="AN1200.40 R4")
-    d.C("C82", "1nF", "LORA_SW_VDD", status="AN1200.40 C14")
-    d.C("C83", "TBD (E449)", "LORA_RFC", "LORA_ANT", status="antenna DC block; value TBD")
+          mpn="PE4259-63", status="E449 U2 (same part); single-pin control mode instead of the reference complementary mode",
+          source="pSemi DOC-03694-5.01 Table 5")
+    d.R("R71", "100R", "SX_DIO2", "LORA_SW_CTRL", status="E449 R3")
+    d.C("C81", "1nF", "LORA_SW_CTRL", status="E449 C15")
+    d.R("R72", "1k", "3V3_MAIN", "LORA_SW_VDD", status="A2: with R74 sets pin 6 to ~0.94 x 3V3_MAIN (<= 3.3 V operating max)")
+    d.R("R74", "15k", "LORA_SW_VDD", "GND", status="A2: PE4259 VDD divider (IDD 9 uA typ)")
+    d.C("C82", "1nF", "LORA_SW_VDD", status="E449 C14")
+    d.C("C83", "39pF C0G", "LORA_RFC", "LORA_ANTF", status="E449 C8", source=E449)
+    d.C("C87", "3.3pF C0G", "LORA_ANTF", status="E449 C9 - start value, tune", source=E449)
+    d.add("L75", "Device:L", "9.1nH LQW15AN9N1H00", "Inductor_SMD:L_0402_1005Metric", {"1": "LORA_ANTF", "2": "LORA_ANT"},
+          mpn="LQW15AN9N1H00D", status="E449 L5 - start value, tune", source=E449)
+    d.C("C89", "3.3pF C0G", "LORA_ANT", status="E449 C10 - start value, tune", source=E449)
     d.add("J6", "Connector:Conn_Coaxial", "U.FL-R-SMT-1(60) LoRa", f"{PLIB}:Hirose_U.FL-R-SMT-1_60_Vertical",
           {"1": "LORA_ANT", "2": "GND"}, mpn="U.FL-R-SMT-1(60)")
 
@@ -581,8 +603,8 @@ def build() -> Design:
     d.sheet("09 ADS-B receiver", "09_adsb.kicad_sch", "09 1090 MHz chain (BLB01 x2, TA2003A x2, ADL5513, MCP6566) and RP2040 capture", [
         "Chain per docs/ADSB_VALIDATION.md. BLB01 bias per BeRex rev 6.6 evaluation BOM (C1 100pF in, C2 12pF out, R1 6.8k/C3 12pF/L1 27nH Ven, R2 0R/C4 100pF/L2 82nH Vd).",
         "ADL5513 measurement mode (VSET=VOUT), 52.3R input termination, 47nF coupling. TADJ resistor and CLPF (1 nF basic value is too slow for 0.5 us pulses) are TBD/bench items.",
-        "MCP6566T-E/OT base pin map, 2.2k pull-up to the RP2040 bank; threshold divider R86/R87 BLOCKED by OWN-09 (value TBD). R88/C88 DNP option: RP2040 PWM threshold.",
-        "RP2040 per DIG-01 (Raspberry Pi minimal design): 12 MHz ABM8-272-T3 + 1k XOUT, 15pF loads; QSPI_SS 1k to USB_BOOT pad; RUN 10k/100nF + TCA9535 P14. Domain 3V3_ADSB switched (P13).",
+        "MCP6566T-E/OT base pin map, 2.2k pull-up to the RP2040 bank. A2: threshold = filtered RP2040 PWM (R88/C88/R87) with ADSB_VIDEO also sampled on ADC0 (R89); fixed-divider top R86 stays DNP (OWN-09 target still open).",
+        "RP2040 per DIG-01 (Raspberry Pi minimal design): 12 MHz ABM8-272-T3 + 1k XOUT, 15pF loads; QSPI_SS 1k to USB_BOOT pad; RUN 10k/100nF + TCA9535 P14. Domain 3V3_ADSB switched (P13). A2: USB D+/D- on test pads through 27R so BOOTSEL (TP21) is usable.",
         "UART0: GPIO0 TX -> RP_UART_RX, GPIO1 RX <- RP_UART_TX, GPIO2 CTS <- RP_UART_RTS, GPIO3 RTS -> RP_UART_CTS (one-shot pin choice). Back-power of ESP32-driven lines into an OFF RP2040 is an open SYS-02 item.",
     ])
     d.g("adsbsw")
@@ -598,10 +620,10 @@ def build() -> Design:
     rp.update({"23": "1V1_ADSB", "50": "1V1_ADSB", "45": "1V1_ADSB", "57": "GND", "19": "GND",
                "20": "RP_XIN", "21": "RP_XOUT", "24": "RP_SWCLK", "25": "RP_SWDIO", "26": "RP_RUN",
                "2": "RP_UART_RX", "3": "RP_UART_TX", "4": "RP_UART_RTS", "5": "RP_UART_CTS",
-               "11": "ADSB_PULSE", "12": "ADSB_THR_PWM",
+               "11": "ADSB_PULSE", "12": "ADSB_THR_PWM", "38": "ADSB_VIDEO_ADC", "46": "RP_USB_DM_R", "47": "RP_USB_DP_R",
                "51": "QSPI_SD3", "52": "QSPI_SCLK", "53": "QSPI_SD0", "54": "QSPI_SD2", "55": "QSPI_SD1", "56": "QSPI_SS",
-               "46": "", "47": ""})
-    for n in (6, 7, 8, 9, 13, 14, 15, 16, 17, 18, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41):
+               })
+    for n in (6, 7, 8, 9, 13, 14, 15, 16, 17, 18, 27, 28, 29, 30, 31, 32, 34, 35, 36, 37, 39, 40, 41):
         rp[str(n)] = ""
     d.add("U20", "MCU_RaspberryPi:RP2040", "RP2040", "Package_DFN_QFN:QFN-56-1EP_7x7mm_P0.4mm_EP3.2x3.2mm", rp,
           mpn="RP2040", status="LOCKED", source="RP2040 datasheet + Hardware design with RP2040")
@@ -620,6 +642,10 @@ def build() -> Design:
     d.TP("TP22", "RP_RUN")
     d.TP("TP23", "RP_SWCLK")
     d.TP("TP24", "RP_SWDIO")
+    d.R("R94", "27R 1%", "RP_USB_DP_R", "RP_USB_DP", status="A2: RP2040 USB series resistor (Hardware design with RP2040, minimal design) - USB BOOTSEL/UF2 programming pads")
+    d.R("R99", "27R 1%", "RP_USB_DM_R", "RP_USB_DM", status="A2: as R94")
+    d.TP("TP29", "RP_USB_DP")
+    d.TP("TP30", "RP_USB_DM")
     d.flag("ADSB_DET_VP")
     d.add("U21", "Memory_Flash:W25Q128JVS", "W25Q128JVSIQ", f"{PLIB}:Winbond_W25Q128JVSIQ_SOIC-8_5.3x5.3mm_P1.27mm",
           {"1": "QSPI_SS", "2": "QSPI_SD1", "3": "QSPI_SD2", "4": "GND", "5": "QSPI_SD0", "6": "QSPI_SCLK",
@@ -673,10 +699,11 @@ def build() -> Design:
           mpn="MCP6566T-E/OT", source="Microchip DS20002143G base map")
     d.C("C116", "100nF", "3V0_RF_QUIET")
     d.R("R98", "2.2k 1%", "ADSB_PULSE", "3V3_ADSB", status="ADSB-01")
-    d.R("R86", "TBD (OWN-09)", "3V0_RF_QUIET", "ADSB_THR", status="threshold divider BLOCKED by OWN-09")
-    d.R("R87", "TBD (OWN-09)", "ADSB_THR", "GND", status="threshold divider BLOCKED by OWN-09")
-    d.R("R88", "10k", "ADSB_THR_PWM", "ADSB_THR", dnp=True, status="optional RP2040 PWM threshold")
-    d.C("C88", "100nF", "ADSB_THR", dnp=True)
+    d.R("R86", "TBD (OWN-09)", "3V0_RF_QUIET", "ADSB_THR", dnp=True, status="optional fixed-bias top resistor - DNP; value blocked by OWN-09")
+    d.R("R87", "100k", "ADSB_THR", "GND", status="A2: defines 0 V threshold (comparator idle) while the RP2040 pin is high-Z; scales PWM full scale to ~3.0 V")
+    d.R("R88", "10k", "ADSB_THR_PWM", "ADSB_THR", status="A2: fitted - firmware-adjustable threshold from RP2040 GPIO9 PWM (replaces the blocked fixed divider)")
+    d.C("C88", "1uF", "ADSB_THR", status="A2: PWM filter, about 17 Hz corner with R88||R87")
+    d.R("R89", "1k", "ADSB_VIDEO", "ADSB_VIDEO_ADC", status="A2: log-video level to RP2040 ADC0 (GPIO26) for noise-floor/threshold tracking; isolates the ADC sample cap from the fast video node")
     d.TP("TP25", "ADSB_VIDEO")
     d.TP("TP26", "ADSB_PULSE")
 
@@ -696,15 +723,18 @@ def build() -> Design:
     d.TP("TP27", "3V3_SD")
     d.g("sd")
     d.add("J8", "Connector:Micro_SD_Card_Det_Hirose_DM3AT", "DM3AT-SF-PEJM5", f"{PLIB}:Hirose_DM3AT-SF-PEJM5_microSD_HC",
-          {"1": "", "2": "SD_CS", "3": "SPI_MOSI", "4": "3V3_SD", "5": "SPI_SCLK", "6": "GND", "7": "SPI_MISO",
-           "8": "", "9": "SD_CD", "10": "GND", "SH": "GND"}, mpn="DM3AT-SF-PEJM5", source="Hirose drawing 0000947170 Rev 4")
+          {"1": "SD_DAT2", "2": "SD_CS", "3": "SPI_MOSI", "4": "3V3_SD", "5": "SPI_SCLK", "6": "GND", "7": "SPI_MISO",
+           "8": "SD_DAT1", "9": "SD_CD", "10": "GND", "SH": "GND"}, mpn="DM3AT-SF-PEJM5", source="Hirose drawing 0000947170 Rev 4")
     d.R("R101", "10k", "SD_CS", "3V3_SD")
     d.R("R102", "10k", "SPI_MOSI", "3V3_SD")
     d.R("R103", "10k", "SPI_MISO", "3V3_SD")
     d.R("R104", "100k", "SD_CD", "3V3_MAIN")
+    d.R("R107", "47k", "SD_DAT1", "3V3_SD", status="A2: unused DAT1 must not float in SPI mode (proposal; SD host pull-up practice)")
+    d.R("R108", "47k", "SD_DAT2", "3V3_SD", status="A2: unused DAT2 must not float in SPI mode (proposal)")
     d.add("U23", "Power_Protection:TPD4E05U06DQA", "TPD4E05U06DQAR", "Package_SON:USON-10_2.5x1.0mm_P0.5mm",
-          {"1": "SPI_SCLK", "2": "SPI_MOSI", "4": "SPI_MISO", "5": "SD_CS", "3": "GND", "8": "GND",
-           "6": "", "7": "", "9": "", "10": ""}, mpn="TPD4E05U06DQARG4")
+          {"1": "SD_CS", "10": "SD_CS", "2": "SPI_MOSI", "9": "SPI_MOSI", "4": "SPI_SCLK", "7": "SPI_SCLK",
+           "5": "SPI_MISO", "6": "SPI_MISO", "3": "GND", "8": "GND"}, mpn="TPD4E05U06DQARG4",
+          status="A2: channel order follows the socket contact order; NC pins used for straight-through routing")
     d.TP("TP28", "SD_CD")
     d.g("audsw")
     d.add("U12", f"{PLIB}:TPS22918", "TPS22918DBVR", CUSTOM["TPS22918"]["fp"],

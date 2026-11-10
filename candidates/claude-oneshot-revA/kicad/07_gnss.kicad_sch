@@ -1,7 +1,7 @@
 (kicad_sch (version 20250114) (generator "stratos_claude_oneshot") (generator_version "10.0")
   (uuid "f67da7c2-bdc5-500e-a619-b65b46898c9e")
   (paper "A3")
-  (title_block (title "07 u-blox MAX-M10S-00B, passive antenna U.FL, TPD1E0B04 ESD") (rev "A-claude-oneshot-1") (company "StratosCore (CERN-OHL-P-2.0) - Claude one-shot candidate") (comment 1 "CANDIDATE - NOT FOR MANUFACTURE - see README gates"))
+  (title_block (title "07 u-blox MAX-M10S-00B, passive antenna U.FL, TPD1E0B04 ESD") (rev "A2-claude-review") (company "StratosCore (CERN-OHL-P-2.0) - Claude one-shot candidate") (comment 1 "CANDIDATE - NOT FOR MANUFACTURE - see README gates"))
   (lib_symbols
     (symbol "RF_GPS:MAX-M10S"
 		(exclude_from_sim no)

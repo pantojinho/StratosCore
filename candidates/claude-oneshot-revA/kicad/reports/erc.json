@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/erc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-09-23T21:47:26",
+    "date": "2026-11-10T06:51:17",
     "ignored_checks": [
         {
             "description": "Four connection points are joined together",
@@ -21,20 +21,20 @@
         "warning",
         "exclusion"
     ],
-    "kicad_version": "10.0.6",
+    "kicad_version": "10.0.8",
     "sheets": [
         {
             "path": "/",
             "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75",
             "violations": [
                 {
-                    "description": "O símbolo '2N7002' não bate com a cópia existente na biblioteca 'Transistor_FET'",
+                    "description": "Symbol '2N7002' doesn't match copy in library 'Transistor_FET'",
                     "items": [
                         {
-                            "description": "Símbolo Q2 [2N7002]",
+                            "description": "Symbol Q2 [2N7002]",
                             "pos": {
-                                "x": 3.048,
-                                "y": 1.2065
+                                "x": 304.8,
+                                "y": 120.65
                             },
                             "uuid": "03da297e-5010-5d9d-a997-5b7e20558a92"
                         }
@@ -69,21 +69,21 @@
             "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/2dd3b7c1-6d8f-5db6-8547-d9ea89d5cabc",
             "violations": [
                 {
-                    "description": "Os pinos do tipo Bidirectional e Power output estão conectados",
+                    "description": "Pins of type Bidirectional and Power output are connected",
                     "items": [
                         {
-                            "description": "Symbol U14 Pino 7 [2A2, Bidirectional, Line]",
+                            "description": "Symbol U14 Pin 7 [2A2, Bidirectional, Line]",
                             "pos": {
-                                "x": 1.2319,
-                                "y": 0.8255
+                                "x": 123.19,
+                                "y": 82.55
                             },
                             "uuid": "17d11c6d-1e09-52ed-8d7b-a66f2ca17c25"
                         },
                         {
-                            "description": "Symbol #FLG02018 Pino 1 [Power output, Line]",
+                            "description": "Symbol #FLG02018 Pin 1 [Power output, Line]",
                             "pos": {
-                                "x": 0.4318,
-                                "y": 2.667
+                                "x": 43.18,
+                                "y": 266.7
                             },
                             "uuid": "a8155571-3845-55b9-995f-47d8a341e1f2"
                         }
@@ -98,21 +98,21 @@
             "uuid_path": "/228046b9-97ff-5406-9bfc-6ccddcf60c75/4d3a0ddd-2d54-5cce-b2a2-96e35ddb21f0",
             "violations": [
                 {
-                    "description": "Os pinos do tipo Output e Power output estão conectados",
+                    "description": "Pins of type Output and Power output are connected",
                     "items": [
                         {
-                            "description": "Symbol U32 Pino 7 [INT, Output, Line]",
+                            "description": "Symbol U32 Pin 7 [INT, Output, Line]",
                             "pos": {
-                                "x": 2.159,
-                                "y": 0.6477
+                                "x": 215.9,
+                                "y": 64.77
                             },
                             "uuid": "fb854beb-37b7-50bc-b49a-161d9d5dd3a4"
                         },
                         {
-                            "description": "Symbol #FLG02018 Pino 1 [Power output, Line]",
+                            "description": "Symbol #FLG02018 Pin 1 [Power output, Line]",
                             "pos": {
-                                "x": 0.4318,
-                                "y": 2.667
+                                "x": 43.18,
+                                "y": 266.7
                             },
                             "uuid": "a8155571-3845-55b9-995f-47d8a341e1f2"
                         }
@@ -121,21 +121,21 @@
                     "type": "pin_to_pin"
                 },
                 {
-                    "description": "Os pinos do tipo Bidirectional e Power output estão conectados",
+                    "description": "Pins of type Bidirectional and Power output are connected",
                     "items": [
                         {
-                            "description": "Symbol U30 Pino 1 [AP_SDO/AD0, Bidirectional, Line]",
+                            "description": "Symbol U30 Pin 1 [AP_SDO/AD0, Bidirectional, Line]",
                             "pos": {
-                                "x": 0.3302,
-                                "y": 0.762
+                                "x": 33.02,
+                                "y": 76.2
                             },
                             "uuid": "5d43cafd-efd6-51e9-a23c-2f28dc979831"
                         },
                         {
-                            "description": "Symbol #FLG02018 Pino 1 [Power output, Line]",
+                            "description": "Symbol #FLG02018 Pin 1 [Power output, Line]",
                             "pos": {
-                                "x": 0.4318,
-                                "y": 2.667
+                                "x": 43.18,
+                                "y": 266.7
                             },
                             "uuid": "a8155571-3845-55b9-995f-47d8a341e1f2"
                         }
@@ -144,21 +144,21 @@
                     "type": "pin_to_pin"
                 },
                 {
-                    "description": "Os pinos do tipo Bidirectional e Power output estão conectados",
+                    "description": "Pins of type Bidirectional and Power output are connected",
                     "items": [
                         {
-                            "description": "Symbol U30 Pino 9 [INT2/FSYNC, Bidirectional, Line]",
+                            "description": "Symbol U30 Pin 9 [INT2/FSYNC, Bidirectional, Line]",
                             "pos": {
-                                "x": 0.635,
-                                "y": 0.6858
+                                "x": 63.5,
+                                "y": 68.58
                             },
                             "uuid": "b8a7cbac-a22d-5b7f-8c1e-d6c923bd9eab"
                         },
                         {
-                            "description": "Symbol #FLG02018 Pino 1 [Power output, Line]",
+                            "description": "Symbol #FLG02018 Pin 1 [Power output, Line]",
                             "pos": {
-                                "x": 0.4318,
-                                "y": 2.667
+                                "x": 43.18,
+                                "y": 266.7
                             },
                             "uuid": "a8155571-3845-55b9-995f-47d8a341e1f2"
                         }
@@ -167,21 +167,21 @@
                     "type": "pin_to_pin"
                 },
                 {
-                    "description": "Os pinos do tipo Bidirectional e Power output estão conectados",
+                    "description": "Pins of type Bidirectional and Power output are connected",
                     "items": [
                         {
-                            "description": "Symbol U32 Pino 5 [SDO, Bidirectional, Line]",
+                            "description": "Symbol U32 Pin 5 [SDO, Bidirectional, Line]",
                             "pos": {
-                                "x": 1.9558,
-                                "y": 0.6858
+                                "x": 195.58,
+                                "y": 68.58
                             },
                             "uuid": "2a485efc-0d07-5987-846e-3dd94372fec1"
                         },
                         {
-                            "description": "Symbol #FLG02018 Pino 1 [Power output, Line]",
+                            "description": "Symbol #FLG02018 Pin 1 [Power output, Line]",
                             "pos": {
-                                "x": 0.4318,
-                                "y": 2.667
+                                "x": 43.18,
+                                "y": 266.7
                             },
                             "uuid": "a8155571-3845-55b9-995f-47d8a341e1f2"
                         }

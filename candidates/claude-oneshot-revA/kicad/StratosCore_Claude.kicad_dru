@@ -1,0 +1,5 @@
+(version 1)
+# StratosCore candidate A2 - custom rules. Stack: JLC04161H-3313 candidate (docs/PCB_STACKUP.md).
+(rule rf_pour_gap
+  (condition "A.NetClass == 'RF50' && B.Type == 'Zone'")
+  (constraint clearance (min 0.3mm)))
