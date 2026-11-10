@@ -208,8 +208,10 @@ def build() -> Design:
           source="https://gct.co/files/drawings/usb4105.pdf")
     d.R("R1", "0R", "USB_SHIELD", "GND", status="Shield/chassis treatment TBD")
     d.add("U2", "Power_Protection:TPD4E05U06DQA", "TPD4E05U06DQAR", "Package_SON:USON-10_2.5x1.0mm_P0.5mm",
-          {"1": "USB_DP", "2": "USB_DN", "4": "USB_CC1", "5": "USB_CC2", "3": "GND", "8": "GND",
-           "6": "", "7": "", "9": "", "10": ""}, mpn="TPD4E05U06DQARG4", source="TI SLVSBO7O")
+          {"1": "USB_CC1", "10": "USB_CC1", "2": "USB_DN", "9": "USB_DN", "4": "USB_DP", "7": "USB_DP",
+           "5": "USB_CC2", "6": "USB_CC2", "3": "GND", "8": "GND"}, mpn="TPD4E05U06DQARG4",
+          status="A2: channels re-ordered to the connector pad order and the NC pins used for straight-through routing (SLVSBO7 Table 4-2)",
+          source="TI SLVSBO7O")
     d.C("C1", "1uF 25V X7R", "VBUS", fp="C0603")
     d.g("efuse")
     d.add("U3", f"{PLIB}:TPS259474L", "TPS259474LRPWR", CUSTOM["TPS259474L"]["fp"],
@@ -730,8 +732,9 @@ def build() -> Design:
     d.R("R107", "47k", "SD_DAT1", "3V3_SD", status="A2: unused DAT1 must not float in SPI mode (proposal; SD host pull-up practice)")
     d.R("R108", "47k", "SD_DAT2", "3V3_SD", status="A2: unused DAT2 must not float in SPI mode (proposal)")
     d.add("U23", "Power_Protection:TPD4E05U06DQA", "TPD4E05U06DQAR", "Package_SON:USON-10_2.5x1.0mm_P0.5mm",
-          {"1": "SPI_SCLK", "2": "SPI_MOSI", "4": "SPI_MISO", "5": "SD_CS", "3": "GND", "8": "GND",
-           "6": "", "7": "", "9": "", "10": ""}, mpn="TPD4E05U06DQARG4")
+          {"1": "SD_CS", "10": "SD_CS", "2": "SPI_MOSI", "9": "SPI_MOSI", "4": "SPI_SCLK", "7": "SPI_SCLK",
+           "5": "SPI_MISO", "6": "SPI_MISO", "3": "GND", "8": "GND"}, mpn="TPD4E05U06DQARG4",
+          status="A2: channel order follows the socket contact order; NC pins used for straight-through routing")
     d.TP("TP28", "SD_CD")
     d.g("audsw")
     d.add("U12", f"{PLIB}:TPS22918", "TPS22918DBVR", CUSTOM["TPS22918"]["fp"],
