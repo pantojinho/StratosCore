@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/home/user/StratosCore/candidates/claude-oneshot-revA/kicad/StratosCore_Claude.kicad_sch</source>
-    <date>2026-11-10T06:55:52</date>
+    <date>2026-11-10T11:44:22</date>
     <tool>Eeschema 10.0.8-10.0.8~ubuntu24.04.1</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -9790,7 +9790,7 @@
       <node ref="C12" pin="1" pintype="passive"/>
       <node ref="U6" pin="12" pinfunction="BTST_12" pintype="passive"/>
     </net>
-    <net code="51" name="CHG_CBSET" class="Power">
+    <net code="51" name="CHG_CBSET" class="Rail">
       <node ref="R15" pin="1" pintype="passive"/>
       <node ref="U6" pin="10" pinfunction="CBSET_10" pintype="power_out"/>
     </net>
@@ -10678,7 +10678,7 @@
       <node ref="TP1" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="U3" pin="5" pinfunction="IN_5" pintype="power_in"/>
     </net>
-    <net code="178" name="VBUS_PROT" class="Power">
+    <net code="178" name="VBUS_PROT" class="Rail">
       <node ref="C10" pin="1" pintype="passive"/>
       <node ref="C2" pin="1" pintype="passive"/>
       <node ref="R8" pin="1" pintype="passive"/>
