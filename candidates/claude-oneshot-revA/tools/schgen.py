@@ -28,7 +28,7 @@ def _strip_ws(text: str) -> str:
 
 GRID = 1.27
 DIRS = {0: (1, 0), 90: (0, -1), 180: (-1, 0), 270: (0, 1)}
-KICAD_SYM = Path("C:/Program Files/KiCad/10.0/share/kicad/symbols")
+from kipaths import KICAD_SYM  # noqa: E402
 PAPERS = [("A4", 297, 210), ("A3", 420, 297), ("A2", 594, 420), ("A1", 841, 594), ("A0", 1189, 841)]
 
 

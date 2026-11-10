@@ -1,7 +1,7 @@
 """Build the candidate KiCad project (symbols, footprints, hierarchical schematic) and run ERC.
 
-Run with any Python 3.11+ (KiCad's bundled python works):
-    "C:/Program Files/KiCad/10.0/bin/python.exe" tools/build_sch.py
+Run with any Python 3.11+ (KiCad's bundled python works; KiCad 10 is located by tools/kipaths.py):
+    python3 tools/build_sch.py
 """
 from __future__ import annotations
 
@@ -15,7 +15,6 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 import design as D  # noqa: E402
-import fpgen  # noqa: E402
 import schgen  # noqa: E402
 import symlib  # noqa: E402
 
@@ -23,13 +22,13 @@ ROOT = HERE.parent
 REPO = ROOT.parent.parent
 OUT = ROOT / "kicad"
 PROJECT = "StratosCore_Claude"
-CLI = "C:/Program Files/KiCad/10.0/bin/kicad-cli.exe"
-REV = "A-claude-oneshot-1"
+from kipaths import CLI  # noqa: E402
+REV = "A2-claude-review"
 DISPLAY_STANDOFF = 5.0   # mm, module underside above PCB top (printed frame; assumption)
 COMPANY = "StratosCore (CERN-OHL-P-2.0) - Claude one-shot candidate"
 
 
-def build_libs(extra_fp_builders=()):
+def build_libs():
     libdir = OUT / "libs"
     (libdir / f"{D.PLIB}.pretty").mkdir(parents=True, exist_ok=True)
     blocks = []
@@ -40,29 +39,9 @@ def build_libs(extra_fp_builders=()):
         if rail != "GND":
             blocks.append(symlib.power_symbol(rail))
     symlib.write_library(libdir / f"{D.PLIB}.kicad_sym", blocks)
-    # reviewed repository footprint candidates, copied unchanged
-    for f in (REPO / "hardware" / "footprints").glob("*.kicad_mod"):
-        shutil.copy2(f, libdir / f"{D.PLIB}.pretty" / f.name)
-    pretty = libdir / f"{D.PLIB}.pretty"
-    fpgen.rpw0010a(pretty)
-    fpgen.xf3m(pretty, 40, 19.5, 23.1, 21.5, 25.1, "XF3M-4015-1B")
-    fpgen.xf3m(pretty, 6, 2.5, 6.1, 4.5, 8.1, "XF3M-0615-1B")
-    fpgen.sksc(pretty)
-    fpgen.t5838(pretty)
-    fpgen.ta2003a(pretty)
-    fpgen.blb01(pretty)
-    fpgen.holder_2s(pretty)
-    fpgen.display_outline(pretty, DISPLAY_STANDOFF)
-    hw = REPO / "hardware" / "footprints"
-    fpgen.corrected_from_repo(pretty, hw / "MEMSIC_MMC5983MA_LGA-16_3x3mm_P0.5mm.kicad_mod",
-                              "MEMSIC_MMC5983MA_LGA-16_3x3mm_P0.5mm_CORRECTED", {1.05: 1.275},
-                              "CORRECTED (one-shot A13): pad centres +/-1.275 = MEMSIC Rev A land pattern 2.550 centre-to-centre; repo file used +/-1.05 (corner pads overlap).")
-    fpgen.corrected_from_repo(pretty, hw / "Bosch_BMP581_LGA-10_2x2mm.kicad_mod",
-                              "Bosch_BMP581_LGA-10_2x2mm_CORRECTED", {0.6: 0.7625},
-                              "CORRECTED (one-shot A14): pad centres +/-0.7625 = Bosch DS004-13 Fig.32 1.525 centre-to-centre; repo used +/-0.6 (0.04 mm corner gap). Pin-1 orientation to re-verify.")
-    fpgen.fix_models(pretty)
-    for b in extra_fp_builders:
-        b(libdir / f"{D.PLIB}.pretty")
+    # Footprints are NOT regenerated here any more: since the 2026-09-23 refinement the files in
+    # libs/SC.pretty (exact RPW/DCU/RGT lands, corrected LGA sensors) are the source of truth.
+    # tools/fpgen.py remains as the provenance of the original generated outlines only.
     return (libdir / f"{D.PLIB}.kicad_sym").read_text(encoding="utf-8")
 
 
@@ -90,9 +69,9 @@ def project_file():
     pro.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
-def main(extra_fp_builders=()):
+def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    ptext = build_libs(extra_fp_builders)
+    ptext = build_libs()
     design = D.build()
     design.sheets.sort(key=lambda sd: sd.file)
     src = schgen.SymbolSource(D.PLIB, ptext)
@@ -114,8 +93,9 @@ def main(extra_fp_builders=()):
             if p.footprint:
                 fp_libs.add(p.footprint.split(":")[0])
     schgen.write_root(OUT / f"{PROJECT}.kicad_sch", PROJECT, root_uuid, sheets,
-                      "StratosCore Rev A - Claude one-shot candidate (NOT FOR MANUFACTURE)", COMPANY, REV, [
-                          "Candidate produced for owner comparison with the Astra pass. docs/ASTRA_HANDOFF.md is NOT READY;",
+                      "StratosCore Rev A2 - Claude candidate, reviewed and re-laid out (NOT FOR MANUFACTURE)", COMPANY, REV, [
+                          "Rev A2 (2026-11-10): schematic review against manufacturer data + engineered re-layout. See ../docs/REVIEW_A2_2026_11_10.md.",
+                          "Candidate for owner/Astra review. docs/ASTRA_HANDOFF.md is NOT READY;",
                           "every open gate (O05 battery safety, display controlled drawing/samples, RF values, assembler approvals) remains open.",
                           "Values marked TBD are deliberately not invented. See ../README.md and ../docs/ISSUES.md.",
                       ])

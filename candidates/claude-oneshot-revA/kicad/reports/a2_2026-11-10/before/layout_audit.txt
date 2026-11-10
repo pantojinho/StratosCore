@@ -1,0 +1,122 @@
+POWER nets
+  1V1_ADSB               total   22.7 mm  w 0.15-0.15  vias  2  F.Cu:15.1 B.Cu:7.7
+  1V8_AUDIO_SW           total   30.0 mm  w 0.11-0.15  vias  2  F.Cu:21.9 In2.Cu:8.2
+  1V8_LOGIC              total   97.8 mm  w 0.15-0.15  vias  7  F.Cu:24.9 B.Cu:20.8 In2.Cu:52.1
+  3V0_RF_QUIET           total   63.2 mm  w 0.11-0.15  vias  3  F.Cu:42.8 B.Cu:16.4 In2.Cu:4.1
+  3V3_ADSB               total   78.4 mm  w 0.11-0.15  vias  3  F.Cu:73.2 B.Cu:2.8 In2.Cu:2.5
+  3V3_EXP                total   22.8 mm  w 0.11-0.15  vias  2  F.Cu:1.9 B.Cu:4.8 In2.Cu:16.1
+  3V3_GNSS               total   14.2 mm  w 0.15-0.15  vias  0  F.Cu:14.2
+  3V3_MAIN               total  492.6 mm  w 0.13-0.40  vias 19  F.Cu:370.0 B.Cu:52.5 In2.Cu:70.2
+  3V3_SD                 total   30.0 mm  w 0.11-0.15  vias  3  F.Cu:22.0 B.Cu:2.8 In2.Cu:5.2
+  BAT_MID                total   62.2 mm  w 0.40-0.40  vias  2  F.Cu:13.1 B.Cu:24.2 In2.Cu:24.9
+  BAT_N                  total   48.2 mm  w 0.30-0.40  vias  2  F.Cu:10.5 In2.Cu:37.7
+  BAT_P                  total   44.8 mm  w 0.40-0.40  vias  1  F.Cu:4.9 In2.Cu:39.9
+  BL_SW                  total    6.7 mm  w 0.35-0.40  vias  0  F.Cu:6.7
+  BUCK_SW                total   13.6 mm  w 0.40-0.40  vias  2  F.Cu:7.5 In2.Cu:6.1
+  CHG_BTST               total   24.7 mm  w 0.15-0.15  vias  2  F.Cu:1.7 In2.Cu:23.0
+  CHG_PMID               total    8.8 mm  w 0.25-0.40  vias  0  F.Cu:8.8
+  CHG_REGN               total   47.7 mm  w 0.11-0.15  vias  4  F.Cu:8.0 B.Cu:8.3 In2.Cu:31.3
+  CHG_SNS                total   16.4 mm  w 0.25-0.40  vias  2  F.Cu:7.2 In2.Cu:9.2
+  CHG_SW                 total   17.0 mm  w 0.40-0.40  vias  0  F.Cu:17.0
+  LED_A                  total   38.4 mm  w 0.15-0.40  vias  4  F.Cu:14.4 In2.Cu:24.0
+  LED_K                  total   33.4 mm  w 0.15-0.15  vias  2  F.Cu:3.4 In2.Cu:30.0
+  PACK_P                 total   74.6 mm  w 0.40-0.40  vias  4  F.Cu:16.6 B.Cu:33.6 In2.Cu:24.4
+  PROT_DRAIN             total    6.7 mm  w 0.40-0.40  vias  2  F.Cu:2.0 B.Cu:4.7
+  VBUS                   total   72.4 mm  w 0.40-0.40  vias  6  F.Cu:25.5 B.Cu:32.7 In2.Cu:14.2
+  VBUS_PROT              total   44.7 mm  w 0.25-0.40  vias  3  F.Cu:17.6 B.Cu:27.1
+RF nets
+  ADSB_ANT               total   12.0 mm  w 0.15-0.15  vias  3  F.Cu:2.5 In2.Cu:9.5
+  ADSB_DET_IN            total    7.0 mm  w 0.11-0.15  vias  0  F.Cu:7.0
+  ADSB_INHI              total    7.5 mm  w 0.15-0.15  vias  2  F.Cu:3.9 In2.Cu:3.6
+  ADSB_L1_BIAS           total   13.7 mm  w 0.15-0.15  vias  3  F.Cu:2.9 B.Cu:6.6 In2.Cu:4.3
+  ADSB_L1_IN             total    6.6 mm  w 0.15-0.15  vias  2  F.Cu:2.6 B.Cu:4.0
+  ADSB_L1_OUT            total   11.2 mm  w 0.15-0.15  vias  0  F.Cu:11.2
+  ADSB_L1_VD             total   14.5 mm  w 0.15-0.15  vias  3  F.Cu:4.0 B.Cu:6.6 In2.Cu:3.9
+  ADSB_L1_VEN            total    2.2 mm  w 0.15-0.15  vias  0  F.Cu:2.2
+  ADSB_L2_BIAS           total   17.4 mm  w 0.11-0.15  vias  0  F.Cu:17.4
+  ADSB_L2_IN             total   10.5 mm  w 0.15-0.15  vias  2  F.Cu:1.4 In2.Cu:9.0
+  ADSB_L2_OUT            total    3.5 mm  w 0.15-0.15  vias  0  F.Cu:3.5
+  ADSB_L2_VD             total   20.2 mm  w 0.15-0.15  vias  2  F.Cu:14.7 In2.Cu:5.5
+  ADSB_L2_VEN            total    2.2 mm  w 0.15-0.15  vias  0  F.Cu:2.2
+  ADSB_S1_IN             total    5.2 mm  w 0.15-0.15  vias  0  F.Cu:5.2
+  ADSB_S1_OUT            total    1.7 mm  w 0.15-0.15  vias  0  F.Cu:1.7
+  ADSB_S2_IN             total    8.7 mm  w 0.15-0.15  vias  0  F.Cu:8.7
+  ADSB_SW_EN             total   26.7 mm  w 0.11-0.15  vias  2  F.Cu:5.0 In2.Cu:21.7
+  GNSS_RF                total   17.6 mm  w 0.15-0.15  vias  0  F.Cu:17.6
+  LORA_ANT               total    9.1 mm  w 0.15-0.15  vias  2  F.Cu:2.9 In2.Cu:6.2
+  LORA_RFC               total    3.7 mm  w 0.11-0.15  vias  0  F.Cu:3.7
+  LORA_RFI_N             total   13.1 mm  w 0.15-0.15  vias  2  F.Cu:7.7 B.Cu:5.4
+  LORA_RFI_P             total    2.4 mm  w 0.15-0.15  vias  0  F.Cu:2.4
+  LORA_RFO               total    4.5 mm  w 0.15-0.15  vias  0  F.Cu:4.5
+  LORA_RX_SW             total   22.9 mm  w 0.15-0.15  vias  3  F.Cu:2.9 B.Cu:19.9
+  LORA_SW_CTRL           total    3.5 mm  w 0.11-0.15  vias  0  F.Cu:3.5
+  LORA_SW_VDD            total    2.5 mm  w 0.15-0.15  vias  0  F.Cu:2.5
+  LORA_TXF1              total   32.4 mm  w 0.15-0.15  vias  2  F.Cu:4.5 In2.Cu:27.9
+  LORA_TXF2              total   37.4 mm  w 0.15-0.15  vias  2  F.Cu:5.8 In2.Cu:31.6
+  LORA_TX_SW             total    1.4 mm  w 0.15-0.15  vias  0  F.Cu:1.4
+  SX_DCC_SW              total    2.6 mm  w 0.10-0.15  vias  0  F.Cu:2.6
+  SX_VREG                total    7.3 mm  w 0.11-0.15  vias  0  F.Cu:7.3
+  SX_VR_PA               total    6.0 mm  w 0.15-0.15  vias  2  F.Cu:3.1 B.Cu:2.9
+  SX_XTA                 total    3.0 mm  w 0.11-0.15  vias  0  F.Cu:3.0
+  SX_XTB                 total    5.4 mm  w 0.15-0.15  vias  2  F.Cu:1.7 In2.Cu:3.7
+USB / clocks
+  ADSB_PULSE             total   17.2 mm  w 0.15-0.15  vias  3  F.Cu:5.6 B.Cu:8.3 In2.Cu:3.4
+  ADSB_VIDEO             total   13.3 mm  w 0.15-0.15  vias  2  F.Cu:5.6 In2.Cu:7.8
+  PDM_CLK                total   29.5 mm  w 0.15-0.15  vias  2  F.Cu:4.7 B.Cu:24.8
+  PDM_CLK_1V8            total   17.5 mm  w 0.15-0.15  vias  2  F.Cu:1.7 In2.Cu:15.8
+  PDM_DATA               total   33.7 mm  w 0.15-0.15  vias  3  F.Cu:2.1 B.Cu:18.2 In2.Cu:13.4
+  PDM_DATA_1V8           total   13.2 mm  w 0.15-0.15  vias  2  F.Cu:2.1 In2.Cu:11.1
+  PDM_OE                 total    3.3 mm  w 0.11-0.15  vias  0  F.Cu:3.3
+  QSPI_SCLK              total   14.7 mm  w 0.15-0.15  vias  2  F.Cu:3.3 In2.Cu:11.4
+  QSPI_SD0               total   16.8 mm  w 0.15-0.15  vias  2  F.Cu:3.1 In2.Cu:13.8
+  QSPI_SD1               total   15.7 mm  w 0.15-0.15  vias  2  F.Cu:2.3 In2.Cu:13.4
+  QSPI_SD2               total   19.6 mm  w 0.15-0.15  vias  2  F.Cu:6.7 In2.Cu:12.9
+  QSPI_SD3               total   11.5 mm  w 0.15-0.15  vias  2  F.Cu:2.4 In2.Cu:9.1
+  QSPI_SS                total   24.3 mm  w 0.11-0.15  vias  2  F.Cu:11.1 In2.Cu:13.2
+  RP_XIN                 total   17.1 mm  w 0.11-0.15  vias  2  F.Cu:12.2 In2.Cu:4.9
+  RP_XOUT                total    7.1 mm  w 0.15-0.15  vias  2  F.Cu:2.1 In2.Cu:5.0
+  RP_XTAL_R              total   19.2 mm  w 0.15-0.15  vias  3  F.Cu:3.9 In2.Cu:15.3
+  SPI_MISO               total  136.7 mm  w 0.15-0.15  vias  7  F.Cu:27.7 B.Cu:39.5 In2.Cu:69.5
+  SPI_MOSI               total  144.3 mm  w 0.15-0.15  vias  9  F.Cu:13.6 B.Cu:61.0 In2.Cu:69.7
+  SPI_SCLK               total  127.8 mm  w 0.15-0.15  vias  7  F.Cu:17.2 B.Cu:44.0 In2.Cu:66.6
+  USB_DN                 total   79.4 mm  w 0.16-0.16  vias  3  F.Cu:12.9 In2.Cu:66.5
+  USB_DP                 total   75.3 mm  w 0.16-0.16  vias  2  F.Cu:17.9 In2.Cu:57.4
+KEY DISTANCES (pad centre to pad centre, mm)
+  buck Cin C20.1 -> U7.12 PVIN         2.2
+  buck Cin C20.2 -> U7.15 PGND         3.8
+  buck L2.1 -> U7.2 SW                 6.1
+  buck Cout C22.1 -> L2.2              9.7
+  chg L1.2 -> U6.17 SW                 4.9
+  chg C14.1 SNS -> U6.15              11.0
+  chg C15.1 SNS -> U6.16              11.5
+  chg C11.1 PMID -> U6.21              2.4
+  chg C12 BTST -> U6.12               17.2
+  chg C13 REGN -> U6.11               15.8
+  chg C16 BAT -> U6.13                14.2
+  chg C10 VBUS -> U6.23                4.7
+  BL L3.2 -> U16.1 SW                  4.1
+  BL D1.2 -> U16.1                     2.3
+  BL C56.1 -> D1.1                    25.7
+  BL C55 -> U16.5                      2.5
+  ESP C42 -> U1.2                      5.4
+  ESP C41 -> U1.2                      2.4
+  SX C72 -> U40.10                     7.9
+  SX C71 -> U40.1                      3.3
+  SX C73 -> U40.7                      3.5
+  SX L70.1 -> U40.9                    2.4
+  SX Y2.1 -> U40.3                     2.7
+  RP Y1.1 -> U20.20                    9.7
+  RP C109 VREG_VOUT -> U20.45         10.7
+  RP C108 -> U20.44                   13.3
+  GNSS C61 -> U17.8                    3.4
+  GNSS J5.1 -> U17.11                 12.5
+  IMU C30 -> U30.8                     2.0
+  MAG C33 -> U31.10                    5.4
+  eFuse C1 -> U3.5                    19.8
+  eFuse C2 -> U3.6                     7.3
+  USB U2.1 -> J1.A6                    6.5
+  MAG U31 -> L2                       24.0
+  MAG U31 -> L1                       46.9
+  MAG U31 -> L3                       38.6
+  BARO U32 -> L3                      53.9
+  SHT U33 -> U1.1                     39.6
